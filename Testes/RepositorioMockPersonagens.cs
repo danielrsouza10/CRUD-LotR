@@ -1,11 +1,10 @@
 ﻿using Dominio;
 using System;
 
-public class RepositorioMock : IRepositorioMock
+public class RepositorioMockPersonagens : IRepositorioMock
 {
     private List<Personagem> ListaDePersonagens { get; }
-    private List<Raca> ListaDeRacas { get; }
-    public RepositorioMock()
+    public RepositorioMockPersonagens()
     {
 
         ListaDePersonagens = new List<Personagem>()
@@ -16,23 +15,9 @@ public class RepositorioMock : IRepositorioMock
             new Personagem(4, "Gandalf", 4, ProfissaoEnum.Mago),
             new Personagem(5, "Sam", 5, ProfissaoEnum.Ladrao),
         };
-
-        ListaDeRacas = new List<Raca>()
-        {
-            new Raca(1, "Humano"),
-            new Raca(2, "Elfo"),
-            new Raca(3, "Anão"),
-            new Raca(4, "Maiar"),
-            new Raca(5, "Hobbit")
-        };
     }
 
-    public List<Personagem> ObterTodosOsPersonagens()
-    {
-        throw new NotImplementedException();
-    }
-
-    public List<Raca> ObterTodasAsRacas()
+    public List<Personagem> ObterTodos()
     {
         throw new NotImplementedException();
     }

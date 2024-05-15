@@ -2,8 +2,8 @@
 using System;
 using System.Collections.Generic;
 
-public interface IRepositorioMock
+public interface IRepositorioMock<T>
 {
-    List<Personagem> ObterTodosOsPersonagens();
-    List<Raca> ObterTodasAsRacas();
+    List<T> ObterTodos();
+  
 }

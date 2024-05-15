@@ -7,10 +7,10 @@
         public string? LocalizacaoGeografica { get; set; }
         public string? HabilidadeRacial { get; set; }
 
-        public Raca(int _id, string _nome)
+        public Raca(int id, string nome)
         {
-            Id = _id;
-            Nome = _nome;
+            Id = id;
+            Nome = nome;
         }
     }
 }
