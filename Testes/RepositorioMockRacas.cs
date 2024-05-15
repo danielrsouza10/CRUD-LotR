@@ -1,7 +1,7 @@
 ﻿using Dominio;
 using System;
 
-public class RepositorioMockRacas : IRepositorioMock
+public class RepositorioMockRacas : IRepositorioMock<Raca>
 {
 
     private List<Raca> ListaDeRacas { get; }
