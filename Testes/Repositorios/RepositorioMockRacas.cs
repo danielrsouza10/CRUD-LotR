@@ -1,10 +1,11 @@
 ﻿using Dominio;
 using System;
+using Testes.Repositorios;
 
 public class RepositorioMockRacas : IRepositorioMock<Raca>
 {
 
-    private List<Raca> ListaDeRacas { get; }
+    public List<Raca> ListaDeRacas { get; }
     public RepositorioMockRacas()
     {
 

@@ -1,5 +1,5 @@
 ﻿using Dominio;
-using System;
+using Testes.Repositorios;
 
 public class RepositorioMockPersonagens : IRepositorioMock<Personagem>
 {
@@ -19,6 +19,6 @@ public class RepositorioMockPersonagens : IRepositorioMock<Personagem>
 
     public List<Personagem> ObterTodos()
     {
-        throw new NotImplementedException();
+        return ListaDePersonagens;
     }
 }
