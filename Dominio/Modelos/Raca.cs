@@ -1,4 +1,5 @@
-﻿namespace Dominio.Modelos
+﻿
+namespace Dominio.Modelos
 {
     public class Raca
     {
@@ -11,6 +12,11 @@
         {
             Id = id;
             Nome = nome;
+        }
+
+        public static implicit operator Raca(string v)
+        {
+            throw new NotImplementedException();
         }
     }
 }

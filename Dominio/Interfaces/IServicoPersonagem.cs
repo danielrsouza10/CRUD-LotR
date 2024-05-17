@@ -9,6 +9,6 @@ namespace Dominio.Interfaces
 {
     public interface IServicoPersonagem
     {
-        List<Personagem> ObterTodos();
+       
     }
 }
