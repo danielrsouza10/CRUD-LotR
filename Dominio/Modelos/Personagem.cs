@@ -1,4 +1,6 @@
-﻿namespace Dominio
+﻿using Dominio.ENUMS;
+
+namespace Dominio.Modelos
 {
     public class Personagem
     {
@@ -10,6 +12,8 @@
         public int? Idade { get; set; }
         public float? Altura { get; set; }
         public DateTime DataDoCadastro { get; set; }
+
+        public Personagem() { }
 
         public Personagem(int id, string nome, int idRaca, ProfissaoEnum profissao)
         {
@@ -23,5 +27,5 @@
 
 
 
-  
+
 }

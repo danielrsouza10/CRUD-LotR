@@ -1,4 +1,4 @@
-﻿namespace Dominio
+﻿namespace Dominio.Modelos
 {
     public class Raca
     {

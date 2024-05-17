@@ -1,19 +1,22 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Testes
 {
     public class TesteBase : IDisposable
     {
-        protected ServiceProvider _serviceProvider;
-
-        public TesteBase(ServiceProvider ServiceProvider)
+        protected ServiceProvider _serviceProvider { get; set; }            
+        public TesteBase()
         {
-            _serviceProvider = ServiceProvider;
+            _serviceProvider = ObterServiceCollections().BuildServiceProvider();
+        }
+
+        public ServiceCollection ObterServiceCollections()
+        {
+            var serviceCollection = new ServiceCollection();
+            ModuloDeInjecao.BindServices(serviceCollection);
+            return serviceCollection;
+
         }
 
         public void Dispose()
