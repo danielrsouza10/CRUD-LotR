@@ -1,15 +1,17 @@
-﻿using Dominio;
+﻿using Dominio.Modelos;
 using System;
-using Testes.Repositorios;
+using Testes.Interfaces;
 
-public class RepositorioMockRacas : IRepositorioMock<Raca>
+namespace Testes.Repositorios
 {
-
-    public List<Raca> ListaDeRacas { get; }
-    public RepositorioMockRacas()
+    public class RepositorioMockRacas : IRepositorioMock<Raca>
     {
 
-        ListaDeRacas = new List<Raca>()
+        public List<Raca> ListaDeRacas { get; }
+        public RepositorioMockRacas()
+        {
+
+            ListaDeRacas = new List<Raca>()
         {
             new Raca(1, "Humano"),
             new Raca(2, "Elfo"),
@@ -17,10 +19,11 @@ public class RepositorioMockRacas : IRepositorioMock<Raca>
             new Raca(4, "Maiar"),
             new Raca(5, "Hobbit")
         };
-    }
+        }
 
-    public List<Raca> ObterTodos()
-    {
-        throw new NotImplementedException();
+        public List<Raca> ObterTodos()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

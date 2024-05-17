@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Testes.Repositorios
+namespace Testes.Interfaces
 {
     public interface IRepositorioMock<T>
     {

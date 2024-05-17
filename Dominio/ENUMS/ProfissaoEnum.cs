@@ -1,6 +1,4 @@
-﻿
-
-namespace Dominio
+﻿namespace Dominio.ENUMS
 {
     public enum ProfissaoEnum
     {

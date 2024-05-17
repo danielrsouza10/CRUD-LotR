@@ -1,5 +1,6 @@
-﻿using Dominio;
+﻿using Dominio.Modelos;
 using Microsoft.Extensions.DependencyInjection;
+using Testes.Interfaces;
 using Testes.Repositorios;
 
 namespace Testes
@@ -8,7 +9,9 @@ namespace Testes
     {
         public static void BindServices(IServiceCollection services)
         {
-            services.AddSingleton<IRepositorioMock<Personagem>, RepositorioMockPersonagens>();
+            services.AddSingleton<RepositorioMockPersonagens>();
+            services.AddScoped<RepositorioMockPersonagens>();
+            services.AddTransient<RepositorioMockPersonagens>();
         }
     }
 }
