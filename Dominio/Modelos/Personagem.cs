@@ -7,7 +7,6 @@ namespace Dominio.Modelos
         public int Id { get; set; }
         public string Nome { get; set; }
         public int IdRaca { get; set; }
-        public Raca Raca { get; set; }
         public ProfissaoEnum Profissao { get; set; }
         public int? Idade { get; set; }
         public float? Altura { get; set; }
@@ -24,8 +23,4 @@ namespace Dominio.Modelos
             DataDoCadastro = DateTime.Now;
         }
     }
-
-
-
-
 }

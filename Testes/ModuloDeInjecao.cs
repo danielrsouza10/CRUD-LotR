@@ -9,9 +9,7 @@ namespace Testes
     {
         public static void BindServices(IServiceCollection services)
         {
-            services.AddSingleton<RepositorioMockPersonagens>();
             services.AddScoped<RepositorioMockPersonagens>();
-            services.AddTransient<RepositorioMockPersonagens>();
         }
     }
 }
