@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dominio.Modelos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,10 @@ namespace Dominio.Interfaces
 {
     public interface IServicoPersonagem
     {
-       
+        List<Personagem> ObterTodos();
+        Personagem ObterPorId();
+        Personagem Criar();
+        Personagem Editar();
+        Personagem Deletar();
     }
 }
