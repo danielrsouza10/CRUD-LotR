@@ -1,7 +1,7 @@
 ﻿using Dominio.Modelos;
 using Microsoft.Extensions.DependencyInjection;
-using Testes.Interfaces;
 using Testes.Repositorios;
+using Testes.Interfaces;
 
 namespace Testes
 {
@@ -9,7 +9,7 @@ namespace Testes
     {
         public static void BindServices(IServiceCollection services)
         {
-            services.AddScoped<RepositorioMockPersonagens>();
+            services.AddScoped<IRepositorioMock<Personagem>, RepositorioMockPersonagens>();
         }
     }
 }

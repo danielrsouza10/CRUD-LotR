@@ -7,9 +7,6 @@ namespace Testes.Repositorios
     public class RepositorioMockPersonagens : IRepositorioMock<Personagem>
     {
         private List<Personagem> ListaDePersonagens { get; }
-        public RepositorioMockPersonagens()
-        {
-        }
 
         public List<Personagem> ObterTodos()
         {

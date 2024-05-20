@@ -8,16 +8,14 @@ namespace Dominio.Modelos
         public string? LocalizacaoGeografica { get; set; }
         public string? HabilidadeRacial { get; set; }
 
+        public Raca() { }
+
         public Raca(int id, string nome)
         {
             Id = id;
             Nome = nome;
         }
 
-        public static implicit operator Raca(string v)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
 

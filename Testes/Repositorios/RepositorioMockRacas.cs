@@ -8,9 +8,6 @@ namespace Testes.Repositorios
     {
 
         public List<Raca> ListaDeRacas { get; }
-        public RepositorioMockRacas()
-        {
-        }
 
         public List<Raca> ObterTodos()
         {
