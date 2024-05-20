@@ -1,4 +1,5 @@
-﻿namespace Dominio
+﻿
+namespace Dominio.Modelos
 {
     public class Raca
     {
@@ -6,6 +7,15 @@
         public string Nome { get; set; }
         public string? LocalizacaoGeografica { get; set; }
         public string? HabilidadeRacial { get; set; }
+
+        public Raca() { }
+
+        public Raca(int id, string nome)
+        {
+            Id = id;
+            Nome = nome;
+        }
+
     }
 }
 
