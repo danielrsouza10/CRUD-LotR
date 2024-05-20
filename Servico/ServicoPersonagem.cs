@@ -1,5 +1,4 @@
 ﻿using Dominio.Interfaces;
-using Dominio.Modelos;
 
 namespace Dominio.Servicos
 {
