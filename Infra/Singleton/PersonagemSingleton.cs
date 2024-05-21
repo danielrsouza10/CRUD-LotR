@@ -11,13 +11,13 @@ namespace Testes.Singleton
         public List<Personagem> Personagens { get; set; }
 
         private PersonagemSingleton() {
-            Personagens = new List<Personagem>()
-            {
-                new (1, "Aragorn", 1, ProfissaoEnum.Guerreiro),
-                new (2, "Legolas", 2, ProfissaoEnum.Arqueiro),
-                new (3, "Guimli", 3, ProfissaoEnum.Guerreiro),
-                new (3, "Gandalf", 4, ProfissaoEnum.Mago)
-            };
+            Personagens = new List<Personagem>();
+            //{
+            //    new (1, "Aragorn", 1, ProfissaoEnum.Guerreiro),
+            //    new (2, "Legolas", 2, ProfissaoEnum.Arqueiro),
+            //    new (3, "Guimli", 3, ProfissaoEnum.Guerreiro),
+            //    new (3, "Gandalf", 4, ProfissaoEnum.Mago)
+            //};
             
         }
 
@@ -32,6 +32,9 @@ namespace Testes.Singleton
                 return instance;
             }
         }
-        public void Initialize() {}  
+        public void Initialize() 
+        {
+           
+        }  
     }
 }
