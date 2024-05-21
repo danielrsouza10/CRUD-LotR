@@ -10,7 +10,7 @@ namespace Dominio.Interfaces
     public interface IServicoPersonagem
     {
         List<Personagem> ObterTodos();
-        Personagem ObterPorId();
+        Personagem ObterPorId(int id);
         Personagem Criar();
         Personagem Editar();
         Personagem Deletar();

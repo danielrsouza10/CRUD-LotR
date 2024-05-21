@@ -12,6 +12,7 @@ namespace Testes
         public static void BindServices(IServiceCollection services)
         {
             services.AddScoped<IServicoPersonagem, ServicoPersonagem>();
+            services.AddScoped<IRepositorioMock<Personagem>, RepositorioMockPersonagens>();
         }
     }
 }

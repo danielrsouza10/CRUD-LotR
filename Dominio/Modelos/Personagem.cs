@@ -14,13 +14,6 @@ namespace Dominio.Modelos
 
         public Personagem() { }
 
-        public Personagem(int id, string nome, int idRaca, ProfissaoEnum profissao)
-        {
-            Id = id;
-            Nome = nome;
-            IdRaca = idRaca;
-            Profissao = profissao;
-            DataDoCadastro = DateTime.Now;
-        }
+      
     }
 }

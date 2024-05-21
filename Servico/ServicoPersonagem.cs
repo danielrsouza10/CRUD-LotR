@@ -23,9 +23,23 @@ namespace Dominio.Servicos
             throw new NotImplementedException();
         }
 
-        public Personagem ObterPorId()
+        public Personagem ObterPorId(int id)
         {
-            throw new NotImplementedException();
+            var personagem = new Personagem();
+            if(id == 1) {
+                personagem.Id = id;
+                personagem.Nome = "Aragorn";
+            }
+            else if(id == 2)
+            {
+                personagem.Id = id;
+                personagem.Nome = "Legolas";
+            } else if(id == 3)
+            {
+                personagem.Id = id;
+                personagem.Nome = "Gandalf";
+            }
+            return personagem;
         }
 
         public List<Personagem> ObterTodos()

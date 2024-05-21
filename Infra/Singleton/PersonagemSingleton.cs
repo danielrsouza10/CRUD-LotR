@@ -1,6 +1,4 @@
-using Dominio.ENUMS;
 using Dominio.Modelos;
-using System.Runtime.CompilerServices;
 
 namespace Testes.Singleton
 {

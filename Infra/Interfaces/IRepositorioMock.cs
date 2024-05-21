@@ -6,7 +6,7 @@ namespace Testes.Interfaces
 {
     public interface IRepositorioMock<T>
     {
-        List<T> ObterTodos();
+        List<T> CriarListaSingleton();
 
     }
 }

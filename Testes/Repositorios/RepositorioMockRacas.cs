@@ -9,6 +9,11 @@ namespace Testes.Repositorios
 
         public List<Raca> ListaDeRacas { get; }
 
+        public List<Raca> CriarListaSingleton()
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Raca> ObterTodos()
         {
             throw new NotImplementedException();
