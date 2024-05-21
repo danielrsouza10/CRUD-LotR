@@ -1,10 +1,8 @@
-﻿
-
-using Dominio.ENUMS;
+﻿using Dominio.ENUMS;
 using Dominio.Interfaces;
 using Dominio.Modelos;
 using Microsoft.Extensions.DependencyInjection;
-using static Dominio.Servicos.ServicoPersonagem;
+using Testes.Singleton;
 
 namespace Testes.TesteServicoPersonagem
 {
@@ -22,44 +20,44 @@ namespace Testes.TesteServicoPersonagem
         [Fact]
         public void DeveRetornarUmaListaDeTipoPersonagem()
         {
+            //arrange
+            var lista = new List<Personagem>();
             //act
             var listaDePersonagens = servicoPersonagem.ObterTodos();
             //assert
-            Assert.IsType<List<Personagem>>(listaDePersonagens);
+            Assert.Equal(lista, listaDePersonagens);
         }
 
         [Fact]
         public void DeveRetornarUmaListaDeTamanhoIgualADaListaDeclaradaNoTeste()
         {
             //arranje
-            List<Personagem> personagens = new List<Personagem>()
-            {
-                new (1, "Aragorn", 1, ProfissaoEnum.Guerreiro),
-                new (2, "Legolas", 2, ProfissaoEnum.Arqueiro),
-                new (3, "Guimli", 3, ProfissaoEnum.Guerreiro),
-                new (3, "Gandalf", 4, ProfissaoEnum.Mago)
-            };
+            var personagemSingleton = PersonagemSingleton.Instance.Personagens;
+            personagemSingleton.Add(new(1, "Aragorn", 1, ProfissaoEnum.Guerreiro));
+            personagemSingleton.Add(new(1, "Aragorn", 1, ProfissaoEnum.Guerreiro));
+            personagemSingleton.Add(new(1, "Aragorn", 1, ProfissaoEnum.Guerreiro));
+            personagemSingleton.Add(new(1, "Aragorn", 1, ProfissaoEnum.Guerreiro));
+
             //act
             var listaDePersonagens = servicoPersonagem.ObterTodos();
+
             //assert
-            Assert.Equal(personagens.Count, listaDePersonagens.Count);
+            Assert.Equal(TAMANHO_ESPERADO_DA_LISTA, listaDePersonagens.Count);
         }
 
         [Fact]
         public void DeveRetornarUmaListaIgualAListaDeclaradaNoTeste()
         {
             //arranje
-            List<Personagem> personagens = new List<Personagem>()
-            {
-                new (1, "Aragorn", 1, ProfissaoEnum.Guerreiro),
-                new (2, "Legolas", 2, ProfissaoEnum.Arqueiro),
-                new (3, "Guimli", 3, ProfissaoEnum.Guerreiro),
-                new (3, "Gandalf", 4, ProfissaoEnum.Mago)
-            };
+            var personagemSingleton = PersonagemSingleton.Instance.Personagens;
+            personagemSingleton.Add( new (1, "Aragorn", 1, ProfissaoEnum.Guerreiro));
+            personagemSingleton.Add(new(2, "Legolas", 2, ProfissaoEnum.Arqueiro));
+            personagemSingleton.Add(new(3, "Gandalf", 3, ProfissaoEnum.Mago));
+            personagemSingleton.Add(new(4, "Gimli", 4, ProfissaoEnum.Guerreiro));
             //act
             var listaDePersonagens = servicoPersonagem.ObterTodos();
             //assert
-            Assert.Equivalent(personagens.SequenceEqual(listaDePersonagens, new CompararListaDePersonagens()));
+            Assert.Equivalent(personagemSingleton, listaDePersonagens);
         }
 
         //[Fact]

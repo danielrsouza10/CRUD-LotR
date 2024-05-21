@@ -1,4 +1,5 @@
-﻿using Dominio.Interfaces;
+﻿using Dominio.ENUMS;
+using Dominio.Interfaces;
 using Dominio.Modelos;
 using System.Diagnostics.CodeAnalysis;
 using Testes.Singleton;
@@ -29,8 +30,15 @@ namespace Dominio.Servicos
 
         public List<Personagem> ObterTodos()
         {
-            return new List<Personagem>();
-            //return PersonagemSingleton.Instance.Personagens;
+            //var list = new List<Personagem>
+            //{
+            //    new Personagem(1, "Aragorn", 1, ProfissaoEnum.Guerreiro),
+            //    new Personagem(2, "Legolas", 2, ProfissaoEnum.Arqueiro),
+            //    new Personagem(3, "Guimli", 3, ProfissaoEnum.Guerreiro),
+            //    new Personagem(3, "Gandalf", 4, ProfissaoEnum.Mago)
+            //};
+            //return list;
+            return PersonagemSingleton.Instance.Personagens;
         }
 
         public class CompararListaDePersonagens : IEqualityComparer<Personagem>
