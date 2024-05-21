@@ -59,29 +59,5 @@ namespace Testes.TesteServicoPersonagem
             //assert
             Assert.Equivalent(personagemSingleton, listaDePersonagens);
         }
-
-        //[Fact]
-        //public void asdf()
-        //{
-        //    var personagens = PersonagemSingleton.Instance;
-
-        //    var a = personagens.Personagens;
-
-        //    Assert.NotNull(a);
-        //    Assert.Equal(TAMANHO_ESPERADO_DA_LISTA, a.Count);
-
-        //}
-
-
-        //[Fact]
-        //public void asd33f()
-        //{
-        //    var personagens = PersonagemSingleton.Instance;
-        //    var a = personagens.Personagens;
-        //    a.Add(new Personagem());
-
-        //    Assert.NotNull(a);
-        //    Assert.Equal(TAMANHO_ESPERADO_DA_LISTA, a.Count);
-        //}
     }
 }
