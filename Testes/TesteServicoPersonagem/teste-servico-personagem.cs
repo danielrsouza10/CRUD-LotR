@@ -2,7 +2,9 @@
 using Dominio.Interfaces;
 using Dominio.Modelos;
 using Microsoft.Extensions.DependencyInjection;
+using Testes.Interfaces;
 using Testes.Singleton;
+
 
 namespace Testes.TesteServicoPersonagem
 {
@@ -10,78 +12,85 @@ namespace Testes.TesteServicoPersonagem
     {
 
         const int TAMANHO_ESPERADO_DA_LISTA = 4;
+        private const int ID_TESTE = 1;
+        const int ID_MAIOR_QUE_EXISTENTE_NA_LISTA = 6;
+        private const int ID_MENOR_QUE_ZERO = -1;
         private readonly IServicoPersonagem servicoPersonagem;
+        private readonly IRepositorioMock<Personagem> servicoRepositorio;
 
         public teste_servico_personagem()
         {
             servicoPersonagem = _serviceProvider.GetService<IServicoPersonagem>();
+            servicoRepositorio = _serviceProvider.GetService<IRepositorioMock<Personagem>>();
         }
 
         [Fact]
-        public void DeveRetornarUmaListaDeTipoPersonagem()
+        public void AoObterTodos_DeveRetornarUmaListaDeTipoPersonagem()
+        {
+            //act
+            var listaDePersonagens = servicoPersonagem.ObterTodos();
+            //assert
+            Assert.IsType<List<Personagem>>(listaDePersonagens);
+        }
+
+        [Fact]
+        public void AoObterTodos_DeveRetornarUmaListaVazia()
         {
             //arrange
-            var lista = new List<Personagem>();
+            var Lista = PersonagemSingleton.Instance.Personagens;
+            Lista.Clear();
             //act
             var listaDePersonagens = servicoPersonagem.ObterTodos();
             //assert
-            Assert.Equal(lista, listaDePersonagens);
+            Assert.Empty(listaDePersonagens);
         }
 
         [Fact]
-        public void DeveRetornarUmaListaDeTamanhoIgualADaListaDeclaradaNoTeste()
+        public void AoObterTodos_DeveRetornarUmaListaCom5Itens()
         {
-            //arranje
-            var personagemSingleton = PersonagemSingleton.Instance.Personagens;
-            personagemSingleton.Add(new(1, "Aragorn", 1, ProfissaoEnum.Guerreiro));
-            personagemSingleton.Add(new(1, "Aragorn", 1, ProfissaoEnum.Guerreiro));
-            personagemSingleton.Add(new(1, "Aragorn", 1, ProfissaoEnum.Guerreiro));
-            personagemSingleton.Add(new(1, "Aragorn", 1, ProfissaoEnum.Guerreiro));
-
+            //arrange
+            const int quantidadeItens = 5;
+            servicoRepositorio.CriarListaSingleton();
             //act
             var listaDePersonagens = servicoPersonagem.ObterTodos();
-
             //assert
-            Assert.Equal(TAMANHO_ESPERADO_DA_LISTA, listaDePersonagens.Count);
+            Assert.Equal(quantidadeItens, listaDePersonagens.Count);
         }
 
         [Fact]
-        public void DeveRetornarUmaListaIgualAListaDeclaradaNoTeste()
+        public void AoObterPorIdIgual01_DeveRetornarUmPersonagemComNomeAragorn()
         {
             //arranje
-            var personagemSingleton = PersonagemSingleton.Instance.Personagens;
-            personagemSingleton.Add( new (1, "Aragorn", 1, ProfissaoEnum.Guerreiro));
-            personagemSingleton.Add(new(2, "Legolas", 2, ProfissaoEnum.Arqueiro));
-            personagemSingleton.Add(new(3, "Gandalf", 3, ProfissaoEnum.Mago));
-            personagemSingleton.Add(new(4, "Gimli", 4, ProfissaoEnum.Guerreiro));
+            var nomePersonagem = "Aragorn";
+            servicoRepositorio.CriarListaSingleton();
             //act
-            var listaDePersonagens = servicoPersonagem.ObterTodos();
+            var personagemRetornado = servicoPersonagem.ObterPorId(ID_TESTE);
             //assert
-            Assert.Equivalent(personagemSingleton, listaDePersonagens);
+            Assert.Equal(nomePersonagem, personagemRetornado.Nome);
         }
-
-        //[Fact]
-        //public void asdf()
-        //{
-        //    var personagens = PersonagemSingleton.Instance;
-
-        //    var a = personagens.Personagens;
-
-        //    Assert.NotNull(a);
-        //    Assert.Equal(TAMANHO_ESPERADO_DA_LISTA, a.Count);
-
-        //}
-
-
-        //[Fact]
-        //public void asd33f()
-        //{
-        //    var personagens = PersonagemSingleton.Instance;
-        //    var a = personagens.Personagens;
-        //    a.Add(new Personagem());
-
-        //    Assert.NotNull(a);
-        //    Assert.Equal(TAMANHO_ESPERADO_DA_LISTA, a.Count);
-        //}
+        
+        [Fact]
+        public void AoObterPorIdUmIdInexistente06_DeveRetornarUmaException()
+        {
+            //arranje
+            servicoRepositorio.CriarListaSingleton();
+            //act
+            var ex = Assert.Throws<Exception>(() => servicoPersonagem.ObterPorId(ID_MAIOR_QUE_EXISTENTE_NA_LISTA));
+  
+            //assert
+            Assert.Equal("O ID informado não existe", ex.Message);
+        }
+        
+        [Fact]
+        public void AoObterPorIdUmIdMenorQueZero_DeveRetornarUmaException()
+        {
+            //arranje
+            servicoRepositorio.CriarListaSingleton();
+            //act
+            var ex = Assert.Throws<Exception>(() => servicoPersonagem.ObterPorId(ID_MENOR_QUE_ZERO));
+  
+            //assert
+            Assert.Equal("O ID tem que ser maior que zero", ex.Message);
+        }
     }
 }

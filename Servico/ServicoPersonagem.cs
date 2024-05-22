@@ -1,19 +1,28 @@
-﻿using Dominio.ENUMS;
+﻿using System.Data.Common;
+using Dominio.ENUMS;
 using Dominio.Interfaces;
 using Dominio.Modelos;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
+using Testes.Interfaces;
 using Testes.Singleton;
 
 namespace Dominio.Servicos
 {
     public class ServicoPersonagem : IServicoPersonagem
     {
+        private readonly IRepositorioMock<Personagem> _servicoRepositorio;
+
+        public ServicoPersonagem(IRepositorioMock<Personagem> servicoRepositorio)
+        {
+            _servicoRepositorio = servicoRepositorio;
+        }
         public Personagem Criar()
         {
             throw new NotImplementedException();
         }
 
-        public Personagem Deletar()
+        public void Deletar()
         {
             throw new NotImplementedException();
         }
@@ -23,42 +32,20 @@ namespace Dominio.Servicos
             throw new NotImplementedException();
         }
 
-        public Personagem ObterPorId()
+        public Personagem ObterPorId(int id)
         {
-            throw new NotImplementedException();
+            if (id < 0)
+            {
+                throw new Exception("O ID tem que ser maior que zero");
+            }
+            return _servicoRepositorio.ObterPorId(id);
         }
 
         public List<Personagem> ObterTodos()
         {
-            //var list = new List<Personagem>
-            //{
-            //    new Personagem(1, "Aragorn", 1, ProfissaoEnum.Guerreiro),
-            //    new Personagem(2, "Legolas", 2, ProfissaoEnum.Arqueiro),
-            //    new Personagem(3, "Guimli", 3, ProfissaoEnum.Guerreiro),
-            //    new Personagem(3, "Gandalf", 4, ProfissaoEnum.Mago)
-            //};
-            //return list;
-            return PersonagemSingleton.Instance.Personagens;
+            return _servicoRepositorio.ObterTodos();
         }
 
-        public class CompararListaDePersonagens : IEqualityComparer<Personagem>
-        {
-            public bool Equals(Personagem? x, Personagem? y)
-            {
-                if(Object.ReferenceEquals(x,y)) return true;
-                if (Object.ReferenceEquals(x, null)) return false;
-
-                return x.Nome == y.Nome;
-            }
-
-            public int GetHashCode([DisallowNull] Personagem obj)
-            {
-                if(Object.ReferenceEquals(obj, null)) return 0;
-
-                int hashName = obj.Nome == null ? 0 : obj.Nome.GetHashCode();
-                
-                return hashName;
-            }
-        }
+        
     }
 }
