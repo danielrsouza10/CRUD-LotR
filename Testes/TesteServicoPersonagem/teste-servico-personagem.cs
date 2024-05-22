@@ -12,6 +12,9 @@ namespace Testes.TesteServicoPersonagem
     {
 
         const int TAMANHO_ESPERADO_DA_LISTA = 4;
+        private const int ID_TESTE = 1;
+        const int ID_MAIOR_QUE_EXISTENTE_NA_LISTA = 6;
+        private const int ID_MENOR_QUE_ZERO = -1;
         private readonly IServicoPersonagem servicoPersonagem;
         private readonly IRepositorioMock<Personagem> servicoRepositorio;
 
@@ -50,7 +53,6 @@ namespace Testes.TesteServicoPersonagem
             servicoRepositorio.CriarListaSingleton();
             //act
             var listaDePersonagens = servicoPersonagem.ObterTodos();
-            
             //assert
             Assert.Equal(quantidadeItens, listaDePersonagens.Count);
         }
@@ -60,37 +62,35 @@ namespace Testes.TesteServicoPersonagem
         {
             //arranje
             var nomePersonagem = "Aragorn";
-            //cria uma lista singleton no repositorio
             servicoRepositorio.CriarListaSingleton();
             //act
-            var personagemRetornado = servicoPersonagem.ObterPorId(1);
+            var personagemRetornado = servicoPersonagem.ObterPorId(ID_TESTE);
             //assert
             Assert.Equal(nomePersonagem, personagemRetornado.Nome);
         }
-        [Fact]
-        public void AoObterPorIdIgual02_DeveRetornarUmPersonagemComNomeLegolas()
-        {
-            //arranje
-            var nomePersonagem = "Legolas";
-            //cria uma lista singleton no repositorio
-            servicoRepositorio.CriarListaSingleton();
-            //act
-            var personagemRetornado = servicoPersonagem.ObterPorId(2);
-            //assert
-            Assert.Equal(nomePersonagem, personagemRetornado.Nome);
-        }
-        [Fact]
         
+        [Fact]
         public void AoObterPorIdUmIdInexistente06_DeveRetornarUmaException()
         {
             //arranje
-            //cria uma lista singleton no repositorio
             servicoRepositorio.CriarListaSingleton();
             //act
-            var ex = Assert.Throws<Exception>(() => servicoPersonagem.ObterPorId(6));
+            var ex = Assert.Throws<Exception>(() => servicoPersonagem.ObterPorId(ID_MAIOR_QUE_EXISTENTE_NA_LISTA));
   
             //assert
             Assert.Equal("O ID informado não existe", ex.Message);
+        }
+        
+        [Fact]
+        public void AoObterPorIdUmIdMenorQueZero_DeveRetornarUmaException()
+        {
+            //arranje
+            servicoRepositorio.CriarListaSingleton();
+            //act
+            var ex = Assert.Throws<Exception>(() => servicoPersonagem.ObterPorId(ID_MENOR_QUE_ZERO));
+  
+            //assert
+            Assert.Equal("O ID tem que ser maior que zero", ex.Message);
         }
     }
 }

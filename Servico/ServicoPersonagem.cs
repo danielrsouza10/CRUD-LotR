@@ -1,20 +1,28 @@
-﻿using Dominio.ENUMS;
+﻿using System.Data.Common;
+using Dominio.ENUMS;
 using Dominio.Interfaces;
 using Dominio.Modelos;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using Testes.Interfaces;
 using Testes.Singleton;
 
 namespace Dominio.Servicos
 {
     public class ServicoPersonagem : IServicoPersonagem
     {
+        private readonly IRepositorioMock<Personagem> _servicoRepositorio;
+
+        public ServicoPersonagem(IRepositorioMock<Personagem> servicoRepositorio)
+        {
+            _servicoRepositorio = servicoRepositorio;
+        }
         public Personagem Criar()
         {
             throw new NotImplementedException();
         }
 
-        public Personagem Deletar()
+        public void Deletar()
         {
             throw new NotImplementedException();
         }
@@ -26,17 +34,18 @@ namespace Dominio.Servicos
 
         public Personagem ObterPorId(int id)
         {
-            var personagem = PersonagemSingleton.Instance.Personagens.Find(p => p.Id == id);
-            if(personagem == null)
+            if (id < 0)
             {
-                throw new Exception("O ID informado não existe");
+                throw new Exception("O ID tem que ser maior que zero");
             }
-            return personagem;
+            return _servicoRepositorio.ObterPorId(id);
         }
 
         public List<Personagem> ObterTodos()
         {
-            return PersonagemSingleton.Instance.Personagens;
+            return _servicoRepositorio.ObterTodos();
         }
+
+        
     }
 }

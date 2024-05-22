@@ -18,5 +18,25 @@ namespace Testes.Repositorios
         {
             throw new NotImplementedException();
         }
+
+        public Personagem ObterPorId(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Personagem Criar()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Personagem Editar()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Deletar()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

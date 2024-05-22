@@ -1,4 +1,5 @@
 ﻿using Dominio.ENUMS;
+using Dominio.Interfaces;
 using Dominio.Modelos;
 using Testes.Interfaces;
 using Testes.Singleton;
@@ -8,6 +9,7 @@ namespace Testes.Repositorios
     public class RepositorioMockPersonagens : IRepositorioMock<Personagem>
     {
         private List<Personagem> ListaDePersonagens = PersonagemSingleton.Instance.Personagens;
+        
 
         public List<Personagem> CriarListaSingleton()
         {
@@ -23,5 +25,29 @@ namespace Testes.Repositorios
             return ListaDePersonagens;
         }
 
+        public List<Personagem> ObterTodos()
+        {
+            return PersonagemSingleton.Instance.Personagens;;
+        }
+
+        public Personagem ObterPorId(int id)
+        {
+            return PersonagemSingleton.Instance.Personagens.Find(p => p.Id == id) ?? throw new Exception("O ID informado não existe");
+        }
+
+        public Personagem Criar()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Personagem Editar()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Deletar()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
