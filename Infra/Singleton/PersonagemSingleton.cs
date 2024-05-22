@@ -6,6 +6,7 @@ namespace Testes.Singleton
     {
         private static PersonagemSingleton instance = null;
 
+
         public List<Personagem> Personagens { get; set; }
 
         private PersonagemSingleton() {

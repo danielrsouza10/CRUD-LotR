@@ -2,6 +2,7 @@
 using Dominio.Interfaces;
 using Dominio.Modelos;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using Testes.Singleton;
 
 namespace Dominio.Servicos
@@ -25,19 +26,10 @@ namespace Dominio.Servicos
 
         public Personagem ObterPorId(int id)
         {
-            var personagem = new Personagem();
-            if(id == 1) {
-                personagem.Id = id;
-                personagem.Nome = "Aragorn";
-            }
-            else if(id == 2)
+            var personagem = PersonagemSingleton.Instance.Personagens.Find(p => p.Id == id);
+            if(personagem == null)
             {
-                personagem.Id = id;
-                personagem.Nome = "Legolas";
-            } else if(id == 3)
-            {
-                personagem.Id = id;
-                personagem.Nome = "Gandalf";
+                throw new Exception("O ID informado não existe");
             }
             return personagem;
         }

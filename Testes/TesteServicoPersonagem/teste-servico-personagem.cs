@@ -33,6 +33,9 @@ namespace Testes.TesteServicoPersonagem
         [Fact]
         public void AoObterTodos_DeveRetornarUmaListaVazia()
         {
+            //arrange
+            var Lista = PersonagemSingleton.Instance.Personagens;
+            Lista.Clear();
             //act
             var listaDePersonagens = servicoPersonagem.ObterTodos();
             //assert
@@ -40,81 +43,54 @@ namespace Testes.TesteServicoPersonagem
         }
 
         [Fact]
-        public void AoObterTodos_DeveRetornarUmaListaCom3Itens()
+        public void AoObterTodos_DeveRetornarUmaListaCom5Itens()
         {
-            const int quantidadeItens = 3;
-            var personagemSingleton = PersonagemSingleton.Instance;
-            var ListaPersonagens = new List<Personagem>
-            {
-                new() {Id = 1, Nome = "Aragorn", IdRaca = 1, Profissao = ProfissaoEnum.Guerreiro},
-                new() {Id = 1, Nome = "Aragorn", IdRaca = 1, Profissao = ProfissaoEnum.Guerreiro},
-                new() {Id = 1, Nome = "Aragorn", IdRaca = 1, Profissao = ProfissaoEnum.Guerreiro},
-
-            };
-            personagemSingleton.Personagens.AddRange(ListaPersonagens);
+            //arrange
+            const int quantidadeItens = 5;
+            servicoRepositorio.CriarListaSingleton();
             //act
             var listaDePersonagens = servicoPersonagem.ObterTodos();
+            
             //assert
             Assert.Equal(quantidadeItens, listaDePersonagens.Count);
         }
 
         [Fact]
-        public void DeveRetornarUmaListaDeTamanhoIgualADaListaDeclaradaNoTeste()
-        {
-            //arranje
-            var lista = servicoRepositorio.CriarListaSingleton();
-
-            //act
-            var listaDePersonagens = servicoPersonagem.ObterTodos();
-
-            //assert
-            Assert.Equal(TAMANHO_ESPERADO_DA_LISTA, listaDePersonagens.Count);
-        }
-
-        [Fact]
-        public void DeveRetornarUmaListaIgualAListaDeclaradaNoTeste()
-        {
-            //arranje
-            //var personagemSingleton = PersonagemSingleton.Instance.Personagens;
-            //personagemSingleton.Add(new(1, "Aragorn", 1, ProfissaoEnum.Guerreiro));
-            //personagemSingleton.Add(new(2, "Legolas", 2, ProfissaoEnum.Arqueiro));
-            //personagemSingleton.Add(new(3, "Gandalf", 3, ProfissaoEnum.Mago));
-            //personagemSingleton.Add(new(4, "Gimli", 4, ProfissaoEnum.Guerreiro));
-            ////act
-            //var listaDePersonagens = servicoPersonagem.ObterTodos();
-            ////assert
-            //Assert.Equivalent(personagemSingleton, listaDePersonagens);
-        }
-
-        [Fact]
-        public void DeveRetornarUmPersonagemComNomeAragorn()
+        public void AoObterPorIdIgual01_DeveRetornarUmPersonagemComNomeAragorn()
         {
             //arranje
             var nomePersonagem = "Aragorn";
+            //cria uma lista singleton no repositorio
+            servicoRepositorio.CriarListaSingleton();
             //act
             var personagemRetornado = servicoPersonagem.ObterPorId(1);
             //assert
             Assert.Equal(nomePersonagem, personagemRetornado.Nome);
         }
         [Fact]
-        public void DeveRetornarUmPersonagemComNomeLegolas()
+        public void AoObterPorIdIgual02_DeveRetornarUmPersonagemComNomeLegolas()
         {
             //arranje
             var nomePersonagem = "Legolas";
+            //cria uma lista singleton no repositorio
+            servicoRepositorio.CriarListaSingleton();
             //act
             var personagemRetornado = servicoPersonagem.ObterPorId(2);
             //assert
             Assert.Equal(nomePersonagem, personagemRetornado.Nome);
         }
         [Fact]
-        public void DeveRetornarUmPersonagemComNomeGandalf()
+        
+        public void AoObterPorIdUmIdInexistente06_DeveRetornarUmaException()
         {
             //arranje
-            var nomePersonagem = "Gandalf";
+            //cria uma lista singleton no repositorio
+            servicoRepositorio.CriarListaSingleton();
             //act
-            var personagemRetornado = servicoPersonagem.ObterPorId(3);
+            var ex = Assert.Throws<Exception>(() => servicoPersonagem.ObterPorId(6));
+  
             //assert
-            Assert.Equal(nomePersonagem, personagemRetornado.Nome);
+            Assert.Equal("O ID informado não existe", ex.Message);
         }
     }
 }
