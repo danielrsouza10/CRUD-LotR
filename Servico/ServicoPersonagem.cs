@@ -21,17 +21,14 @@ namespace Dominio.Servicos
         {
             throw new NotImplementedException();
         }
-
         public void Deletar()
         {
             throw new NotImplementedException();
         }
-
         public Personagem Editar()
         {
             throw new NotImplementedException();
         }
-
         public Personagem ObterPorId(int id)
         {
             if (id < 0)
@@ -40,7 +37,6 @@ namespace Dominio.Servicos
             }
             return _servicoRepositorio.ObterPorId(id);
         }
-
         public List<Personagem> ObterTodos()
         {
             return _servicoRepositorio.ObterTodos();
