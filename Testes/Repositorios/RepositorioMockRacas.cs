@@ -24,7 +24,7 @@ namespace Testes.Repositorios
             throw new NotImplementedException();
         }
 
-        public Personagem Criar()
+        public void Criar(Personagem personagem)
         {
             throw new NotImplementedException();
         }

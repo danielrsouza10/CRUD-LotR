@@ -12,7 +12,9 @@ namespace Dominio.Modelos
         public float? Altura { get; set; }
         public DateTime DataDoCadastro { get; set; }
 
-        public Personagem() { }
+        public Personagem() {
+            DataDoCadastro = DateTime.Now;
+        }
 
       
     }

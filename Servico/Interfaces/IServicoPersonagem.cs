@@ -9,7 +9,7 @@ namespace Dominio.Interfaces
 {
     public interface IServicoPersonagem
     {
-        Personagem Criar();
+        void Criar(Personagem personagem);
         Personagem Editar();
         void Deletar();
         Personagem ObterPorId(int id);
