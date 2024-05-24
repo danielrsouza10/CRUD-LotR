@@ -109,5 +109,19 @@ namespace Testes.TesteServicoPersonagem
             //assert
             Assert.IsType<Exception>(ex);
         }
+
+        [Fact]
+        public void AoCriarUmPersonagemComUmIdDeclaradoManualmenteENomeMenorQue3Letras_DeveRetornarUmaExcecaoComOTextoDosDoisErros()
+        {
+            //arranje
+            var mensagemDeErro = "O nome do personagem precisa ter entre 3 e 25 caracteres. Não deve ser informado um Id. ";
+            var Lista = PersonagemSingleton.Instance.Personagens;
+            Personagem personagem = new() { Nome = "Sa", Id = 9, Profissao = ProfissaoEnum.Ladrao, IdRaca = 4 };
+            //act
+            var ex = Assert.Throws<Exception>(() => _servicoPersonagem.Criar(personagem));
+            //assert
+            Assert.Equal(mensagemDeErro, ex.Message);
+            Assert.IsType<Exception>(ex);
+        }
     }
 }

@@ -22,11 +22,12 @@ namespace Dominio.Servicos
             var resultadoValidacao = _personagemValidacao.Validate(personagem);
             if (!resultadoValidacao.IsValid)
             {
+                var erros = "";
                 foreach (var falha in resultadoValidacao.Errors)
                 {
-                    throw new Exception("Property " + falha.PropertyName + " failed validation. Error was: " + falha.ErrorMessage);
+                    erros += falha.ErrorMessage + ". ";
                 }
-                
+                throw new Exception(erros);
             }
             _servicoRepositorio.Criar(personagem);
         }
