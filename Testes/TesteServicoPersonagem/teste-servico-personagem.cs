@@ -10,73 +10,45 @@ namespace Testes.TesteServicoPersonagem
 {
     public class teste_servico_personagem : TesteBase
     {
-
-        const int TAMANHO_ESPERADO_DA_LISTA = 4;
-        private const int ID_TESTE = 1;
-        const int ID_MAIOR_QUE_EXISTENTE_NA_LISTA = 6;
-        private const int ID_MENOR_QUE_ZERO = -1;
-        private readonly IServicoPersonagem servicoPersonagem;
-        private readonly IRepositorioMock<Personagem> servicoRepositorio;
+        const int ID_TESTE = 1;
+        const int ID_MAIOR_QUE_EXISTENTE_NA_LISTA = 100;
+        const int ID_MENOR_QUE_ZERO = -1;
+        const int TAMANHO_ESPERADO_DA_LISTA = 6;
+        const int ID_NOVO_PERSONAGEM = 7;
+        private readonly IServicoPersonagem _servicoPersonagem;
+        private readonly IRepositorioMock<Personagem> _servicoRepositorio;
 
         public teste_servico_personagem()
         {
-            servicoPersonagem = _serviceProvider.GetService<IServicoPersonagem>();
-            servicoRepositorio = _serviceProvider.GetService<IRepositorioMock<Personagem>>();
+            _servicoPersonagem = _serviceProvider.GetService<IServicoPersonagem>();
+            _servicoRepositorio = _serviceProvider.GetService<IRepositorioMock<Personagem>>();
         }
 
         [Fact]
         public void AoObterTodos_DeveRetornarUmaListaDeTipoPersonagem()
         {
             //act
-            var listaDePersonagens = servicoPersonagem.ObterTodos();
+            var listaDePersonagens = _servicoPersonagem.ObterTodos();
             //assert
             Assert.IsType<List<Personagem>>(listaDePersonagens);
         }
 
         [Fact]
-        public void AoObterTodos_DeveRetornarUmaListaVazia()
-        {
-            //arrange
-            var Lista = PersonagemSingleton.Instance.Personagens;
-            Lista.Clear();
-            //act
-            var listaDePersonagens = servicoPersonagem.ObterTodos();
-            //assert
-            Assert.Empty(listaDePersonagens);
-        }
-
-        [Fact]
-        public void AoObterTodos_DeveRetornarUmaListaCom5Itens()
-        {
-            //arrange
-            const int quantidadeItens = 5;
-            servicoRepositorio.CriarListaSingleton();
-            //act
-            var listaDePersonagens = servicoPersonagem.ObterTodos();
-            //assert
-            Assert.Equal(quantidadeItens, listaDePersonagens.Count);
-        }
-
-        [Fact]
         public void AoObterPorIdIgual01_DeveRetornarUmPersonagemComNomeAragorn()
         {
-            //arranje
+            //arrange
             var nomePersonagem = "Aragorn";
-            servicoRepositorio.CriarListaSingleton();
             //act
-            var personagemRetornado = servicoPersonagem.ObterPorId(ID_TESTE);
+            var personagemRetornado = _servicoPersonagem.ObterPorId(ID_TESTE);
             //assert
             Assert.Equal(nomePersonagem, personagemRetornado.Nome);
         }
         
         [Fact]
-        public void AoObterPorIdUmIdInexistente06_DeveRetornarUmaException()
+        public void AoObterPorIdUmIdInexistente100_DeveRetornarUmaException()
         {
-            //arranje
-            servicoRepositorio.CriarListaSingleton();
             //act
-            var ex = Assert.Throws<Exception>(() => servicoPersonagem.ObterPorId(ID_MAIOR_QUE_EXISTENTE_NA_LISTA));
-  
+            var ex = Assert.Throws<Exception>(() => _servicoPersonagem.ObterPorId(ID_MAIOR_QUE_EXISTENTE_NA_LISTA));
             //assert
             Assert.Equal("O ID informado não existe", ex.Message);
         }
@@ -84,13 +56,72 @@ namespace Testes.TesteServicoPersonagem
         [Fact]
         public void AoObterPorIdUmIdMenorQueZero_DeveRetornarUmaException()
         {
-            //arranje
-            servicoRepositorio.CriarListaSingleton();
             //act
-            var ex = Assert.Throws<Exception>(() => servicoPersonagem.ObterPorId(ID_MENOR_QUE_ZERO));
-  
+            var ex = Assert.Throws<Exception>(() => _servicoPersonagem.ObterPorId(ID_MENOR_QUE_ZERO));
             //assert
             Assert.Equal("O ID tem que ser maior que zero", ex.Message);
+        }
+        
+        [Fact]
+        public void AoCriarUmPersonagemValido_AoObterporIdDeveRetornarUmaId6()
+        {
+            //arrange
+            Personagem personagem = new() { Nome = "Daniel", Profissao = ProfissaoEnum.Guerreiro, IdRaca = 1 };
+            _servicoPersonagem.Criar(personagem);
+            //act
+            var idPersonagem = _servicoRepositorio.ObterPorId(personagem.Id);
+            //assert
+            Assert.Equal(personagem.Id, idPersonagem.Id);
+        }
+
+        [Fact]
+        public void AoCriarUmPersonagemComNomeVazio_DeveRetornarUmaExcecao()
+        {
+            //arranje
+            var Lista = PersonagemSingleton.Instance.Personagens;
+            Personagem personagem = new() { Profissao = ProfissaoEnum.Guerreiro, IdRaca = 1 };
+            //act
+            var ex = Assert.Throws<Exception>(() => _servicoPersonagem.Criar(personagem));
+            //assert
+            Assert.IsType<Exception>(ex);
+        }
+
+        [Fact]
+        public void AoCriarUmPersonagemComComApenas2Caracteres_DeveRetornarUmaExcecao()
+        {
+            //arranje
+            var Lista = PersonagemSingleton.Instance.Personagens;
+            Personagem personagem = new() { Nome = "ab", Profissao = ProfissaoEnum.Guerreiro, IdRaca = 1 };
+            //act
+            var ex = Assert.Throws<Exception>(() => _servicoPersonagem.Criar(personagem));
+            //assert
+            Assert.IsType<Exception>(ex);
+        }
+
+        [Fact]
+        public void AoCriarUmPersonagemComUmIdDeclaradoManualmente_DeveRetornarUmaExcecao()
+        {
+            //arranje
+            var Lista = PersonagemSingleton.Instance.Personagens;
+            Personagem personagem = new() { Nome = "Sam", Id = 9, Profissao = ProfissaoEnum.Ladrao, IdRaca = 4 };
+            //act
+            var ex = Assert.Throws<Exception>(() => _servicoPersonagem.Criar(personagem));
+            //assert
+            Assert.IsType<Exception>(ex);
+        }
+
+        [Fact]
+        public void AoCriarUmPersonagemComUmIdDeclaradoManualmenteENomeMenorQue3Letras_DeveRetornarUmaExcecaoComOTextoDosDoisErros()
+        {
+            //arranje
+            var mensagemDeErro = "O nome do personagem precisa ter entre 3 e 25 caracteres. Não deve ser informado um Id. ";
+            var Lista = PersonagemSingleton.Instance.Personagens;
+            Personagem personagem = new() { Nome = "Sa", Id = 9, Profissao = ProfissaoEnum.Ladrao, IdRaca = 4 };
+            //act
+            var ex = Assert.Throws<Exception>(() => _servicoPersonagem.Criar(personagem));
+            //assert
+            Assert.Equal(mensagemDeErro, ex.Message);
+            Assert.IsType<Exception>(ex);
         }
     }
 }

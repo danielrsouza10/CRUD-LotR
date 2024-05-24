@@ -1,37 +1,44 @@
-﻿using System.Data.Common;
-using Dominio.ENUMS;
+﻿
 using Dominio.Interfaces;
 using Dominio.Modelos;
-using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
+using Dominio.Validacao;
+using FluentValidation;
 using Testes.Interfaces;
-using Testes.Singleton;
-
 namespace Dominio.Servicos
 {
     public class ServicoPersonagem : IServicoPersonagem
     {
         private readonly IRepositorioMock<Personagem> _servicoRepositorio;
+        private readonly PersonagemValidacao _personagemValidacao;
 
-        public ServicoPersonagem(IRepositorioMock<Personagem> servicoRepositorio)
+        public ServicoPersonagem(IRepositorioMock<Personagem> servicoRepositorio, PersonagemValidacao personagemValidacao)
         {
             _servicoRepositorio = servicoRepositorio;
+            _personagemValidacao = personagemValidacao;
+            
         }
-        public Personagem Criar()
+        public void Criar(Personagem personagem)
         {
-            throw new NotImplementedException();
+            var resultadoValidacao = _personagemValidacao.Validate(personagem);
+            if (!resultadoValidacao.IsValid)
+            {
+                var erros = "";
+                foreach (var falha in resultadoValidacao.Errors)
+                {
+                    erros += falha.ErrorMessage + ". ";
+                }
+                throw new Exception(erros);
+            }
+            _servicoRepositorio.Criar(personagem);
         }
-
         public void Deletar()
         {
             throw new NotImplementedException();
         }
-
         public Personagem Editar()
         {
             throw new NotImplementedException();
         }
-
         public Personagem ObterPorId(int id)
         {
             if (id < 0)
@@ -40,7 +47,6 @@ namespace Dominio.Servicos
             }
             return _servicoRepositorio.ObterPorId(id);
         }
-
         public List<Personagem> ObterTodos()
         {
             return _servicoRepositorio.ObterTodos();

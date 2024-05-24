@@ -7,10 +7,9 @@ namespace Testes.Interfaces
 {
     public interface IRepositorioMock<T>
     {
-        List<T> CriarListaSingleton();
         List<T> ObterTodos();
         Personagem ObterPorId(int id);
-        Personagem Criar();
+        void Criar(Personagem personagem);
         Personagem Editar();
         void Deletar();
     }
