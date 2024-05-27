@@ -16,6 +16,13 @@ namespace Dominio.Servicos
             _servicoRepositorio = servicoRepositorio;
             _personagemValidacao = personagemValidacao;
         }
+        public List<Personagem> ObterTodos() => _servicoRepositorio.ObterTodos();
+        public void Deletar(int id) => _servicoRepositorio.Deletar(id);
+        public Personagem ObterPorId(int id)
+        {
+            if (id < 0) throw new Exception("O ID tem que ser maior que zero");
+            return _servicoRepositorio.ObterPorId(id);
+        }
         public void Criar(Personagem personagem)
         {
             var resultadoValidacao = _personagemValidacao
@@ -30,10 +37,6 @@ namespace Dominio.Servicos
                 throw new Exception(erros);
             }
             _servicoRepositorio.Criar(personagem);
-        }
-        public void Deletar()
-        {
-            throw new NotImplementedException();
         }
         public Personagem Editar(Personagem personagem)
         {
@@ -50,19 +53,5 @@ namespace Dominio.Servicos
             }
             return _servicoRepositorio.Editar(personagem);
         }
-        public Personagem ObterPorId(int id)
-        {
-            if (id < 0)
-            {
-                throw new Exception("O ID tem que ser maior que zero");
-            }
-            return _servicoRepositorio.ObterPorId(id);
-        }
-        public List<Personagem> ObterTodos()
-        {
-            return _servicoRepositorio.ObterTodos();
-        }
-
-        
     }
 }

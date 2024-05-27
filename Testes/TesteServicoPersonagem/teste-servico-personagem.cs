@@ -23,7 +23,6 @@ namespace Testes.TesteServicoPersonagem
             _servicoPersonagem = _serviceProvider.GetService<IServicoPersonagem>();
             _servicoRepositorio = _serviceProvider.GetService<IRepositorioMock<Personagem>>();
         }
-
         [Fact]
         public void AoObterTodos_DeveRetornarUmaListaDeTipoPersonagem()
         {
@@ -32,7 +31,6 @@ namespace Testes.TesteServicoPersonagem
             //assert
             Assert.IsType<List<Personagem>>(listaDePersonagens);
         }
-
         [Fact]
         public void AoObterPorIdIgual01_DeveRetornarUmPersonagemComNomeAragorn()
         {
@@ -43,7 +41,6 @@ namespace Testes.TesteServicoPersonagem
             //assert
             Assert.Equal(nomePersonagem, personagemRetornado.Nome);
         }
-        
         [Fact]
         public void AoObterPorIdUmIdInexistente100_DeveRetornarUmaException()
         {
@@ -54,7 +51,6 @@ namespace Testes.TesteServicoPersonagem
             //assert
             Assert.Equal(mensagemErro, ex.Message);
         }
-        
         [Fact]
         public void AoObterPorIdUmIdMenorQueZero_DeveRetornarUmaException()
         {
@@ -65,7 +61,6 @@ namespace Testes.TesteServicoPersonagem
             //assert
             Assert.Equal(mensagemErro, ex.Message);
         }
-        
         [Fact]
         public void AoCriarUmPersonagemValido_AoObterporIdDeveRetornarUmaId6()
         {
@@ -77,7 +72,6 @@ namespace Testes.TesteServicoPersonagem
             //assert
             Assert.Equal(personagem.Id, idPersonagem.Id);
         }
-
         [Fact]
         public void AoCriarUmPersonagemComNomeVazio_DeveRetornarUmaExcecao()
         {
@@ -89,7 +83,6 @@ namespace Testes.TesteServicoPersonagem
             //assert
             Assert.IsType<Exception>(ex);
         }
-
         [Fact]
         public void AoCriarUmPersonagemComComApenas2Caracteres_DeveRetornarUmaExcecao()
         {
@@ -101,7 +94,6 @@ namespace Testes.TesteServicoPersonagem
             //assert
             Assert.IsType<Exception>(ex);
         }
-
         [Fact]
         public void AoCriarUmPersonagemComUmIdDeclaradoManualmente_DeveRetornarUmaExcecao()
         {
@@ -113,7 +105,6 @@ namespace Testes.TesteServicoPersonagem
             //assert
             Assert.IsType<Exception>(ex);
         }
-
         [Fact]
         public void AoCriarUmPersonagemComUmIdDeclaradoManualmenteENomeMenorQue3Letras_DeveRetornarUmaExcecaoComOTextoDosDoisErros()
         {
@@ -127,7 +118,6 @@ namespace Testes.TesteServicoPersonagem
             Assert.Equal(mensagemDeErro, ex.Message);
             Assert.IsType<Exception>(ex);
         }
-        
         [Fact]
         public void AoEditarUmPersonagem_DeveRetornarOMesmoPersonagemComOsDadosAtualizados()
         {
@@ -145,7 +135,6 @@ namespace Testes.TesteServicoPersonagem
             Assert.Equal(nomePesonagem, personagemEditado.Nome);
             Assert.Equal(profissaoPersonagem, personagemEditado.Profissao);
         }
-
         [Fact]
         public void AoEditarUmPersonagemComUmNomeDeApenas2Caracteres_DeveRetornarUmaExcecao()
         {
@@ -168,19 +157,46 @@ namespace Testes.TesteServicoPersonagem
             var ex = Assert.Throws<Exception>(() => _servicoPersonagem.Editar(personagem));
             //assert
             Assert.IsType<Exception>(ex);
-            Assert.Equal("O ID informado não existe", ex.Message);
+            Assert.Equal(mensagemErro, ex.Message);
         }
         [Fact]
         public void AoEditarUmPersonagemComId0_DeveRetornarUmaExcecao()
         {
             //arranje
-            var mensagemErro = "O ID informado não exite";
+            var mensagemErro = "O ID informado não existe";
             Personagem personagem = new() { Id = 0, Nome = "Aragorn" };
             //act
             var ex = Assert.Throws<Exception>(() => _servicoPersonagem.Editar(personagem));
             //assert
             Assert.IsType<Exception>(ex);
-            Assert.Equal("O ID informado não existe", ex.Message);
+            Assert.Equal(mensagemErro, ex.Message);
+        }
+        [Fact]
+        public void AoExcluirUmPersonagemComId0_DeveRetornarUmaExcecao()
+        {
+            //arranje
+            var mensagemErro = "O ID informado não existe";
+            var idPersonagem = 0;
+            //act
+            var ex = Assert.Throws<Exception>(() => _servicoPersonagem.Deletar(idPersonagem));
+            //assert
+            Assert.IsType<Exception>(ex);
+            Assert.Equal(mensagemErro, ex.Message);
+        }
+
+        [Fact]
+        public void AoExcluirUmPersonagemComId3_DeveRetornarUmaListaMenorQueAListaInicialEUmaExcecaoAoBuscarOId()
+        {
+            //arranje
+            var idPersonagem = 3;
+            var tamanhoEsperadoDaLista = _servicoRepositorio.ObterTodos().Count - 1;
+            var mensagemErro = "O ID informado não existe";
+            //act
+            _servicoPersonagem.Deletar(idPersonagem);
+            var ex = Assert.Throws<Exception>(() => _servicoPersonagem.ObterPorId(idPersonagem));
+            //assert
+            Assert.Equal(tamanhoEsperadoDaLista, _servicoRepositorio.ObterTodos().Count);
+            Assert.Equal(mensagemErro, ex.Message);
         }
     }
 }

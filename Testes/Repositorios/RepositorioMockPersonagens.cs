@@ -9,25 +9,15 @@ namespace Testes.Repositorios
     public class RepositorioMockPersonagens : IRepositorioMock<Personagem>
     {
         private List<Personagem> _listaDePersonagens = PersonagemSingleton.Instance.Personagens;
-        
-
-        public List<Personagem> ObterTodos()
-        {
-            return _listaDePersonagens;
-        }
-
-        public Personagem ObterPorId(int id)
-        {
-            return _listaDePersonagens.Find(p => p.Id == id) ?? throw new Exception("O ID informado não existe");
-        }
-
+        public List<Personagem> ObterTodos() => _listaDePersonagens;
+        public void Deletar(int id) => _listaDePersonagens.Remove(ObterPorId(id));
+        public Personagem ObterPorId(int id) => _listaDePersonagens.Find(p => p.Id == id) ?? throw new Exception("O ID informado não existe");
         public void Criar(Personagem personagem)
         {
             var incrementoParaONovoId = 1;
             personagem.Id = _listaDePersonagens.Max(p => p.Id) + incrementoParaONovoId;
             _listaDePersonagens.Add(personagem);
         }
-
         public Personagem Editar(Personagem personagem)
         {
             var personagemExistente = ObterPorId(personagem.Id);
@@ -38,11 +28,6 @@ namespace Testes.Repositorios
             if(personagem.Altura != null) personagemExistente.Altura = personagem.Altura;
    
             return personagemExistente;
-        }
-
-        public void Deletar()
-        {
-            throw new NotImplementedException();
         }
     }
 }
