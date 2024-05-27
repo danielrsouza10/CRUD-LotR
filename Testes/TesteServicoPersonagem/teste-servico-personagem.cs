@@ -47,19 +47,23 @@ namespace Testes.TesteServicoPersonagem
         [Fact]
         public void AoObterPorIdUmIdInexistente100_DeveRetornarUmaException()
         {
+            //arrange
+            var mensagemErro = "O ID informado não existe";
             //act
             var ex = Assert.Throws<Exception>(() => _servicoPersonagem.ObterPorId(ID_MAIOR_QUE_EXISTENTE_NA_LISTA));
             //assert
-            Assert.Equal("O ID informado não existe", ex.Message);
+            Assert.Equal(mensagemErro, ex.Message);
         }
         
         [Fact]
         public void AoObterPorIdUmIdMenorQueZero_DeveRetornarUmaException()
         {
+            //arrange
+            var mensagemErro = "O ID tem que ser maior que zero";
             //act
             var ex = Assert.Throws<Exception>(() => _servicoPersonagem.ObterPorId(ID_MENOR_QUE_ZERO));
             //assert
-            Assert.Equal("O ID tem que ser maior que zero", ex.Message);
+            Assert.Equal(mensagemErro, ex.Message);
         }
         
         [Fact]
@@ -122,6 +126,61 @@ namespace Testes.TesteServicoPersonagem
             //assert
             Assert.Equal(mensagemDeErro, ex.Message);
             Assert.IsType<Exception>(ex);
+        }
+        
+        [Fact]
+        public void AoEditarUmPersonagem_DeveRetornarOMesmoPersonagemComOsDadosAtualizados()
+        {
+            //arranje
+            Personagem personagem = new() { Id = 1, Altura = 190, Idade = 150, Profissao = ProfissaoEnum.Mago };
+            var nomePesonagem = "Aragorn";
+            var alturaPersonagem = 190;
+            var idadePersonagem = 150;
+            var profissaoPersonagem = ProfissaoEnum.Mago;
+            //act
+            var personagemEditado = _servicoPersonagem.Editar(personagem);
+            //assert
+            Assert.Equal(alturaPersonagem, personagemEditado.Altura);
+            Assert.Equal(idadePersonagem, personagemEditado.Idade);
+            Assert.Equal(nomePesonagem, personagemEditado.Nome);
+            Assert.Equal(profissaoPersonagem, personagemEditado.Profissao);
+        }
+
+        [Fact]
+        public void AoEditarUmPersonagemComUmNomeDeApenas2Caracteres_DeveRetornarUmaExcecao()
+        {
+            //arranje
+            var mensagemErro = "O nome do personagem precisa ter entre 3 e 25 caracteres. ";
+            Personagem personagem = new() { Id = 1, Nome = "ab" };
+            //act
+            var ex = Assert.Throws<Exception>(() => _servicoPersonagem.Editar(personagem));
+            //assert
+            Assert.IsType<Exception>(ex);
+            Assert.Equal(mensagemErro, ex.Message);
+        }
+        [Fact]
+        public void AoEditarUmPersonagemComIdInexistente_DeveRetornarUmaExcecao()
+        {
+            //arranje
+            var mensagemErro = "O ID informado não existe";
+            Personagem personagem = new() { Id = 10, Nome = "Aragorn" };
+            //act
+            var ex = Assert.Throws<Exception>(() => _servicoPersonagem.Editar(personagem));
+            //assert
+            Assert.IsType<Exception>(ex);
+            Assert.Equal("O ID informado não existe", ex.Message);
+        }
+        [Fact]
+        public void AoEditarUmPersonagemComId0_DeveRetornarUmaExcecao()
+        {
+            //arranje
+            var mensagemErro = "O ID informado não exite";
+            Personagem personagem = new() { Id = 0, Nome = "Aragorn" };
+            //act
+            var ex = Assert.Throws<Exception>(() => _servicoPersonagem.Editar(personagem));
+            //assert
+            Assert.IsType<Exception>(ex);
+            Assert.Equal("O ID informado não existe", ex.Message);
         }
     }
 }
