@@ -10,7 +10,7 @@ namespace Testes.Interfaces
         List<T> ObterTodos();
         Personagem ObterPorId(int id);
         void Criar(Personagem personagem);
-        Personagem Editar();
+        Personagem Editar(Personagem personagem);
         void Deletar();
     }
 }

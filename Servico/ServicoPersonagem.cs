@@ -15,11 +15,11 @@ namespace Dominio.Servicos
         {
             _servicoRepositorio = servicoRepositorio;
             _personagemValidacao = personagemValidacao;
-            
         }
         public void Criar(Personagem personagem)
         {
-            var resultadoValidacao = _personagemValidacao.Validate(personagem);
+            var resultadoValidacao = _personagemValidacao
+                .Validate(personagem, options => options.IncludeRuleSets("Criacao"));
             if (!resultadoValidacao.IsValid)
             {
                 var erros = "";
@@ -35,9 +35,20 @@ namespace Dominio.Servicos
         {
             throw new NotImplementedException();
         }
-        public Personagem Editar()
+        public Personagem Editar(Personagem personagem)
         {
-            throw new NotImplementedException();
+            var resultadoValidacao = _personagemValidacao
+                .Validate(personagem, options => options.IncludeRuleSets("Edicao"));
+            if (!resultadoValidacao.IsValid)
+            {
+                var erros = "";
+                foreach (var falha in resultadoValidacao.Errors)
+                {
+                    erros += falha.ErrorMessage + ". ";
+                }
+                throw new Exception(erros);
+            }
+            return _servicoRepositorio.Editar(personagem);
         }
         public Personagem ObterPorId(int id)
         {

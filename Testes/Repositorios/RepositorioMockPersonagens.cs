@@ -1,4 +1,5 @@
-﻿using Dominio.ENUMS;
+﻿using System.Reflection;
+using Dominio.ENUMS;
 using Dominio.Modelos;
 using Testes.Interfaces;
 using Testes.Singleton;
@@ -7,29 +8,36 @@ namespace Testes.Repositorios
 {
     public class RepositorioMockPersonagens : IRepositorioMock<Personagem>
     {
-        private List<Personagem> ListaDePersonagens = PersonagemSingleton.Instance.Personagens;
+        private List<Personagem> _listaDePersonagens = PersonagemSingleton.Instance.Personagens;
         
 
         public List<Personagem> ObterTodos()
         {
-            return ListaDePersonagens;
+            return _listaDePersonagens;
         }
 
         public Personagem ObterPorId(int id)
         {
-            return ListaDePersonagens.Find(p => p.Id == id) ?? throw new Exception("O ID informado não existe");
+            return _listaDePersonagens.Find(p => p.Id == id) ?? throw new Exception("O ID informado não existe");
         }
 
         public void Criar(Personagem personagem)
         {
-            var incrementoParaOId = 1;
-            personagem.Id = PersonagemSingleton.Instance.Personagens.Max(p => p.Id) + incrementoParaOId;
-            ListaDePersonagens.Add(personagem);
+            var incrementoParaONovoId = 1;
+            personagem.Id = _listaDePersonagens.Max(p => p.Id) + incrementoParaONovoId;
+            _listaDePersonagens.Add(personagem);
         }
 
-        public Personagem Editar()
+        public Personagem Editar(Personagem personagem)
         {
-            throw new NotImplementedException();
+            var personagemExistente = ObterPorId(personagem.Id);
+            if(personagem.Nome != null) personagemExistente.Nome = personagem.Nome;
+            if(personagem.Profissao != null) personagemExistente.Profissao = personagem.Profissao;
+            if(personagem.IdRaca != null) personagemExistente.IdRaca = personagem.IdRaca;
+            if(personagem.Idade != null) personagemExistente.Idade = personagem.Idade;
+            if(personagem.Altura != null) personagemExistente.Altura = personagem.Altura;
+   
+            return personagemExistente;
         }
 
         public void Deletar()

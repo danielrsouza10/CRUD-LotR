@@ -29,7 +29,7 @@ namespace Testes.Repositorios
             throw new NotImplementedException();
         }
 
-        public Personagem Editar()
+        public Personagem Editar(Personagem personagem)
         {
             throw new NotImplementedException();
         }
