@@ -34,7 +34,7 @@ namespace Testes.Repositorios
             throw new NotImplementedException();
         }
 
-        public void Deletar()
+        public void Deletar(Personagem personagem)
         {
             throw new NotImplementedException();
         }

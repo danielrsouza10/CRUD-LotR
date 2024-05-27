@@ -11,6 +11,6 @@ namespace Testes.Interfaces
         Personagem ObterPorId(int id);
         void Criar(Personagem personagem);
         Personagem Editar(Personagem personagem);
-        void Deletar();
+        void Deletar(Personagem personagem);
     }
 }

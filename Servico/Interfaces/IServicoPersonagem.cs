@@ -11,7 +11,7 @@ namespace Dominio.Interfaces
     {
         void Criar(Personagem personagem);
         Personagem Editar(Personagem personagem);
-        void Deletar();
+        void Deletar(Personagem personagem);
         Personagem ObterPorId(int id);
         List<Personagem> ObterTodos();
     }

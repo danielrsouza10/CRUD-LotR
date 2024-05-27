@@ -168,19 +168,57 @@ namespace Testes.TesteServicoPersonagem
             var ex = Assert.Throws<Exception>(() => _servicoPersonagem.Editar(personagem));
             //assert
             Assert.IsType<Exception>(ex);
-            Assert.Equal("O ID informado não existe", ex.Message);
+            Assert.Equal(mensagemErro, ex.Message);
         }
         [Fact]
         public void AoEditarUmPersonagemComId0_DeveRetornarUmaExcecao()
         {
             //arranje
-            var mensagemErro = "O ID informado não exite";
+            var mensagemErro = "O ID informado não existe";
             Personagem personagem = new() { Id = 0, Nome = "Aragorn" };
             //act
             var ex = Assert.Throws<Exception>(() => _servicoPersonagem.Editar(personagem));
             //assert
             Assert.IsType<Exception>(ex);
-            Assert.Equal("O ID informado não existe", ex.Message);
+            Assert.Equal(mensagemErro, ex.Message);
+        }
+        
+        [Fact]
+        public void AoExcluirUmPersonagemComId0_DeveRetornarUmaExcecao()
+        {
+            //arranje
+            var mensagemErro = "O ID informado não existe";
+            Personagem personagem = new() { Id = 0 };
+            //act
+            var ex = Assert.Throws<Exception>(() => _servicoPersonagem.Deletar(personagem));
+            //assert
+            Assert.IsType<Exception>(ex);
+            Assert.Equal(mensagemErro, ex.Message);
+        }
+        [Fact]
+        public void AoExcluirUmPersonagemComId3_DeveRetornarUmaListaMenorQueAListaInicialEUmaExcecaoAoBuscarOId()
+        {
+            //arranje
+            Personagem personagem = new() { Id = 3 };
+            var tamanhoEsperadoDaLista = _servicoRepositorio.ObterTodos().Count -1;
+            var mensagemErro = "O ID informado não existe";
+            //act
+            _servicoPersonagem.Deletar(personagem);
+            var ex = Assert.Throws<Exception>(() => _servicoPersonagem.ObterPorId(personagem.Id));
+            //assert
+            Assert.Equal(tamanhoEsperadoDaLista, _servicoRepositorio.ObterTodos().Count);
+            Assert.Equal(mensagemErro, ex.Message);
+        }
+        [Fact]
+        public void AoExcluirUmPersonagemSemInformarOId_DeveRetornarUmaExcecao()
+        {
+            //arranje
+            Personagem personagem = new() { Nome = "Aragorn" };
+            var mensagemErro = "O ID informado não existe";
+            //act
+            var ex = Assert.Throws<Exception>(() => _servicoPersonagem.Deletar(personagem));
+            //assert
+            Assert.Equal(mensagemErro, ex.Message);
         }
     }
 }
