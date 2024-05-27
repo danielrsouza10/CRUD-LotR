@@ -17,7 +17,7 @@ namespace Dominio.Servicos
             _personagemValidacao = personagemValidacao;
         }
         public List<Personagem> ObterTodos() => _servicoRepositorio.ObterTodos();
-        public void Deletar(Personagem personagem) => _servicoRepositorio.Deletar(personagem);
+        public void Deletar(int id) => _servicoRepositorio.Deletar(id);
         public Personagem ObterPorId(int id)
         {
             if (id < 0) throw new Exception("O ID tem que ser maior que zero");

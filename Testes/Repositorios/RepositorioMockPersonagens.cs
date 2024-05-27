@@ -10,7 +10,7 @@ namespace Testes.Repositorios
     {
         private List<Personagem> _listaDePersonagens = PersonagemSingleton.Instance.Personagens;
         public List<Personagem> ObterTodos() => _listaDePersonagens;
-        public void Deletar(Personagem personagem) => _listaDePersonagens.Remove(ObterPorId(personagem.Id));
+        public void Deletar(int id) => _listaDePersonagens.Remove(ObterPorId(id));
         public Personagem ObterPorId(int id) => _listaDePersonagens.Find(p => p.Id == id) ?? throw new Exception("O ID informado não existe");
         public void Criar(Personagem personagem)
         {
