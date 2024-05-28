@@ -7,7 +7,8 @@ namespace Testes.Singleton
     {
         private static PersonagemSingleton instance = null;
 
-        public List<Personagem> Personagens = new List<Personagem>() {
+        public List<Personagem> Personagens = new ()
+        {
             new Personagem { Id = 1, Nome = "Aragorn", IdRaca = 1, Profissao = ProfissaoEnum.Guerreiro },
             new Personagem { Id = 2, Nome = "Legolas", IdRaca = 2, Profissao = ProfissaoEnum.Arqueiro },
             new Personagem { Id = 3, Nome = "Gandalf", IdRaca = 3, Profissao = ProfissaoEnum.Mago },

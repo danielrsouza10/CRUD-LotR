@@ -9,12 +9,7 @@ namespace Dominio.Modelos
         public string? HabilidadeRacial { get; set; }
 
         public Raca() { }
-
-        public Raca(int id, string nome)
-        {
-            Id = id;
-            Nome = nome;
-        }
+        
 
     }
 }
