@@ -15,7 +15,7 @@ namespace Testes.Repositorios
         public void Criar(Personagem personagem)
         {
             var incrementoParaONovoId = 1;
-            personagem.Id = _listaDePersonagens.Max(p => p.Id) + incrementoParaONovoId;
+            personagem.Id = _listaDePersonagens.Any() ? _listaDePersonagens.Max(p => p.Id) + incrementoParaONovoId : 1;
             _listaDePersonagens.Add(personagem);
         }
         public Personagem Editar(Personagem personagem)

@@ -44,4 +44,53 @@ public class teste_servico_raca : TesteBase
         //assert
         Assert.Equivalent(listaDeRacas, listaMockada);
     }
+    [Fact]
+    public void AoObterPorId_DeveRetornarUmaRacaIgualNaListaMockada()
+    {
+        //arrange
+        var humano = "Humano";
+        var idHumano = 1;
+        var elfo = "Elfo";
+        var idElfo = 2;
+        var anao = "Anao";
+        var idAnao = 3;
+
+        //act
+        var humanoEncontrado = _servicoRaca.ObterPorId(idHumano).Nome;
+        var elfoEncontrado = _servicoRaca.ObterPorId(idElfo).Nome;
+        var anaoEncontrado = _servicoRaca.ObterPorId(idAnao).Nome;
+
+        //assert
+        Assert.Equal(humano, humanoEncontrado);
+        Assert.Equal(elfo, elfoEncontrado);
+        Assert.Equal(anao, anaoEncontrado);
+    }
+
+    [Fact]
+    public void AoObterPorIdIgualA0_DeveRetornarUmaExcecao()
+    {
+        //arrange
+        var idBusca = 0;
+        var mensagemErro = "O ID deve ser maior que zero";
+
+        //act
+        var ex = Assert.Throws<Exception>(() => _servicoRaca.ObterPorId(idBusca));
+
+        //assert
+        Assert.Equal(mensagemErro, ex.Message);
+    }
+
+    [Fact]
+    public void AoObterPorIdIgualQueNaoExisteNaLista_DeveRetornarUmaExcecao()
+    {
+        //arrange
+        var idBusca = 100;
+        var mensagemErro = "O ID informado não existe";
+
+        //act
+        var ex = Assert.Throws<Exception>(() => _servicoRaca.ObterPorId(idBusca));
+
+        //assert
+        Assert.Equal(mensagemErro, ex.Message);
+    }
 }
