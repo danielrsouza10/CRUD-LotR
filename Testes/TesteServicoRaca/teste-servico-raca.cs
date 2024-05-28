@@ -54,12 +54,10 @@ public class teste_servico_raca : TesteBase
         var idElfo = 2;
         var anao = "Anao";
         var idAnao = 3;
-
         //act
         var humanoEncontrado = _servicoRaca.ObterPorId(idHumano).Nome;
         var elfoEncontrado = _servicoRaca.ObterPorId(idElfo).Nome;
         var anaoEncontrado = _servicoRaca.ObterPorId(idAnao).Nome;
-
         //assert
         Assert.Equal(humano, humanoEncontrado);
         Assert.Equal(elfo, elfoEncontrado);
@@ -72,10 +70,8 @@ public class teste_servico_raca : TesteBase
         //arrange
         var idBusca = 0;
         var mensagemErro = "O ID deve ser maior que zero";
-
         //act
         var ex = Assert.Throws<Exception>(() => _servicoRaca.ObterPorId(idBusca));
-
         //assert
         Assert.Equal(mensagemErro, ex.Message);
     }
@@ -86,11 +82,78 @@ public class teste_servico_raca : TesteBase
         //arrange
         var idBusca = 100;
         var mensagemErro = "O ID informado não existe";
-
         //act
         var ex = Assert.Throws<Exception>(() => _servicoRaca.ObterPorId(idBusca));
-
         //assert
         Assert.Equal(mensagemErro, ex.Message);
     }
+
+    [Fact]
+    public void AoCriarUmaRacaValida_DeveRetornarUmNovoIdDeValor06()
+    {
+        //arrange
+        var novaRaca = new Raca(){ Nome = "Orc"};
+        var novoId = 6;
+        //act
+        _servicoRaca.Criar(novaRaca);
+        //assert
+        Assert.Equal(novoId, _servicoRaca.ObterPorId(novoId).Id);
+        Assert.Equal(novaRaca.Nome, _servicoRaca.ObterPorId(novoId).Nome);
+    }
+    [Fact]
+    public void AoCriarUmaRacaComNomeVazio_DeveRetornarUmaExcecao()
+    {
+        //arrange
+        var novaRaca = new Raca() { LocalizacaoGeografica = "Goiania" };
+        var mensagemDeErro = "O nome da raça não pode ser null. Precisa informar um nome para a raça. ";
+        //act
+        var ex = Assert.Throws<Exception>(() => _servicoRaca.Criar(novaRaca));
+        //assert
+        Assert.Equal(mensagemDeErro, ex.Message);
+    }
+    [Fact]
+    public void AoCriarUmaRacaComNomeNull_DeveRetornarUmaExcecao()
+    {
+        //arrange
+        var novaRaca = new Raca() { Nome = null, HabilidadeRacial = "Imunidade a veneno" };
+        var mensagemDeErro = "O nome da raça não pode ser null. Precisa informar um nome para a raça. ";
+        //act
+        var ex = Assert.Throws<Exception>(() => _servicoRaca.Criar(novaRaca));
+        //assert
+        Assert.Equal(mensagemDeErro, ex.Message);
+    }
+    [Fact]
+    public void AoCriarUmaRacaComNomeDeApenas2Caracteres_DeveRetornarUmaExcecao()
+    {
+        //arrange
+        var novaRaca = new Raca() { Nome = "or" };
+        var mensagemDeErro = "O nome da raça precisa ter entre 3 e 25 caracteres. ";
+        //act
+        var ex = Assert.Throws<Exception>(() => _servicoRaca.Criar(novaRaca));
+        //assert
+        Assert.Equal(mensagemDeErro, ex.Message);
+    }
+    [Fact]
+    public void AoCriarUmaRacaComIdDeclaradoManualmente_DeveRetornarUmaExcecao()
+    {
+        //arrange
+        var novaRaca = new Raca() { Nome = "Orc", Id = 1 };
+        var mensagemDeErro = "Não deve ser informado um Id. ";
+        //act
+        var ex = Assert.Throws<Exception>(() => _servicoRaca.Criar(novaRaca));
+        //assert
+        Assert.Equal(mensagemDeErro, ex.Message);
+    }
+    [Fact]
+    public void AoCriarUmaRacaComIdDeclaradoManualmenteENomeComMenosDe2Caracteres_DeveRetornarUmaExcecaoComOTextoDosDoisErros()
+    {
+        //arrange
+        var novaRaca = new Raca() { Nome = "Or", Id = 1 };
+        var mensagemDeErro = "O nome da raça precisa ter entre 3 e 25 caracteres. Não deve ser informado um Id. ";
+        //act
+        var ex = Assert.Throws<Exception>(() => _servicoRaca.Criar(novaRaca));
+        //assert
+        Assert.Equal(mensagemDeErro, ex.Message);
+    }
+
 }

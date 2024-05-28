@@ -19,7 +19,9 @@ namespace Testes.Repositorios
 
         public void Criar(Raca raca)
         {
-            throw new NotImplementedException();
+            const int IncrementoParaONovoId = 1;
+            raca.Id = _listaDeRacas.Any() ? _listaDeRacas.Max(r => r.Id) + IncrementoParaONovoId : IncrementoParaONovoId;
+            _listaDeRacas.Add(raca);
         }
 
         public Raca Editar(Raca raca)
