@@ -14,8 +14,8 @@ namespace Testes.Repositorios
         public Personagem ObterPorId(int id) => _listaDePersonagens.Find(p => p.Id == id) ?? throw new Exception("O ID informado não existe");
         public void Criar(Personagem personagem)
         {
-            var incrementoParaONovoId = 1;
-            personagem.Id = _listaDePersonagens.Any() ? _listaDePersonagens.Max(p => p.Id) + incrementoParaONovoId : 1;
+            const int IncrementoParaONovoId = 1;
+            personagem.Id = _listaDePersonagens.Any() ? _listaDePersonagens.Max(p => p.Id) + IncrementoParaONovoId : IncrementoParaONovoId;
             _listaDePersonagens.Add(personagem);
         }
         public Personagem Editar(Personagem personagem)

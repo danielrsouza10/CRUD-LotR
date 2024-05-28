@@ -25,14 +25,16 @@ namespace Dominio.Servicos
         }
         public void Criar(Personagem personagem)
         {
+            
             var resultadoValidacao = _personagemValidacao
                 .Validate(personagem, options => options.IncludeRuleSets("Criacao"));
             if (!resultadoValidacao.IsValid)
             {
                 var erros = "";
+                const string SerapacaoEntreErros = ". ";
                 foreach (var falha in resultadoValidacao.Errors)
                 {
-                    erros += falha.ErrorMessage + ". ";
+                    erros += falha.ErrorMessage + SerapacaoEntreErros;
                 }
                 throw new Exception(erros);
             }

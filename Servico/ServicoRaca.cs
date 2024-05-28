@@ -27,9 +27,10 @@ namespace Dominio.Servicos
             if (!resultadoValidacao.IsValid) 
             {
                 var erros = "";
-                foreach(var falha in resultadoValidacao.Errors)
+                const string SerapacaoEntreErros = ". ";
+                foreach (var falha in resultadoValidacao.Errors)
                 {
-                    erros += falha.ErrorMessage + ". ";
+                    erros += falha.ErrorMessage + SerapacaoEntreErros;
                 }
                 throw new Exception(erros);
             }

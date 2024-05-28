@@ -19,8 +19,8 @@ namespace Testes.Repositorios
 
         public void Criar(Raca raca)
         {
-            var incrementoPraONovoId = 1;
-            raca.Id = _listaDeRacas.Any() ? _listaDeRacas.Max(r => r.Id) + incrementoPraONovoId : 1;
+            const int IncrementoParaONovoId = 1;
+            raca.Id = _listaDeRacas.Any() ? _listaDeRacas.Max(r => r.Id) + IncrementoParaONovoId : IncrementoParaONovoId;
             _listaDeRacas.Add(raca);
         }
 
