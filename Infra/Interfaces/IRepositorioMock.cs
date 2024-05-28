@@ -8,9 +8,9 @@ namespace Testes.Interfaces
     public interface IRepositorioMock<T>
     {
         List<T> ObterTodos();
-        Personagem ObterPorId(int id);
-        void Criar(Personagem personagem);
-        Personagem Editar(Personagem personagem);
+        T ObterPorId(int id);
+        void Criar(T t);
+        T Editar(T t);
         void Deletar(int id);
     }
 }

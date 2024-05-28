@@ -1,5 +1,6 @@
 ﻿using Dominio.Interfaces;
 using Dominio.Modelos;
+using System.Collections.Generic;
 using Testes.Interfaces;
 
 namespace Dominio.Servicos
@@ -16,7 +17,8 @@ namespace Dominio.Servicos
         }
 
         public List<Raca> ObterTodos() => _servicoRepositorio.ObterTodos();
-        
+        public Raca ObterPorId(int id) => id > 0 ? _servicoRepositorio.ObterPorId(id) : throw new Exception("O ID deve ser maior que zero");
+
 
         public void Criar(Raca raca)
         {
@@ -33,10 +35,7 @@ namespace Dominio.Servicos
             throw new NotImplementedException();
         }
 
-        public Raca ObterPorId(int id)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }
 

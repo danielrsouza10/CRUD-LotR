@@ -15,17 +15,14 @@ namespace Testes.Repositorios
             return _listaDeRacas;
         }
 
-        public Personagem ObterPorId(int id)
+        public Raca ObterPorId(int id) => _listaDeRacas.Find(r => r.Id == id) ?? throw new Exception("O ID informado não existe");
+
+        public void Criar(Raca raca)
         {
             throw new NotImplementedException();
         }
 
-        public void Criar(Personagem personagem)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Personagem Editar(Personagem personagem)
+        public Raca Editar(Raca raca)
         {
             throw new NotImplementedException();
         }
