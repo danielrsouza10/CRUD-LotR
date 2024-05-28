@@ -1,22 +1,18 @@
 ﻿using Dominio.Modelos;
 using System;
 using Testes.Interfaces;
+using Testes.Singleton;
 
 namespace Testes.Repositorios
 {
     public class RepositorioMockRacas : IRepositorioMock<Raca>
     {
 
-        public List<Raca> ListaDeRacas { get; }
-
-        public List<Raca> CriarListaSingleton()
-        {
-            throw new NotImplementedException();
-        }
+        private List<Raca> _listaDeRacas = RacaSingleton.Instance.Racas;
 
         public List<Raca> ObterTodos()
         {
-            throw new NotImplementedException();
+            return _listaDeRacas;
         }
 
         public Personagem ObterPorId(int id)
