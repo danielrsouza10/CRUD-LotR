@@ -28,13 +28,20 @@ public class teste_servico_raca : TesteBase
     }
 
     [Fact]
-    public void AoObterTodos_DeveRetornarUmaListaDeTamanho5()
+    public void AoObterTodos_DeveRetornarUmaListaEquivalenteAListaMockada()
     {
         //arrange
-        var tamanhoEsperadoDaLista = 5;
+        List<Raca> listaDeRacas = new()
+        {
+            new Raca { Id = 1, Nome = "Humano", LocalizacaoGeografica = "Gondor", HabilidadeRacial = "Nenhuma"},
+            new Raca { Id = 2, Nome = "Elfo", LocalizacaoGeografica = "Lóthlorien", HabilidadeRacial = "Visão Noturna"},
+            new Raca { Id = 3, Nome = "Anao", LocalizacaoGeografica = "Moria", HabilidadeRacial = "Resistencia a Magia"},
+            new Raca { Id = 4, Nome = "Maiar", LocalizacaoGeografica = "Valinor", HabilidadeRacial = "Poder mágico aumentado"},
+            new Raca { Id = 5, Nome = "Hobbit", LocalizacaoGeografica = "Condado", HabilidadeRacial = "Evasão aumentada"}
+        };
         //act
-        var tamanhoRealDaLista = _servicoRaca.ObterTodos().Count;
+        var listaMockada = _servicoRaca.ObterTodos();
         //assert
-        Assert.Equal(tamanhoEsperadoDaLista, tamanhoRealDaLista);
+        Assert.Equivalent(listaDeRacas, listaMockada);
     }
 }

@@ -8,9 +8,6 @@ namespace Dominio.Modelos
         public string? LocalizacaoGeografica { get; set; }
         public string? HabilidadeRacial { get; set; }
 
-        public Raca() { }
-        
-
     }
 }
 
