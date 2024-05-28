@@ -17,6 +17,8 @@ namespace Testes
             services.AddScoped<IRepositorioMock<Personagem>, RepositorioMockPersonagens>();
             services.AddScoped<IRepositorioMock<Raca>, RepositorioMockRacas>();
             services.AddScoped<PersonagemValidacao>();
+            services.AddScoped<RacaValidacao>();
+
         }
     }
 }
