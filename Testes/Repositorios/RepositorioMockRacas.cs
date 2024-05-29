@@ -28,9 +28,8 @@ namespace Testes.Repositorios
         {
             var racaExistente = ObterPorId(raca.Id);
             if (raca.Nome != null) racaExistente.Nome = raca.Nome;
-            if (raca.HabilidadeRacial != null) racaExistente.HabilidadeRacial = raca.HabilidadeRacial;
-            if (raca.LocalizacaoGeografica != null) racaExistente.LocalizacaoGeografica = raca.LocalizacaoGeografica;
-
+            racaExistente.HabilidadeRacial = raca.HabilidadeRacial;
+            racaExistente.LocalizacaoGeografica = raca.LocalizacaoGeografica;
             return racaExistente;
         }
 
