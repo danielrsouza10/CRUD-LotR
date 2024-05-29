@@ -204,5 +204,30 @@ public class teste_servico_raca : TesteBase
         Assert.IsType<Exception>(ex);
         Assert.Equal(mensagemErro, ex.Message);
     }
-
+    [Fact]
+    public void AoExcluirUmaRacaComId0_DeveRetornarUmaExcecao()
+    {
+        //arranje
+        var mensagemErro = "O ID informado não existe";
+        var idPersonagem = 0;
+        //act
+        var ex = Assert.Throws<Exception>(() => _servicoRaca.Deletar(idPersonagem));
+        //assert
+        Assert.IsType<Exception>(ex);
+        Assert.Equal(mensagemErro, ex.Message);
+    }
+    [Fact]
+    public void AoExcluirUmaRacaComId1_DeveRetornarUmaListaMenorQueAInicial()
+    {
+        //arranje
+        var idPersonagem = 4;
+        var quantidadeDePersonagensRemovidos = 1;
+        var tamanhoPrevistoDaLista = RacaSingleton.Instance.Racas.Count - quantidadeDePersonagensRemovidos;
+        //act
+        _servicoRaca.Deletar(idPersonagem);
+        var tamanhoFinalDaLista = RacaSingleton.Instance.Racas.Count;
+        //assert
+        Assert.Equal(tamanhoPrevistoDaLista, tamanhoFinalDaLista);
+        RacaSingleton.Instance.Racas.Add(new Raca() { Id = 4, Nome = "Maiar", HabilidadeRacial = "Poder mágico aumentado", LocalizacaoGeografica = "Valinor"});
+    }
 }
