@@ -6,7 +6,7 @@ using Testes.Singleton;
 
 namespace Testes.Repositorios
 {
-    public class RepositorioMockPersonagens : IRepositorioMock<Personagem>
+    public class RepositorioMockPersonagens : IRepositorio<Personagem>
     {
         private List<Personagem> _listaDePersonagens = PersonagemSingleton.Instance.Personagens;
         public List<Personagem> ObterTodos() => _listaDePersonagens;

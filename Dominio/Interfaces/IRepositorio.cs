@@ -5,7 +5,7 @@ using Dominio.Modelos;
 
 namespace Testes.Interfaces
 {
-    public interface IRepositorioMock<T>
+    public interface IRepositorio<T>
     {
         List<T> ObterTodos();
         T ObterPorId(int id);
