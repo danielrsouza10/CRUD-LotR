@@ -24,8 +24,8 @@ namespace Testes.Repositorios
             if(personagem.Nome != null) personagemExistente.Nome = personagem.Nome;
             if(personagem.Profissao != null) personagemExistente.Profissao = personagem.Profissao;
             if(personagem.IdRaca != null) personagemExistente.IdRaca = personagem.IdRaca;
-            if(personagem.Idade != null) personagemExistente.Idade = personagem.Idade;
-            if(personagem.Altura != null) personagemExistente.Altura = personagem.Altura;
+            personagemExistente.Idade = personagem.Idade;
+            personagemExistente.Altura = personagem.Altura;
    
             return personagemExistente;
         }
