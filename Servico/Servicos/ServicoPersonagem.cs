@@ -1,17 +1,16 @@
 ﻿
-using Dominio.Interfaces;
 using Dominio.Modelos;
 using Dominio.Validacao;
 using FluentValidation;
 using Testes.Interfaces;
-namespace Dominio.Servicos
+namespace Servico.Servicos
 {
-    public class ServicoPersonagem : IServicoPersonagem
+    public class ServicoPersonagem
     {
-        private readonly IRepositorioMock<Personagem> _servicoRepositorio;
+        private readonly IRepositorio<Personagem> _servicoRepositorio;
         private readonly PersonagemValidacao _personagemValidacao;
 
-        public ServicoPersonagem(IRepositorioMock<Personagem> servicoRepositorio, PersonagemValidacao personagemValidacao)
+        public ServicoPersonagem(IRepositorio<Personagem> servicoRepositorio, PersonagemValidacao personagemValidacao)
         {
             _servicoRepositorio = servicoRepositorio;
             _personagemValidacao = personagemValidacao;
@@ -25,7 +24,7 @@ namespace Dominio.Servicos
         }
         public void Criar(Personagem personagem)
         {
-            
+
             var resultadoValidacao = _personagemValidacao
                 .Validate(personagem, options => options.IncludeRuleSets("Criacao"));
             if (!resultadoValidacao.IsValid)

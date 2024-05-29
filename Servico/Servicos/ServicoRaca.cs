@@ -1,16 +1,16 @@
-﻿using Dominio.Interfaces;
+﻿
 using Dominio.Modelos;
 using Dominio.Validacao;
 using FluentValidation;
 using Testes.Interfaces;
-namespace Dominio.Servicos
+namespace Servico.Servicos
 {
-    public class ServicoRaca : IServicoRaca
+    public class ServicoRaca
     {
-        private readonly IRepositorioMock<Raca> _servicoRepositorio;
+        private readonly IRepositorio<Raca> _servicoRepositorio;
         private readonly RacaValidacao _racaValidacao;
 
-        public ServicoRaca(IRepositorioMock<Raca> servicoRepositorio, RacaValidacao racaValidacao)
+        public ServicoRaca(IRepositorio<Raca> servicoRepositorio, RacaValidacao racaValidacao)
         {
             _servicoRepositorio = servicoRepositorio;
             _racaValidacao = racaValidacao;
@@ -23,7 +23,7 @@ namespace Dominio.Servicos
         {
             var resultadoValidacao = _racaValidacao
                 .Validate(raca, options => options.IncludeRuleSets("Criacao"));
-            if (!resultadoValidacao.IsValid) 
+            if (!resultadoValidacao.IsValid)
             {
                 var erros = "";
                 const string SerapacaoEntreErros = ". ";
@@ -39,7 +39,7 @@ namespace Dominio.Servicos
         {
             var resultadoValidacao = _racaValidacao
                 .Validate(raca, options => options.IncludeRuleSets("Edicao"));
-            if (!resultadoValidacao.IsValid) 
+            if (!resultadoValidacao.IsValid)
             {
                 var erros = "";
                 const string SerapacaoEntreErros = ". ";
