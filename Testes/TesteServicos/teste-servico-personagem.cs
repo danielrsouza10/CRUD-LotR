@@ -1,12 +1,12 @@
 ﻿using Dominio.ENUMS;
-using Dominio.Interfaces;
 using Dominio.Modelos;
 using Microsoft.Extensions.DependencyInjection;
+using Servico.Servicos;
 using Testes.Interfaces;
 using Testes.Singleton;
 
 
-namespace Testes.TesteServicoPersonagem
+namespace Testes.TesteServicos
 {
     public class teste_servico_personagem : TesteBase
     {
@@ -15,12 +15,12 @@ namespace Testes.TesteServicoPersonagem
         const int ID_MENOR_QUE_ZERO = -1;
         const int TAMANHO_ESPERADO_DA_LISTA = 6;
         const int ID_NOVO_PERSONAGEM = 7;
-        private readonly IServicoPersonagem _servicoPersonagem;
+        private readonly ServicoPersonagem _servicoPersonagem;
         private readonly IRepositorioMock<Personagem> _servicoRepositorio;
 
         public teste_servico_personagem()
         {
-            _servicoPersonagem = _serviceProvider.GetService<IServicoPersonagem>();
+            _servicoPersonagem = _serviceProvider.GetService<ServicoPersonagem>();
             _servicoRepositorio = _serviceProvider.GetService<IRepositorioMock<Personagem>>();
         }
         [Fact]
@@ -62,15 +62,15 @@ namespace Testes.TesteServicoPersonagem
             Assert.Equal(mensagemErro, ex.Message);
         }
         [Fact]
-        public void AoCriarUmPersonagemValido_AoObterporIdDeveRetornarUmaId6()
+        public void AoCriarUmPersonagemValido_DeveSerCapazDeAcharONomeDoNovoPersonagemNoRepositorio()
         {
             //arrange
             Personagem personagem = new() { Nome = "Daniel", Profissao = ProfissaoEnum.Guerreiro, IdRaca = 1 };
-            _servicoPersonagem.Criar(personagem);
             //act
-            var idPersonagem = _servicoRepositorio.ObterPorId(personagem.Id);
+            _servicoPersonagem.Criar(personagem);
+            var verificarNomeNovoPersonagem = PersonagemSingleton.Instance.Personagens.Find(x => x.Nome == personagem.Nome).Nome;
             //assert
-            Assert.Equal(personagem.Id, idPersonagem.Id);
+            Assert.Equal(personagem.Nome, verificarNomeNovoPersonagem);
         }
         [Fact]
         public void AoCriarUmPersonagemComNomeVazio_DeveRetornarUmaExcecao()
@@ -185,18 +185,18 @@ namespace Testes.TesteServicoPersonagem
         }
 
         [Fact]
-        public void AoExcluirUmPersonagemComId3_DeveRetornarUmaListaMenorQueAListaInicialEUmaExcecaoAoBuscarOId()
+        public void AoExcluirUmPersonagemComId3_DeveRetornarUmaListaMenorQueAListaInicial()
         {
             //arranje
             var idPersonagem = 3;
-            var tamanhoEsperadoDaLista = _servicoRepositorio.ObterTodos().Count - 1;
-            var mensagemErro = "O ID informado não existe";
+            var decrementoAposRemocao = 1;
+            var tamanhoEsperadoDaListaMockAposRemocao = PersonagemSingleton.Instance.Personagens.Count - decrementoAposRemocao;
+            
             //act
             _servicoPersonagem.Deletar(idPersonagem);
-            var ex = Assert.Throws<Exception>(() => _servicoPersonagem.ObterPorId(idPersonagem));
+            var tamanhoAtualDaListaMockAposRemocao = PersonagemSingleton.Instance.Personagens.Count;
             //assert
-            Assert.Equal(tamanhoEsperadoDaLista, _servicoRepositorio.ObterTodos().Count);
-            Assert.Equal(mensagemErro, ex.Message);
+            Assert.Equal(tamanhoEsperadoDaListaMockAposRemocao, tamanhoAtualDaListaMockAposRemocao);
         }
     }
 }

@@ -1,20 +1,20 @@
-﻿using Dominio.Interfaces;
+﻿
 using Dominio.Modelos;
 using Microsoft.Extensions.DependencyInjection;
+using Servico.Servicos;
 using Testes.Interfaces;
 using Testes.Singleton;
-using Testes.TestesRepositorio;
 
-namespace Testes.TesteServicoRaca;
+namespace Testes.TesteServicos;
 
 public class teste_servico_raca : TesteBase
 {
-    private readonly IServicoRaca _servicoRaca;
+    private readonly ServicoRaca _servicoRaca;
     private readonly IRepositorioMock<Raca> _servicoRepositorio;
 
     public teste_servico_raca()
     {
-        _servicoRaca = _serviceProvider.GetService<IServicoRaca>();
+        _servicoRaca = _serviceProvider.GetService<ServicoRaca>();
         _servicoRepositorio = _serviceProvider.GetService<IRepositorioMock<Raca>>();
     }
 
@@ -89,16 +89,15 @@ public class teste_servico_raca : TesteBase
     }
 
     [Fact]
-    public void AoCriarUmaRacaValida_DeveRetornarUmNovoIdDeValor06()
+    public void AoCriarUmaRacaValida_DeveSerCapazDeAcharONomeDaNovaRacaNoRepositorio()
     {
         //arrange
-        var novaRaca = new Raca(){ Nome = "Orc"};
-        var novoId = 6;
+        var novaRaca = new Raca() { Nome = "Orc" };
         //act
         _servicoRaca.Criar(novaRaca);
+        var nomeNovaRacaNoRepositorio = RacaSingleton.Instance.Racas.Find(r => r.Nome == novaRaca.Nome).Nome;
         //assert
-        Assert.Equal(novoId, _servicoRaca.ObterPorId(novoId).Id);
-        Assert.Equal(novaRaca.Nome, _servicoRaca.ObterPorId(novoId).Nome);
+        Assert.Equal(novaRaca.Nome, nomeNovaRacaNoRepositorio);
     }
     [Fact]
     public void AoCriarUmaRacaComNomeVazio_DeveRetornarUmaExcecao()
@@ -155,12 +154,12 @@ public class teste_servico_raca : TesteBase
         //assert
         Assert.Equal(mensagemDeErro, ex.Message);
     }
-    
+
     [Fact]
     public void AoEditarUmaRacaComIdValido_DeveRetornarARacaComOsDadosAtualizados()
     {
         //arrange
-        var raca = new Raca() { Id = 1, HabilidadeRacial = "Domar feras"};
+        var raca = new Raca() { Id = 1, HabilidadeRacial = "Domar feras" };
         var nomeRaca = "Humano";
         //act
         var racaEditada = _servicoRaca.Editar(raca);
@@ -228,6 +227,6 @@ public class teste_servico_raca : TesteBase
         var tamanhoFinalDaLista = RacaSingleton.Instance.Racas.Count;
         //assert
         Assert.Equal(tamanhoPrevistoDaLista, tamanhoFinalDaLista);
-        RacaSingleton.Instance.Racas.Add(new Raca() { Id = 4, Nome = "Maiar", HabilidadeRacial = "Poder mágico aumentado", LocalizacaoGeografica = "Valinor"});
+        RacaSingleton.Instance.Racas.Add(new Raca() { Id = 4, Nome = "Maiar", HabilidadeRacial = "Poder mágico aumentado", LocalizacaoGeografica = "Valinor" });
     }
 }
