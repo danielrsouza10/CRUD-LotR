@@ -7,10 +7,10 @@ namespace Servico.Servicos
 {
     public class ServicoRaca
     {
-        private readonly IRepositorioMock<Raca> _servicoRepositorio;
+        private readonly IRepositorio<Raca> _servicoRepositorio;
         private readonly RacaValidacao _racaValidacao;
 
-        public ServicoRaca(IRepositorioMock<Raca> servicoRepositorio, RacaValidacao racaValidacao)
+        public ServicoRaca(IRepositorio<Raca> servicoRepositorio, RacaValidacao racaValidacao)
         {
             _servicoRepositorio = servicoRepositorio;
             _racaValidacao = racaValidacao;

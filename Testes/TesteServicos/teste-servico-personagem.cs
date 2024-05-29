@@ -16,12 +16,12 @@ namespace Testes.TesteServicos
         const int TAMANHO_ESPERADO_DA_LISTA = 6;
         const int ID_NOVO_PERSONAGEM = 7;
         private readonly ServicoPersonagem _servicoPersonagem;
-        private readonly IRepositorioMock<Personagem> _servicoRepositorio;
+        private readonly IRepositorio<Personagem> _servicoRepositorio;
 
         public teste_servico_personagem()
         {
             _servicoPersonagem = _serviceProvider.GetService<ServicoPersonagem>();
-            _servicoRepositorio = _serviceProvider.GetService<IRepositorioMock<Personagem>>();
+            _servicoRepositorio = _serviceProvider.GetService<IRepositorio<Personagem>>();
         }
         [Fact]
         public void AoObterTodos_DeveRetornarUmaListaDeTipoPersonagem()

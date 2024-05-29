@@ -7,10 +7,10 @@ namespace Servico.Servicos
 {
     public class ServicoPersonagem
     {
-        private readonly IRepositorioMock<Personagem> _servicoRepositorio;
+        private readonly IRepositorio<Personagem> _servicoRepositorio;
         private readonly PersonagemValidacao _personagemValidacao;
 
-        public ServicoPersonagem(IRepositorioMock<Personagem> servicoRepositorio, PersonagemValidacao personagemValidacao)
+        public ServicoPersonagem(IRepositorio<Personagem> servicoRepositorio, PersonagemValidacao personagemValidacao)
         {
             _servicoRepositorio = servicoRepositorio;
             _personagemValidacao = personagemValidacao;

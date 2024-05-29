@@ -10,12 +10,12 @@ namespace Testes.TesteServicos;
 public class teste_servico_raca : TesteBase
 {
     private readonly ServicoRaca _servicoRaca;
-    private readonly IRepositorioMock<Raca> _servicoRepositorio;
+    private readonly IRepositorio<Raca> _servicoRepositorio;
 
     public teste_servico_raca()
     {
         _servicoRaca = _serviceProvider.GetService<ServicoRaca>();
-        _servicoRepositorio = _serviceProvider.GetService<IRepositorioMock<Raca>>();
+        _servicoRepositorio = _serviceProvider.GetService<IRepositorio<Raca>>();
     }
 
     [Fact]

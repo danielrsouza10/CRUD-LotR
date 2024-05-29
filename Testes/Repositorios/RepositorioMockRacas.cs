@@ -5,7 +5,7 @@ using Testes.Singleton;
 
 namespace Testes.Repositorios
 {
-    public class RepositorioMockRacas : IRepositorioMock<Raca>
+    public class RepositorioMockRacas : IRepositorio<Raca>
     {
 
         private List<Raca> _listaDeRacas = RacaSingleton.Instance.Racas;
