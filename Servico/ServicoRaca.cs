@@ -39,7 +39,19 @@ namespace Dominio.Servicos
 
         public Raca Editar(Raca raca)
         {
-            throw new NotImplementedException();
+            var resultadoValidacao = _racaValidacao
+                .Validate(raca, options => options.IncludeRuleSets("Edicao"));
+            if (!resultadoValidacao.IsValid) 
+            {
+                var erros = "";
+                const string SerapacaoEntreErros = ". ";
+                foreach (var falha in resultadoValidacao.Errors)
+                {
+                    erros += falha.ErrorMessage + SerapacaoEntreErros;
+                }
+                throw new Exception(erros);
+            }
+            return _servicoRepositorio.Editar(raca);
         }
 
         public void Deletar(int id)

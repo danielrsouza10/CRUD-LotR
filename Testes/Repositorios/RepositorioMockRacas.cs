@@ -26,7 +26,12 @@ namespace Testes.Repositorios
 
         public Raca Editar(Raca raca)
         {
-            throw new NotImplementedException();
+            var racaExistente = ObterPorId(raca.Id);
+            if (raca.Nome != null) racaExistente.Nome = raca.Nome;
+            if (raca.HabilidadeRacial != null) racaExistente.HabilidadeRacial = raca.HabilidadeRacial;
+            if (raca.LocalizacaoGeografica != null) racaExistente.LocalizacaoGeografica = raca.LocalizacaoGeografica;
+
+            return racaExistente;
         }
 
         public void Deletar(int id)

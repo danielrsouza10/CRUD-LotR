@@ -20,6 +20,11 @@ namespace Dominio.Validacao;
                     .Length(3, 25).WithMessage("O nome da raça precisa ter entre 3 e 25 caracteres");
                 RuleFor(raca => raca.Id).Empty().WithMessage("Não deve ser informado um Id");
             });
+            RuleSet("Edicao", () =>
+            {
+                RuleFor(raca => raca.Nome)
+                    .Length(3, 25).WithMessage("O nome da raça precisa ter entre 3 e 25 caracteres");
+            });
         }
     }
 

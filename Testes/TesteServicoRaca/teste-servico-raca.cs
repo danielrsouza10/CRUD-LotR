@@ -155,5 +155,54 @@ public class teste_servico_raca : TesteBase
         //assert
         Assert.Equal(mensagemDeErro, ex.Message);
     }
+    
+    [Fact]
+    public void AoEditarUmaRacaComIdValido_DeveRetornarARacaComOsDadosAtualizados()
+    {
+        //arrange
+        var raca = new Raca() { Id = 1, HabilidadeRacial = "Domar feras"};
+        var nomeRaca = "Humano";
+        //act
+        var racaEditada = _servicoRaca.Editar(raca);
+        //assert
+        Assert.Equal(racaEditada.HabilidadeRacial, racaEditada.HabilidadeRacial);
+        Assert.Equal(nomeRaca, racaEditada.Nome);
+    }
+    [Fact]
+    public void AoEditarUmaRacaComUmNomeDeApenas2Caracteres_DeveRetornarUmaExcecao()
+    {
+        //arranje
+        var mensagemErro = "O nome da raça precisa ter entre 3 e 25 caracteres. ";
+        Raca raca = new() { Id = 1, Nome = "ab" };
+        //act
+        var ex = Assert.Throws<Exception>(() => _servicoRaca.Editar(raca));
+        //assert
+        Assert.IsType<Exception>(ex);
+        Assert.Equal(mensagemErro, ex.Message);
+    }
+    [Fact]
+    public void AoEditarUmaRacaComIdInexistente_DeveRetornarUmaExcecao()
+    {
+        //arranje
+        var mensagemErro = "O ID informado não existe";
+        Raca raca = new() { Id = 6, Nome = "Orc" };
+        //act
+        var ex = Assert.Throws<Exception>(() => _servicoRaca.Editar(raca));
+        //assert
+        Assert.IsType<Exception>(ex);
+        Assert.Equal(mensagemErro, ex.Message);
+    }
+    [Fact]
+    public void AoEditarUmaRacaComId0_DeveRetornarUmaExcecao()
+    {
+        //arranje
+        var mensagemErro = "O ID informado não existe";
+        Raca raca = new() { Id = 0, Nome = "Trolls" };
+        //act
+        var ex = Assert.Throws<Exception>(() => _servicoRaca.Editar(raca));
+        //assert
+        Assert.IsType<Exception>(ex);
+        Assert.Equal(mensagemErro, ex.Message);
+    }
 
 }
