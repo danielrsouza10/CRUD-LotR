@@ -18,8 +18,7 @@ namespace Dominio.Servicos
 
         public List<Raca> ObterTodos() => _servicoRepositorio.ObterTodos();
         public Raca ObterPorId(int id) => id > 0 ? _servicoRepositorio.ObterPorId(id) : throw new Exception("O ID deve ser maior que zero");
-
-
+        public void Deletar(int id) => _servicoRepositorio.Deletar(id);
         public void Criar(Raca raca)
         {
             var resultadoValidacao = _racaValidacao
@@ -36,7 +35,6 @@ namespace Dominio.Servicos
             }
             _servicoRepositorio.Criar(raca);
         }
-
         public Raca Editar(Raca raca)
         {
             var resultadoValidacao = _racaValidacao
@@ -53,13 +51,6 @@ namespace Dominio.Servicos
             }
             return _servicoRepositorio.Editar(raca);
         }
-
-        public void Deletar(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-       
     }
 }
 

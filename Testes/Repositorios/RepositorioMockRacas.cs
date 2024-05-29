@@ -33,9 +33,6 @@ namespace Testes.Repositorios
             return racaExistente;
         }
 
-        public void Deletar(int id)
-        {
-            throw new NotImplementedException();
-        }
+        public void Deletar(int id) => _listaDeRacas.Remove(ObterPorId(id));
     }
 }
