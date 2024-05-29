@@ -6,18 +6,16 @@ namespace Testes.Singleton
     {
         private static RacaSingleton instance = null;
 
-        public List<Raca> Racas { get; set; }
-
-        private RacaSingleton()
+        public List<Raca> Racas = new()
         {
-            Racas = new List<Raca>() {
-                new Raca(1, "Humano"),
-                new Raca(2, "Elfo"),
-                new Raca(3, "An�o"),
-                new Raca(4, "Maiar"),
-                new Raca(5, "Hobbit")
-            };
-        }
+            new Raca { Id = 1, Nome = "Humano", LocalizacaoGeografica = "Gondor", HabilidadeRacial = "Nenhuma"},
+            new Raca { Id = 2, Nome = "Elfo", LocalizacaoGeografica = "Lóthlorien", HabilidadeRacial = "Visão Noturna"},
+            new Raca { Id = 3, Nome = "Anao", LocalizacaoGeografica = "Moria", HabilidadeRacial = "Resistencia a Magia"},
+            new Raca { Id = 4, Nome = "Maiar", LocalizacaoGeografica = "Valinor", HabilidadeRacial = "Poder mágico aumentado"},
+            new Raca { Id = 5, Nome = "Hobbit", LocalizacaoGeografica = "Condado", HabilidadeRacial = "Evasão aumentada"}
+        };
+
+        private RacaSingleton(){ }
         public static RacaSingleton Instance
         {
             get
@@ -29,5 +27,6 @@ namespace Testes.Singleton
                 return instance;
             }
         }
+        public void Initialize() { }
     }
 }
