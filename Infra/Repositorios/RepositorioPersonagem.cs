@@ -6,9 +6,12 @@ namespace Infra.Repositorios;
 
 public class RepositorioPersonagem : IRepositorio<Personagem>
 {
-    public List<Personagem> ObterTodos(string propriedade)
+    public List<Personagem> ObterTodos(string nome)
     {
-        throw new NotImplementedException();
+        var db = new DbOSenhorDosAneis();
+        var personagens = from personagem in db.Personagem select personagem;
+        personagens = from personagem in personagens where personagem.Nome.Contains(nome.ToLower()) select personagem;
+        return personagens.ToList();
     }
 
     public Personagem ObterPorId(int id)

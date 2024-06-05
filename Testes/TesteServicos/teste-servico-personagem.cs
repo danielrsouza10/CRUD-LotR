@@ -26,9 +26,9 @@ namespace Testes.TesteServicos
         [Fact]
         public void AoObterTodos_DeveRetornarUmaListaDeTipoPersonagem()
         {
-            var propriedade = "";
+            var nome = "";
             //act
-            var listaDePersonagens = _servicoPersonagem.ObterTodos(propriedade);
+            var listaDePersonagens = _servicoPersonagem.ObterTodos(nome);
             //assert
             Assert.IsType<List<Personagem>>(listaDePersonagens);
         }
