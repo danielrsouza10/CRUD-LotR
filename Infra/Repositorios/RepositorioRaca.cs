@@ -6,9 +6,15 @@ namespace Infra.Repositorios;
 
 public class RepositorioRaca : IRepositorio<Raca>
 {
-    public List<Raca> ObterTodos(string propriedade)
+    public List<Raca> ObterTodos(string nome)
     {
-        throw new NotImplementedException();
+        using var db = new DbOSenhorDosAneis();
+        var racas = db.Raca.ToList();
+        if (nome != null)
+        {
+            return racas.Where(r => r.Nome.ToLower().Contains(nome.ToLower())).ToList();
+        }
+        return racas;
     }
 
     public Raca ObterPorId(int id)

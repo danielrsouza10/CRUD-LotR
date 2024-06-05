@@ -21,9 +21,9 @@ public class teste_servico_raca : TesteBase
     [Fact]
     public void AoObterTodos_DeveRetornarUmaListaTipoRaca()
     {
-        var propriedade = "";
+        var nome = "";
         //act
-        var listaDeRacas = _servicoRaca.ObterTodos(propriedade);
+        var listaDeRacas = _servicoRaca.ObterTodos(nome);
         //assert
         Assert.IsType<List<Raca>>(listaDeRacas);
     }
@@ -31,7 +31,7 @@ public class teste_servico_raca : TesteBase
     [Fact]
     public void AoObterTodos_DeveRetornarUmaListaEquivalenteAListaMockada()
     {
-        var propriedade = "";
+        var nome = "";
         //arrange
         List<Raca> listaDeRacas = new()
         {
@@ -42,7 +42,7 @@ public class teste_servico_raca : TesteBase
             new Raca { Id = 5, Nome = "Hobbit", LocalizacaoGeografica = "Condado", HabilidadeRacial = "Evasão aumentada"}
         };
         //act
-        var listaMockada = _servicoRaca.ObterTodos(propriedade);
+        var listaMockada = _servicoRaca.ObterTodos(nome);
         //assert
         Assert.Equivalent(listaDeRacas, listaMockada);
     }

@@ -1,16 +1,27 @@
 using Dominio.Interfaces;
 using Dominio.Modelos;
+using System.Collections;
 using Testes.Interfaces;
 
 namespace Infra.Repositorios;
 
 public class RepositorioPersonagem : IRepositorio<Personagem>
 {
-    public List<Personagem> ObterTodos(string propriedade)
+    public List<Personagem> ObterTodos(string nome)
     {
-        throw new NotImplementedException();
-    }
+        using var db = new DbOSenhorDosAneis();
+        var personagens = db.Personagem.ToList();
+        if (nome != null)
+        {
+            //var x =  (from Personagem personagem 
+            //         in personagens 
+            //         where personagem.Nome.ToLower().Contains(nome.ToLower()) 
+            //         select personagem).ToList();
 
+           return personagens.Where(p => p.Nome.ToLower().Contains(nome.ToLower())).ToList();
+        }
+        return personagens;
+    }
     public Personagem ObterPorId(int id)
     {
         throw new NotImplementedException();
