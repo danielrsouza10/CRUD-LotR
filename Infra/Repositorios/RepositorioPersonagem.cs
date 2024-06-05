@@ -4,9 +4,9 @@ using Testes.Interfaces;
 
 namespace Infra.Repositorios;
 
-public class RepositorioPersonagem : IRepositorioPersonagem
+public class RepositorioPersonagem : IRepositorio<Personagem>
 {
-    public List<Personagem> ObterTodos()
+    public List<Personagem> ObterTodos(string propriedade)
     {
         throw new NotImplementedException();
     }
@@ -27,11 +27,6 @@ public class RepositorioPersonagem : IRepositorioPersonagem
     }
 
     public void Deletar(int id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public IEnumerable<Personagem> ObterPersonagensPorRaca(Raca raca)
     {
         throw new NotImplementedException();
     }

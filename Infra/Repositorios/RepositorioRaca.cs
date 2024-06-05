@@ -1,11 +1,12 @@
 using Dominio.Interfaces;
 using Dominio.Modelos;
+using Testes.Interfaces;
 
 namespace Infra.Repositorios;
 
-public class RepositorioRaca : IRepositorioRaca
+public class RepositorioRaca : IRepositorio<Raca>
 {
-    public List<Raca> ObterTodos()
+    public List<Raca> ObterTodos(string propriedade)
     {
         throw new NotImplementedException();
     }

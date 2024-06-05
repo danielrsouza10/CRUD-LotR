@@ -9,7 +9,7 @@ namespace Testes.Repositorios
     public class RepositorioMockPersonagens : IRepositorio<Personagem>
     {
         private List<Personagem> _listaDePersonagens = PersonagemSingleton.Instance.Personagens;
-        public List<Personagem> ObterTodos() => _listaDePersonagens;
+        public List<Personagem> ObterTodos(string propriedade) => _listaDePersonagens;
         public void Deletar(int id) => _listaDePersonagens.Remove(ObterPorId(id));
         public Personagem ObterPorId(int id) => _listaDePersonagens.Find(p => p.Id == id) ?? throw new Exception("O ID informado não existe");
         public void Criar(Personagem personagem)

@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <Compile Remove="Class1.cs" />
+    <Compile Remove="Interfaces\IRepositorioPersonagem.cs" />
+    <Compile Remove="Interfaces\IRepositorioRaca.cs" />
   </ItemGroup>
 
   <ItemGroup>

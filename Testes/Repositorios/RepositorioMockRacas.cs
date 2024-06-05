@@ -10,7 +10,7 @@ namespace Testes.Repositorios
 
         private List<Raca> _listaDeRacas = RacaSingleton.Instance.Racas;
 
-        public List<Raca> ObterTodos()
+        public List<Raca> ObterTodos(string propriedade)
         {
             return _listaDeRacas;
         }

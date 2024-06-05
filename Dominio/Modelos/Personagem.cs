@@ -3,7 +3,7 @@ using LinqToDB.Mapping;
 
 namespace Dominio.Modelos
 {
-    [Table("Personagens")]
+    [Table("Personagem")]
     public class Personagem
     {
         [PrimaryKey, Identity]
