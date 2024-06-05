@@ -9,12 +9,12 @@ public class RepositorioRaca : IRepositorio<Raca>
     public List<Raca> ObterTodos(string nome)
     {
         using var db = new DbOSenhorDosAneis();
-        var racas = from raca in db.Raca select raca;
+        var racas = db.Raca.ToList();
         if (nome != null)
         {
-            racas = from raca in db.Raca where raca.Nome.Contains(nome.ToLower()) select raca;
+            return racas.Where(r => r.Nome.ToLower().Contains(nome.ToLower())).ToList();
         }
-        return racas.ToList();
+        return racas;
     }
 
     public Raca ObterPorId(int id)
