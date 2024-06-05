@@ -8,13 +8,13 @@ public class RepositorioRaca : IRepositorio<Raca>
 {
     public List<Raca> ObterTodos(string nome)
     {
-        var db = new DbOSenhorDosAneis();
-        List<Raca> racas = new List<Raca>();
+        using var db = new DbOSenhorDosAneis();
+        var racas = from raca in db.Raca select raca;
         if (nome != null)
         {
-            racas = (from raca in db.Raca where raca.Nome.Contains(nome.ToLower()) select raca).ToList();
+            racas = from raca in db.Raca where raca.Nome.Contains(nome.ToLower()) select raca;
         }
-        return racas;
+        return racas.ToList();
     }
 
     public Raca ObterPorId(int id)

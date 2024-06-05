@@ -8,13 +8,13 @@ public class RepositorioPersonagem : IRepositorio<Personagem>
 {
     public List<Personagem> ObterTodos(string nome)
     {
-        var db = new DbOSenhorDosAneis();
-        List<Personagem> personagens = new List<Personagem>();
+        using var db = new DbOSenhorDosAneis();
+        var personagens = from personagem in db.Personagem select personagem;
         if (nome != null)
         {
-           personagens = (from personagem in db.Personagem where personagem.Nome.Contains(nome.ToLower()) select personagem).ToList();
+           personagens = (from personagem in db.Personagem where personagem.Nome.Contains(nome.ToLower()) select personagem);
         }
-        return personagens;
+        return personagens.ToList();
     }
 
     public Personagem ObterPorId(int id)
