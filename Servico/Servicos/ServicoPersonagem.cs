@@ -15,7 +15,7 @@ namespace Servico.Servicos
             _servicoRepositorio = servicoRepositorio;
             _personagemValidacao = personagemValidacao;
         }
-        public List<Personagem> ObterTodos(string propriedade) => _servicoRepositorio.ObterTodos(propriedade);
+        public IEnumerable<Personagem> ObterTodos(string propriedade) => _servicoRepositorio.ObterTodos(propriedade);
         public void Deletar(int id) => _servicoRepositorio.Deletar(id);
         public Personagem ObterPorId(int id)
         {

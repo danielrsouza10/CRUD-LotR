@@ -2,6 +2,7 @@ using Dominio.Interfaces;
 using Dominio.Modelos;
 using LinqToDB;
 using System.Collections;
+using System.Diagnostics.Contracts;
 using Testes.Interfaces;
 
 namespace Infra.Repositorios;
@@ -34,9 +35,12 @@ public class RepositorioPersonagem : IRepositorio<Personagem>
         db.Insert(personagem);
     }
 
-    public Personagem Editar(Personagem t)
+    public Personagem Editar(Personagem personagem)
     {
-        throw new NotImplementedException();
+        using var db = new DbOSenhorDosAneis();
+        var personagens = db.Personagem.ToList();
+        db.Update(personagem);
+        return personagens.FirstOrDefault(p => p.Nome == personagem.Nome);
     }
 
     public void Deletar(int id)
