@@ -46,6 +46,8 @@ public class RepositorioPersonagem : IRepositorio<Personagem>
     public void Deletar(int id)
     {
         using var db = new DbOSenhorDosAneis();
-        db.Delete(id);
+        db.Personagem
+            .Where(p => p.Id == id)
+            .Delete();
     }
 }
