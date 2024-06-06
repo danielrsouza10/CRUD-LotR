@@ -1,5 +1,6 @@
 using Dominio.Interfaces;
 using Dominio.Modelos;
+using LinqToDB;
 using System.Collections;
 using Testes.Interfaces;
 
@@ -7,7 +8,7 @@ namespace Infra.Repositorios;
 
 public class RepositorioPersonagem : IRepositorio<Personagem>
 {
-    public List<Personagem> ObterTodos(string nome)
+    public IEnumerable<Personagem> ObterTodos(string nome)
     {
         using var db = new DbOSenhorDosAneis();
         var personagens = db.Personagem.ToList();
@@ -27,9 +28,10 @@ public class RepositorioPersonagem : IRepositorio<Personagem>
         throw new NotImplementedException();
     }
 
-    public void Criar(Personagem t)
+    public void Criar(Personagem personagem)
     {
-        throw new NotImplementedException();
+        using var db = new DbOSenhorDosAneis();
+        db.Insert(personagem);
     }
 
     public Personagem Editar(Personagem t)
