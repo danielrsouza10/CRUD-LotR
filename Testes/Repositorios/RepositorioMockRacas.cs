@@ -10,11 +10,7 @@ namespace Testes.Repositorios
 
         private List<Raca> _listaDeRacas = RacaSingleton.Instance.Racas;
 
-        public List<Raca> ObterTodos(string nome)
-        {
-            return _listaDeRacas;
-        }
-
+        public IEnumerable<Raca> ObterTodos(string nome) => _listaDeRacas;
         public Raca ObterPorId(int id) => _listaDeRacas.Find(r => r.Id == id) ?? throw new Exception("O ID informado não existe");
 
         public void Criar(Raca raca)

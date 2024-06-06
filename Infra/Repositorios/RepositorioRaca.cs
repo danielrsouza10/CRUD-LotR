@@ -11,10 +11,7 @@ public class RepositorioRaca : IRepositorio<Raca>
     {
         using var db = new DbOSenhorDosAneis();
         var racas = db.Raca.ToList();
-        if (nome != null)
-        {
-            return racas.Where(r => r.Nome.ToLower().Contains(nome.ToLower())).ToList();
-        }
+        if (nome != null) return racas.Where(r => r.Nome.ToLower().Contains(nome.ToLower())).ToList();
         return racas;
     }
 
@@ -31,7 +28,10 @@ public class RepositorioRaca : IRepositorio<Raca>
 
     public Raca Editar(Raca raca)
     {
-        throw new NotImplementedException();
+        using var db = new DbOSenhorDosAneis();
+        var racas = db.Raca.ToList();
+        db.Update(raca);
+        return racas.FirstOrDefault(r => r.Nome == raca.Nome);
     }
 
     public void Deletar(int id)
