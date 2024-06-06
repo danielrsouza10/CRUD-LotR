@@ -26,15 +26,15 @@ public class RepositorioPersonagem : IRepositorio<Personagem>
     }
     public Personagem ObterPorId(int id)
     {
-        throw new NotImplementedException();
+        using var db = new DbOSenhorDosAneis();
+        var personagens = db.Personagem;
+        return personagens.FirstOrDefault(p => p.Id == id);
     }
-
     public void Criar(Personagem personagem)
     {
         using var db = new DbOSenhorDosAneis();
         db.Insert(personagem);
     }
-
     public Personagem Editar(Personagem personagem)
     {
         using var db = new DbOSenhorDosAneis();
@@ -42,7 +42,6 @@ public class RepositorioPersonagem : IRepositorio<Personagem>
         db.Update(personagem);
         return personagens.FirstOrDefault(p => p.Nome == personagem.Nome);
     }
-
     public void Deletar(int id)
     {
         using var db = new DbOSenhorDosAneis();
