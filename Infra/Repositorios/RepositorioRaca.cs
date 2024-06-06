@@ -37,8 +37,6 @@ public class RepositorioRaca : IRepositorio<Raca>
     public void Deletar(int id)
     {
         using var db = new DbOSenhorDosAneis();
-        db.Raca
-            .Where(r => r.Id == id)
-            .Delete();
+        db.Delete(id);
     }
 }
