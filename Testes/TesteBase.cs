@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Infra;
+using Microsoft.Extensions.DependencyInjection;
 
 
 namespace Testes
@@ -15,6 +16,7 @@ namespace Testes
         {
             var serviceCollection = new ServiceCollection();
             ModuloDeInjecao.BindServices(serviceCollection);
+            ModuloDeInjecaoInfra.BindServices(serviceCollection);
             return serviceCollection;
 
         }

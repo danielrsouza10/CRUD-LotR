@@ -11,7 +11,7 @@ namespace Infra
 {
     public class DbOSenhorDosAneis : LinqToDB.Data.DataConnection
     {
-        public DbOSenhorDosAneis() : base("O_Senhor_dos_Aneis") { }
+        public DbOSenhorDosAneis(DataOptions options) : base(options) {}
         public ITable<Personagem> Personagem => this.GetTable<Personagem>();
         public ITable<Raca> Raca => this.GetTable<Raca>();
     }
