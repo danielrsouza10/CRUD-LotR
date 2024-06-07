@@ -9,10 +9,14 @@ namespace Infra.Repositorios;
 
 public class RepositorioPersonagem : IRepositorio<Personagem>
 {
+    private readonly DbOSenhorDosAneis _db;
+    public RepositorioPersonagem(DbOSenhorDosAneis db)
+    {
+        _db = db; 
+    }
     public IEnumerable<Personagem> ObterTodos(string nome)
     {
-        using var db = new DbOSenhorDosAneis();
-        var personagens = db.Personagem.ToList();
+        var personagens = _db.Personagem.ToList();
         if (nome != null)
         {
             //var x =  (from Personagem personagem 
