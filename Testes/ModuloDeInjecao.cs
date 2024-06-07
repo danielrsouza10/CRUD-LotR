@@ -4,6 +4,7 @@ using Testes.Repositorios;
 using Testes.Interfaces;
 using Dominio.Validacao;
 using Servico.Servicos;
+using Infra;
 
 namespace Testes
 {
