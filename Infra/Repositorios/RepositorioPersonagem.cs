@@ -1,8 +1,5 @@
-using Dominio.Interfaces;
 using Dominio.Modelos;
 using LinqToDB;
-using System.Collections;
-using System.Diagnostics.Contracts;
 using Testes.Interfaces;
 
 namespace Infra.Repositorios;

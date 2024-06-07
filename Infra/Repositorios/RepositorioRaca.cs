@@ -1,4 +1,3 @@
-using Dominio.Interfaces;
 using Dominio.Modelos;
 using LinqToDB;
 using Testes.Interfaces;
