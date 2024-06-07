@@ -16,7 +16,7 @@ namespace Servico.Servicos
             _racaValidacao = racaValidacao;
         }
 
-        public List<Raca> ObterTodos() => _servicoRepositorio.ObterTodos();
+        public IEnumerable<Raca> ObterTodos(string propriedade) => _servicoRepositorio.ObterTodos(propriedade);
         public Raca ObterPorId(int id) => id > 0 ? _servicoRepositorio.ObterPorId(id) : throw new Exception("O ID deve ser maior que zero");
         public void Deletar(int id) => _servicoRepositorio.Deletar(id);
         public void Criar(Raca raca)

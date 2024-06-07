@@ -4,6 +4,7 @@ using Testes.Repositorios;
 using Testes.Interfaces;
 using Dominio.Validacao;
 using Servico.Servicos;
+using Infra;
 
 namespace Testes
 {
@@ -17,7 +18,6 @@ namespace Testes
             services.AddScoped<IRepositorio<Raca>, RepositorioMockRacas>();
             services.AddScoped<PersonagemValidacao>();
             services.AddScoped<RacaValidacao>();
-
         }
     }
 }
