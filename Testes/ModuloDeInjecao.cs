@@ -18,7 +18,6 @@ namespace Testes
             services.AddScoped<IRepositorio<Raca>, RepositorioMockRacas>();
             services.AddScoped<PersonagemValidacao>();
             services.AddScoped<RacaValidacao>();
-            services.AddScoped<DbOSenhorDosAneis>();
         }
     }
 }
