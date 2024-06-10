@@ -20,7 +20,6 @@ namespace Dominio.Modelos
         public float? Altura { get; set; }
         [Column]
         public DateTime DataDoCadastro { get; set; }
-
         public Personagem() {
             DataDoCadastro = DateTime.Now;
         }
