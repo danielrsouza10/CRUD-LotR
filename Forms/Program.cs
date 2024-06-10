@@ -1,10 +1,17 @@
+using Dominio.Modelos;
+using Dominio.Validacao;
 using FluentMigrator.Runner;
+using Infra;
 using Infra.Migrations;
+using Infra.Repositorios;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Servico.Servicos;
+using Testes.Interfaces;
 
 namespace Forms
 {
-    internal static class Program
+    public static class Program
     {
         /// <summary>
         ///  The main entry point for the application.
@@ -14,14 +21,30 @@ namespace Forms
         {
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
-            ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+           ApplicationConfiguration.Initialize();
+           Application.Run(new Form1());
             
             using (var serviceProvider = CreateServices())
             using (var scope = serviceProvider.CreateScope())
             {
                 UpdateDatabase(scope.ServiceProvider);
             }
+        }
+        public static IServiceProvider ServiceProvider { get; set; }
+
+        static IHostBuilder CreateDefaultBuilder()
+        {
+            return Host.CreateDefaultBuilder()
+                .ConfigureServices((DbOSenhorDosAneis, services) =>
+                {
+                    services.AddScoped<PersonagemValidacao>();
+                    services.AddScoped<RacaValidacao>();
+                    services.AddScoped<ServicoPersonagem>();
+                    services.AddScoped<ServicoRaca>();
+                    services.AddScoped<DbOSenhorDosAneis>();
+                    services.AddScoped<IRepositorio<Personagem>, RepositorioPersonagem>();
+                    services.AddScoped<IRepositorio<Raca>, RepositorioRaca>();
+                });
         }
         private static ServiceProvider CreateServices()
         {
