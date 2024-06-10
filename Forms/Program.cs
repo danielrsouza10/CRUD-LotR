@@ -21,8 +21,12 @@ namespace Forms
         {
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
+            
            ApplicationConfiguration.Initialize();
-           Application.Run(new Form1());
+           var host = CreateHostBuilder().Build();
+           ServiceProvider = host.Services;
+           
+           Application.Run(ServiceProvider.GetRequiredService<MainForm>());
             
             using (var serviceProvider = CreateServices())
             using (var scope = serviceProvider.CreateScope())
@@ -30,12 +34,11 @@ namespace Forms
                 UpdateDatabase(scope.ServiceProvider);
             }
         }
-        public static IServiceProvider ServiceProvider { get; set; }
-
-        static IHostBuilder CreateDefaultBuilder()
+        public static IServiceProvider ServiceProvider { get; private set; }
+        static IHostBuilder CreateHostBuilder()
         {
             return Host.CreateDefaultBuilder()
-                .ConfigureServices((DbOSenhorDosAneis, services) =>
+                .ConfigureServices((services) =>
                 {
                     services.AddScoped<PersonagemValidacao>();
                     services.AddScoped<RacaValidacao>();
@@ -44,6 +47,7 @@ namespace Forms
                     services.AddScoped<DbOSenhorDosAneis>();
                     services.AddScoped<IRepositorio<Personagem>, RepositorioPersonagem>();
                     services.AddScoped<IRepositorio<Raca>, RepositorioRaca>();
+                    services.AddScoped<MainForm>();
                 });
         }
         private static ServiceProvider CreateServices()
