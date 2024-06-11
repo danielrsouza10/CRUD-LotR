@@ -7,11 +7,15 @@ public class RepositorioRaca : IRepositorio<Raca>
 {
     private readonly DbOSenhorDosAneis _db;
     public RepositorioRaca (DbOSenhorDosAneis db) => _db = db;
-    public IEnumerable<Raca> ObterTodos(string? nome, bool? estaExtinta, int? idRaca)
+    public IEnumerable<Raca> ObterTodos(string? nome, bool? estaExtinta, int? id)
     {
-        var racas = _db.Raca.ToList();
-        if (nome != null) return racas.Where(r => r.Nome.ToLower().Contains(nome.ToLower())).ToList();
-        return racas;
+        var racas = from p in _db.Raca select p;
+
+        if (estaExtinta != null) racas = from p in racas where p.EstaExtinta select p;
+        if (id != null) racas = from p in racas where p.Id == id select p;
+        if (nome != null) racas = from p in racas where p.Nome.ToLower().Contains(nome.ToLower()) select p;
+
+        return racas.ToList();
     }
     public Raca ObterPorId(int id)
     {

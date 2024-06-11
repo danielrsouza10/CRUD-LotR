@@ -14,6 +14,8 @@ namespace Dominio.Modelos
         public string? LocalizacaoGeografica { get; set; }
         [Column]
         public string? HabilidadeRacial { get; set; }
+        [Column]
+        public Boolean EstaExtinta {  get; set; }
     }
 }
 

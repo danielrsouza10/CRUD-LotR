@@ -10,18 +10,10 @@ public class RepositorioPersonagem : IRepositorio<Personagem>
     public IEnumerable<Personagem> ObterTodos(string? nome, bool? estaVivo, int? idRaca)
     {
         var personagens = from p in _db.Personagem select p;
-        if (estaVivo != null) 
-        {
-            personagens = from p in personagens where p.EstaVivo select p;
-        }
-        if (idRaca!= null)
-        {
-            personagens = from p in personagens where p.IdRaca==idRaca select p; 
-        }
-        if (nome != null) 
-        {
-            personagens = from p in personagens where p.Nome.ToLower().Contains(nome.ToLower()) select p;
-        }
+
+        if (estaVivo != null)personagens = from p in personagens where p.EstaVivo select p;
+        if (idRaca!= null) personagens = from p in personagens where p.IdRaca==idRaca select p;
+        if (nome != null) personagens = from p in personagens where p.Nome.ToLower().Contains(nome.ToLower()) select p;
         
         return personagens.ToList();
     }
