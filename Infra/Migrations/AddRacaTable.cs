@@ -12,7 +12,8 @@ namespace Infra.Migrations
                 .WithColumn("Id").AsInt32().PrimaryKey().Identity().NotNullable()
                 .WithColumn("Nome").AsString().NotNullable()
                 .WithColumn("Habilidade Racial").AsString()
-                .WithColumn("Localizacao Geografica").AsString();
+                .WithColumn("Localizacao Geografica").AsString()
+                .WithColumn("Esta Extinta?").AsBoolean().NotNullable();
         }
         public override void Down()
         {
