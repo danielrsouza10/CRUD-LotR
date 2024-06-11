@@ -7,7 +7,7 @@ public class RepositorioRaca : IRepositorio<Raca>
 {
     private readonly DbOSenhorDosAneis _db;
     public RepositorioRaca (DbOSenhorDosAneis db) => _db = db;
-    public IEnumerable<Raca> ObterTodos(string nome)
+    public IEnumerable<Raca> ObterTodos(string? nome, bool? estaExtinta, int? idRaca)
     {
         var racas = _db.Raca.ToList();
         if (nome != null) return racas.Where(r => r.Nome.ToLower().Contains(nome.ToLower())).ToList();

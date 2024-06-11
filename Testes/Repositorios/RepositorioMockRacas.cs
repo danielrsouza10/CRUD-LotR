@@ -10,7 +10,7 @@ namespace Testes.Repositorios
 
         private List<Raca> _listaDeRacas = RacaSingleton.Instance.Racas;
 
-        public IEnumerable<Raca> ObterTodos(string nome) => _listaDeRacas;
+        public IEnumerable<Raca> ObterTodos(string? nome, bool? estaExtinta, int? idRaca) => _listaDeRacas;
         public Raca ObterPorId(int id) => _listaDeRacas.Find(r => r.Id == id) ?? throw new Exception("O ID informado não existe");
 
         public void Criar(Raca raca)
@@ -28,7 +28,6 @@ namespace Testes.Repositorios
             racaExistente.LocalizacaoGeografica = raca.LocalizacaoGeografica;
             return racaExistente;
         }
-
         public void Deletar(int id) => _listaDeRacas.Remove(ObterPorId(id));
     }
 }

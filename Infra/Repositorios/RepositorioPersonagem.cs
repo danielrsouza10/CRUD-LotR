@@ -7,7 +7,7 @@ public class RepositorioPersonagem : IRepositorio<Personagem>
 {
     private readonly DbOSenhorDosAneis _db;
     public RepositorioPersonagem(DbOSenhorDosAneis db) => _db = db;
-    public IEnumerable<Personagem> ObterTodos(string nome)
+    public IEnumerable<Personagem> ObterTodos(string? nome, bool? estaVivo, int? idRaca)
     {
         var personagens = _db.Personagem.ToList();
         if (nome != null) return personagens.Where(p => p.Nome.ToLower().Contains(nome.ToLower())).ToList();

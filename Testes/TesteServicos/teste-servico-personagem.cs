@@ -28,7 +28,7 @@ namespace Testes.TesteServicos
         {
             var nome = "";
             //act
-            var listaDePersonagens = _servicoPersonagem.ObterTodos(nome);
+            var listaDePersonagens = _servicoPersonagem.ObterTodos(nome, null, null);
             //assert
             Assert.IsType<List<Personagem>>(listaDePersonagens);
         }

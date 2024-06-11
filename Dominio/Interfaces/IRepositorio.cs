@@ -7,7 +7,7 @@ namespace Testes.Interfaces
 {
     public interface IRepositorio<T>
     {
-        IEnumerable<T> ObterTodos(string nome);
+        IEnumerable<T> ObterTodos(string? nome, bool? estaVivo, int? id);
         T ObterPorId(int id);
         void Criar(T t);
         T Editar(T t);
