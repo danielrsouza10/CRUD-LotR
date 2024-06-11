@@ -9,9 +9,21 @@ public class RepositorioPersonagem : IRepositorio<Personagem>
     public RepositorioPersonagem(DbOSenhorDosAneis db) => _db = db;
     public IEnumerable<Personagem> ObterTodos(string? nome, bool? estaVivo, int? idRaca)
     {
-        var personagens = _db.Personagem.ToList();
-        if (nome != null) return personagens.Where(p => p.Nome.ToLower().Contains(nome.ToLower())).ToList();
-        return personagens;
+        var personagens = from p in _db.Personagem select p;
+        if (estaVivo != null) 
+        {
+            personagens = from p in personagens where p.EstaVivo select p;
+        }
+        if (idRaca!= null)
+        {
+            personagens = from p in personagens where p.IdRaca==idRaca select p; 
+        }
+        if (nome != null) 
+        {
+            personagens = from p in personagens where p.Nome.ToLower().Contains(nome.ToLower()) select p;
+        }
+        
+        return personagens.ToList();
     }
     public Personagem ObterPorId(int id)
     {
