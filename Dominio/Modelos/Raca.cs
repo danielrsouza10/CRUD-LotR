@@ -8,13 +8,13 @@ namespace Dominio.Modelos
     {
         [PrimaryKey, Identity]
         public int Id { get; set; }
-        [Column("NomeRaca"), NotNull]
+        [Column("Nome"), NotNull]
         public string Nome { get; set; }
-        [Column]
+        [Column("Localização Geográfica")]
         public string? LocalizacaoGeografica { get; set; }
-        [Column]
+        [Column("Habilidade Racial")]
         public string? HabilidadeRacial { get; set; }
-        [Column]
+        [Column("Raça Extinta?")]
         public Boolean EstaExtinta {  get; set; }
     }
 }
