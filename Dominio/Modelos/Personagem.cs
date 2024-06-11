@@ -1,5 +1,6 @@
 ﻿using Dominio.ENUMS;
 using LinqToDB.Mapping;
+using System.Numerics;
 
 namespace Dominio.Modelos
 {
@@ -8,22 +9,23 @@ namespace Dominio.Modelos
     {
         [PrimaryKey, Identity]
         public int Id { get; set; }
-        [Column("NomePersonagem"), NotNull]
+        [Column("Nome Personagem"), NotNull]
         public string Nome { get; set; }
-        [Column, NotNull]
+        [Association(ThisKey = nameof(IdRaca), OtherKey = nameof(Raca.Id))]
         public int IdRaca { get; set; }
-        [Column, NotNull]
+        [Column("Profissão"), NotNull]
         public ProfissaoEnum Profissao { get; set; }
-        [Column]
+        [Column("Idade")]
         public int? Idade { get; set; }
-        [Column]
+        [Column("Altura")]
         public float? Altura { get; set; }
-        [Column]
+        [Column("Esta vivo?"), NotNull]
+        public Boolean EstaVivo { get; set; }
+        [Column("Data do Cadastro")]
         public DateTime DataDoCadastro { get; set; }
-        public Personagem() {
+        public Personagem()
+        {
             DataDoCadastro = DateTime.Now;
         }
-
-      
     }
 }
