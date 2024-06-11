@@ -24,7 +24,6 @@ namespace Servico.Servicos
         }
         public void Criar(Personagem personagem)
         {
-
             var resultadoValidacao = _personagemValidacao
                 .Validate(personagem, options => options.IncludeRuleSets("Criacao"));
             if (!resultadoValidacao.IsValid)
