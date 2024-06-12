@@ -2,10 +2,10 @@
 {
     public enum ProfissaoEnum
     {
-        Arqueiro = 1,
-        Guerreiro = 2,
-        Mago = 3,
-        Ladrao = 4,
-        Curandeiro = 5
+        Arqueiro = 0,
+        Guerreiro = 1,
+        Mago = 2,
+        Ladrao = 3,
+        Curandeiro = 4
     }
 }
