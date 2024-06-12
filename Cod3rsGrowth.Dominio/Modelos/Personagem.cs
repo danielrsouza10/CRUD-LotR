@@ -9,19 +9,19 @@ namespace Dominio.Modelos
     {
         [PrimaryKey, Identity]
         public int Id { get; set; }
-        [Column("Nome Personagem"), NotNull]
+        [Column("Nome"), NotNull]
         public string Nome { get; set; }
         [Association(ThisKey = nameof(IdRaca), OtherKey = nameof(Raca.Id))]
         public int IdRaca { get; set; }
-        [Column("Profissão"), NotNull]
+        [Column("Profissao"), NotNull]
         public ProfissaoEnum Profissao { get; set; }
         [Column("Idade")]
         public int? Idade { get; set; }
         [Column("Altura")]
         public float? Altura { get; set; }
-        [Column("Esta vivo?"), NotNull]
+        [Column("EstaVivo"), NotNull]
         public bool EstaVivo { get; set; }
-        [Column("Data do Cadastro")]
+        [Column("DataDoCadastro")]
         public DateTime DataDoCadastro { get; set; }
         public Personagem()
         {

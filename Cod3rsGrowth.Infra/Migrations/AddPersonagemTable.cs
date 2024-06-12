@@ -12,12 +12,12 @@ namespace Infra.Migrations
             Create.Table("Personagem")
                 .WithColumn("Id").AsInt32().PrimaryKey().Identity().NotNullable()
                 .WithColumn("Nome").AsString().NotNullable()
-                .WithColumn("Id Raca").AsInt32().ForeignKey().NotNullable()
+                .WithColumn("IdRaca").AsInt32().ForeignKey().NotNullable()
                 .WithColumn("Profissao").AsInt32().NotNullable()
                 .WithColumn("Idade").AsInt32()
                 .WithColumn("Altura").AsFloat()
-                .WithColumn("Esta Vivo?").AsBoolean().NotNullable()
-                .WithColumn("Data do Cadastro").AsDateTime();
+                .WithColumn("EstaVivo").AsBoolean().NotNullable()
+                .WithColumn("DataDoCadastro").AsDateTime();
         }
         public override void Down()
         {

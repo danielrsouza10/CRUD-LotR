@@ -10,11 +10,11 @@ namespace Dominio.Modelos
         public int Id { get; set; }
         [Column("Nome"), NotNull]
         public string Nome { get; set; }
-        [Column("Localização Geográfica")]
+        [Column("LocalizacaoGeografica")]
         public string? LocalizacaoGeografica { get; set; }
-        [Column("Habilidade Racial")]
+        [Column("HabilidadeRacial")]
         public string? HabilidadeRacial { get; set; }
-        [Column("Raça Extinta?")]
+        [Column("EstaExtinta")]
         public bool EstaExtinta {  get; set; }
     }
 }
