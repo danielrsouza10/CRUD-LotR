@@ -4,12 +4,14 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <RootNamespace>Dominio</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="Class1.cs" />
     <Compile Remove="Interfaces\IRepositorioPersonagem.cs" />
     <Compile Remove="Interfaces\IRepositorioRaca.cs" />
+    <Compile Remove="Modelos\Filtro.cs" />
   </ItemGroup>
 
   <ItemGroup>

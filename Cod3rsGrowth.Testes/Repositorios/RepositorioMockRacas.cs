@@ -1,5 +1,6 @@
 ﻿using Dominio.Modelos;
 using System;
+using Dominio.Filtros;
 using Testes.Interfaces;
 using Testes.Singleton;
 
@@ -10,7 +11,7 @@ namespace Testes.Repositorios
 
         private List<Raca> _listaDeRacas = RacaSingleton.Instance.Racas;
 
-        public IEnumerable<Raca> ObterTodos(string? nome, bool? estaExtinta, int? idRaca) => _listaDeRacas;
+        public IEnumerable<Raca> ObterTodos(Filtro filtro) => _listaDeRacas;
         public Raca ObterPorId(int id) => _listaDeRacas.Find(r => r.Id == id) ?? throw new Exception("O ID informado não existe");
 
         public void Criar(Raca raca)

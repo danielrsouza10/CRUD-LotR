@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Dominio.ENUMS;
+using Dominio.Filtros;
 using Dominio.Modelos;
 using Testes.Interfaces;
 using Testes.Singleton;
@@ -9,7 +10,7 @@ namespace Testes.Repositorios
     public class RepositorioMockPersonagens : IRepositorio<Personagem>
     {
         private List<Personagem> _listaDePersonagens = PersonagemSingleton.Instance.Personagens;
-        public IEnumerable<Personagem> ObterTodos(string? nome, bool? estaVivo, int? idRaca) => _listaDePersonagens;
+        public IEnumerable<Personagem> ObterTodos(Filtro filtro) => _listaDePersonagens;
         public void Deletar(int id) => _listaDePersonagens.Remove(ObterPorId(id));
         public Personagem ObterPorId(int id) => _listaDePersonagens.Find(p => p.Id == id) ?? throw new Exception("O ID informado não existe");
         public void Criar(Personagem personagem)

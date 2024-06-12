@@ -1,4 +1,5 @@
 ﻿
+using Dominio.Filtros;
 using Dominio.Modelos;
 using Dominio.Validacao;
 using FluentValidation;
@@ -16,7 +17,7 @@ namespace Servico.Servicos
             _racaValidacao = racaValidacao;
         }
 
-        public IEnumerable<Raca> ObterTodos(string? nome, bool? estaExtinta, int? idRaca) => _servicoRepositorio.ObterTodos(nome, estaExtinta, idRaca);
+        public IEnumerable<Raca> ObterTodos(Filtro filtro) => _servicoRepositorio.ObterTodos(filtro);
         public Raca ObterPorId(int id) => id > 0 ? _servicoRepositorio.ObterPorId(id) : throw new Exception("O ID deve ser maior que zero");
         public void Deletar(int id) => _servicoRepositorio.Deletar(id);
         public void Criar(Raca raca)

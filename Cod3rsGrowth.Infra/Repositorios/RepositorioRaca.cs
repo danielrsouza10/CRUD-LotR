@@ -1,3 +1,4 @@
+using Dominio.Filtros;
 using Dominio.Modelos;
 using LinqToDB;
 using Testes.Interfaces;
@@ -7,13 +8,13 @@ public class RepositorioRaca : IRepositorio<Raca>
 {
     private readonly DbOSenhorDosAneis _db;
     public RepositorioRaca (DbOSenhorDosAneis db) => _db = db;
-    public IEnumerable<Raca> ObterTodos(string? nome, bool? estaExtinta, int? id)
+    public IEnumerable<Raca> ObterTodos(Filtro filtro)
     {
-        var racas = from p in _db.Raca select p;
+        var racas = from r in _db.Raca select r;
 
-        if (estaExtinta != null) racas = from p in racas where p.EstaExtinta select p;
-        if (id != null) racas = from p in racas where p.Id == id select p;
-        if (nome != null) racas = from p in racas where p.Nome.ToLower().Contains(nome.ToLower()) select p;
+        if (!string.IsNullOrEmpty(filtro.Nome)) racas = from r in racas where r.Nome.ToLower().Contains(filtro.Nome.ToLower()) select r;
+        if (!filtro.Id.Equals(null)) racas = from r in racas where r.Id == filtro.Id select r;
+        if (!filtro.EstaExtinta.Equals(null)) racas = from r in racas where r.EstaExtinta == filtro.EstaMorto select r;
 
         return racas.ToList();
     }

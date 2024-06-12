@@ -15,7 +15,7 @@ namespace Dominio.Modelos
         [Column("Habilidade Racial")]
         public string? HabilidadeRacial { get; set; }
         [Column("Raça Extinta?")]
-        public Boolean EstaExtinta {  get; set; }
+        public bool EstaExtinta {  get; set; }
     }
 }
 

@@ -20,7 +20,7 @@ namespace Dominio.Modelos
         [Column("Altura")]
         public float? Altura { get; set; }
         [Column("Esta vivo?"), NotNull]
-        public Boolean EstaVivo { get; set; }
+        public bool EstaVivo { get; set; }
         [Column("Data do Cadastro")]
         public DateTime DataDoCadastro { get; set; }
         public Personagem()

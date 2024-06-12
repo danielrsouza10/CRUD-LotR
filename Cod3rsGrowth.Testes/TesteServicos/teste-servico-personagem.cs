@@ -1,4 +1,5 @@
 ﻿using Dominio.ENUMS;
+using Dominio.Filtros;
 using Dominio.Modelos;
 using Microsoft.Extensions.DependencyInjection;
 using Servico.Servicos;
@@ -26,9 +27,10 @@ namespace Testes.TesteServicos
         [Fact]
         public void AoObterTodos_DeveRetornarUmaListaDeTipoPersonagem()
         {
-            var nome = "";
+            //arrange
+            Filtro filtro = new Filtro();
             //act
-            var listaDePersonagens = _servicoPersonagem.ObterTodos(nome, null, null);
+            var listaDePersonagens = _servicoPersonagem.ObterTodos(filtro);
             //assert
             Assert.IsType<List<Personagem>>(listaDePersonagens);
         }

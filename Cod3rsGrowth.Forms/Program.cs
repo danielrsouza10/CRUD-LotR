@@ -26,7 +26,7 @@ namespace Forms
            var host = CreateHostBuilder().Build();
            ServiceProvider = host.Services;
            
-           Application.Run(ServiceProvider.GetRequiredService<MainForm>());
+           Application.Run(new MainForm());
             
             using (var serviceProvider = CreateServices())
             using (var scope = serviceProvider.CreateScope())
@@ -47,7 +47,6 @@ namespace Forms
                     services.AddScoped<DbOSenhorDosAneis>();
                     services.AddScoped<IRepositorio<Personagem>, RepositorioPersonagem>();
                     services.AddScoped<IRepositorio<Raca>, RepositorioRaca>();
-                    services.AddScoped<MainForm>();
                 });
         }
         private static ServiceProvider CreateServices()

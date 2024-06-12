@@ -1,4 +1,5 @@
 ﻿
+using Dominio.Filtros;
 using Dominio.Modelos;
 using Microsoft.Extensions.DependencyInjection;
 using Servico.Servicos;
@@ -21,9 +22,10 @@ public class teste_servico_raca : TesteBase
     [Fact]
     public void AoObterTodos_DeveRetornarUmaListaTipoRaca()
     {
-        var nome = "";
+        //arrange
+        Filtro filtro = new Filtro();
         //act
-        var listaDeRacas = _servicoRaca.ObterTodos(nome, null, null);
+        var listaDeRacas = _servicoRaca.ObterTodos(filtro);
         //assert
         Assert.IsType<List<Raca>>(listaDeRacas);
     }
@@ -31,8 +33,8 @@ public class teste_servico_raca : TesteBase
     [Fact]
     public void AoObterTodos_DeveRetornarUmaListaEquivalenteAListaMockada()
     {
-        var nome = "";
         //arrange
+        Filtro filtro = new Filtro();
         List<Raca> listaDeRacas = new()
         {
             new Raca { Id = 1, Nome = "Humano", LocalizacaoGeografica = "Gondor", HabilidadeRacial = "Nenhuma"},
@@ -42,7 +44,7 @@ public class teste_servico_raca : TesteBase
             new Raca { Id = 5, Nome = "Hobbit", LocalizacaoGeografica = "Condado", HabilidadeRacial = "Evasão aumentada"}
         };
         //act
-        var listaMockada = _servicoRaca.ObterTodos(nome, null, null);
+        var listaMockada = _servicoRaca.ObterTodos(filtro);
         //assert
         Assert.Equivalent(listaDeRacas, listaMockada);
     }

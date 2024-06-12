@@ -1,3 +1,4 @@
+using Dominio.Filtros;
 using Dominio.Modelos;
 using LinqToDB;
 using Testes.Interfaces;
@@ -7,13 +8,16 @@ public class RepositorioPersonagem : IRepositorio<Personagem>
 {
     private readonly DbOSenhorDosAneis _db;
     public RepositorioPersonagem(DbOSenhorDosAneis db) => _db = db;
-    public IEnumerable<Personagem> ObterTodos(string? nome, bool? estaVivo, int? idRaca)
+    public IEnumerable<Personagem> ObterTodos(Filtro filtro)
     {
         var personagens = from p in _db.Personagem select p;
-
-        if (estaVivo != null)personagens = from p in personagens where p.EstaVivo select p;
-        if (idRaca!= null) personagens = from p in personagens where p.IdRaca==idRaca select p;
-        if (nome != null) personagens = from p in personagens where p.Nome.ToLower().Contains(nome.ToLower()) select p;
+        
+        if (filtro == null) return personagens.ToList();
+        
+        if (!string.IsNullOrEmpty(filtro.Nome)) personagens = from p in personagens where p.Nome.ToLower().Contains(filtro.Nome.ToLower()) select p;
+        if (!filtro.Id.Equals(null)) personagens = from p in personagens where p.Id == filtro.Id select p;
+        if (!filtro.EstaMorto.Equals(null)) personagens = from p in personagens where p.EstaVivo == filtro.EstaMorto select p;
+        if (!filtro.DataDoCadastro.Equals(null)) personagens = from p in personagens where p.DataDoCadastro == filtro.DataDoCadastro select p;
         
         return personagens.ToList();
     }

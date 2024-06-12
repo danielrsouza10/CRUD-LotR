@@ -1,4 +1,5 @@
 ﻿
+using Dominio.Filtros;
 using Dominio.Modelos;
 using Dominio.Validacao;
 using FluentValidation;
@@ -15,7 +16,7 @@ namespace Servico.Servicos
             _servicoRepositorio = servicoRepositorio;
             _personagemValidacao = personagemValidacao;
         }
-        public IEnumerable<Personagem> ObterTodos(string? nome, bool? estaVivo, int? idRaca) => _servicoRepositorio.ObterTodos(nome, estaVivo, idRaca);
+        public IEnumerable<Personagem> ObterTodos(Filtro filtro) => _servicoRepositorio.ObterTodos(filtro);
         public void Deletar(int id) => _servicoRepositorio.Deletar(id);
         public Personagem ObterPorId(int id)
         {
