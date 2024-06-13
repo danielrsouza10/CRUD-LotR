@@ -30,7 +30,6 @@
         {
             components = new System.ComponentModel.Container();
             dataGridView1 = new DataGridView();
-            personagemBindingSource = new BindingSource(components);
             idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             nomeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             idRacaDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
@@ -39,28 +38,30 @@
             alturaDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             estaVivoDataGridViewCheckBoxColumn = new DataGridViewCheckBoxColumn();
             dataDoCadastroDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            personagemBindingSource2 = new BindingSource(components);
+            personagemBindingSource1 = new BindingSource(components);
+            personagemBindingSource = new BindingSource(components);
             button1 = new Button();
             button2 = new Button();
             button3 = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)personagemBindingSource2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)personagemBindingSource1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)personagemBindingSource).BeginInit();
             SuspendLayout();
             // 
             // dataGridView1
             // 
             dataGridView1.AutoGenerateColumns = false;
+            dataGridView1.BackgroundColor = SystemColors.Control;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn, nomeDataGridViewTextBoxColumn, idRacaDataGridViewTextBoxColumn, profissaoDataGridViewTextBoxColumn, idadeDataGridViewTextBoxColumn, alturaDataGridViewTextBoxColumn, estaVivoDataGridViewCheckBoxColumn, dataDoCadastroDataGridViewTextBoxColumn });
-            dataGridView1.DataSource = personagemBindingSource;
+            dataGridView1.DataSource = personagemBindingSource2;
             dataGridView1.Location = new Point(12, 12);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowTemplate.Height = 25;
             dataGridView1.Size = new Size(791, 400);
             dataGridView1.TabIndex = 0;
-            // 
-            // personagemBindingSource
-            // 
-            personagemBindingSource.DataSource = typeof(Dominio.Modelos.Personagem);
             // 
             // idDataGridViewTextBoxColumn
             // 
@@ -111,6 +112,18 @@
             dataDoCadastroDataGridViewTextBoxColumn.HeaderText = "DataDoCadastro";
             dataDoCadastroDataGridViewTextBoxColumn.Name = "dataDoCadastroDataGridViewTextBoxColumn";
             // 
+            // personagemBindingSource2
+            // 
+            personagemBindingSource2.DataSource = typeof(Dominio.Modelos.Personagem);
+            // 
+            // personagemBindingSource1
+            // 
+            personagemBindingSource1.DataSource = typeof(Dominio.Modelos.Personagem);
+            // 
+            // personagemBindingSource
+            // 
+            personagemBindingSource.DataSource = typeof(Dominio.Modelos.Personagem);
+            // 
             // button1
             // 
             button1.Location = new Point(566, 418);
@@ -149,7 +162,10 @@
             Controls.Add(dataGridView1);
             Name = "MainForm";
             Text = "Form1";
+            Load += MainForm_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)personagemBindingSource2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)personagemBindingSource1).EndInit();
             ((System.ComponentModel.ISupportInitialize)personagemBindingSource).EndInit();
             ResumeLayout(false);
         }
@@ -169,5 +185,7 @@
         private Button button1;
         private Button button2;
         private Button button3;
+        private BindingSource personagemBindingSource1;
+        private BindingSource personagemBindingSource2;
     }
 }
