@@ -4,6 +4,8 @@ using FluentMigrator.Runner;
 using Infra;
 using Infra.Migrations;
 using Infra.Repositorios;
+using LinqToDB;
+using LinqToDB.AspNet;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Servico.Servicos;
@@ -26,7 +28,7 @@ namespace Forms
            var host = CreateHostBuilder().Build();
            ServiceProvider = host.Services;
            
-           Application.Run(new MainForm());
+           Application.Run(new MainForm(ServiceProvider.GetRequiredService<ServicoPersonagem>()));
             
             using (var serviceProvider = CreateServices())
             using (var scope = serviceProvider.CreateScope())
@@ -47,6 +49,9 @@ namespace Forms
                     services.AddScoped<DbOSenhorDosAneis>();
                     services.AddScoped<IRepositorio<Personagem>, RepositorioPersonagem>();
                     services.AddScoped<IRepositorio<Raca>, RepositorioRaca>();
+
+                    var connectionString = Environment.GetEnvironmentVariable("SQLSERVER_CONNECTION_STRING");
+                    services.AddLinqToDBContext<DbOSenhorDosAneis>((provider, options) => options.UseSqlServer(connectionString));
                 });
         }
         private static ServiceProvider CreateServices()
