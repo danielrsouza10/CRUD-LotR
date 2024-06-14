@@ -14,7 +14,7 @@ public class RepositorioRaca : IRepositorio<Raca>
 
         if (!string.IsNullOrEmpty(filtro.Nome)) racas = from r in racas where r.Nome.ToLower().Contains(filtro.Nome.ToLower()) select r;
         if (!filtro.Id.Equals(null)) racas = from r in racas where r.Id == filtro.Id select r;
-        if (!filtro.EstaExtinta.Equals(null)) racas = from r in racas where r.EstaExtinta == filtro.EstaMorto select r;
+        if (!filtro.EstaExtinta.Equals(null)) racas = from r in racas where r.EstaExtinta == filtro.EstaExtinta select r;
 
         return racas.ToList();
     }
