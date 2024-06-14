@@ -16,7 +16,7 @@ public class RepositorioPersonagem : IRepositorio<Personagem>
         
         if (!string.IsNullOrEmpty(filtro.Nome)) personagens = from p in personagens where p.Nome.ToLower().Contains(filtro.Nome.ToLower()) select p;
         if (!filtro.Id.Equals(null)) personagens = from p in personagens where p.Id == filtro.Id select p;
-        if (!filtro.EstaMorto.Equals(null)) personagens = from p in personagens where p.EstaVivo == filtro.EstaMorto select p;
+        if (!filtro.EstaVivo.Equals(null)) personagens = from p in personagens where p.EstaVivo == filtro.EstaVivo select p;
         if (!filtro.DataDoCadastro.Equals(null)) personagens = from p in personagens where p.DataDoCadastro == filtro.DataDoCadastro select p;
         
         return personagens.ToList();
