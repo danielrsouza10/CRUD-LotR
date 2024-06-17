@@ -2,6 +2,7 @@ using Dominio.ENUMS;
 using Dominio.Filtros;
 using Dominio.Modelos;
 using Dominio.Validacao;
+using Forms.Forms;
 using Servico.Servicos;
 using System.ComponentModel;
 
@@ -19,7 +20,6 @@ namespace Forms
         }
         private void MainForm_Load(object sender, EventArgs e)
         {
-
             InicializarListaDePersonagens();
         }
         private void InicializarListaDePersonagens()
@@ -73,6 +73,12 @@ namespace Forms
             filtro.DataDoCadastro = null;
             filtro.Id = null;
             dataGridView1.DataSource = _servicoPersonagem.ObterTodos(filtro);
+        }
+
+        private void buttonAdicionar_Click(object sender, EventArgs e)
+        {
+            var criacaoPersonagem = new CriacaoPersonagemForm();
+            criacaoPersonagem.Show();
         }
     }
 }

@@ -50,7 +50,7 @@
             personagemBindingSource = new BindingSource(components);
             personagemBindingSource2 = new BindingSource(components);
             personagemBindingSource1 = new BindingSource(components);
-            button1 = new Button();
+            buttonAdicionar = new Button();
             button2 = new Button();
             button3 = new Button();
             barraDePesquisa = new TextBox();
@@ -168,14 +168,15 @@
             // 
             personagemBindingSource1.DataSource = typeof(Dominio.Modelos.Personagem);
             // 
-            // button1
+            // buttonAdicionar
             // 
-            button1.Location = new Point(690, 418);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 1;
-            button1.Text = "Adicionar";
-            button1.UseVisualStyleBackColor = true;
+            buttonAdicionar.Location = new Point(690, 418);
+            buttonAdicionar.Name = "buttonAdicionar";
+            buttonAdicionar.Size = new Size(75, 23);
+            buttonAdicionar.TabIndex = 1;
+            buttonAdicionar.Text = "Adicionar";
+            buttonAdicionar.UseVisualStyleBackColor = true;
+            buttonAdicionar.Click += buttonAdicionar_Click;
             // 
             // button2
             // 
@@ -262,7 +263,7 @@
             Controls.Add(barraDePesquisa);
             Controls.Add(button3);
             Controls.Add(button2);
-            Controls.Add(button1);
+            Controls.Add(buttonAdicionar);
             Controls.Add(dataGridView1);
             Name = "MainForm";
             Text = "O Senhor dos Anéis DB";
@@ -279,7 +280,7 @@
 
         private DataGridView dataGridView1;
         private BindingSource personagemBindingSource;
-        private Button button1;
+        private Button buttonAdicionar;
         private Button button2;
         private Button button3;
         private BindingSource personagemBindingSource1;
