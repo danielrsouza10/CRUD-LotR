@@ -11,11 +11,13 @@ namespace Forms
     public partial class MainForm : Form
     {
         private readonly ServicoPersonagem _servicoPersonagem;
+        private readonly ServicoRaca _servicoRaca;
         Filtro filtro = new Filtro();
 
-        public MainForm(ServicoPersonagem servicoPersonagem)
+        public MainForm(ServicoPersonagem servicoPersonagem, ServicoRaca servicoRaca)
         {
             _servicoPersonagem = servicoPersonagem;
+            _servicoRaca = servicoRaca;
             InitializeComponent();
         }
         private void MainForm_Load(object sender, EventArgs e)
@@ -77,7 +79,7 @@ namespace Forms
 
         private void buttonAdicionar_Click(object sender, EventArgs e)
         {
-            var criacaoPersonagem = new CriacaoPersonagemForm();
+            var criacaoPersonagem = new CriacaoPersonagemForm(_servicoPersonagem, _servicoRaca);
             criacaoPersonagem.Show();
         }
     }

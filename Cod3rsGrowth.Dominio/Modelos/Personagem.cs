@@ -11,7 +11,7 @@ namespace Dominio.Modelos
         public int Id { get; set; }
         [Column("Nome"), NotNull]
         public string Nome { get; set; }
-        [Association(ThisKey = nameof(IdRaca), OtherKey = nameof(Raca.Id))]
+        [Column("IdRaca"), NotNull]
         public int IdRaca { get; set; }
         [Column("Profissao"), NotNull]
         public ProfissaoEnum Profissao { get; set; }

@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            textBox1 = new TextBox();
+            textBoxNome = new TextBox();
             labelNome = new Label();
             labelProfissao = new Label();
             labelRaca = new Label();
             labelIdade = new Label();
-            listaRacas = new ComboBox();
-            comboBox1 = new ComboBox();
+            boxRacas = new ComboBox();
+            boxProfissao = new ComboBox();
             labelAltura = new Label();
             labelEstaVivo = new Label();
             radioButtonSim = new RadioButton();
@@ -47,12 +47,12 @@
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
             SuspendLayout();
             // 
-            // textBox1
+            // textBoxNome
             // 
-            textBox1.Location = new Point(56, 16);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(135, 23);
-            textBox1.TabIndex = 0;
+            textBoxNome.Location = new Point(56, 16);
+            textBoxNome.Name = "textBoxNome";
+            textBoxNome.Size = new Size(135, 23);
+            textBoxNome.TabIndex = 0;
             // 
             // labelNome
             // 
@@ -90,23 +90,23 @@
             labelIdade.TabIndex = 4;
             labelIdade.Text = "Idade";
             // 
-            // listaRacas
+            // boxRacas
             // 
-            listaRacas.FormattingEnabled = true;
-            listaRacas.Items.AddRange(new object[] { "Humano", "Elfo", "Anão", "Hobbit", "Orc", "Uruk-hai", "Troll", "Ent", "Maiar", "Dragão" });
-            listaRacas.Location = new Point(271, 16);
-            listaRacas.Name = "listaRacas";
-            listaRacas.Size = new Size(121, 23);
-            listaRacas.TabIndex = 5;
+            boxRacas.FormattingEnabled = true;
+            boxRacas.Items.AddRange(new object[] { "Humano", "Elfo", "Anão", "Hobbit", "Orc", "Uruk-hai", "Troll", "Ent", "Maiar", "Dragão" });
+            boxRacas.Location = new Point(271, 16);
+            boxRacas.Name = "boxRacas";
+            boxRacas.Size = new Size(121, 23);
+            boxRacas.TabIndex = 5;
             // 
-            // comboBox1
+            // boxProfissao
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "Guerreiro", "Arqueiro", "Mago", "Ladrao", "Jardineiro", "Aventureiro", "Rei", "SenhoraDeLothlorien", "SenhorDeValfenda", "Escudeira", "Capitao", "Princesa", "Ent", "Cavaleiro", "ExHobbit" });
-            comboBox1.Location = new Point(271, 54);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(121, 23);
-            comboBox1.TabIndex = 6;
+            boxProfissao.FormattingEnabled = true;
+            boxProfissao.Items.AddRange(new object[] { "Guerreiro", "Arqueiro", "Mago", "Ladrao", "Jardineiro", "Aventureiro", "Rei", "SenhoraDeLothlorien", "SenhorDeValfenda", "Escudeira", "Capitao", "Princesa", "Ent", "Cavaleiro", "ExHobbit" });
+            boxProfissao.Location = new Point(271, 54);
+            boxProfissao.Name = "boxProfissao";
+            boxProfissao.Size = new Size(121, 23);
+            boxProfissao.TabIndex = 6;
             // 
             // labelAltura
             // 
@@ -120,7 +120,7 @@
             // labelEstaVivo
             // 
             labelEstaVivo.AutoSize = true;
-            labelEstaVivo.Location = new Point(225, 91);
+            labelEstaVivo.Location = new Point(225, 93);
             labelEstaVivo.Name = "labelEstaVivo";
             labelEstaVivo.Size = new Size(58, 15);
             labelEstaVivo.TabIndex = 8;
@@ -156,6 +156,7 @@
             buttonCriar.TabIndex = 11;
             buttonCriar.Text = "Adicionar";
             buttonCriar.UseVisualStyleBackColor = true;
+            buttonCriar.Click += buttonCriar_Click;
             // 
             // buttonCancelar
             // 
@@ -165,7 +166,7 @@
             buttonCancelar.TabIndex = 12;
             buttonCancelar.Text = "Cancelar";
             buttonCancelar.UseVisualStyleBackColor = true;
-            buttonCancelar.Click += this.buttonCancelar_Click;
+            buttonCancelar.Click += buttonCancelar_Click;
             // 
             // numericUpDown1
             // 
@@ -194,13 +195,13 @@
             Controls.Add(radioButtonSim);
             Controls.Add(labelEstaVivo);
             Controls.Add(labelAltura);
-            Controls.Add(comboBox1);
-            Controls.Add(listaRacas);
+            Controls.Add(boxProfissao);
+            Controls.Add(boxRacas);
             Controls.Add(labelIdade);
             Controls.Add(labelRaca);
             Controls.Add(labelProfissao);
             Controls.Add(labelNome);
-            Controls.Add(textBox1);
+            Controls.Add(textBoxNome);
             Name = "CriacaoPersonagemForm";
             Text = "CriacaoPersonagem";
             Load += CriacaoPersonagem_Load;
@@ -212,13 +213,13 @@
 
         #endregion
 
-        private TextBox textBox1;
+        private TextBox textBoxNome;
         private Label labelNome;
         private Label labelProfissao;
         private Label labelRaca;
         private Label labelIdade;
-        private ComboBox listaRacas;
-        private ComboBox comboBox1;
+        private ComboBox boxRacas;
+        private ComboBox boxProfissao;
         private Label labelAltura;
         private Label labelEstaVivo;
         private RadioButton radioButtonSim;
