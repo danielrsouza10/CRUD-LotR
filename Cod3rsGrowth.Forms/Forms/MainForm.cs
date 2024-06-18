@@ -28,7 +28,7 @@ namespace Forms
         {
             dataGridView1.DataSource = _servicoPersonagem.ObterTodos(filtro);
         }
-        private void barraDePesquisa_TextChanged(object sender, EventArgs e)
+        private void AoDigitarNaBarraDePesquisaDeveListarOsItensCorrespondentesAPesquisa(object sender, EventArgs e)
         {
             filtro.Nome = nomeRadioButton.Checked ? barraDePesquisa.Text : null;
             if (idRadioButton.Checked)
@@ -42,27 +42,27 @@ namespace Forms
             }
             dataGridView1.DataSource = _servicoPersonagem.ObterTodos(filtro);
         }
-        private void barraDePesquisa_Enter(object sender, EventArgs e)
+        private void AoEntrarNaBarraDePesquisaDeveLimparOPlaceholder(object sender, EventArgs e)
         {
             barraDePesquisa.PlaceholderText = string.Empty;
         }
-        private void barraDePesquisa_Leave(object sender, EventArgs e)
+        private void AoSairDaBarraDePesquisaDeveAdicionarOPlaceholder(object sender, EventArgs e)
         {
             barraDePesquisa.PlaceholderText = "Pesquise o personagem...";
         }
-        private void vivoCheckBox_CheckedChanged(object sender, EventArgs e)
+        private void AoDarCheckNoBoxVivoDeveFiltarALista(object sender, EventArgs e)
         {
             LimparFiltro();
             barraDePesquisa.Text = string.Empty;
             filtro.EstaVivo = vivoCheckBox.Checked;
             dataGridView1.DataSource = _servicoPersonagem.ObterTodos(filtro);
         }
-        private void dateTimePicker_ValueChanged(object sender, EventArgs e)
+        private void AoSelecionarUmaDataDeveAdicionarOValorAoFiltro(object sender, EventArgs e)
         {
             filtro.DataDoCadastro = dateTimePicker.Value;
             dataGridView1.DataSource = _servicoPersonagem.ObterTodos(filtro);
         }
-        private void nomeRadioButton_CheckedChanged(object sender, EventArgs e)
+        private void AoAlterarASelecaoDoImputRadioDeNomeDeveAtualizarALista(object sender, EventArgs e)
         {
             LimparFiltro();
             barraDePesquisa.Text = string.Empty;
@@ -77,13 +77,13 @@ namespace Forms
             dataGridView1.DataSource = _servicoPersonagem.ObterTodos(filtro);
         }
 
-        private void buttonAdicionar_Click(object sender, EventArgs e)
+        private void AoClicarNoBotaoAdicionarDeveAbrirAJanelaDeCriacao(object sender, EventArgs e)
         {
             var criacaoPersonagem = new CriacaoPersonagemForm(_servicoPersonagem, _servicoRaca);
             criacaoPersonagem.Show();
         }
 
-        private void buttonReset_Click(object sender, EventArgs e)
+        private void AoClicarNoBotaoResetDeveCarregarAListaSemFiltrosAplicados(object sender, EventArgs e)
         {
             LimparFiltro();
             barraDePesquisa.Text = string.Empty;

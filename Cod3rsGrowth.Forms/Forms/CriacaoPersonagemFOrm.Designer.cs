@@ -170,7 +170,7 @@
             buttonCriar.TabIndex = 11;
             buttonCriar.Text = "Adicionar";
             buttonCriar.UseVisualStyleBackColor = true;
-            buttonCriar.Click += buttonCriar_Click;
+            buttonCriar.Click += AoClicarNoBotaoCriarDeveCriarUmPersonagemOuDispararUmaExcecao;
             // 
             // buttonCancelar
             // 
@@ -181,7 +181,7 @@
             buttonCancelar.TabIndex = 12;
             buttonCancelar.Text = "Cancelar";
             buttonCancelar.UseVisualStyleBackColor = true;
-            buttonCancelar.Click += buttonCancelar_Click;
+            buttonCancelar.Click += AoClicarNoBotaoCancelarDeveFecharAJanelaDeCriacao;
             // 
             // boxIdade
             // 

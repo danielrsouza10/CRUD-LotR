@@ -37,12 +37,12 @@ namespace Forms.Forms
             
         }
 
-        private void buttonCancelar_Click(object sender, EventArgs e)
+        private void AoClicarNoBotaoCancelarDeveFecharAJanelaDeCriacao(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void buttonCriar_Click(object sender, EventArgs e)
+        private void AoClicarNoBotaoCriarDeveCriarUmPersonagemOuDispararUmaExcecao(object sender, EventArgs e)
         {
             try
             {
@@ -60,8 +60,7 @@ namespace Forms.Forms
 
             } catch (Exception ex)
             {
-                CaixaDeDialogoForm caixaDeDialogoForm = new CaixaDeDialogoForm(ex.Message);
-                caixaDeDialogoForm.ShowDialog();
+                MessageBox.Show(ex.Message);
             }
         }
     }

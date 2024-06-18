@@ -195,7 +195,7 @@
             buttonAdicionar.TabIndex = 1;
             buttonAdicionar.Text = "Adicionar";
             buttonAdicionar.UseVisualStyleBackColor = true;
-            buttonAdicionar.Click += buttonAdicionar_Click;
+            buttonAdicionar.Click += AoClicarNoBotaoAdicionarDeveAbrirAJanelaDeCriacao;
             // 
             // button2
             // 
@@ -226,9 +226,9 @@
             barraDePesquisa.PlaceholderText = "Pesquise o personagem...";
             barraDePesquisa.Size = new Size(575, 29);
             barraDePesquisa.TabIndex = 4;
-            barraDePesquisa.TextChanged += barraDePesquisa_TextChanged;
-            barraDePesquisa.Enter += barraDePesquisa_Enter;
-            barraDePesquisa.Leave += barraDePesquisa_Leave;
+            barraDePesquisa.TextChanged += AoDigitarNaBarraDePesquisaDeveListarOsItensCorrespondentesAPesquisa;
+            barraDePesquisa.Enter += AoEntrarNaBarraDePesquisaDeveLimparOPlaceholder;
+            barraDePesquisa.Leave += AoSairDaBarraDePesquisaDeveAdicionarOPlaceholder;
             // 
             // nomeRadioButton
             // 
@@ -242,7 +242,7 @@
             nomeRadioButton.TabStop = true;
             nomeRadioButton.Text = "Nome";
             nomeRadioButton.UseVisualStyleBackColor = true;
-            nomeRadioButton.CheckedChanged += nomeRadioButton_CheckedChanged;
+            nomeRadioButton.CheckedChanged += AoAlterarASelecaoDoImputRadioDeNomeDeveAtualizarALista;
             // 
             // idRadioButton
             // 
@@ -274,7 +274,7 @@
             vivoCheckBox.TabIndex = 8;
             vivoCheckBox.Text = "Vivo";
             vivoCheckBox.UseVisualStyleBackColor = true;
-            vivoCheckBox.CheckedChanged += vivoCheckBox_CheckedChanged;
+            vivoCheckBox.CheckedChanged += AoDarCheckNoBoxVivoDeveFiltarALista;
             // 
             // buttonReset
             // 
@@ -284,7 +284,7 @@
             buttonReset.TabIndex = 9;
             buttonReset.Text = "Reset";
             buttonReset.UseVisualStyleBackColor = true;
-            buttonReset.Click += buttonReset_Click;
+            buttonReset.Click += AoClicarNoBotaoResetDeveCarregarAListaSemFiltrosAplicados;
             // 
             // MainForm
             // 
