@@ -2,6 +2,9 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
+    <Compile Update="Forms\CaixaDeDialogoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\CriacaoPersonagemForm.cs">
       <SubType>Form</SubType>
     </Compile>

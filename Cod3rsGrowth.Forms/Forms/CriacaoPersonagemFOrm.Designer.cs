@@ -28,12 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             textBoxNome = new TextBox();
             labelNome = new Label();
             labelProfissao = new Label();
             labelRaca = new Label();
             labelIdade = new Label();
             boxRacas = new ComboBox();
+            racaBindingSource = new BindingSource(components);
             boxProfissao = new ComboBox();
             labelAltura = new Label();
             labelEstaVivo = new Label();
@@ -41,97 +43,109 @@
             radioButtonNao = new RadioButton();
             buttonCriar = new Button();
             buttonCancelar = new Button();
-            numericUpDown1 = new NumericUpDown();
-            numericUpDown2 = new NumericUpDown();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
+            boxIdade = new NumericUpDown();
+            boxAltura = new NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)racaBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)boxIdade).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)boxAltura).BeginInit();
             SuspendLayout();
             // 
             // textBoxNome
             // 
-            textBoxNome.Location = new Point(56, 16);
+            textBoxNome.Location = new Point(64, 21);
+            textBoxNome.Margin = new Padding(3, 4, 3, 4);
             textBoxNome.Name = "textBoxNome";
-            textBoxNome.Size = new Size(135, 23);
+            textBoxNome.Size = new Size(154, 27);
             textBoxNome.TabIndex = 0;
             // 
             // labelNome
             // 
             labelNome.AutoSize = true;
-            labelNome.Location = new Point(10, 19);
+            labelNome.Location = new Point(11, 25);
             labelNome.Name = "labelNome";
-            labelNome.Size = new Size(40, 15);
+            labelNome.Size = new Size(50, 20);
             labelNome.TabIndex = 1;
             labelNome.Text = "Nome";
             // 
             // labelProfissao
             // 
             labelProfissao.AutoSize = true;
-            labelProfissao.Location = new Point(225, 57);
+            labelProfissao.Location = new Point(257, 76);
             labelProfissao.Name = "labelProfissao";
-            labelProfissao.Size = new Size(40, 15);
+            labelProfissao.Size = new Size(50, 20);
             labelProfissao.TabIndex = 2;
             labelProfissao.Text = "Classe";
             // 
             // labelRaca
             // 
             labelRaca.AutoSize = true;
-            labelRaca.Location = new Point(225, 19);
+            labelRaca.Location = new Point(257, 25);
             labelRaca.Name = "labelRaca";
-            labelRaca.Size = new Size(32, 15);
+            labelRaca.Size = new Size(41, 20);
             labelRaca.TabIndex = 3;
             labelRaca.Text = "Raça";
             // 
             // labelIdade
             // 
             labelIdade.AutoSize = true;
-            labelIdade.Location = new Point(10, 57);
+            labelIdade.Location = new Point(11, 76);
             labelIdade.Name = "labelIdade";
-            labelIdade.Size = new Size(36, 15);
+            labelIdade.Size = new Size(47, 20);
             labelIdade.TabIndex = 4;
             labelIdade.Text = "Idade";
             // 
             // boxRacas
             // 
+            boxRacas.DataSource = racaBindingSource;
+            boxRacas.DropDownStyle = ComboBoxStyle.DropDownList;
             boxRacas.FormattingEnabled = true;
-            boxRacas.Items.AddRange(new object[] { "Humano", "Elfo", "Anão", "Hobbit", "Orc", "Uruk-hai", "Troll", "Ent", "Maiar", "Dragão" });
-            boxRacas.Location = new Point(271, 16);
+            boxRacas.Location = new Point(310, 21);
+            boxRacas.Margin = new Padding(3, 4, 3, 4);
             boxRacas.Name = "boxRacas";
-            boxRacas.Size = new Size(121, 23);
+            boxRacas.Size = new Size(138, 28);
             boxRacas.TabIndex = 5;
+            // 
+            // racaBindingSource
+            // 
+            racaBindingSource.DataSource = typeof(Dominio.Modelos.Raca);
             // 
             // boxProfissao
             // 
+            boxProfissao.DropDownStyle = ComboBoxStyle.DropDownList;
             boxProfissao.FormattingEnabled = true;
             boxProfissao.Items.AddRange(new object[] { "Guerreiro", "Arqueiro", "Mago", "Ladrao", "Jardineiro", "Aventureiro", "Rei", "SenhoraDeLothlorien", "SenhorDeValfenda", "Escudeira", "Capitao", "Princesa", "Ent", "Cavaleiro", "ExHobbit" });
-            boxProfissao.Location = new Point(271, 54);
+            boxProfissao.Location = new Point(310, 72);
+            boxProfissao.Margin = new Padding(3, 4, 3, 4);
             boxProfissao.Name = "boxProfissao";
-            boxProfissao.Size = new Size(121, 23);
+            boxProfissao.Size = new Size(138, 28);
             boxProfissao.TabIndex = 6;
             // 
             // labelAltura
             // 
             labelAltura.AutoSize = true;
-            labelAltura.Location = new Point(11, 91);
+            labelAltura.Location = new Point(13, 121);
             labelAltura.Name = "labelAltura";
-            labelAltura.Size = new Size(39, 15);
+            labelAltura.Size = new Size(49, 20);
             labelAltura.TabIndex = 7;
             labelAltura.Text = "Altura";
             // 
             // labelEstaVivo
             // 
             labelEstaVivo.AutoSize = true;
-            labelEstaVivo.Location = new Point(225, 93);
+            labelEstaVivo.Location = new Point(257, 124);
             labelEstaVivo.Name = "labelEstaVivo";
-            labelEstaVivo.Size = new Size(58, 15);
+            labelEstaVivo.Size = new Size(74, 20);
             labelEstaVivo.TabIndex = 8;
             labelEstaVivo.Text = "Esta vivo?";
             // 
             // radioButtonSim
             // 
             radioButtonSim.AutoSize = true;
-            radioButtonSim.Location = new Point(289, 91);
+            radioButtonSim.Checked = true;
+            radioButtonSim.Location = new Point(330, 121);
+            radioButtonSim.Margin = new Padding(3, 4, 3, 4);
             radioButtonSim.Name = "radioButtonSim";
-            radioButtonSim.Size = new Size(45, 19);
+            radioButtonSim.Size = new Size(55, 24);
             radioButtonSim.TabIndex = 9;
             radioButtonSim.TabStop = true;
             radioButtonSim.Text = "Sim";
@@ -140,19 +154,20 @@
             // radioButtonNao
             // 
             radioButtonNao.AutoSize = true;
-            radioButtonNao.Location = new Point(340, 91);
+            radioButtonNao.Location = new Point(389, 121);
+            radioButtonNao.Margin = new Padding(3, 4, 3, 4);
             radioButtonNao.Name = "radioButtonNao";
-            radioButtonNao.Size = new Size(47, 19);
+            radioButtonNao.Size = new Size(58, 24);
             radioButtonNao.TabIndex = 10;
-            radioButtonNao.TabStop = true;
             radioButtonNao.Text = "Não";
             radioButtonNao.UseVisualStyleBackColor = true;
             // 
             // buttonCriar
             // 
-            buttonCriar.Location = new Point(238, 125);
+            buttonCriar.Location = new Point(272, 167);
+            buttonCriar.Margin = new Padding(3, 4, 3, 4);
             buttonCriar.Name = "buttonCriar";
-            buttonCriar.Size = new Size(75, 23);
+            buttonCriar.Size = new Size(86, 31);
             buttonCriar.TabIndex = 11;
             buttonCriar.Text = "Adicionar";
             buttonCriar.UseVisualStyleBackColor = true;
@@ -160,35 +175,40 @@
             // 
             // buttonCancelar
             // 
-            buttonCancelar.Location = new Point(319, 125);
+            buttonCancelar.Location = new Point(365, 167);
+            buttonCancelar.Margin = new Padding(3, 4, 3, 4);
             buttonCancelar.Name = "buttonCancelar";
-            buttonCancelar.Size = new Size(75, 23);
+            buttonCancelar.Size = new Size(86, 31);
             buttonCancelar.TabIndex = 12;
             buttonCancelar.Text = "Cancelar";
             buttonCancelar.UseVisualStyleBackColor = true;
             buttonCancelar.Click += buttonCancelar_Click;
             // 
-            // numericUpDown1
+            // boxIdade
             // 
-            numericUpDown1.Location = new Point(56, 54);
-            numericUpDown1.Name = "numericUpDown1";
-            numericUpDown1.Size = new Size(135, 23);
-            numericUpDown1.TabIndex = 13;
+            boxIdade.Location = new Point(64, 72);
+            boxIdade.Margin = new Padding(3, 4, 3, 4);
+            boxIdade.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
+            boxIdade.Name = "boxIdade";
+            boxIdade.Size = new Size(154, 27);
+            boxIdade.TabIndex = 13;
             // 
-            // numericUpDown2
+            // boxAltura
             // 
-            numericUpDown2.Location = new Point(56, 89);
-            numericUpDown2.Name = "numericUpDown2";
-            numericUpDown2.Size = new Size(135, 23);
-            numericUpDown2.TabIndex = 14;
+            boxAltura.Location = new Point(64, 119);
+            boxAltura.Margin = new Padding(3, 4, 3, 4);
+            boxAltura.Maximum = new decimal(new int[] { 3000, 0, 0, 0 });
+            boxAltura.Name = "boxAltura";
+            boxAltura.Size = new Size(154, 27);
+            boxAltura.TabIndex = 14;
             // 
             // CriacaoPersonagemForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(402, 158);
-            Controls.Add(numericUpDown2);
-            Controls.Add(numericUpDown1);
+            ClientSize = new Size(459, 211);
+            Controls.Add(boxAltura);
+            Controls.Add(boxIdade);
             Controls.Add(buttonCancelar);
             Controls.Add(buttonCriar);
             Controls.Add(radioButtonNao);
@@ -202,11 +222,15 @@
             Controls.Add(labelProfissao);
             Controls.Add(labelNome);
             Controls.Add(textBoxNome);
+            Margin = new Padding(3, 4, 3, 4);
+            MinimizeBox = false;
             Name = "CriacaoPersonagemForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "CriacaoPersonagem";
             Load += CriacaoPersonagem_Load;
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)racaBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)boxIdade).EndInit();
+            ((System.ComponentModel.ISupportInitialize)boxAltura).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -226,7 +250,8 @@
         private RadioButton radioButtonNao;
         private Button buttonCriar;
         private Button buttonCancelar;
-        private NumericUpDown numericUpDown1;
-        private NumericUpDown numericUpDown2;
+        private NumericUpDown boxIdade;
+        private NumericUpDown boxAltura;
+        private BindingSource racaBindingSource;
     }
 }

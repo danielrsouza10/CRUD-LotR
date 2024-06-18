@@ -26,13 +26,16 @@ namespace Forms.Forms
         {
             _servicoPersonagem = servicoPersonagem;
             _servicoRaca = servicoRaca;
-
             InitializeComponent();
         }
 
         public void CriacaoPersonagem_Load(object sender, EventArgs e)
         {
-
+            boxRacas.DataSource = _servicoRaca.ObterTodos(filtro);
+            boxRacas.DisplayMember = "Nome";
+            //Define o valor default da profissao
+            boxProfissao.SelectedIndex = 0;
+            
         }
 
         private void buttonCancelar_Click(object sender, EventArgs e)
@@ -42,17 +45,25 @@ namespace Forms.Forms
 
         private void buttonCriar_Click(object sender, EventArgs e)
         {
-            var personagem = new Personagem();
-            personagem.Nome = textBoxNome.Text;
-            filtro.Nome = boxRacas.Text;
-            personagem.IdRaca = _servicoRaca.ObterTodos(filtro).FirstOrDefault(r => r.Nome == filtro.Nome).Id;
-            personagem.Profissao = (ProfissaoEnum)Enum.Parse(typeof(ProfissaoEnum), boxProfissao.Text);
-            personagem.Altura = 1;
-            personagem.Idade = 1;
+            try
+            {
+                var personagem = new Personagem();
+                personagem.Nome = textBoxNome.Text;
+                filtro.Nome = boxRacas.Text;
+                personagem.IdRaca = _servicoRaca.ObterTodos(filtro).FirstOrDefault(r => r.Nome == filtro.Nome).Id;
+                personagem.Profissao = (ProfissaoEnum)Enum.Parse(typeof(ProfissaoEnum), boxProfissao.Text);
+                personagem.Altura = (int)boxAltura.Value;
+                personagem.Idade = (int)boxIdade.Value;
+                personagem.EstaVivo = radioButtonSim.Checked;
 
-            _servicoPersonagem.Criar(personagem);
+                _servicoPersonagem.Criar(personagem);
+                this.Close();
+
+            } catch (Exception ex)
+            {
+                CaixaDeDialogoForm caixaDeDialogoForm = new CaixaDeDialogoForm(ex.Message);
+                caixaDeDialogoForm.ShowDialog();
+            }
         }
-
-        
     }
 }

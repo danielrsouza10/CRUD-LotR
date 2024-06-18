@@ -82,5 +82,12 @@ namespace Forms
             var criacaoPersonagem = new CriacaoPersonagemForm(_servicoPersonagem, _servicoRaca);
             criacaoPersonagem.Show();
         }
+
+        private void buttonReset_Click(object sender, EventArgs e)
+        {
+            LimparFiltro();
+            barraDePesquisa.Text = string.Empty;
+            dataGridView1.DataSource = _servicoPersonagem.ObterTodos(filtro);
+        }
     }
 }
