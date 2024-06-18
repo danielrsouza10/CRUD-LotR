@@ -33,8 +33,7 @@ namespace Forms.Forms
         {
             boxRacas.DataSource = _servicoRaca.ObterTodos(filtro);
             boxRacas.DisplayMember = "Nome";
-            //Define o valor default da profissao
-            boxProfissao.SelectedIndex = 0;
+            boxProfissao.DataSource = Enum.GetValues(typeof(ProfissaoEnum));
             
         }
 

@@ -113,7 +113,6 @@
             // 
             boxProfissao.DropDownStyle = ComboBoxStyle.DropDownList;
             boxProfissao.FormattingEnabled = true;
-            boxProfissao.Items.AddRange(new object[] { "Guerreiro", "Arqueiro", "Mago", "Ladrao", "Jardineiro", "Aventureiro", "Rei", "SenhoraDeLothlorien", "SenhorDeValfenda", "Escudeira", "Capitao", "Princesa", "Ent", "Cavaleiro", "ExHobbit" });
             boxProfissao.Location = new Point(310, 72);
             boxProfissao.Margin = new Padding(3, 4, 3, 4);
             boxProfissao.Name = "boxProfissao";
