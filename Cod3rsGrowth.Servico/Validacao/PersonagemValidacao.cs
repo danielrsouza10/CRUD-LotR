@@ -20,7 +20,9 @@ public class PersonagemValidacao : AbstractValidator<Personagem>
                 .NotEmpty().WithMessage("Deve ser informado um id correspondente a raça do personagem");
             RuleFor(personagem => personagem.EstaVivo)
                 .NotNull().WithMessage("É necessário informar se o personagem está vivo ou não");
-            
+            RuleFor(Personagem => Personagem.Profissao)
+                .NotNull().WithMessage("É necessário selecionar uma classe")
+                .IsInEnum().WithMessage("É necessário selecionar uma classe");
         });
         RuleSet("Edicao", () => 
         {

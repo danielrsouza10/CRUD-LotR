@@ -11,8 +11,8 @@ namespace Infra.Migrations
             Create.Table("Raca")
                 .WithColumn("Id").AsInt32().PrimaryKey().Identity().NotNullable()
                 .WithColumn("Nome").AsString().NotNullable()
-                .WithColumn("LocalizacaoGeografica").AsString()
-                .WithColumn("HabilidadeRacial").AsString()
+                .WithColumn("LocalizacaoGeografica").AsString().Nullable()
+                .WithColumn("HabilidadeRacial").AsString().Nullable()
                 .WithColumn("EstaExtinta").AsBoolean().NotNullable();
         }
         public override void Down()

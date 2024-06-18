@@ -29,15 +29,15 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            DataGridViewCellStyle dataGridViewCellStyle18 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle13 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle14 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle15 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle16 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle17 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
             dataGridView1 = new DataGridView();
             idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             nomeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
@@ -50,7 +50,7 @@
             personagemBindingSource = new BindingSource(components);
             personagemBindingSource2 = new BindingSource(components);
             personagemBindingSource1 = new BindingSource(components);
-            button1 = new Button();
+            buttonAdicionar = new Button();
             button2 = new Button();
             button3 = new Button();
             barraDePesquisa = new TextBox();
@@ -58,6 +58,7 @@
             idRadioButton = new RadioButton();
             dateTimePicker = new DateTimePicker();
             vivoCheckBox = new CheckBox();
+            buttonReset = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)personagemBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)personagemBindingSource2).BeginInit();
@@ -68,30 +69,34 @@
             // 
             dataGridView1.AutoGenerateColumns = false;
             dataGridView1.BackgroundColor = SystemColors.Control;
+            dataGridView1.BorderStyle = BorderStyle.None;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn, nomeDataGridViewTextBoxColumn, idRacaDataGridViewTextBoxColumn, profissaoDataGridViewTextBoxColumn, idadeDataGridViewTextBoxColumn, alturaDataGridViewTextBoxColumn, estaVivoDataGridViewCheckBoxColumn, dataDoCadastroDataGridViewTextBoxColumn });
             dataGridView1.DataSource = personagemBindingSource;
-            dataGridViewCellStyle18.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle18.BackColor = SystemColors.Window;
-            dataGridViewCellStyle18.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle18.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle18.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle18.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle18.WrapMode = DataGridViewTriState.False;
-            dataGridView1.DefaultCellStyle = dataGridViewCellStyle18;
-            dataGridView1.Location = new Point(12, 40);
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.BackColor = SystemColors.Window;
+            dataGridViewCellStyle9.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle9.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle9.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.False;
+            dataGridView1.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridView1.Location = new Point(14, 53);
+            dataGridView1.Margin = new Padding(3, 4, 3, 4);
             dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowHeadersWidth = 51;
             dataGridView1.RowTemplate.Height = 25;
-            dataGridView1.Size = new Size(915, 372);
+            dataGridView1.Size = new Size(1058, 496);
             dataGridView1.TabIndex = 0;
             // 
             // idDataGridViewTextBoxColumn
             // 
             idDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            idDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            idDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
             idDataGridViewTextBoxColumn.HeaderText = "Id";
+            idDataGridViewTextBoxColumn.MinimumWidth = 6;
             idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
             idDataGridViewTextBoxColumn.Width = 50;
             // 
@@ -99,62 +104,75 @@
             // 
             nomeDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             nomeDataGridViewTextBoxColumn.DataPropertyName = "Nome";
-            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            nomeDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            nomeDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
             nomeDataGridViewTextBoxColumn.HeaderText = "Nome";
+            nomeDataGridViewTextBoxColumn.MinimumWidth = 6;
             nomeDataGridViewTextBoxColumn.Name = "nomeDataGridViewTextBoxColumn";
             // 
             // idRacaDataGridViewTextBoxColumn
             // 
             idRacaDataGridViewTextBoxColumn.DataPropertyName = "IdRaca";
-            dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            idRacaDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            idRacaDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle3;
             idRacaDataGridViewTextBoxColumn.HeaderText = "IdRaca";
+            idRacaDataGridViewTextBoxColumn.MinimumWidth = 6;
             idRacaDataGridViewTextBoxColumn.Name = "idRacaDataGridViewTextBoxColumn";
+            idRacaDataGridViewTextBoxColumn.Width = 125;
             // 
             // profissaoDataGridViewTextBoxColumn
             // 
             profissaoDataGridViewTextBoxColumn.DataPropertyName = "Profissao";
-            dataGridViewCellStyle13.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            profissaoDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            profissaoDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle4;
             profissaoDataGridViewTextBoxColumn.HeaderText = "Profissao";
+            profissaoDataGridViewTextBoxColumn.MinimumWidth = 6;
             profissaoDataGridViewTextBoxColumn.Name = "profissaoDataGridViewTextBoxColumn";
+            profissaoDataGridViewTextBoxColumn.Width = 125;
             // 
             // idadeDataGridViewTextBoxColumn
             // 
             idadeDataGridViewTextBoxColumn.DataPropertyName = "Idade";
-            dataGridViewCellStyle14.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            idadeDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            idadeDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle5;
             idadeDataGridViewTextBoxColumn.HeaderText = "Idade";
+            idadeDataGridViewTextBoxColumn.MinimumWidth = 6;
             idadeDataGridViewTextBoxColumn.Name = "idadeDataGridViewTextBoxColumn";
+            idadeDataGridViewTextBoxColumn.Width = 125;
             // 
             // alturaDataGridViewTextBoxColumn
             // 
             alturaDataGridViewTextBoxColumn.DataPropertyName = "Altura";
-            dataGridViewCellStyle15.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            alturaDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            alturaDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle6;
             alturaDataGridViewTextBoxColumn.HeaderText = "Altura";
+            alturaDataGridViewTextBoxColumn.MinimumWidth = 6;
             alturaDataGridViewTextBoxColumn.Name = "alturaDataGridViewTextBoxColumn";
+            alturaDataGridViewTextBoxColumn.Width = 125;
             // 
             // estaVivoDataGridViewCheckBoxColumn
             // 
             estaVivoDataGridViewCheckBoxColumn.DataPropertyName = "EstaVivo";
-            dataGridViewCellStyle16.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            estaVivoDataGridViewCheckBoxColumn.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            estaVivoDataGridViewCheckBoxColumn.DefaultCellStyle = dataGridViewCellStyle7;
             estaVivoDataGridViewCheckBoxColumn.HeaderText = "EstaVivo";
+            estaVivoDataGridViewCheckBoxColumn.MinimumWidth = 6;
             estaVivoDataGridViewCheckBoxColumn.Name = "estaVivoDataGridViewCheckBoxColumn";
             estaVivoDataGridViewCheckBoxColumn.Resizable = DataGridViewTriState.True;
             estaVivoDataGridViewCheckBoxColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
+            estaVivoDataGridViewCheckBoxColumn.Width = 125;
             // 
             // dataDoCadastroDataGridViewTextBoxColumn
             // 
             dataDoCadastroDataGridViewTextBoxColumn.DataPropertyName = "DataDoCadastro";
-            dataGridViewCellStyle17.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle17.Format = "d";
-            dataGridViewCellStyle17.NullValue = null;
-            dataDoCadastroDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.Format = "d";
+            dataGridViewCellStyle8.NullValue = null;
+            dataDoCadastroDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle8;
             dataDoCadastroDataGridViewTextBoxColumn.HeaderText = "DataDoCadastro";
+            dataDoCadastroDataGridViewTextBoxColumn.MinimumWidth = 6;
             dataDoCadastroDataGridViewTextBoxColumn.Name = "dataDoCadastroDataGridViewTextBoxColumn";
+            dataDoCadastroDataGridViewTextBoxColumn.Width = 125;
             // 
             // personagemBindingSource
             // 
@@ -168,64 +186,71 @@
             // 
             personagemBindingSource1.DataSource = typeof(Dominio.Modelos.Personagem);
             // 
-            // button1
+            // buttonAdicionar
             // 
-            button1.Location = new Point(690, 418);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 1;
-            button1.Text = "Adicionar";
-            button1.UseVisualStyleBackColor = true;
+            buttonAdicionar.Location = new Point(802, 556);
+            buttonAdicionar.Margin = new Padding(3, 4, 3, 4);
+            buttonAdicionar.Name = "buttonAdicionar";
+            buttonAdicionar.Size = new Size(86, 31);
+            buttonAdicionar.TabIndex = 1;
+            buttonAdicionar.Text = "Adicionar";
+            buttonAdicionar.UseVisualStyleBackColor = true;
+            buttonAdicionar.Click += AoClicarNoBotaoAdicionarDeveAbrirAJanelaDeCriacao;
             // 
             // button2
             // 
-            button2.Location = new Point(771, 418);
+            button2.Location = new Point(894, 556);
+            button2.Margin = new Padding(3, 4, 3, 4);
             button2.Name = "button2";
-            button2.Size = new Size(75, 23);
+            button2.Size = new Size(86, 31);
             button2.TabIndex = 2;
             button2.Text = "Editar";
             button2.UseVisualStyleBackColor = true;
             // 
             // button3
             // 
-            button3.Location = new Point(852, 418);
+            button3.Location = new Point(986, 556);
+            button3.Margin = new Padding(3, 4, 3, 4);
             button3.Name = "button3";
-            button3.Size = new Size(75, 23);
+            button3.Size = new Size(86, 31);
             button3.TabIndex = 3;
             button3.Text = "Remover";
             button3.UseVisualStyleBackColor = true;
             // 
             // barraDePesquisa
             // 
-            barraDePesquisa.Location = new Point(12, 10);
+            barraDePesquisa.Location = new Point(14, 13);
+            barraDePesquisa.Margin = new Padding(3, 4, 3, 4);
             barraDePesquisa.Multiline = true;
             barraDePesquisa.Name = "barraDePesquisa";
             barraDePesquisa.PlaceholderText = "Pesquise o personagem...";
-            barraDePesquisa.Size = new Size(504, 23);
+            barraDePesquisa.Size = new Size(575, 29);
             barraDePesquisa.TabIndex = 4;
-            barraDePesquisa.TextChanged += barraDePesquisa_TextChanged;
-            barraDePesquisa.Enter += barraDePesquisa_Enter;
-            barraDePesquisa.Leave += barraDePesquisa_Leave;
+            barraDePesquisa.TextChanged += AoDigitarNaBarraDePesquisaDeveListarOsItensCorrespondentesAPesquisa;
+            barraDePesquisa.Enter += AoEntrarNaBarraDePesquisaDeveLimparOPlaceholder;
+            barraDePesquisa.Leave += AoSairDaBarraDePesquisaDeveAdicionarOPlaceholder;
             // 
             // nomeRadioButton
             // 
             nomeRadioButton.AutoSize = true;
             nomeRadioButton.Checked = true;
-            nomeRadioButton.Location = new Point(522, 11);
+            nomeRadioButton.Location = new Point(597, 15);
+            nomeRadioButton.Margin = new Padding(3, 4, 3, 4);
             nomeRadioButton.Name = "nomeRadioButton";
-            nomeRadioButton.Size = new Size(58, 19);
+            nomeRadioButton.Size = new Size(71, 24);
             nomeRadioButton.TabIndex = 5;
             nomeRadioButton.TabStop = true;
             nomeRadioButton.Text = "Nome";
             nomeRadioButton.UseVisualStyleBackColor = true;
-            nomeRadioButton.CheckedChanged += nomeRadioButton_CheckedChanged;
+            nomeRadioButton.CheckedChanged += AoAlterarASelecaoDoImputRadioDeNomeDeveAtualizarALista;
             // 
             // idRadioButton
             // 
             idRadioButton.AutoSize = true;
-            idRadioButton.Location = new Point(586, 12);
+            idRadioButton.Location = new Point(670, 16);
+            idRadioButton.Margin = new Padding(3, 4, 3, 4);
             idRadioButton.Name = "idRadioButton";
-            idRadioButton.Size = new Size(35, 19);
+            idRadioButton.Size = new Size(43, 24);
             idRadioButton.TabIndex = 6;
             idRadioButton.TabStop = true;
             idRadioButton.Text = "Id";
@@ -233,28 +258,41 @@
             // 
             // dateTimePicker
             // 
-            dateTimePicker.Location = new Point(683, 10);
+            dateTimePicker.Location = new Point(781, 13);
+            dateTimePicker.Margin = new Padding(3, 4, 3, 4);
             dateTimePicker.Name = "dateTimePicker";
-            dateTimePicker.Size = new Size(244, 23);
+            dateTimePicker.Size = new Size(291, 27);
             dateTimePicker.TabIndex = 7;
             // 
             // vivoCheckBox
             // 
             vivoCheckBox.AutoSize = true;
-            vivoCheckBox.Location = new Point(627, 13);
+            vivoCheckBox.Location = new Point(717, 17);
+            vivoCheckBox.Margin = new Padding(3, 4, 3, 4);
             vivoCheckBox.Name = "vivoCheckBox";
-            vivoCheckBox.Size = new Size(49, 19);
+            vivoCheckBox.Size = new Size(60, 24);
             vivoCheckBox.TabIndex = 8;
             vivoCheckBox.Text = "Vivo";
             vivoCheckBox.UseVisualStyleBackColor = true;
-            vivoCheckBox.CheckedChanged += vivoCheckBox_CheckedChanged;
+            vivoCheckBox.CheckedChanged += AoDarCheckNoBoxVivoDeveFiltarALista;
+            // 
+            // buttonReset
+            // 
+            buttonReset.Location = new Point(12, 556);
+            buttonReset.Name = "buttonReset";
+            buttonReset.Size = new Size(94, 29);
+            buttonReset.TabIndex = 9;
+            buttonReset.Text = "Reset";
+            buttonReset.UseVisualStyleBackColor = true;
+            buttonReset.Click += AoClicarNoBotaoResetDeveCarregarAListaSemFiltrosAplicados;
             // 
             // MainForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
-            ClientSize = new Size(939, 450);
+            ClientSize = new Size(1084, 600);
+            Controls.Add(buttonReset);
             Controls.Add(vivoCheckBox);
             Controls.Add(dateTimePicker);
             Controls.Add(idRadioButton);
@@ -262,8 +300,10 @@
             Controls.Add(barraDePesquisa);
             Controls.Add(button3);
             Controls.Add(button2);
-            Controls.Add(button1);
+            Controls.Add(buttonAdicionar);
             Controls.Add(dataGridView1);
+            Margin = new Padding(3, 4, 3, 4);
+            MaximizeBox = false;
             Name = "MainForm";
             Text = "O Senhor dos Anéis DB";
             Load += MainForm_Load;
@@ -279,7 +319,7 @@
 
         private DataGridView dataGridView1;
         private BindingSource personagemBindingSource;
-        private Button button1;
+        private Button buttonAdicionar;
         private Button button2;
         private Button button3;
         private BindingSource personagemBindingSource1;
@@ -297,5 +337,6 @@
         private DataGridViewTextBoxColumn estaVivoDataGridViewCheckBoxColumn;
         private DataGridViewTextBoxColumn dataDoCadastroDataGridViewTextBoxColumn;
         private CheckBox vivoCheckBox;
+        private Button buttonReset;
     }
 }

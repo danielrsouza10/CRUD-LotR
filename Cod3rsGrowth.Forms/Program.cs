@@ -28,7 +28,7 @@ namespace Forms
            var host = CreateHostBuilder().Build();
            ServiceProvider = host.Services;
            
-           Application.Run(new MainForm(ServiceProvider.GetRequiredService<ServicoPersonagem>()));
+           Application.Run(new MainForm(ServiceProvider.GetRequiredService<ServicoPersonagem>(), ServiceProvider.GetRequiredService<ServicoRaca>()));
             
             using (var serviceProvider = CreateServices())
             using (var scope = serviceProvider.CreateScope())
