@@ -20,78 +20,6 @@ namespace Forms
             _servicoRaca = servicoRaca;
             InitializeComponent();
         }
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            InicializarListaDePersonagens();
-        }
-        private void InicializarListaDePersonagens()
-        {
-            LimparFiltro();
-            gridDeDados.DataSource = _servicoPersonagem.ObterTodos(filtro);
-            gridDeDados.Columns["Id"].Width = 75;
-            gridDeDados.ReadOnly = true;
-        }
-
-        private void InicializarListaDeRacas()
-        {
-            LimparFiltro();
-            gridDeDados.DataSource = _servicoRaca.ObterTodos(filtro);
-            gridDeDados.Columns["Id"].Width = 75;
-            gridDeDados.ReadOnly = true;
-        }
-        private void AoDigitarNaBarraDePesquisaDeveListarOsItensCorrespondentesAPesquisa(object sender, EventArgs e)
-        {
-            filtro.Nome = nomeRadioButton.Checked ? barraDePesquisa.Text : null;
-            if (idRadioButton.Checked)
-            {
-                try
-                {
-                    filtro.Id = int.Parse(barraDePesquisa.Text);
-                    gridDeDados.DataSource = _servicoPersonagem.ObterTodos(filtro);
-                }
-                catch { }
-            }
-            gridDeDados.DataSource = _servicoPersonagem.ObterTodos(filtro);
-        }
-        private void AoEntrarNaBarraDePesquisaDeveLimparOPlaceholder(object sender, EventArgs e)
-        {
-            barraDePesquisa.PlaceholderText = string.Empty;
-        }
-        private void AoSairDaBarraDePesquisaDeveAdicionarOPlaceholder(object sender, EventArgs e)
-        {
-            barraDePesquisa.PlaceholderText = "Pesquise o personagem...";
-        }
-        private void AoDarCheckNoBoxVivoDeveFiltarALista(object sender, EventArgs e)
-        {
-            LimparFiltro();
-            barraDePesquisa.Text = string.Empty;
-            filtro.EstaVivo = vivoCheckBox.Checked;
-            InicializarListaDePersonagens();
-        }
-        private void AoSelecionarUmaDataDeveAdicionarOValorAoFiltro(object sender, EventArgs e)
-        {
-            filtro.DataDoCadastro = dateTimePicker.Value;
-            InicializarListaDePersonagens();
-        }
-        private void AoAlterarASelecaoDoImputRadioDeNomeDeveAtualizarALista(object sender, EventArgs e)
-        {
-            LimparFiltro();
-            barraDePesquisa.Text = string.Empty;
-            InicializarListaDePersonagens();
-        }
-
-        private void AoClicarNoBotaoAdicionarDeveAbrirAJanelaDeCriacao(object sender, EventArgs e)
-        {
-            var criacaoPersonagem = new CriacaoPersonagemForm(_servicoPersonagem, _servicoRaca);
-            criacaoPersonagem.Show();
-        }
-
-        private void AoClicarNoBotaoResetDeveCarregarAListaSemFiltrosAplicados(object sender, EventArgs e)
-        {
-            LimparFiltro();
-            barraDePesquisa.Text = string.Empty;
-            InicializarListaDePersonagens();
-        }
         private void LimparFiltro()
         {
             filtro.Nome = null;
@@ -100,13 +28,84 @@ namespace Forms
             filtro.Id = null;
         }
 
+        private void IniciarFormPrincipal(object sender, EventArgs e)
+        {
+            InicializarListaDePersonagens();
+            InicializarListaDeRacas();
+        }
+        private void InicializarListaDePersonagens()
+        {
+            LimparFiltro();
+            gridPersonagens.DataSource = _servicoPersonagem.ObterTodos(filtro);
+        }
+
+        private void InicializarListaDeRacas()
+        {
+            LimparFiltro();
+            gridRacas.DataSource = _servicoRaca.ObterTodos(filtro);
+        }
+        private void AoDigitarNaBarraDePesquisaDeveListarOsItensCorrespondentesAPesquisa(object sender, EventArgs e)
+        {
+            filtro.Nome = nomeRadioButton.Checked ? barraDePesquisaDePersonagem.Text : null;
+            if (idRadioButton.Checked)
+            {
+                try
+                {
+                    filtro.Id = int.Parse(barraDePesquisaDePersonagem.Text);
+                    gridPersonagens.DataSource = _servicoPersonagem.ObterTodos(filtro);
+                }
+                catch { }
+            }
+            gridPersonagens.DataSource = _servicoPersonagem.ObterTodos(filtro);
+        }
+        private void AoEntrarNaBarraDePesquisaDeveLimparOPlaceholder(object sender, EventArgs e)
+        {
+            barraDePesquisaDePersonagem.PlaceholderText = string.Empty;
+        }
+        private void AoSairDaBarraDePesquisaDeveAdicionarOPlaceholder(object sender, EventArgs e)
+        {
+            
+     
+        }
+        private void AoDarCheckNoBoxVivoDeveFiltarALista(object sender, EventArgs e)
+        {
+            barraDePesquisaDePersonagem.Text = string.Empty;
+            filtro.EstaVivo = vivoCheckBox.Checked;
+            gridPersonagens.DataSource = _servicoPersonagem.ObterTodos(filtro);
+        }
+        private void AoSelecionarUmaDataDeveAdicionarOValorAoFiltro(object sender, EventArgs e)
+        {
+            filtro.DataDoCadastro = dateTimePicker.Value;
+            gridPersonagens.DataSource = _servicoPersonagem.ObterTodos(filtro);
+        }
+        private void AoAlterarASelecaoDoImputRadioDeNomeDeveAtualizarALista(object sender, EventArgs e)
+        {
+            LimparFiltro();
+            barraDePesquisaDePersonagem.Text = string.Empty;
+            gridPersonagens.DataSource = _servicoPersonagem.ObterTodos(filtro);
+        }
+
+        private void AoClicarNoBotaoAdicionarDeveAbrirAJanelaDeCriacao(object sender, EventArgs e)
+        {
+            var criacaoPersonagem = new CriacaoPersonagemForm(_servicoPersonagem, _servicoRaca);
+            criacaoPersonagem.Show();
+            InicializarListaDePersonagens();
+        }
+
+        private void AoClicarNoBotaoResetDeveCarregarAListaSemFiltrosAplicados(object sender, EventArgs e)
+        {
+            LimparFiltro();
+            barraDePesquisaDePersonagem.Text = string.Empty;
+            InicializarListaDePersonagens();
+        }
+
         private void AoClicarNoBotaoRemoverDevePedirConfirmacaoERemoverPersonagemSelecionado(object sender, EventArgs e)
         {
-            var idDaLinhaSelecionadaNoDataGridView = gridDeDados.CurrentCell.RowIndex;
+            var idDaLinhaSelecionadaNoDataGridView = gridPersonagens.CurrentCell.RowIndex;
             var valorDaColunaRespectivaAoId = 0;
             try
             {
-                var idDoPersonagemSelecionado = int.Parse(gridDeDados.Rows[idDaLinhaSelecionadaNoDataGridView]
+                int idDoPersonagemSelecionado = int.Parse(gridPersonagens.Rows[idDaLinhaSelecionadaNoDataGridView]
                                                     .Cells[valorDaColunaRespectivaAoId].Value
                                                     .ToString());
                 var retornoDaConfirmacaoDoUsuario = MessageBox.Show("Tem certeza que quer remover o personagem selecionado?", "Confirme sua escolha", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -121,18 +120,12 @@ namespace Forms
                     }
                 LimparFiltro();
                 InicializarListaDePersonagens();
-            
             }
-            catch { 
+            catch 
+            { 
                 MessageBox.Show("Lista vazia", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-}
-
-        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
-        {
-
         }
-
         private void AoClicarNoMenuDeRacasDeveListarTodasAsRacasNoDataGrid(object sender, EventArgs e)
         {
             InicializarListaDeRacas();
