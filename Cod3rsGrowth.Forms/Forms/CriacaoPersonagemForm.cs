@@ -60,7 +60,7 @@ namespace Forms.Forms
 
             } catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message,"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
