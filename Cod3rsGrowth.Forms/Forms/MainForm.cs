@@ -26,7 +26,18 @@ namespace Forms
         }
         private void InicializarListaDePersonagens()
         {
-            dataGridView1.DataSource = _servicoPersonagem.ObterTodos(filtro);
+            LimparFiltro();
+            gridDeDados.DataSource = _servicoPersonagem.ObterTodos(filtro);
+            gridDeDados.Columns["Id"].Width = 75;
+            gridDeDados.ReadOnly = true;
+        }
+
+        private void InicializarListaDeRacas()
+        {
+            LimparFiltro();
+            gridDeDados.DataSource = _servicoRaca.ObterTodos(filtro);
+            gridDeDados.Columns["Id"].Width = 75;
+            gridDeDados.ReadOnly = true;
         }
         private void AoDigitarNaBarraDePesquisaDeveListarOsItensCorrespondentesAPesquisa(object sender, EventArgs e)
         {
@@ -36,11 +47,11 @@ namespace Forms
                 try
                 {
                     filtro.Id = int.Parse(barraDePesquisa.Text);
-                    dataGridView1.DataSource = _servicoPersonagem.ObterTodos(filtro);
+                    gridDeDados.DataSource = _servicoPersonagem.ObterTodos(filtro);
                 }
                 catch { }
             }
-            dataGridView1.DataSource = _servicoPersonagem.ObterTodos(filtro);
+            gridDeDados.DataSource = _servicoPersonagem.ObterTodos(filtro);
         }
         private void AoEntrarNaBarraDePesquisaDeveLimparOPlaceholder(object sender, EventArgs e)
         {
@@ -91,14 +102,36 @@ namespace Forms
 
         private void AoClicarNoBotaoRemoverDevePedirConfirmacaoERemoverPersonagemSelecionado(object sender, EventArgs e)
         {
-            var idDaLinhaSelecionadaNoDataGridView = dataGridView1.CurrentCell.RowIndex;
+            var idDaLinhaSelecionadaNoDataGridView = gridDeDados.CurrentCell.RowIndex;
             var valorDaColunaRespectivaAoId = 0;
-            var idDoPersonagemSelecionado = int.Parse(dataGridView1.Rows[idDaLinhaSelecionadaNoDataGridView]
+            var idDoPersonagemSelecionado = int.Parse(gridDeDados.Rows[idDaLinhaSelecionadaNoDataGridView]
                                                 .Cells[valorDaColunaRespectivaAoId].Value
                                                 .ToString());
-            var retornoDaConfirmacaoDoUsuario = MessageBox.Show("Tem certeza que quer remover o personagem selecionado?", "Confirme sua escolha",MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if(retornoDaConfirmacaoDoUsuario == DialogResult.Yes) _servicoPersonagem.Deletar(idDoPersonagemSelecionado);
+            var retornoDaConfirmacaoDoUsuario = MessageBox.Show("Tem certeza que quer remover o personagem selecionado?", "Confirme sua escolha", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (retornoDaConfirmacaoDoUsuario == DialogResult.Yes)
+                try
+                {
+                    _servicoPersonagem.Deletar(idDoPersonagemSelecionado);
+                }
+                catch (Exception ex) {
+                    MessageBox.Show(ex.Message);
+                }
             LimparFiltro();
+            InicializarListaDePersonagens();
+        }
+
+        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void AoClicarNoMenuDeRacasDeveListarTodasAsRacasNoDataGrid(object sender, EventArgs e)
+        {
+            InicializarListaDeRacas();
+        }
+
+        private void AoClicarNoMenuDePersonagensDeveListarTodasOsPersonagensNoDataGrid(object sender, EventArgs e)
+        {
             InicializarListaDePersonagens();
         }
     }
