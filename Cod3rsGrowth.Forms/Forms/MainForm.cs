@@ -104,21 +104,29 @@ namespace Forms
         {
             var idDaLinhaSelecionadaNoDataGridView = gridDeDados.CurrentCell.RowIndex;
             var valorDaColunaRespectivaAoId = 0;
-            var idDoPersonagemSelecionado = int.Parse(gridDeDados.Rows[idDaLinhaSelecionadaNoDataGridView]
-                                                .Cells[valorDaColunaRespectivaAoId].Value
-                                                .ToString());
-            var retornoDaConfirmacaoDoUsuario = MessageBox.Show("Tem certeza que quer remover o personagem selecionado?", "Confirme sua escolha", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (retornoDaConfirmacaoDoUsuario == DialogResult.Yes)
-                try
-                {
-                    _servicoPersonagem.Deletar(idDoPersonagemSelecionado);
-                }
-                catch (Exception ex) {
-                    MessageBox.Show(ex.Message);
-                }
-            LimparFiltro();
-            InicializarListaDePersonagens();
-        }
+            try
+            {
+                var idDoPersonagemSelecionado = int.Parse(gridDeDados.Rows[idDaLinhaSelecionadaNoDataGridView]
+                                                    .Cells[valorDaColunaRespectivaAoId].Value
+                                                    .ToString());
+                var retornoDaConfirmacaoDoUsuario = MessageBox.Show("Tem certeza que quer remover o personagem selecionado?", "Confirme sua escolha", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (retornoDaConfirmacaoDoUsuario == DialogResult.Yes)
+                    try
+                    {
+                        _servicoPersonagem.Deletar(idDoPersonagemSelecionado);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                LimparFiltro();
+                InicializarListaDePersonagens();
+            
+            }
+            catch { 
+                MessageBox.Show("Lista vazia", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+}
 
         private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
         {
