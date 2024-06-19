@@ -55,26 +55,18 @@ namespace Forms
             LimparFiltro();
             barraDePesquisa.Text = string.Empty;
             filtro.EstaVivo = vivoCheckBox.Checked;
-            dataGridView1.DataSource = _servicoPersonagem.ObterTodos(filtro);
+            InicializarListaDePersonagens();
         }
         private void AoSelecionarUmaDataDeveAdicionarOValorAoFiltro(object sender, EventArgs e)
         {
             filtro.DataDoCadastro = dateTimePicker.Value;
-            dataGridView1.DataSource = _servicoPersonagem.ObterTodos(filtro);
+            InicializarListaDePersonagens();
         }
         private void AoAlterarASelecaoDoImputRadioDeNomeDeveAtualizarALista(object sender, EventArgs e)
         {
             LimparFiltro();
             barraDePesquisa.Text = string.Empty;
-            dataGridView1.DataSource = _servicoPersonagem.ObterTodos(filtro);
-        }
-        private void LimparFiltro()
-        {
-            filtro.Nome = null;
-            filtro.EstaVivo = null;
-            filtro.DataDoCadastro = null;
-            filtro.Id = null;
-            dataGridView1.DataSource = _servicoPersonagem.ObterTodos(filtro);
+            InicializarListaDePersonagens();
         }
 
         private void AoClicarNoBotaoAdicionarDeveAbrirAJanelaDeCriacao(object sender, EventArgs e)
@@ -87,7 +79,27 @@ namespace Forms
         {
             LimparFiltro();
             barraDePesquisa.Text = string.Empty;
-            dataGridView1.DataSource = _servicoPersonagem.ObterTodos(filtro);
+            InicializarListaDePersonagens();
+        }
+        private void LimparFiltro()
+        {
+            filtro.Nome = null;
+            filtro.EstaVivo = null;
+            filtro.DataDoCadastro = null;
+            filtro.Id = null;
+        }
+
+        private void AoClicarNoBotaoRemoverDevePedirConfirmacaoERemoverPersonagemSelecionado(object sender, EventArgs e)
+        {
+            var idDaLinhaSelecionadaNoDataGridView = dataGridView1.CurrentCell.RowIndex;
+            var valorDaColunaRespectivaAoId = 0;
+            var idDoPersonagemSelecionado = int.Parse(dataGridView1.Rows[idDaLinhaSelecionadaNoDataGridView]
+                                                .Cells[valorDaColunaRespectivaAoId].Value
+                                                .ToString());
+            var retornoDaConfirmacaoDoUsuario = MessageBox.Show("Tem certeza que quer remover o personagem selecionado?", "Confirme sua escolha",MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if(retornoDaConfirmacaoDoUsuario == DialogResult.Yes) _servicoPersonagem.Deletar(idDoPersonagemSelecionado);
+            LimparFiltro();
+            InicializarListaDePersonagens();
         }
     }
 }

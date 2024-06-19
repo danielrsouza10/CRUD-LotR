@@ -67,6 +67,8 @@
             // 
             // dataGridView1
             // 
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.AutoGenerateColumns = false;
             dataGridView1.BackgroundColor = SystemColors.Control;
             dataGridView1.BorderStyle = BorderStyle.None;
@@ -84,6 +86,7 @@
             dataGridView1.Location = new Point(14, 53);
             dataGridView1.Margin = new Padding(3, 4, 3, 4);
             dataGridView1.Name = "dataGridView1";
+            dataGridView1.ReadOnly = true;
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.RowTemplate.Height = 25;
             dataGridView1.Size = new Size(1058, 496);
@@ -95,20 +98,25 @@
             idDataGridViewTextBoxColumn.DataPropertyName = "Id";
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             idDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
+            idDataGridViewTextBoxColumn.Frozen = true;
             idDataGridViewTextBoxColumn.HeaderText = "Id";
             idDataGridViewTextBoxColumn.MinimumWidth = 6;
             idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            idDataGridViewTextBoxColumn.ReadOnly = true;
             idDataGridViewTextBoxColumn.Width = 50;
             // 
             // nomeDataGridViewTextBoxColumn
             // 
-            nomeDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            nomeDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             nomeDataGridViewTextBoxColumn.DataPropertyName = "Nome";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             nomeDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            nomeDataGridViewTextBoxColumn.Frozen = true;
             nomeDataGridViewTextBoxColumn.HeaderText = "Nome";
             nomeDataGridViewTextBoxColumn.MinimumWidth = 6;
             nomeDataGridViewTextBoxColumn.Name = "nomeDataGridViewTextBoxColumn";
+            nomeDataGridViewTextBoxColumn.ReadOnly = true;
+            nomeDataGridViewTextBoxColumn.Width = 207;
             // 
             // idRacaDataGridViewTextBoxColumn
             // 
@@ -118,6 +126,7 @@
             idRacaDataGridViewTextBoxColumn.HeaderText = "IdRaca";
             idRacaDataGridViewTextBoxColumn.MinimumWidth = 6;
             idRacaDataGridViewTextBoxColumn.Name = "idRacaDataGridViewTextBoxColumn";
+            idRacaDataGridViewTextBoxColumn.ReadOnly = true;
             idRacaDataGridViewTextBoxColumn.Width = 125;
             // 
             // profissaoDataGridViewTextBoxColumn
@@ -128,6 +137,7 @@
             profissaoDataGridViewTextBoxColumn.HeaderText = "Profissao";
             profissaoDataGridViewTextBoxColumn.MinimumWidth = 6;
             profissaoDataGridViewTextBoxColumn.Name = "profissaoDataGridViewTextBoxColumn";
+            profissaoDataGridViewTextBoxColumn.ReadOnly = true;
             profissaoDataGridViewTextBoxColumn.Width = 125;
             // 
             // idadeDataGridViewTextBoxColumn
@@ -138,6 +148,7 @@
             idadeDataGridViewTextBoxColumn.HeaderText = "Idade";
             idadeDataGridViewTextBoxColumn.MinimumWidth = 6;
             idadeDataGridViewTextBoxColumn.Name = "idadeDataGridViewTextBoxColumn";
+            idadeDataGridViewTextBoxColumn.ReadOnly = true;
             idadeDataGridViewTextBoxColumn.Width = 125;
             // 
             // alturaDataGridViewTextBoxColumn
@@ -148,6 +159,7 @@
             alturaDataGridViewTextBoxColumn.HeaderText = "Altura";
             alturaDataGridViewTextBoxColumn.MinimumWidth = 6;
             alturaDataGridViewTextBoxColumn.Name = "alturaDataGridViewTextBoxColumn";
+            alturaDataGridViewTextBoxColumn.ReadOnly = true;
             alturaDataGridViewTextBoxColumn.Width = 125;
             // 
             // estaVivoDataGridViewCheckBoxColumn
@@ -158,6 +170,7 @@
             estaVivoDataGridViewCheckBoxColumn.HeaderText = "EstaVivo";
             estaVivoDataGridViewCheckBoxColumn.MinimumWidth = 6;
             estaVivoDataGridViewCheckBoxColumn.Name = "estaVivoDataGridViewCheckBoxColumn";
+            estaVivoDataGridViewCheckBoxColumn.ReadOnly = true;
             estaVivoDataGridViewCheckBoxColumn.Resizable = DataGridViewTriState.True;
             estaVivoDataGridViewCheckBoxColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
             estaVivoDataGridViewCheckBoxColumn.Width = 125;
@@ -172,6 +185,7 @@
             dataDoCadastroDataGridViewTextBoxColumn.HeaderText = "DataDoCadastro";
             dataDoCadastroDataGridViewTextBoxColumn.MinimumWidth = 6;
             dataDoCadastroDataGridViewTextBoxColumn.Name = "dataDoCadastroDataGridViewTextBoxColumn";
+            dataDoCadastroDataGridViewTextBoxColumn.ReadOnly = true;
             dataDoCadastroDataGridViewTextBoxColumn.Width = 125;
             // 
             // personagemBindingSource
@@ -216,6 +230,7 @@
             button3.TabIndex = 3;
             button3.Text = "Remover";
             button3.UseVisualStyleBackColor = true;
+            button3.Click += AoClicarNoBotaoRemoverDevePedirConfirmacaoERemoverPersonagemSelecionado;
             // 
             // barraDePesquisa
             // 
@@ -328,6 +343,8 @@
         private RadioButton nomeRadioButton;
         private RadioButton idRadioButton;
         private DateTimePicker dateTimePicker;
+        private CheckBox vivoCheckBox;
+        private Button buttonReset;
         private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn nomeDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn idRacaDataGridViewTextBoxColumn;
@@ -336,7 +353,5 @@
         private DataGridViewTextBoxColumn alturaDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn estaVivoDataGridViewCheckBoxColumn;
         private DataGridViewTextBoxColumn dataDoCadastroDataGridViewTextBoxColumn;
-        private CheckBox vivoCheckBox;
-        private Button buttonReset;
     }
 }
