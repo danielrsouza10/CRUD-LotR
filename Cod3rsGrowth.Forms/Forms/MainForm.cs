@@ -5,6 +5,7 @@ using Dominio.Validacao;
 using Forms.Forms;
 using Servico.Servicos;
 using System.ComponentModel;
+using System.Drawing.Text;
 
 namespace Forms
 {
@@ -13,6 +14,7 @@ namespace Forms
         private readonly ServicoPersonagem _servicoPersonagem;
         private readonly ServicoRaca _servicoRaca;
         Filtro filtro = new Filtro();
+        private BindingSource _listaPersonagemCombinada;
 
         public MainForm(ServicoPersonagem servicoPersonagem, ServicoRaca servicoRaca)
         {
@@ -36,7 +38,24 @@ namespace Forms
         private void InicializarListaDePersonagens()
         {
             LimparFiltro();
-            gridPersonagens.DataSource = _servicoPersonagem.ObterTodos(filtro);
+            var listaDePersonagens = _servicoPersonagem.ObterTodos(filtro);
+            var listaDeRacas = _servicoRaca.ObterTodos(filtro);
+            var listaCombinada = from personagem in listaDePersonagens
+                                 join raca in listaDeRacas on personagem.IdRaca equals raca.Id
+                                 select new
+                                 {
+                                     personagem.Id,
+                                     personagem.Nome,
+                                     Raca = raca.Nome,
+                                     personagem.Profissao,
+                                     personagem.Idade,
+                                     personagem.Altura,
+                                     personagem.EstaVivo,
+                                     personagem.DataDoCadastro
+                                 };
+            _listaPersonagemCombinada = new BindingSource();
+            _listaPersonagemCombinada.DataSource = listaCombinada.ToList();
+            gridPersonagens.DataSource = _listaPersonagemCombinada;
         }
 
         private void InicializarListaDeRacas()
