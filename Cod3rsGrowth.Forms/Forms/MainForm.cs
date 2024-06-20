@@ -55,6 +55,7 @@ namespace Forms
 
             var bindingList = new BindingList<object>(listaCombinada.Cast<object>().ToList());
             gridPersonagens.DataSource = bindingList;
+            gridPersonagens.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             var POSICAO_ESTA_VIVO_NA_TABELA = 6;
             var POSICAO_DATA_DE_CADASTRO_NA_TABELA = 7;
             if(gridPersonagens.Columns.Count>0)
@@ -66,6 +67,7 @@ namespace Forms
         private void InicializarListaDeRacas(Filtro filtroRaca)
         {
             gridRacas.DataSource = _servicoRaca.ObterTodos(filtroRaca);
+            gridRacas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             var POSICAO_HABILIDADE_RACIAL_NA_TABELA = 2;
             var POSICAO_LOCALIZACAO_GEOGRAFICA_NA_TABELA = 3;
             var POSICAO_ESTA_EXTINTA_NA_TABELA = 4;

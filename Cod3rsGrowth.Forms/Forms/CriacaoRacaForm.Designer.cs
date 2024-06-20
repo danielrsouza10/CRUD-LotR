@@ -159,6 +159,7 @@
             Controls.Add(textBoxNome);
             MaximizeBox = false;
             Name = "CriacaoRacaForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Criar Raça";
             ResumeLayout(false);
             PerformLayout();
