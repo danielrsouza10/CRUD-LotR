@@ -1,18 +1,7 @@
 ﻿using Dominio.ENUMS;
 using Dominio.Filtros;
 using Dominio.Modelos;
-using Microsoft.Extensions.DependencyInjection;
 using Servico.Servicos;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.ServiceModel.Syndication;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Forms.Forms
 {
@@ -28,20 +17,16 @@ namespace Forms.Forms
             _servicoRaca = servicoRaca;
             InitializeComponent();
         }
-
         public void CriacaoPersonagem_Load(object sender, EventArgs e)
         {
             boxRacas.DataSource = _servicoRaca.ObterTodos(filtro);
             boxRacas.DisplayMember = "Nome";
-            boxProfissao.DataSource = Enum.GetValues(typeof(ProfissaoEnum));
-            
+            boxProfissao.DataSource = Enum.GetValues(typeof(ProfissaoEnum)); 
         }
-
         private void AoClicarNoBotaoCancelarDeveFecharAJanelaDeCriacao(object sender, EventArgs e)
         {
             this.Close();
         }
-
         private void AoClicarNoBotaoCriarDeveCriarUmPersonagemOuDispararUmaExcecao(object sender, EventArgs e)
         {
             try
@@ -57,7 +42,6 @@ namespace Forms.Forms
 
                 _servicoPersonagem.Criar(personagem);
                 this.Close();
-
             } catch (Exception ex)
             {
                 MessageBox.Show(ex.Message,"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);

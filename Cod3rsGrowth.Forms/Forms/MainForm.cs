@@ -1,11 +1,7 @@
-using Dominio.ENUMS;
 using Dominio.Filtros;
-using Dominio.Modelos;
-using Dominio.Validacao;
 using Forms.Forms;
 using Servico.Servicos;
 using System.ComponentModel;
-using System.Drawing.Text;
 
 namespace Forms
 {
@@ -13,8 +9,8 @@ namespace Forms
     {
         private readonly ServicoPersonagem _servicoPersonagem;
         private readonly ServicoRaca _servicoRaca;
-        Filtro filtro = new Filtro();
-        private BindingSource _listaPersonagemCombinada;
+        Filtro filtroPersonagem = new Filtro();
+        Filtro filtroRaca = new Filtro();
 
         public MainForm(ServicoPersonagem servicoPersonagem, ServicoRaca servicoRaca)
         {
@@ -24,111 +20,174 @@ namespace Forms
         }
         private void LimparFiltro()
         {
-            filtro.Nome = null;
-            filtro.EstaVivo = null;
-            filtro.DataDoCadastro = null;
-            filtro.Id = null;
+            filtroPersonagem.Nome = null;
+            filtroPersonagem.EstaVivo = null;
+            filtroPersonagem.DataDoCadastro = null;
+            filtroPersonagem.Id = null;
+            filtroRaca.Nome = null;
+            filtroRaca.EstaExtinta = null;
+            filtroRaca.Id = null;
         }
-
         private void IniciarFormPrincipal(object sender, EventArgs e)
         {
-            InicializarListaDePersonagens();
-            InicializarListaDeRacas();
-        }
-        private void InicializarListaDePersonagens()
-        {
             LimparFiltro();
-            var listaDePersonagens = _servicoPersonagem.ObterTodos(filtro);
-            var listaDeRacas = _servicoRaca.ObterTodos(filtro);
-            var listaCombinada = from personagem in listaDePersonagens
-                                 join raca in listaDeRacas on personagem.IdRaca equals raca.Id
+            InicializarListaDePersonagens(filtroPersonagem, filtroRaca);
+            InicializarListaDeRacas(filtroRaca);
+        }
+        private void InicializarListaDePersonagens(Filtro filtroPersonagem, Filtro filtroRaca)
+        {
+            var personagens = _servicoPersonagem.ObterTodos(filtroPersonagem);
+            var racas = _servicoRaca.ObterTodos(filtroRaca);
+
+            var listaCombinada = from personagem in personagens
+                                 join raca in racas on personagem.IdRaca equals raca.Id
                                  select new
                                  {
-                                     personagem.Id,
-                                     personagem.Nome,
+                                     Id = personagem.Id,
+                                     Nome = personagem.Nome,
                                      Raca = raca.Nome,
-                                     personagem.Profissao,
-                                     personagem.Idade,
-                                     personagem.Altura,
-                                     personagem.EstaVivo,
-                                     personagem.DataDoCadastro
+                                     Profissao = personagem.Profissao,
+                                     Idade = personagem.Idade,
+                                     Altura = personagem.Altura,
+                                     EstaVivo = personagem.EstaVivo,
+                                     DataDoCadastro = personagem.DataDoCadastro
                                  };
-            _listaPersonagemCombinada = new BindingSource();
-            _listaPersonagemCombinada.DataSource = listaCombinada.ToList();
-            gridPersonagens.DataSource = _listaPersonagemCombinada;
-        }
 
-        private void InicializarListaDeRacas()
+            var bindingList = new BindingList<object>(listaCombinada.Cast<object>().ToList());
+            gridPersonagens.DataSource = bindingList;
+            var POSICAO_ESTA_VIVO_NA_TABELA = 6;
+            var POSICAO_DATA_DE_CADASTRO_NA_TABELA = 7;
+            if(gridPersonagens.Columns.Count>0)
+            {
+                gridPersonagens.Columns[POSICAO_ESTA_VIVO_NA_TABELA].HeaderText = "Esta vivo?";
+                gridPersonagens.Columns[POSICAO_DATA_DE_CADASTRO_NA_TABELA].DefaultCellStyle.Format = "dd/MM/yyyy";
+            }
+        }
+        private void InicializarListaDeRacas(Filtro filtroRaca)
+        {
+            gridRacas.DataSource = _servicoRaca.ObterTodos(filtroRaca);
+            var POSICAO_HABILIDADE_RACIAL_NA_TABELA = 2;
+            var POSICAO_LOCALIZACAO_GEOGRAFICA_NA_TABELA = 3;
+            var POSICAO_ESTA_EXTINTA_NA_TABELA = 4;
+
+            gridRacas.Columns[POSICAO_HABILIDADE_RACIAL_NA_TABELA].HeaderText = "Habilidade Racial";
+            gridRacas.Columns[POSICAO_LOCALIZACAO_GEOGRAFICA_NA_TABELA].HeaderText = "Localização Geográfica";
+            gridRacas.Columns[POSICAO_ESTA_EXTINTA_NA_TABELA].HeaderText = "Esta Extinta?";
+        }
+        private void AoClicarNaTabDePersonagensDeveListarTodasOsPersonagensNoDataGrid(object sender, EventArgs e)
         {
             LimparFiltro();
-            gridRacas.DataSource = _servicoRaca.ObterTodos(filtro);
+            InicializarListaDePersonagens(filtroPersonagem, filtroRaca);
         }
-        private void AoDigitarNaBarraDePesquisaDeveListarOsItensCorrespondentesAPesquisa(object sender, EventArgs e)
+        private void AoClicarNaTabDeRacasDeveListarTodasAsRacasNoDataGrid(object sender, EventArgs e)
         {
-            filtro.Nome = nomeRadioButton.Checked ? barraDePesquisaDePersonagem.Text : null;
-            if (idRadioButton.Checked)
+            InicializarListaDeRacas(filtroRaca);
+        }
+        private void AoDigitarNaBarraDePesquisaDePersonagemDeveListarNoDataGrid(object sender, EventArgs e)
+        {
+            filtroPersonagem.Nome = nomePersonagemRadioButton.Checked ? barraDePesquisaDePersonagem.Text : null;
+            if (idPersonagemRadioButton.Checked)
             {
                 try
                 {
-                    filtro.Id = int.Parse(barraDePesquisaDePersonagem.Text);
-                    gridPersonagens.DataSource = _servicoPersonagem.ObterTodos(filtro);
+                    filtroPersonagem.Id = int.Parse(barraDePesquisaDePersonagem.Text);
+                    InicializarListaDePersonagens(filtroPersonagem, filtroRaca);
                 }
                 catch { }
             }
-            gridPersonagens.DataSource = _servicoPersonagem.ObterTodos(filtro);
+            InicializarListaDePersonagens(filtroPersonagem, filtroRaca);
         }
-        private void AoEntrarNaBarraDePesquisaDeveLimparOPlaceholder(object sender, EventArgs e)
+        private void AoDigitarNaBarraDePesquisaDeRacaDeveListarNoDataGrid(object sender, EventArgs e)
         {
-            barraDePesquisaDePersonagem.PlaceholderText = string.Empty;
+            filtroRaca.Nome = nomeRacaRadioButton.Checked ? barraDePesquisaDeRaca.Text : null;
+            filtroRaca.EstaExtinta = racaExtintaCheckBox.Checked ? racaExtintaCheckBox.Checked : null;
+            if (idRacaRadioButton.Checked)
+            {
+                try
+                {
+                    filtroRaca.Id = int.Parse(barraDePesquisaDeRaca.Text);
+                    InicializarListaDeRacas(filtroRaca);
+                }
+                catch { }
+            }
+            InicializarListaDeRacas(filtroRaca);
         }
-        private void AoSairDaBarraDePesquisaDeveAdicionarOPlaceholder(object sender, EventArgs e)
-        {
-            
-     
-        }
-        private void AoDarCheckNoBoxVivoDeveFiltarALista(object sender, EventArgs e)
+        private void AoDarCheckNoBoxVivoDeveFiltarAListaDePersonagens(object sender, EventArgs e)
         {
             barraDePesquisaDePersonagem.Text = string.Empty;
-            filtro.EstaVivo = vivoCheckBox.Checked;
-            gridPersonagens.DataSource = _servicoPersonagem.ObterTodos(filtro);
+            filtroPersonagem.EstaVivo = vivoPersonagemCheckBox.Checked ? vivoPersonagemCheckBox.Checked : null;
+            InicializarListaDePersonagens(filtroPersonagem, filtroRaca);
+        }
+        private void AoDarCheckNoBoxExtintaDeveFiltarAListaDeRacas(object sender, EventArgs e)
+        {
+            barraDePesquisaDeRaca.Text = string.Empty;
+            filtroRaca.EstaExtinta = racaExtintaCheckBox.Checked ? racaExtintaCheckBox.Checked : null;
+            InicializarListaDeRacas(filtroRaca);
         }
         private void AoSelecionarUmaDataDeveAdicionarOValorAoFiltro(object sender, EventArgs e)
         {
-            filtro.DataDoCadastro = dateTimePicker.Value;
-            gridPersonagens.DataSource = _servicoPersonagem.ObterTodos(filtro);
+            filtroPersonagem.DataDoCadastro = dateTimePicker.Value;
+            InicializarListaDePersonagens(filtroPersonagem, filtroRaca);
         }
-        private void AoAlterarASelecaoDoImputRadioDeNomeDeveAtualizarALista(object sender, EventArgs e)
+        private void AoAlterarASelecaoDoImputRadioDeNomePersonagemDeveAtualizarAListaPersonagem(object sender, EventArgs e)
         {
             LimparFiltro();
             barraDePesquisaDePersonagem.Text = string.Empty;
-            gridPersonagens.DataSource = _servicoPersonagem.ObterTodos(filtro);
+            InicializarListaDePersonagens(filtroPersonagem, filtroRaca);
         }
-
+        private void AoAlterarASelecaoDoImputRadioDeNomeRacaDeveAtualizarAListaRaca(object sender, EventArgs e)
+        {
+            LimparFiltro();
+            barraDePesquisaDeRaca.Text = string.Empty;
+            InicializarListaDeRacas(filtroRaca);
+        }
         private void AoClicarNoBotaoAdicionarDeveAbrirAJanelaDeCriacao(object sender, EventArgs e)
         {
-            var criacaoPersonagem = new CriacaoPersonagemForm(_servicoPersonagem, _servicoRaca);
-            criacaoPersonagem.Show();
-            InicializarListaDePersonagens();
+            if(tabControl.SelectedTab == tabPersonagens)
+            {
+                var criacaoPersonagem = new CriacaoPersonagemForm(_servicoPersonagem, _servicoRaca);
+                criacaoPersonagem.ShowDialog();
+                InicializarListaDePersonagens(filtroPersonagem, filtroRaca);
+            } else if(tabControl.SelectedTab == tabRacas)
+            {
+                var criacaoRaca = new CriacaoRacaForm(_servicoRaca);
+                criacaoRaca.ShowDialog();
+                InicializarListaDeRacas(filtroRaca);
+            }
         }
-
-        private void AoClicarNoBotaoResetDeveCarregarAListaSemFiltrosAplicados(object sender, EventArgs e)
+        private void AoClicarNoBotaoResetDeveCarregarAsListasSemFiltrosAplicados(object sender, EventArgs e)
         {
             LimparFiltro();
             barraDePesquisaDePersonagem.Text = string.Empty;
-            InicializarListaDePersonagens();
+            barraDePesquisaDeRaca.Text = string.Empty;
+            InicializarListaDePersonagens(filtroPersonagem, filtroRaca);
+            InicializarListaDeRacas(filtroRaca);
         }
-
-        private void AoClicarNoBotaoRemoverDevePedirConfirmacaoERemoverPersonagemSelecionado(object sender, EventArgs e)
+        private void AoClicarNoBotaoRemoverDeveVerificarTabAtivaERemoverDeAcordo(object sender, EventArgs e)
         {
-            var idDaLinhaSelecionadaNoDataGridView = gridPersonagens.CurrentCell.RowIndex;
-            var valorDaColunaRespectivaAoId = 0;
+            if(tabControl.SelectedTab == tabPersonagens)
+            {
+                RemoverPersonagem();
+            }
+            else if (tabControl.SelectedTab == tabRacas)
+            {
+                RemoverRaca();
+            }
+        }
+        private void RemoverPersonagem()
+        {
+            var idDaLinhaSelecionadaNoDataGrid = gridPersonagens.CurrentCell.RowIndex;
+            var COLUNA_ID = "Id";
+            var MENSAGEM_CONFIRMACAO_REMOCAO_DE_PERSONAGEM = "Tem certeza que quer remover o personagem selecionado?";
+            var TITULO_MESSAGE_BOX = "Confirme sua escolha";
             try
             {
-                int idDoPersonagemSelecionado = int.Parse(gridPersonagens.Rows[idDaLinhaSelecionadaNoDataGridView]
-                                                    .Cells[valorDaColunaRespectivaAoId].Value
+                int idDoPersonagemSelecionado = int.Parse(gridPersonagens.Rows[idDaLinhaSelecionadaNoDataGrid]
+                                                    .Cells[COLUNA_ID].Value
                                                     .ToString());
-                var retornoDaConfirmacaoDoUsuario = MessageBox.Show("Tem certeza que quer remover o personagem selecionado?", "Confirme sua escolha", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                var retornoDaConfirmacaoDoUsuario = MessageBox.Show(MENSAGEM_CONFIRMACAO_REMOCAO_DE_PERSONAGEM, TITULO_MESSAGE_BOX, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (retornoDaConfirmacaoDoUsuario == DialogResult.Yes)
+                {
                     try
                     {
                         _servicoPersonagem.Deletar(idDoPersonagemSelecionado);
@@ -137,22 +196,51 @@ namespace Forms
                     {
                         MessageBox.Show(ex.Message);
                     }
-                LimparFiltro();
-                InicializarListaDePersonagens();
+                    LimparFiltro();
+                    InicializarListaDePersonagens(filtroPersonagem, filtroRaca);
+                }
             }
-            catch 
-            { 
-                MessageBox.Show("Lista vazia", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            catch
+            {
+                var MENSAGEM_ERRO_LISTA_VAZIA = "Lista vazia";
+                var TITULO_MESSAGE_BOX_ERRO_LISTA_VAZIA = "Erro";
+                MessageBox.Show(MENSAGEM_ERRO_LISTA_VAZIA, TITULO_MESSAGE_BOX_ERRO_LISTA_VAZIA, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        private void AoClicarNoMenuDeRacasDeveListarTodasAsRacasNoDataGrid(object sender, EventArgs e)
+        private void RemoverRaca()
         {
-            InicializarListaDeRacas();
-        }
+            var idDaLinhaSelecionadaNoDataGridViewDeRacas = gridRacas.CurrentCell.RowIndex;
+            var COLUNA_ID = "Id";
+            var MENSAGEM_CONFIRMACAO_REMOCAO_DE_RACA = "Tem certeza que quer remover a raça selecionada?";
+            var TITULO_MESSAGE_BOX = "Confirme sua escolha";
+            try
+            {
+                int idDaRacaSelecionada = int.Parse(gridRacas.Rows[idDaLinhaSelecionadaNoDataGridViewDeRacas]
+                                                    .Cells[COLUNA_ID].Value
+                                                    .ToString());
+                var retornoDaConfirmacaoDoUsuario = MessageBox.Show(MENSAGEM_CONFIRMACAO_REMOCAO_DE_RACA, TITULO_MESSAGE_BOX, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (retornoDaConfirmacaoDoUsuario == DialogResult.Yes)
+                {
 
-        private void AoClicarNoMenuDePersonagensDeveListarTodasOsPersonagensNoDataGrid(object sender, EventArgs e)
-        {
-            InicializarListaDePersonagens();
+                }
+                try
+                {
+                    _servicoRaca.Deletar(idDaRacaSelecionada);
+                }
+                catch (Exception ex)
+                {
+                    var MENSAGEM_DE_ERRO_AO_DELETAR_RACA = "Existem personagens vinculados a essa raça. Exclua-os primeiramente para que seja possível exluir essa raça";
+                    MessageBox.Show(MENSAGEM_DE_ERRO_AO_DELETAR_RACA);
+                }
+                LimparFiltro();
+                InicializarListaDeRacas(filtroRaca);
+            }
+            catch
+            {
+                var MENSAGEM_ERRO_LISTA_VAZIA = "Lista vazia";
+                var TITULO_MESSAGE_BOX_ERRO_LISTA_VAZIA = "Erro";
+                MessageBox.Show(MENSAGEM_ERRO_LISTA_VAZIA, TITULO_MESSAGE_BOX_ERRO_LISTA_VAZIA, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
