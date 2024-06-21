@@ -31,10 +31,10 @@ namespace Forms
         private void IniciarFormPrincipal(object sender, EventArgs e)
         {
             LimparFiltro();
-            InicializarListaDePersonagens(filtroPersonagem, filtroRaca);
-            InicializarListaDeRacas(filtroRaca);
+            DefinirGridDePersonagens(filtroPersonagem, filtroRaca);
+            DefinirGridDeRacas(filtroRaca);
         }
-        private void InicializarListaDePersonagens(Filtro filtroPersonagem, Filtro filtroRaca)
+        private void DefinirGridDePersonagens(Filtro filtroPersonagem, Filtro filtroRaca)
         {
             var personagens = _servicoPersonagem.ObterTodos(filtroPersonagem);
             var racas = _servicoRaca.ObterTodos(filtroRaca);
@@ -55,35 +55,21 @@ namespace Forms
 
             var bindingList = new BindingList<object>(listaCombinada.Cast<object>().ToList());
             gridPersonagens.DataSource = bindingList;
-            gridPersonagens.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            var POSICAO_ESTA_VIVO_NA_TABELA = 6;
-            var POSICAO_DATA_DE_CADASTRO_NA_TABELA = 7;
-            if(gridPersonagens.Columns.Count>0)
-            {
-                gridPersonagens.Columns[POSICAO_ESTA_VIVO_NA_TABELA].HeaderText = "Esta vivo?";
-                gridPersonagens.Columns[POSICAO_DATA_DE_CADASTRO_NA_TABELA].DefaultCellStyle.Format = "dd/MM/yyyy";
-            }
+            FormatarGridDePersonagens();
         }
-        private void InicializarListaDeRacas(Filtro filtroRaca)
+        private void DefinirGridDeRacas(Filtro filtroRaca)
         {
             gridRacas.DataSource = _servicoRaca.ObterTodos(filtroRaca);
-            gridRacas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            var POSICAO_HABILIDADE_RACIAL_NA_TABELA = 2;
-            var POSICAO_LOCALIZACAO_GEOGRAFICA_NA_TABELA = 3;
-            var POSICAO_ESTA_EXTINTA_NA_TABELA = 4;
-
-            gridRacas.Columns[POSICAO_HABILIDADE_RACIAL_NA_TABELA].HeaderText = "Habilidade Racial";
-            gridRacas.Columns[POSICAO_LOCALIZACAO_GEOGRAFICA_NA_TABELA].HeaderText = "Localização Geográfica";
-            gridRacas.Columns[POSICAO_ESTA_EXTINTA_NA_TABELA].HeaderText = "Esta Extinta?";
+            FormatarGridRacas();
         }
         private void AoClicarNaTabDePersonagensDeveListarTodasOsPersonagensNoDataGrid(object sender, EventArgs e)
         {
             LimparFiltro();
-            InicializarListaDePersonagens(filtroPersonagem, filtroRaca);
+            DefinirGridDePersonagens(filtroPersonagem, filtroRaca);
         }
         private void AoClicarNaTabDeRacasDeveListarTodasAsRacasNoDataGrid(object sender, EventArgs e)
         {
-            InicializarListaDeRacas(filtroRaca);
+            DefinirGridDeRacas(filtroRaca);
         }
         private void AoDigitarNaBarraDePesquisaDePersonagemDeveListarNoDataGrid(object sender, EventArgs e)
         {
@@ -93,11 +79,11 @@ namespace Forms
                 try
                 {
                     filtroPersonagem.Id = int.Parse(barraDePesquisaDePersonagem.Text);
-                    InicializarListaDePersonagens(filtroPersonagem, filtroRaca);
+                    DefinirGridDePersonagens(filtroPersonagem, filtroRaca);
                 }
                 catch { }
             }
-            InicializarListaDePersonagens(filtroPersonagem, filtroRaca);
+            DefinirGridDePersonagens(filtroPersonagem, filtroRaca);
         }
         private void AoDigitarNaBarraDePesquisaDeRacaDeveListarNoDataGrid(object sender, EventArgs e)
         {
@@ -108,40 +94,40 @@ namespace Forms
                 try
                 {
                     filtroRaca.Id = int.Parse(barraDePesquisaDeRaca.Text);
-                    InicializarListaDeRacas(filtroRaca);
+                    DefinirGridDeRacas(filtroRaca);
                 }
                 catch { }
             }
-            InicializarListaDeRacas(filtroRaca);
+            DefinirGridDeRacas(filtroRaca);
         }
         private void AoDarCheckNoBoxVivoDeveFiltarAListaDePersonagens(object sender, EventArgs e)
         {
             barraDePesquisaDePersonagem.Text = string.Empty;
             filtroPersonagem.EstaVivo = vivoPersonagemCheckBox.Checked ? vivoPersonagemCheckBox.Checked : null;
-            InicializarListaDePersonagens(filtroPersonagem, filtroRaca);
+            DefinirGridDePersonagens(filtroPersonagem, filtroRaca);
         }
         private void AoDarCheckNoBoxExtintaDeveFiltarAListaDeRacas(object sender, EventArgs e)
         {
             barraDePesquisaDeRaca.Text = string.Empty;
             filtroRaca.EstaExtinta = racaExtintaCheckBox.Checked ? racaExtintaCheckBox.Checked : null;
-            InicializarListaDeRacas(filtroRaca);
+            DefinirGridDeRacas(filtroRaca);
         }
         private void AoSelecionarUmaDataDeveAdicionarOValorAoFiltro(object sender, EventArgs e)
         {
             filtroPersonagem.DataDoCadastro = dateTimePicker.Value;
-            InicializarListaDePersonagens(filtroPersonagem, filtroRaca);
+            DefinirGridDePersonagens(filtroPersonagem, filtroRaca);
         }
         private void AoAlterarASelecaoDoImputRadioDeNomePersonagemDeveAtualizarAListaPersonagem(object sender, EventArgs e)
         {
             LimparFiltro();
             barraDePesquisaDePersonagem.Text = string.Empty;
-            InicializarListaDePersonagens(filtroPersonagem, filtroRaca);
+            DefinirGridDePersonagens(filtroPersonagem, filtroRaca);
         }
         private void AoAlterarASelecaoDoImputRadioDeNomeRacaDeveAtualizarAListaRaca(object sender, EventArgs e)
         {
             LimparFiltro();
             barraDePesquisaDeRaca.Text = string.Empty;
-            InicializarListaDeRacas(filtroRaca);
+            DefinirGridDeRacas(filtroRaca);
         }
         private void AoClicarNoBotaoAdicionarDeveAbrirAJanelaDeCriacao(object sender, EventArgs e)
         {
@@ -149,12 +135,12 @@ namespace Forms
             {
                 var criacaoPersonagem = new CriacaoPersonagemForm(_servicoPersonagem, _servicoRaca);
                 criacaoPersonagem.ShowDialog();
-                InicializarListaDePersonagens(filtroPersonagem, filtroRaca);
+                DefinirGridDePersonagens(filtroPersonagem, filtroRaca);
             } else if(tabControl.SelectedTab == tabRacas)
             {
                 var criacaoRaca = new CriacaoRacaForm(_servicoRaca);
                 criacaoRaca.ShowDialog();
-                InicializarListaDeRacas(filtroRaca);
+                DefinirGridDeRacas(filtroRaca);
             }
         }
         private void AoClicarNoBotaoResetDeveCarregarAsListasSemFiltrosAplicados(object sender, EventArgs e)
@@ -162,8 +148,8 @@ namespace Forms
             LimparFiltro();
             barraDePesquisaDePersonagem.Text = string.Empty;
             barraDePesquisaDeRaca.Text = string.Empty;
-            InicializarListaDePersonagens(filtroPersonagem, filtroRaca);
-            InicializarListaDeRacas(filtroRaca);
+            DefinirGridDePersonagens(filtroPersonagem, filtroRaca);
+            DefinirGridDeRacas(filtroRaca);
         }
         private void AoClicarNoBotaoRemoverDeveVerificarTabAtivaERemoverDeAcordo(object sender, EventArgs e)
         {
@@ -199,7 +185,7 @@ namespace Forms
                         MessageBox.Show(ex.Message);
                     }
                     LimparFiltro();
-                    InicializarListaDePersonagens(filtroPersonagem, filtroRaca);
+                    DefinirGridDePersonagens(filtroPersonagem, filtroRaca);
                 }
             }
             catch
@@ -223,19 +209,18 @@ namespace Forms
                 var retornoDaConfirmacaoDoUsuario = MessageBox.Show(MENSAGEM_CONFIRMACAO_REMOCAO_DE_RACA, TITULO_MESSAGE_BOX, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (retornoDaConfirmacaoDoUsuario == DialogResult.Yes)
                 {
-
+                    try
+                    {
+                        _servicoRaca.Deletar(idDaRacaSelecionada);
+                    }
+                    catch (Exception ex)
+                    {
+                        var MENSAGEM_DE_ERRO_AO_DELETAR_RACA = "Existem personagens vinculados a essa raça. Exclua-os primeiramente para que seja possível exluir essa raça";
+                        MessageBox.Show(MENSAGEM_DE_ERRO_AO_DELETAR_RACA);
+                    }
+                    LimparFiltro();
+                    DefinirGridDeRacas(filtroRaca);
                 }
-                try
-                {
-                    _servicoRaca.Deletar(idDaRacaSelecionada);
-                }
-                catch (Exception ex)
-                {
-                    var MENSAGEM_DE_ERRO_AO_DELETAR_RACA = "Existem personagens vinculados a essa raça. Exclua-os primeiramente para que seja possível exluir essa raça";
-                    MessageBox.Show(MENSAGEM_DE_ERRO_AO_DELETAR_RACA);
-                }
-                LimparFiltro();
-                InicializarListaDeRacas(filtroRaca);
             }
             catch
             {
@@ -243,6 +228,28 @@ namespace Forms
                 var TITULO_MESSAGE_BOX_ERRO_LISTA_VAZIA = "Erro";
                 MessageBox.Show(MENSAGEM_ERRO_LISTA_VAZIA, TITULO_MESSAGE_BOX_ERRO_LISTA_VAZIA, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+        private void FormatarGridDePersonagens()
+        {
+            gridPersonagens.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            var POSICAO_ESTA_VIVO_NA_TABELA = 6;
+            var POSICAO_DATA_DE_CADASTRO_NA_TABELA = 7;
+            if (gridPersonagens.Columns.Count > 0)
+            {
+                gridPersonagens.Columns[POSICAO_ESTA_VIVO_NA_TABELA].HeaderText = "Esta vivo?";
+                gridPersonagens.Columns[POSICAO_DATA_DE_CADASTRO_NA_TABELA].DefaultCellStyle.Format = "dd/MM/yyyy";
+            }
+        }
+        private void FormatarGridRacas()
+        {
+            gridRacas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            var POSICAO_HABILIDADE_RACIAL_NA_TABELA = 2;
+            var POSICAO_LOCALIZACAO_GEOGRAFICA_NA_TABELA = 3;
+            var POSICAO_ESTA_EXTINTA_NA_TABELA = 4;
+
+            gridRacas.Columns[POSICAO_HABILIDADE_RACIAL_NA_TABELA].HeaderText = "Habilidade Racial";
+            gridRacas.Columns[POSICAO_LOCALIZACAO_GEOGRAFICA_NA_TABELA].HeaderText = "Localização Geográfica";
+            gridRacas.Columns[POSICAO_ESTA_EXTINTA_NA_TABELA].HeaderText = "Esta Extinta?";
         }
     }
 }
