@@ -1,6 +1,6 @@
 ﻿namespace Forms.Forms
 {
-    partial class CriacaoRacaForm
+    partial class CriarAtualizarRacaForm
     {
         /// <summary>
         /// Required designer variable.
@@ -129,7 +129,7 @@
             criarButton.TabIndex = 11;
             criarButton.Text = "Criar";
             criarButton.UseVisualStyleBackColor = true;
-            criarButton.Click += AoClicarNoBotaoCriarDeveCriarUmaRacaOuDispararUmaExcecao;
+            criarButton.Click += AoClicarNoBotaoCriarOuAtualizar;
             // 
             // cancelarButton
             // 
@@ -161,6 +161,7 @@
             Name = "CriacaoRacaForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Criar Raça";
+            Load += CriacaoRacaForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }
