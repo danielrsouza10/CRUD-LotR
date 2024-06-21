@@ -225,7 +225,7 @@
             MinimizeBox = false;
             Name = "CriacaoPersonagemForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "CriacaoPersonagem";
+            Text = "Criar Personagem";
             Load += CriacaoPersonagem_Load;
             ((System.ComponentModel.ISupportInitialize)racaBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)boxIdade).EndInit();

@@ -30,7 +30,7 @@ namespace Servico.Servicos
             if (!resultadoValidacao.IsValid)
             {
                 var erros = "";
-                const string SerapacaoEntreErros = ". ";
+                const string SerapacaoEntreErros = ".\n";
                 foreach (var falha in resultadoValidacao.Errors)
                 {
                     erros += falha.ErrorMessage + SerapacaoEntreErros;
@@ -48,7 +48,7 @@ namespace Servico.Servicos
                 var erros = "";
                 foreach (var falha in resultadoValidacao.Errors)
                 {
-                    erros += falha.ErrorMessage + ". ";
+                    erros += falha.ErrorMessage + ".\n";
                 }
                 throw new Exception(erros);
             }

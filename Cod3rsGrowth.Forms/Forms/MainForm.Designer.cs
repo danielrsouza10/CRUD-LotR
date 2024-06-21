@@ -29,162 +29,34 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            dataGridView1 = new DataGridView();
-            idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            nomeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            idRacaDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            profissaoDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            idadeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            alturaDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            estaVivoDataGridViewCheckBoxColumn = new DataGridViewTextBoxColumn();
-            dataDoCadastroDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            personagemBindingSource = new BindingSource(components);
-            personagemBindingSource2 = new BindingSource(components);
-            personagemBindingSource1 = new BindingSource(components);
             buttonAdicionar = new Button();
             button2 = new Button();
             button3 = new Button();
-            barraDePesquisa = new TextBox();
-            nomeRadioButton = new RadioButton();
-            idRadioButton = new RadioButton();
+            barraDePesquisaDePersonagem = new TextBox();
+            nomePersonagemRadioButton = new RadioButton();
+            idPersonagemRadioButton = new RadioButton();
             dateTimePicker = new DateTimePicker();
-            vivoCheckBox = new CheckBox();
+            vivoPersonagemCheckBox = new CheckBox();
             buttonReset = new Button();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            tabControl = new TabControl();
+            tabPersonagens = new TabPage();
+            gridPersonagens = new DataGridView();
+            tabRacas = new TabPage();
+            gridRacas = new DataGridView();
+            barraDePesquisaDeRaca = new TextBox();
+            idRacaRadioButton = new RadioButton();
+            nomeRacaRadioButton = new RadioButton();
+            racaExtintaCheckBox = new CheckBox();
+            personagemBindingSource = new BindingSource(components);
+            racaBindingSource = new BindingSource(components);
+            tabControl.SuspendLayout();
+            tabPersonagens.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)gridPersonagens).BeginInit();
+            tabRacas.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)gridRacas).BeginInit();
             ((System.ComponentModel.ISupportInitialize)personagemBindingSource).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)personagemBindingSource2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)personagemBindingSource1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)racaBindingSource).BeginInit();
             SuspendLayout();
-            // 
-            // dataGridView1
-            // 
-            dataGridView1.AutoGenerateColumns = false;
-            dataGridView1.BackgroundColor = SystemColors.Control;
-            dataGridView1.BorderStyle = BorderStyle.None;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn, nomeDataGridViewTextBoxColumn, idRacaDataGridViewTextBoxColumn, profissaoDataGridViewTextBoxColumn, idadeDataGridViewTextBoxColumn, alturaDataGridViewTextBoxColumn, estaVivoDataGridViewCheckBoxColumn, dataDoCadastroDataGridViewTextBoxColumn });
-            dataGridView1.DataSource = personagemBindingSource;
-            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.BackColor = SystemColors.Window;
-            dataGridViewCellStyle9.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle9.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle9.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.False;
-            dataGridView1.DefaultCellStyle = dataGridViewCellStyle9;
-            dataGridView1.Location = new Point(14, 53);
-            dataGridView1.Margin = new Padding(3, 4, 3, 4);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.RowTemplate.Height = 25;
-            dataGridView1.Size = new Size(1058, 496);
-            dataGridView1.TabIndex = 0;
-            // 
-            // idDataGridViewTextBoxColumn
-            // 
-            idDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            idDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
-            idDataGridViewTextBoxColumn.HeaderText = "Id";
-            idDataGridViewTextBoxColumn.MinimumWidth = 6;
-            idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            idDataGridViewTextBoxColumn.Width = 50;
-            // 
-            // nomeDataGridViewTextBoxColumn
-            // 
-            nomeDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            nomeDataGridViewTextBoxColumn.DataPropertyName = "Nome";
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            nomeDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
-            nomeDataGridViewTextBoxColumn.HeaderText = "Nome";
-            nomeDataGridViewTextBoxColumn.MinimumWidth = 6;
-            nomeDataGridViewTextBoxColumn.Name = "nomeDataGridViewTextBoxColumn";
-            // 
-            // idRacaDataGridViewTextBoxColumn
-            // 
-            idRacaDataGridViewTextBoxColumn.DataPropertyName = "IdRaca";
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            idRacaDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle3;
-            idRacaDataGridViewTextBoxColumn.HeaderText = "IdRaca";
-            idRacaDataGridViewTextBoxColumn.MinimumWidth = 6;
-            idRacaDataGridViewTextBoxColumn.Name = "idRacaDataGridViewTextBoxColumn";
-            idRacaDataGridViewTextBoxColumn.Width = 125;
-            // 
-            // profissaoDataGridViewTextBoxColumn
-            // 
-            profissaoDataGridViewTextBoxColumn.DataPropertyName = "Profissao";
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            profissaoDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle4;
-            profissaoDataGridViewTextBoxColumn.HeaderText = "Profissao";
-            profissaoDataGridViewTextBoxColumn.MinimumWidth = 6;
-            profissaoDataGridViewTextBoxColumn.Name = "profissaoDataGridViewTextBoxColumn";
-            profissaoDataGridViewTextBoxColumn.Width = 125;
-            // 
-            // idadeDataGridViewTextBoxColumn
-            // 
-            idadeDataGridViewTextBoxColumn.DataPropertyName = "Idade";
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            idadeDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle5;
-            idadeDataGridViewTextBoxColumn.HeaderText = "Idade";
-            idadeDataGridViewTextBoxColumn.MinimumWidth = 6;
-            idadeDataGridViewTextBoxColumn.Name = "idadeDataGridViewTextBoxColumn";
-            idadeDataGridViewTextBoxColumn.Width = 125;
-            // 
-            // alturaDataGridViewTextBoxColumn
-            // 
-            alturaDataGridViewTextBoxColumn.DataPropertyName = "Altura";
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            alturaDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle6;
-            alturaDataGridViewTextBoxColumn.HeaderText = "Altura";
-            alturaDataGridViewTextBoxColumn.MinimumWidth = 6;
-            alturaDataGridViewTextBoxColumn.Name = "alturaDataGridViewTextBoxColumn";
-            alturaDataGridViewTextBoxColumn.Width = 125;
-            // 
-            // estaVivoDataGridViewCheckBoxColumn
-            // 
-            estaVivoDataGridViewCheckBoxColumn.DataPropertyName = "EstaVivo";
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            estaVivoDataGridViewCheckBoxColumn.DefaultCellStyle = dataGridViewCellStyle7;
-            estaVivoDataGridViewCheckBoxColumn.HeaderText = "EstaVivo";
-            estaVivoDataGridViewCheckBoxColumn.MinimumWidth = 6;
-            estaVivoDataGridViewCheckBoxColumn.Name = "estaVivoDataGridViewCheckBoxColumn";
-            estaVivoDataGridViewCheckBoxColumn.Resizable = DataGridViewTriState.True;
-            estaVivoDataGridViewCheckBoxColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            estaVivoDataGridViewCheckBoxColumn.Width = 125;
-            // 
-            // dataDoCadastroDataGridViewTextBoxColumn
-            // 
-            dataDoCadastroDataGridViewTextBoxColumn.DataPropertyName = "DataDoCadastro";
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.Format = "d";
-            dataGridViewCellStyle8.NullValue = null;
-            dataDoCadastroDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle8;
-            dataDoCadastroDataGridViewTextBoxColumn.HeaderText = "DataDoCadastro";
-            dataDoCadastroDataGridViewTextBoxColumn.MinimumWidth = 6;
-            dataDoCadastroDataGridViewTextBoxColumn.Name = "dataDoCadastroDataGridViewTextBoxColumn";
-            dataDoCadastroDataGridViewTextBoxColumn.Width = 125;
-            // 
-            // personagemBindingSource
-            // 
-            personagemBindingSource.DataSource = typeof(Dominio.Modelos.Personagem);
-            // 
-            // personagemBindingSource2
-            // 
-            personagemBindingSource2.DataSource = typeof(Dominio.Modelos.Personagem);
-            // 
-            // personagemBindingSource1
-            // 
-            personagemBindingSource1.DataSource = typeof(Dominio.Modelos.Personagem);
             // 
             // buttonAdicionar
             // 
@@ -216,65 +88,64 @@
             button3.TabIndex = 3;
             button3.Text = "Remover";
             button3.UseVisualStyleBackColor = true;
+            button3.Click += AoClicarNoBotaoRemoverDeveVerificarTabAtivaERemoverDeAcordo;
             // 
-            // barraDePesquisa
+            // barraDePesquisaDePersonagem
             // 
-            barraDePesquisa.Location = new Point(14, 13);
-            barraDePesquisa.Margin = new Padding(3, 4, 3, 4);
-            barraDePesquisa.Multiline = true;
-            barraDePesquisa.Name = "barraDePesquisa";
-            barraDePesquisa.PlaceholderText = "Pesquise o personagem...";
-            barraDePesquisa.Size = new Size(575, 29);
-            barraDePesquisa.TabIndex = 4;
-            barraDePesquisa.TextChanged += AoDigitarNaBarraDePesquisaDeveListarOsItensCorrespondentesAPesquisa;
-            barraDePesquisa.Enter += AoEntrarNaBarraDePesquisaDeveLimparOPlaceholder;
-            barraDePesquisa.Leave += AoSairDaBarraDePesquisaDeveAdicionarOPlaceholder;
+            barraDePesquisaDePersonagem.Location = new Point(6, 4);
+            barraDePesquisaDePersonagem.Margin = new Padding(3, 4, 3, 4);
+            barraDePesquisaDePersonagem.Multiline = true;
+            barraDePesquisaDePersonagem.Name = "barraDePesquisaDePersonagem";
+            barraDePesquisaDePersonagem.PlaceholderText = "Pesquise o personagem...";
+            barraDePesquisaDePersonagem.Size = new Size(555, 29);
+            barraDePesquisaDePersonagem.TabIndex = 4;
+            barraDePesquisaDePersonagem.TextChanged += AoDigitarNaBarraDePesquisaDePersonagemDeveListarNoDataGrid;
             // 
-            // nomeRadioButton
+            // nomePersonagemRadioButton
             // 
-            nomeRadioButton.AutoSize = true;
-            nomeRadioButton.Checked = true;
-            nomeRadioButton.Location = new Point(597, 15);
-            nomeRadioButton.Margin = new Padding(3, 4, 3, 4);
-            nomeRadioButton.Name = "nomeRadioButton";
-            nomeRadioButton.Size = new Size(71, 24);
-            nomeRadioButton.TabIndex = 5;
-            nomeRadioButton.TabStop = true;
-            nomeRadioButton.Text = "Nome";
-            nomeRadioButton.UseVisualStyleBackColor = true;
-            nomeRadioButton.CheckedChanged += AoAlterarASelecaoDoImputRadioDeNomeDeveAtualizarALista;
+            nomePersonagemRadioButton.AutoSize = true;
+            nomePersonagemRadioButton.Checked = true;
+            nomePersonagemRadioButton.Location = new Point(567, 9);
+            nomePersonagemRadioButton.Margin = new Padding(3, 4, 3, 4);
+            nomePersonagemRadioButton.Name = "nomePersonagemRadioButton";
+            nomePersonagemRadioButton.Size = new Size(71, 24);
+            nomePersonagemRadioButton.TabIndex = 5;
+            nomePersonagemRadioButton.TabStop = true;
+            nomePersonagemRadioButton.Text = "Nome";
+            nomePersonagemRadioButton.UseVisualStyleBackColor = true;
+            nomePersonagemRadioButton.CheckedChanged += AoAlterarASelecaoDoImputRadioDeNomePersonagemDeveAtualizarAListaPersonagem;
             // 
-            // idRadioButton
+            // idPersonagemRadioButton
             // 
-            idRadioButton.AutoSize = true;
-            idRadioButton.Location = new Point(670, 16);
-            idRadioButton.Margin = new Padding(3, 4, 3, 4);
-            idRadioButton.Name = "idRadioButton";
-            idRadioButton.Size = new Size(43, 24);
-            idRadioButton.TabIndex = 6;
-            idRadioButton.TabStop = true;
-            idRadioButton.Text = "Id";
-            idRadioButton.UseVisualStyleBackColor = true;
+            idPersonagemRadioButton.AutoSize = true;
+            idPersonagemRadioButton.Location = new Point(644, 8);
+            idPersonagemRadioButton.Margin = new Padding(3, 4, 3, 4);
+            idPersonagemRadioButton.Name = "idPersonagemRadioButton";
+            idPersonagemRadioButton.Size = new Size(43, 24);
+            idPersonagemRadioButton.TabIndex = 6;
+            idPersonagemRadioButton.TabStop = true;
+            idPersonagemRadioButton.Text = "Id";
+            idPersonagemRadioButton.UseVisualStyleBackColor = true;
             // 
             // dateTimePicker
             // 
-            dateTimePicker.Location = new Point(781, 13);
+            dateTimePicker.Location = new Point(755, 7);
             dateTimePicker.Margin = new Padding(3, 4, 3, 4);
             dateTimePicker.Name = "dateTimePicker";
             dateTimePicker.Size = new Size(291, 27);
             dateTimePicker.TabIndex = 7;
             // 
-            // vivoCheckBox
+            // vivoPersonagemCheckBox
             // 
-            vivoCheckBox.AutoSize = true;
-            vivoCheckBox.Location = new Point(717, 17);
-            vivoCheckBox.Margin = new Padding(3, 4, 3, 4);
-            vivoCheckBox.Name = "vivoCheckBox";
-            vivoCheckBox.Size = new Size(60, 24);
-            vivoCheckBox.TabIndex = 8;
-            vivoCheckBox.Text = "Vivo";
-            vivoCheckBox.UseVisualStyleBackColor = true;
-            vivoCheckBox.CheckedChanged += AoDarCheckNoBoxVivoDeveFiltarALista;
+            vivoPersonagemCheckBox.AutoSize = true;
+            vivoPersonagemCheckBox.Location = new Point(691, 9);
+            vivoPersonagemCheckBox.Margin = new Padding(3, 4, 3, 4);
+            vivoPersonagemCheckBox.Name = "vivoPersonagemCheckBox";
+            vivoPersonagemCheckBox.Size = new Size(60, 24);
+            vivoPersonagemCheckBox.TabIndex = 8;
+            vivoPersonagemCheckBox.Text = "Vivo";
+            vivoPersonagemCheckBox.UseVisualStyleBackColor = true;
+            vivoPersonagemCheckBox.CheckedChanged += AoDarCheckNoBoxVivoDeveFiltarAListaDePersonagens;
             // 
             // buttonReset
             // 
@@ -284,7 +155,134 @@
             buttonReset.TabIndex = 9;
             buttonReset.Text = "Reset";
             buttonReset.UseVisualStyleBackColor = true;
-            buttonReset.Click += AoClicarNoBotaoResetDeveCarregarAListaSemFiltrosAplicados;
+            buttonReset.Click += AoClicarNoBotaoResetDeveCarregarAsListasSemFiltrosAplicados;
+            // 
+            // tabControl
+            // 
+            tabControl.Controls.Add(tabPersonagens);
+            tabControl.Controls.Add(tabRacas);
+            tabControl.Location = new Point(12, 5);
+            tabControl.Name = "tabControl";
+            tabControl.SelectedIndex = 0;
+            tabControl.Size = new Size(1060, 545);
+            tabControl.TabIndex = 10;
+            // 
+            // tabPersonagens
+            // 
+            tabPersonagens.Controls.Add(gridPersonagens);
+            tabPersonagens.Controls.Add(barraDePesquisaDePersonagem);
+            tabPersonagens.Controls.Add(dateTimePicker);
+            tabPersonagens.Controls.Add(idPersonagemRadioButton);
+            tabPersonagens.Controls.Add(nomePersonagemRadioButton);
+            tabPersonagens.Controls.Add(vivoPersonagemCheckBox);
+            tabPersonagens.Location = new Point(4, 29);
+            tabPersonagens.Name = "tabPersonagens";
+            tabPersonagens.Padding = new Padding(3);
+            tabPersonagens.Size = new Size(1052, 512);
+            tabPersonagens.TabIndex = 0;
+            tabPersonagens.Text = "Personagens";
+            tabPersonagens.UseVisualStyleBackColor = true;
+            // 
+            // gridPersonagens
+            // 
+            gridPersonagens.AllowUserToAddRows = false;
+            gridPersonagens.AllowUserToDeleteRows = false;
+            gridPersonagens.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            gridPersonagens.BackgroundColor = SystemColors.Control;
+            gridPersonagens.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            gridPersonagens.Location = new Point(6, 39);
+            gridPersonagens.Name = "gridPersonagens";
+            gridPersonagens.ReadOnly = true;
+            gridPersonagens.RowHeadersWidth = 51;
+            gridPersonagens.RowTemplate.Height = 29;
+            gridPersonagens.Size = new Size(1040, 469);
+            gridPersonagens.TabIndex = 9;
+            // 
+            // tabRacas
+            // 
+            tabRacas.Controls.Add(gridRacas);
+            tabRacas.Controls.Add(barraDePesquisaDeRaca);
+            tabRacas.Controls.Add(idRacaRadioButton);
+            tabRacas.Controls.Add(nomeRacaRadioButton);
+            tabRacas.Controls.Add(racaExtintaCheckBox);
+            tabRacas.Location = new Point(4, 29);
+            tabRacas.Name = "tabRacas";
+            tabRacas.Padding = new Padding(3);
+            tabRacas.Size = new Size(1052, 512);
+            tabRacas.TabIndex = 1;
+            tabRacas.Text = "Raças";
+            tabRacas.UseVisualStyleBackColor = true;
+            // 
+            // gridRacas
+            // 
+            gridRacas.AllowUserToAddRows = false;
+            gridRacas.AllowUserToDeleteRows = false;
+            gridRacas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            gridRacas.BackgroundColor = SystemColors.Control;
+            gridRacas.ColumnHeadersHeight = 29;
+            gridRacas.Location = new Point(6, 39);
+            gridRacas.Name = "gridRacas";
+            gridRacas.ReadOnly = true;
+            gridRacas.RowHeadersWidth = 51;
+            gridRacas.Size = new Size(1040, 470);
+            gridRacas.TabIndex = 0;
+            // 
+            // barraDePesquisaDeRaca
+            // 
+            barraDePesquisaDeRaca.Location = new Point(6, 4);
+            barraDePesquisaDeRaca.Margin = new Padding(3, 4, 3, 4);
+            barraDePesquisaDeRaca.Multiline = true;
+            barraDePesquisaDeRaca.Name = "barraDePesquisaDeRaca";
+            barraDePesquisaDeRaca.PlaceholderText = "Pesquise a raça...";
+            barraDePesquisaDeRaca.Size = new Size(555, 29);
+            barraDePesquisaDeRaca.TabIndex = 9;
+            barraDePesquisaDeRaca.TextChanged += AoDigitarNaBarraDePesquisaDeRacaDeveListarNoDataGrid;
+            // 
+            // idRacaRadioButton
+            // 
+            idRacaRadioButton.AutoSize = true;
+            idRacaRadioButton.Location = new Point(644, 8);
+            idRacaRadioButton.Margin = new Padding(3, 4, 3, 4);
+            idRacaRadioButton.Name = "idRacaRadioButton";
+            idRacaRadioButton.Size = new Size(43, 24);
+            idRacaRadioButton.TabIndex = 11;
+            idRacaRadioButton.TabStop = true;
+            idRacaRadioButton.Text = "Id";
+            idRacaRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // nomeRacaRadioButton
+            // 
+            nomeRacaRadioButton.AutoSize = true;
+            nomeRacaRadioButton.Checked = true;
+            nomeRacaRadioButton.Location = new Point(567, 9);
+            nomeRacaRadioButton.Margin = new Padding(3, 4, 3, 4);
+            nomeRacaRadioButton.Name = "nomeRacaRadioButton";
+            nomeRacaRadioButton.Size = new Size(71, 24);
+            nomeRacaRadioButton.TabIndex = 10;
+            nomeRacaRadioButton.TabStop = true;
+            nomeRacaRadioButton.Text = "Nome";
+            nomeRacaRadioButton.UseVisualStyleBackColor = true;
+            nomeRacaRadioButton.CheckedChanged += AoAlterarASelecaoDoImputRadioDeNomeRacaDeveAtualizarAListaRaca;
+            // 
+            // racaExtintaCheckBox
+            // 
+            racaExtintaCheckBox.AutoSize = true;
+            racaExtintaCheckBox.Location = new Point(691, 9);
+            racaExtintaCheckBox.Margin = new Padding(3, 4, 3, 4);
+            racaExtintaCheckBox.Name = "racaExtintaCheckBox";
+            racaExtintaCheckBox.Size = new Size(76, 24);
+            racaExtintaCheckBox.TabIndex = 12;
+            racaExtintaCheckBox.Text = "Extinta";
+            racaExtintaCheckBox.UseVisualStyleBackColor = true;
+            racaExtintaCheckBox.CheckedChanged += AoDarCheckNoBoxExtintaDeveFiltarAListaDeRacas;
+            // 
+            // personagemBindingSource
+            // 
+            personagemBindingSource.DataSource = typeof(Dominio.Modelos.Personagem);
+            // 
+            // racaBindingSource
+            // 
+            racaBindingSource.DataSource = typeof(Dominio.Modelos.Raca);
             // 
             // MainForm
             // 
@@ -292,51 +290,61 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
             ClientSize = new Size(1084, 600);
+            Controls.Add(tabControl);
             Controls.Add(buttonReset);
-            Controls.Add(vivoCheckBox);
-            Controls.Add(dateTimePicker);
-            Controls.Add(idRadioButton);
-            Controls.Add(nomeRadioButton);
-            Controls.Add(barraDePesquisa);
             Controls.Add(button3);
             Controls.Add(button2);
             Controls.Add(buttonAdicionar);
-            Controls.Add(dataGridView1);
             Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
             Name = "MainForm";
             Text = "O Senhor dos Anéis DB";
-            Load += MainForm_Load;
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            Load += IniciarFormPrincipal;
+            tabControl.ResumeLayout(false);
+            tabPersonagens.ResumeLayout(false);
+            tabPersonagens.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)gridPersonagens).EndInit();
+            tabRacas.ResumeLayout(false);
+            tabRacas.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)gridRacas).EndInit();
             ((System.ComponentModel.ISupportInitialize)personagemBindingSource).EndInit();
-            ((System.ComponentModel.ISupportInitialize)personagemBindingSource2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)personagemBindingSource1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)racaBindingSource).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
-
-        private DataGridView dataGridView1;
-        private BindingSource personagemBindingSource;
         private Button buttonAdicionar;
         private Button button2;
         private Button button3;
-        private BindingSource personagemBindingSource1;
-        private BindingSource personagemBindingSource2;
-        private TextBox barraDePesquisa;
-        private RadioButton nomeRadioButton;
-        private RadioButton idRadioButton;
+        private TextBox barraDePesquisaDePersonagem;
+        private RadioButton nomePersonagemRadioButton;
+        private RadioButton idPersonagemRadioButton;
         private DateTimePicker dateTimePicker;
+        private CheckBox vivoPersonagemCheckBox;
+        private Button buttonReset;
+        private TabControl tabControl;
+        private TabPage tabPersonagens;
+        private TabPage tabRacas;
+        private DataGridView gridPersonagens;
+        private TextBox barraDePesquisaDeRaca;
+        private RadioButton idRacaRadioButton;
+        private RadioButton nomeRacaRadioButton;
+        private CheckBox racaExtintaCheckBox;
+        private DataGridView gridRacas;
+        private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn1;
+        private DataGridViewTextBoxColumn nomeDataGridViewTextBoxColumn1;
+        private DataGridViewTextBoxColumn localizacaoGeograficaDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn habilidadeRacialDataGridViewTextBoxColumn;
+        private DataGridViewCheckBoxColumn estaExtintaDataGridViewCheckBoxColumn;
         private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn nomeDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn idRacaDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn profissaoDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn idadeDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn alturaDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn estaVivoDataGridViewCheckBoxColumn;
+        private DataGridViewCheckBoxColumn estaVivoDataGridViewCheckBoxColumn;
         private DataGridViewTextBoxColumn dataDoCadastroDataGridViewTextBoxColumn;
-        private CheckBox vivoCheckBox;
-        private Button buttonReset;
+        private BindingSource personagemBindingSource;
+        private BindingSource racaBindingSource;
     }
 }

@@ -2,20 +2,20 @@
 {
     public enum ProfissaoEnum
     {
-        Guerreiro = 0,
-        Arqueiro = 1,
-        Mago = 2,
-        Ladrao = 3,
-        Jardineiro = 4,
-        Aventureiro = 5,
-        Rei = 6,
-        SenhoraDeLothlorien = 7,
-        SenhorDeValfenda = 8,
-        Escudeira = 9,
-        Capitao = 10,
-        Princesa = 11,
-        Ent = 12,
-        Cavaleiro = 13,
-        ExHobbit = 14
+        Guerreiro = 1,
+        Arqueiro = 2,
+        Mago = 3,
+        Ladrao = 4,
+        Jardineiro = 5,
+        Aventureiro = 6,
+        Rei = 7,
+        SenhoraDeLothlorien = 8,
+        SenhorDeValfenda = 9,
+        Escudeira = 10,
+        Capitao = 11,
+        Princesa = 12,
+        Ent = 13,
+        Cavaleiro = 14,
+        ExHobbit = 15
     }
 }
