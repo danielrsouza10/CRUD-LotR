@@ -131,14 +131,32 @@ namespace Forms
         }
         private void AoClicarNoBotaoAdicionarDeveAbrirAJanelaDeCriacao(object sender, EventArgs e)
         {
-            if(tabControl.SelectedTab == tabPersonagens)
+            if (tabControl.SelectedTab == tabPersonagens)
             {
-                var criacaoPersonagem = new CriacaoPersonagemForm(_servicoPersonagem, _servicoRaca);
+                var criacaoPersonagem = new CriarAtualizarPersonagemForm(_servicoPersonagem, _servicoRaca);
                 criacaoPersonagem.ShowDialog();
                 DefinirGridDePersonagens(filtroPersonagem, filtroRaca);
-            } else if(tabControl.SelectedTab == tabRacas)
+            }
+            else if (tabControl.SelectedTab == tabRacas)
             {
-                var criacaoRaca = new CriacaoRacaForm(_servicoRaca);
+                var criacaoRaca = new CriarAtualizarRacaForm(_servicoRaca);
+                criacaoRaca.ShowDialog();
+                DefinirGridDeRacas(filtroRaca);
+            }
+        }
+        private void AoClicarNoBotaoEditarDeveAbrirJanelaDeEdicao(object sender, EventArgs e)
+        {
+            if (tabControl.SelectedTab == tabPersonagens)
+            {
+                var idSelecionado = ObterIdDoPersonagemSelecionadoNoGrid();
+                var criacaoPersonagem = new CriarAtualizarPersonagemForm(_servicoPersonagem, _servicoRaca, idSelecionado);
+                criacaoPersonagem.ShowDialog();
+                DefinirGridDePersonagens(filtroPersonagem, filtroRaca);
+            }
+            else if (tabControl.SelectedTab == tabRacas)
+            {
+                var idSelecionado = ObterIdDaRacaSelecionadoNoGrid();
+                var criacaoRaca = new CriarAtualizarRacaForm(_servicoRaca, idSelecionado);
                 criacaoRaca.ShowDialog();
                 DefinirGridDeRacas(filtroRaca);
             }
@@ -153,7 +171,7 @@ namespace Forms
         }
         private void AoClicarNoBotaoRemoverDeveVerificarTabAtivaERemoverDeAcordo(object sender, EventArgs e)
         {
-            if(tabControl.SelectedTab == tabPersonagens)
+            if (tabControl.SelectedTab == tabPersonagens)
             {
                 RemoverPersonagem();
             }
@@ -164,49 +182,32 @@ namespace Forms
         }
         private void RemoverPersonagem()
         {
-            var idDaLinhaSelecionadaNoDataGrid = gridPersonagens.CurrentCell.RowIndex;
-            var COLUNA_ID = "Id";
+            int idDoPersonagemSelecionado = ObterIdDoPersonagemSelecionadoNoGrid();
             var MENSAGEM_CONFIRMACAO_REMOCAO_DE_PERSONAGEM = "Tem certeza que quer remover o personagem selecionado?";
             var TITULO_MESSAGE_BOX = "Confirme sua escolha";
-            try
+            var retornoDaConfirmacaoDoUsuario = MessageBox.Show(MENSAGEM_CONFIRMACAO_REMOCAO_DE_PERSONAGEM, TITULO_MESSAGE_BOX, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            
+            if (retornoDaConfirmacaoDoUsuario == DialogResult.Yes)
             {
-                int idDoPersonagemSelecionado = int.Parse(gridPersonagens.Rows[idDaLinhaSelecionadaNoDataGrid]
-                                                    .Cells[COLUNA_ID].Value
-                                                    .ToString());
-                var retornoDaConfirmacaoDoUsuario = MessageBox.Show(MENSAGEM_CONFIRMACAO_REMOCAO_DE_PERSONAGEM, TITULO_MESSAGE_BOX, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (retornoDaConfirmacaoDoUsuario == DialogResult.Yes)
+                try
                 {
-                    try
-                    {
-                        _servicoPersonagem.Deletar(idDoPersonagemSelecionado);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
-                    LimparFiltro();
-                    DefinirGridDePersonagens(filtroPersonagem, filtroRaca);
+                    _servicoPersonagem.Deletar(idDoPersonagemSelecionado);
                 }
-            }
-            catch
-            {
-                var MENSAGEM_ERRO_LISTA_VAZIA = "Lista vazia";
-                var TITULO_MESSAGE_BOX_ERRO_LISTA_VAZIA = "Erro";
-                MessageBox.Show(MENSAGEM_ERRO_LISTA_VAZIA, TITULO_MESSAGE_BOX_ERRO_LISTA_VAZIA, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                LimparFiltro();
+                DefinirGridDePersonagens(filtroPersonagem, filtroRaca);
             }
         }
         private void RemoverRaca()
         {
-            var idDaLinhaSelecionadaNoDataGridViewDeRacas = gridRacas.CurrentCell.RowIndex;
-            var COLUNA_ID = "Id";
+            var idDaRacaSelecionada = ObterIdDaRacaSelecionadoNoGrid();
             var MENSAGEM_CONFIRMACAO_REMOCAO_DE_RACA = "Tem certeza que quer remover a raça selecionada?";
             var TITULO_MESSAGE_BOX = "Confirme sua escolha";
-            try
-            {
-                int idDaRacaSelecionada = int.Parse(gridRacas.Rows[idDaLinhaSelecionadaNoDataGridViewDeRacas]
-                                                    .Cells[COLUNA_ID].Value
-                                                    .ToString());
-                var retornoDaConfirmacaoDoUsuario = MessageBox.Show(MENSAGEM_CONFIRMACAO_REMOCAO_DE_RACA, TITULO_MESSAGE_BOX, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            var retornoDaConfirmacaoDoUsuario = MessageBox.Show(MENSAGEM_CONFIRMACAO_REMOCAO_DE_RACA, TITULO_MESSAGE_BOX, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            
                 if (retornoDaConfirmacaoDoUsuario == DialogResult.Yes)
                 {
                     try
@@ -215,19 +216,12 @@ namespace Forms
                     }
                     catch (Exception ex)
                     {
-                        var MENSAGEM_DE_ERRO_AO_DELETAR_RACA = "Existem personagens vinculados a essa raça. Exclua-os primeiramente para que seja possível exluir essa raça";
+                        var MENSAGEM_DE_ERRO_AO_DELETAR_RACA = "Existem personagens vinculados a essa raça.\nExclua-os primeiramente para que seja possível ecxluir essa raça.";
                         MessageBox.Show(MENSAGEM_DE_ERRO_AO_DELETAR_RACA);
                     }
                     LimparFiltro();
                     DefinirGridDeRacas(filtroRaca);
                 }
-            }
-            catch
-            {
-                var MENSAGEM_ERRO_LISTA_VAZIA = "Lista vazia";
-                var TITULO_MESSAGE_BOX_ERRO_LISTA_VAZIA = "Erro";
-                MessageBox.Show(MENSAGEM_ERRO_LISTA_VAZIA, TITULO_MESSAGE_BOX_ERRO_LISTA_VAZIA, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
         private void FormatarGridDePersonagens()
         {
@@ -250,6 +244,42 @@ namespace Forms
             gridRacas.Columns[POSICAO_HABILIDADE_RACIAL_NA_TABELA].HeaderText = "Habilidade Racial";
             gridRacas.Columns[POSICAO_LOCALIZACAO_GEOGRAFICA_NA_TABELA].HeaderText = "Localização Geográfica";
             gridRacas.Columns[POSICAO_ESTA_EXTINTA_NA_TABELA].HeaderText = "Esta Extinta?";
+        }
+        private int ObterIdDoPersonagemSelecionadoNoGrid()
+        {
+            var idDaLinhaSelecionadaNoDataGrid = gridPersonagens.CurrentCell.RowIndex;
+            var COLUNA_ID = "Id";
+            try
+            {
+                return int.Parse(gridPersonagens.Rows[idDaLinhaSelecionadaNoDataGrid]
+                                                    .Cells[COLUNA_ID].Value
+                                                    .ToString());
+            }
+            catch (Exception ex)
+            {
+                var MENSAGEM_ERRO_LISTA_VAZIA = "Lista vazia";
+                var TITULO_MESSAGE_BOX_ERRO_LISTA_VAZIA = "Erro";
+                MessageBox.Show(MENSAGEM_ERRO_LISTA_VAZIA, TITULO_MESSAGE_BOX_ERRO_LISTA_VAZIA, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return 0;
+            }
+        }
+        private int ObterIdDaRacaSelecionadoNoGrid()
+        {
+            var idDaLinhaSelecionadaNoDataGrid = gridRacas.CurrentCell.RowIndex;
+            var COLUNA_ID = "Id";
+            try
+            {
+                return int.Parse(gridRacas.Rows[idDaLinhaSelecionadaNoDataGrid]
+                                                    .Cells[COLUNA_ID].Value
+                                                    .ToString());
+            }
+            catch (Exception ex)
+            {
+                var MENSAGEM_ERRO_LISTA_VAZIA = "Lista vazia";
+                var TITULO_MESSAGE_BOX_ERRO_LISTA_VAZIA = "Erro";
+                MessageBox.Show(MENSAGEM_ERRO_LISTA_VAZIA, TITULO_MESSAGE_BOX_ERRO_LISTA_VAZIA, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return 0;
+            }
         }
     }
 }

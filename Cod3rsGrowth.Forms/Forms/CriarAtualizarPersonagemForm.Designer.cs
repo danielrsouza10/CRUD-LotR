@@ -1,6 +1,6 @@
 ﻿namespace Forms.Forms
 {
-    partial class CriacaoPersonagemForm
+    partial class CriarAtualizarPersonagemForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            textBoxNome = new TextBox();
+            boxNome = new TextBox();
             labelNome = new Label();
             labelProfissao = new Label();
             labelRaca = new Label();
@@ -52,11 +52,11 @@
             // 
             // textBoxNome
             // 
-            textBoxNome.Location = new Point(64, 21);
-            textBoxNome.Margin = new Padding(3, 4, 3, 4);
-            textBoxNome.Name = "textBoxNome";
-            textBoxNome.Size = new Size(154, 27);
-            textBoxNome.TabIndex = 0;
+            boxNome.Location = new Point(64, 21);
+            boxNome.Margin = new Padding(3, 4, 3, 4);
+            boxNome.Name = "textBoxNome";
+            boxNome.Size = new Size(154, 27);
+            boxNome.TabIndex = 0;
             // 
             // labelNome
             // 
@@ -170,7 +170,7 @@
             buttonCriar.TabIndex = 11;
             buttonCriar.Text = "Adicionar";
             buttonCriar.UseVisualStyleBackColor = true;
-            buttonCriar.Click += AoClicarNoBotaoCriarDeveCriarUmPersonagemOuDispararUmaExcecao;
+            buttonCriar.Click += AoClicarNoBotaoCriarOuAtualizar;
             // 
             // buttonCancelar
             // 
@@ -220,7 +220,7 @@
             Controls.Add(labelRaca);
             Controls.Add(labelProfissao);
             Controls.Add(labelNome);
-            Controls.Add(textBoxNome);
+            Controls.Add(boxNome);
             Margin = new Padding(3, 4, 3, 4);
             MinimizeBox = false;
             Name = "CriacaoPersonagemForm";
@@ -236,7 +236,7 @@
 
         #endregion
 
-        private TextBox textBoxNome;
+        private TextBox boxNome;
         private Label labelNome;
         private Label labelProfissao;
         private Label labelRaca;
