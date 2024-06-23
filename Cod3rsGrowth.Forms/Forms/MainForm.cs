@@ -69,6 +69,7 @@ namespace Forms
         }
         private void AoClicarNaTabDeRacasDeveListarTodasAsRacasNoDataGrid(object sender, EventArgs e)
         {
+            LimparFiltro();
             DefinirGridDeRacas(filtroRaca);
         }
         private void AoDigitarNaBarraDePesquisaDePersonagemDeveListarNoDataGrid(object sender, EventArgs e)
@@ -228,7 +229,8 @@ namespace Forms
             gridPersonagens.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             var POSICAO_ESTA_VIVO_NA_TABELA = 6;
             var POSICAO_DATA_DE_CADASTRO_NA_TABELA = 7;
-            if (gridPersonagens.Columns.Count > 0)
+            bool GRID_PERSONAGENS_EXISTE = gridPersonagens.Columns.Count > 0;
+            if (GRID_PERSONAGENS_EXISTE)
             {
                 gridPersonagens.Columns[POSICAO_ESTA_VIVO_NA_TABELA].HeaderText = "Esta vivo?";
                 gridPersonagens.Columns[POSICAO_DATA_DE_CADASTRO_NA_TABELA].DefaultCellStyle.Format = "dd/MM/yyyy";
