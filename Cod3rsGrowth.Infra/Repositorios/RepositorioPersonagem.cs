@@ -26,7 +26,13 @@ public class RepositorioPersonagem : IRepositorio<Personagem>
         var personagens = _db.Personagem;
         return personagens.FirstOrDefault(p => p.Id == id);
     }
-    public void Criar(Personagem personagem) => _db.Insert(personagem);
+    public void Criar(Personagem personagem) {
+        if(_db.Personagem.Where(p => p.Nome.ToLower().Contains(personagem.Nome.ToLower())) != null)
+        {
+            throw new Exception("Já existe um personagem com esse nome.");
+        }
+        _db.Insert(personagem);
+    }
     public Personagem Editar(Personagem personagem)
     {
         var personagens = _db.Personagem.ToList();
