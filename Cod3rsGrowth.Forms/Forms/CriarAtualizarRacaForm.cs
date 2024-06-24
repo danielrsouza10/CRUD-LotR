@@ -1,6 +1,4 @@
-﻿using Dominio.ENUMS;
-using Dominio.Filtros;
-using Dominio.Modelos;
+﻿using Dominio.Modelos;
 using Servico.Servicos;
 
 namespace Forms.Forms
@@ -24,11 +22,9 @@ namespace Forms.Forms
             if (_raca == null)
             {
                 ApresentarTelaParaCriacao();
+                return;
             }
-            else
-            {
-                ApresentarTelaParaEdicao();
-            }
+            ApresentarTelaParaEdicao();
         }
         private void AoClicarNoBotaoCriarOuAtualizar(object sender, EventArgs e)
         {
@@ -43,18 +39,16 @@ namespace Forms.Forms
                 {
                     MessageBox.Show(ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                return;
             }
-            else
+            try
             {
-                try
-                {
-                    EditarRaca();
-                    this.Close();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                EditarRaca();
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void AoClicarNoBotaoCancelarDeveFecharACaixaDeDialogo(object sender, EventArgs e)
