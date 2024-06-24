@@ -8,8 +8,8 @@ namespace Forms.Forms
     public partial class CriarAtualizarRacaForm : Form
     {
         private readonly ServicoRaca _servicoRaca;
-        private int _id;
-        private Raca _raca = new Raca();
+        private readonly int _id;
+        private readonly Raca _raca = new Raca();
 
         public CriarAtualizarRacaForm(ServicoRaca servicoRaca, int? id = null)
         {
@@ -69,7 +69,7 @@ namespace Forms.Forms
         }
         private void ApresentarTelaParaEdicao()
         {
-            this.Text = "Editar Personagem";
+            this.Text = "Editar Raça";
             criarButton.Text = "Atualizar";
             BuscarDadosDaRacaSelecionada();
         }
