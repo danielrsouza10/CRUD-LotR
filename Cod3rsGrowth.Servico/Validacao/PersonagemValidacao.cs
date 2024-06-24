@@ -1,15 +1,20 @@
 ﻿using Dominio.Modelos;
 using FluentValidation;
+using Testes.Interfaces;
 
 namespace Dominio.Validacao;
 
 public class PersonagemValidacao : AbstractValidator<Personagem>
 {
-    public PersonagemValidacao()
+    private readonly IRepositorio<Personagem> _repositorio;
+    public PersonagemValidacao(IRepositorio<Personagem> repositorio)
     {
+        _repositorio = repositorio;
+
         RuleSet("Criacao", () =>
         {
             RuleFor(personagem => personagem.Nome)
+                .Must(nome => _repositorio.VerificarNomeNoDb(nome.ToLower())).WithMessage("O nome ja existe")
                 .Matches(@"^[a-zA-Z-']*$").WithMessage("O nome não pode conter caracteres especiais")
                 .NotNull().WithMessage("O nome do personagem não pode ser null")
                 .NotEmpty().WithMessage("Precisa informar um nome para o personagem")

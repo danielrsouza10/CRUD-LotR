@@ -234,8 +234,8 @@ namespace Forms
         private void FormatarGridRacas()
         {
             gridRacas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            var POSICAO_HABILIDADE_RACIAL_NA_TABELA = 2;
-            var POSICAO_LOCALIZACAO_GEOGRAFICA_NA_TABELA = 3;
+            var POSICAO_LOCALIZACAO_GEOGRAFICA_NA_TABELA = 2;
+            var POSICAO_HABILIDADE_RACIAL_NA_TABELA = 3;
             var POSICAO_ESTA_EXTINTA_NA_TABELA = 4;
 
             gridRacas.Columns[POSICAO_HABILIDADE_RACIAL_NA_TABELA].HeaderText = "Habilidade Racial";

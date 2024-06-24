@@ -1,6 +1,7 @@
 using Dominio.Filtros;
 using Dominio.Modelos;
 using LinqToDB;
+using LinqToDB.Common;
 using Testes.Interfaces;
 
 namespace Infra.Repositorios;
@@ -37,5 +38,11 @@ public class RepositorioRaca : IRepositorio<Raca>
         _db.Raca
             .Where(r => r.Id == id)
             .Delete();
+    }
+    public bool VerificarNomeNoDb(string nome)
+    {
+        return _db.Raca
+                    .Where(p => p.Nome.ToLower().Contains(nome.ToLower()))
+                    .ToList().IsNullOrEmpty();
     }
 }
