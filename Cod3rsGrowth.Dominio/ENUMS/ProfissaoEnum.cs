@@ -2,6 +2,7 @@
 {
     public enum ProfissaoEnum
     {
+        Nenhum = 0,
         Guerreiro = 1,
         Arqueiro = 2,
         Mago = 3,
