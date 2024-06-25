@@ -5,19 +5,18 @@ using Testes.Interfaces;
 using Dominio.Validacao;
 using Servico.Servicos;
 using Infra;
+using Servico;
 
 namespace Testes
 {
-    public class ModuloDeInjecao
+    public class ModuloDeInjecaoTestes
     {
         public static void BindServices(IServiceCollection services)
         {
-            services.AddScoped<ServicoPersonagem>();
-            services.AddScoped<ServicoRaca>();
+            ModuloDeInjecaoServico.BindServices(services);
+            ModuloDeInjecaoInfra.BindServices(services);
             services.AddScoped<IRepositorio<Personagem>, RepositorioMockPersonagens>();
             services.AddScoped<IRepositorio<Raca>, RepositorioMockRacas>();
-            services.AddScoped<PersonagemValidacao>();
-            services.AddScoped<RacaValidacao>();
         }
     }
 }
