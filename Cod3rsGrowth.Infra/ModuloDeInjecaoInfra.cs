@@ -15,7 +15,6 @@ public class ModuloDeInjecaoInfra
 {
     public static void BindServices(IServiceCollection services)
     {
-        services.AddScoped<DbOSenhorDosAneis>();
         services.AddScoped<IRepositorio<Personagem>, RepositorioPersonagem>();
         services.AddScoped<IRepositorio<Raca>, RepositorioRaca>();
 
