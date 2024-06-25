@@ -40,8 +40,12 @@ public class RepositorioRaca : IRepositorio<Raca>
     }
     public bool VerificarNomeNoDb(string nome, int? id = null)
     {
+        if (id.HasValue)
+        {
+            return _db.Raca
+                        .Any(r => r.Nome.ToLower() == nome.ToLower() && r.Id != id.Value);
+        }
         return _db.Raca
-                    .Where(p => p.Nome.ToLower().Equals(nome.ToLower()))
-                    .ToList().IsNullOrEmpty();
+                        .Any(r => r.Nome.ToLower().Equals(nome.ToLower()));
     }
 }

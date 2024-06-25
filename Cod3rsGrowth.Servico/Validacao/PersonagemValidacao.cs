@@ -14,8 +14,8 @@ public class PersonagemValidacao : AbstractValidator<Personagem>
         RuleSet("Criacao", () =>
         {
             RuleFor(personagem => personagem.Nome)
-                .Must(nome => _repositorio.VerificarNomeNoDb(nome.ToLower(), null)).WithMessage("O nome ja existe")
-                .Matches(@"^[a-zA-Z-']*$").WithMessage("O nome não pode conter caracteres especiais")
+                .Must(nome => !_repositorio.VerificarNomeNoDb(nome.ToLower(), null)).WithMessage("O nome ja existe")
+                .Matches(@"^[a-zA-ZÀ-ÖØ-öø-ÿ'-]*$").WithMessage("O nome não pode conter caracteres especiais")
                 .NotNull().WithMessage("O nome do personagem não pode ser null")
                 .NotEmpty().WithMessage("Precisa informar um nome para o personagem")
                 .Length(3, 25).WithMessage("O nome do personagem precisa ter entre 3 e 25 caracteres");
@@ -33,8 +33,8 @@ public class PersonagemValidacao : AbstractValidator<Personagem>
         RuleSet("Edicao", () => 
         {
             RuleFor(personagem => personagem.Nome)
-                .Must((personagem, nome) => _repositorio.VerificarNomeNoDb(nome.ToLower(), personagem.Id)).WithMessage("O nome ja existe")
-                .Matches(@"^[a-zA-Z-']*$").WithMessage("O nome não pode conter caracteres especiais")
+                .Must((personagem, nome) => !_repositorio.VerificarNomeNoDb(nome.ToLower(), personagem.Id)).WithMessage("O nome ja existe")
+                .Matches(@"^[a-zA-ZÀ-ÖØ-öø-ÿ'-]*$").WithMessage("O nome não pode conter caracteres especiais")
                 .Length(3, 25).WithMessage("O nome do personagem precisa ter entre 3 e 25 caracteres");
         }); 
     }
