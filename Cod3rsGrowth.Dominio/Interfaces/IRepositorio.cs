@@ -9,6 +9,6 @@ namespace Testes.Interfaces
         void Criar(T t);
         T Editar(T t);
         void Deletar(int id);
-        bool VerificarNomeNoDb(string nome);
+        bool VerificarNomeNoDb(string nome, int? id);
     }
 }
