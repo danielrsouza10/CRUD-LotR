@@ -159,7 +159,7 @@ namespace Forms
             criacaoRaca.ShowDialog();
             DefinirGridDeRacas(_filtroRaca);
         }
-        private void AoClicarNoBotaoResetDeveCarregarAsListasSemFiltrosAplicados(object sender, EventArgs e)
+        private void AoClicarNoBotaoAtualizarDeveCarregarAsListasSemFiltrosAplicados(object sender, EventArgs e)
         {
             LimparFiltro();
             barraDePesquisaDePersonagem.Text = string.Empty;

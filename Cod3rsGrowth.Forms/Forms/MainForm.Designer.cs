@@ -154,9 +154,9 @@
             buttonReset.Name = "buttonReset";
             buttonReset.Size = new Size(94, 29);
             buttonReset.TabIndex = 9;
-            buttonReset.Text = "Reset";
+            buttonReset.Text = "Atualizar";
             buttonReset.UseVisualStyleBackColor = true;
-            buttonReset.Click += AoClicarNoBotaoResetDeveCarregarAsListasSemFiltrosAplicados;
+            buttonReset.Click += AoClicarNoBotaoAtualizarDeveCarregarAsListasSemFiltrosAplicados;
             // 
             // tabControl
             // 
