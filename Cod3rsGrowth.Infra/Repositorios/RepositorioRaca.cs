@@ -38,7 +38,7 @@ public class RepositorioRaca : IRepositorio<Raca>
             .Where(r => r.Id == id)
             .Delete();
     }
-    public bool VerificarNomeNoDb(string nome)
+    public bool VerificarNomeNoDb(string nome, int? id = null)
     {
         return _db.Raca
                     .Where(p => p.Nome.ToLower().Equals(nome.ToLower()))
