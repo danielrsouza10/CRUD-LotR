@@ -33,6 +33,8 @@ public class PersonagemValidacao : AbstractValidator<Personagem>
         RuleSet("Edicao", () => 
         {
             RuleFor(personagem => personagem.Nome)
+                .Must(nome => _repositorio.VerificarNomeNoDb(nome.ToLower())).WithMessage("O nome ja existe")
+                .Matches(@"^[a-zA-Z-']*$").WithMessage("O nome não pode conter caracteres especiais")
                 .Length(3, 25).WithMessage("O nome do personagem precisa ter entre 3 e 25 caracteres");
         }); 
     }
