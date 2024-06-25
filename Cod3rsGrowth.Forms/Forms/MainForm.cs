@@ -1,3 +1,4 @@
+using Dominio.ENUMS;
 using Dominio.Filtros;
 using Forms.Forms;
 using Servico.Servicos;
@@ -22,14 +23,19 @@ namespace Forms
         {
             _filtroPersonagem.Nome = null;
             _filtroPersonagem.EstaVivo = null;
-            _filtroPersonagem.DataDoCadastro = null;
-            _filtroPersonagem.Id = null;
+            _filtroPersonagem.DataFinal = null;
+            _filtroPersonagem.Profissao = (ProfissaoEnum)Enum.Parse(typeof(ProfissaoEnum), "Nenhum");
+            _filtroPersonagem.DataInicial = null;
+            _filtroPersonagem.DataFinal = null;
             _filtroRaca.Nome = null;
             _filtroRaca.EstaExtinta = null;
-            _filtroRaca.Id = null;
+            filtroRacaBox.SelectedItem = null;
         }
         private void IniciarFormPrincipal(object sender, EventArgs e)
         {
+            filtroRacaBox.DataSource = _servicoRaca.ObterTodos(_filtroRaca);
+            filtroRacaBox.DisplayMember = "Nome";
+            boxFiltroProfissao.DataSource = Enum.GetValues(typeof(ProfissaoEnum));
             LimparFiltro();
             DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
             DefinirGridDeRacas(_filtroRaca);
@@ -74,27 +80,27 @@ namespace Forms
         }
         private void AoDigitarNaBarraDePesquisaDePersonagemDeveListarNoDataGrid(object sender, EventArgs e)
         {
-            _filtroPersonagem.Nome = nomePersonagemRadioButton.Checked ? barraDePesquisaDePersonagem.Text : null;
-            if (idPersonagemRadioButton.Checked)
+            if (vivoPersonagemCheckBox.Checked)
             {
                 try
                 {
-                    _filtroPersonagem.Id = int.Parse(barraDePesquisaDePersonagem.Text);
+                    _filtroPersonagem.EstaVivo = vivoPersonagemCheckBox.Checked;
                     DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
                 }
                 catch { }
             }
+            _filtroPersonagem.Nome = barraDePesquisaDePersonagem.Text;
             DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
         }
         private void AoDigitarNaBarraDePesquisaDeRacaDeveListarNoDataGrid(object sender, EventArgs e)
         {
             _filtroRaca.Nome = nomeRacaRadioButton.Checked ? barraDePesquisaDeRaca.Text : null;
             _filtroRaca.EstaExtinta = racaExtintaCheckBox.Checked ? racaExtintaCheckBox.Checked : null;
-            if (idRacaRadioButton.Checked)
+            if (racaExtintaCheckBox.Checked)
             {
                 try
                 {
-                    _filtroRaca.Id = int.Parse(barraDePesquisaDeRaca.Text);
+                    _filtroRaca.EstaExtinta = racaExtintaCheckBox.Checked;
                     DefinirGridDeRacas(_filtroRaca);
                 }
                 catch { }
@@ -107,6 +113,12 @@ namespace Forms
             _filtroPersonagem.EstaVivo = vivoPersonagemCheckBox.Checked ? vivoPersonagemCheckBox.Checked : null;
             DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
         }
+        private void AoDarCheckNoBoxMortoDeveFiltarAListaDePersonagens(object sender, EventArgs e)
+        {
+            barraDePesquisaDePersonagem.Text = string.Empty;
+            _filtroPersonagem.EstaVivo = mortoPersonagemCheckBox.Checked ? !mortoPersonagemCheckBox.Checked : null;
+            DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
+        }
         private void AoDarCheckNoBoxExtintaDeveFiltarAListaDeRacas(object sender, EventArgs e)
         {
             barraDePesquisaDeRaca.Text = string.Empty;
@@ -115,20 +127,8 @@ namespace Forms
         }
         private void AoSelecionarUmaDataDeveAdicionarOValorAoFiltro(object sender, EventArgs e)
         {
-            _filtroPersonagem.DataDoCadastro = dateTimePicker.Value;
+            _filtroPersonagem.DataFinal = dataInicialTimePicker.Value;
             DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
-        }
-        private void AoAlterarASelecaoDoImputRadioDeNomePersonagemDeveAtualizarAListaPersonagem(object sender, EventArgs e)
-        {
-            LimparFiltro();
-            barraDePesquisaDePersonagem.Text = string.Empty;
-            DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
-        }
-        private void AoAlterarASelecaoDoImputRadioDeNomeRacaDeveAtualizarAListaRaca(object sender, EventArgs e)
-        {
-            LimparFiltro();
-            barraDePesquisaDeRaca.Text = string.Empty;
-            DefinirGridDeRacas(_filtroRaca);
         }
         private void AoClicarNoBotaoAdicionarDeveAbrirAJanelaDeCriacao(object sender, EventArgs e)
         {
@@ -159,7 +159,7 @@ namespace Forms
             criacaoRaca.ShowDialog();
             DefinirGridDeRacas(_filtroRaca);
         }
-        private void AoClicarNoBotaoAtualizarDeveCarregarAsListasSemFiltrosAplicados(object sender, EventArgs e)
+        private void AoClicarNoBotaoResetLimparFiltroEDefinirOGrid(object sender, EventArgs e)
         {
             LimparFiltro();
             barraDePesquisaDePersonagem.Text = string.Empty;
@@ -174,7 +174,7 @@ namespace Forms
                 RemoverPersonagem();
                 return;
             }
-            RemoverRaca();  
+            RemoverRaca();
         }
         private void RemoverPersonagem()
         {
@@ -182,7 +182,7 @@ namespace Forms
             var MENSAGEM_CONFIRMACAO_REMOCAO_DE_PERSONAGEM = "Tem certeza que quer remover o personagem selecionado?";
             var TITULO_MESSAGE_BOX = "Confirme sua escolha";
             var retornoDaConfirmacaoDoUsuario = MessageBox.Show(MENSAGEM_CONFIRMACAO_REMOCAO_DE_PERSONAGEM, TITULO_MESSAGE_BOX, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            
+
             if (retornoDaConfirmacaoDoUsuario == DialogResult.Yes)
             {
                 try
@@ -203,21 +203,21 @@ namespace Forms
             var MENSAGEM_CONFIRMACAO_REMOCAO_DE_RACA = "Tem certeza que quer remover a raça selecionada?";
             var TITULO_MESSAGE_BOX = "Confirme sua escolha";
             var retornoDaConfirmacaoDoUsuario = MessageBox.Show(MENSAGEM_CONFIRMACAO_REMOCAO_DE_RACA, TITULO_MESSAGE_BOX, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            
-                if (retornoDaConfirmacaoDoUsuario == DialogResult.Yes)
+
+            if (retornoDaConfirmacaoDoUsuario == DialogResult.Yes)
+            {
+                try
                 {
-                    try
-                    {
-                        _servicoRaca.Deletar(idDaRacaSelecionada);
-                    }
-                    catch (Exception ex)
-                    {
-                        var MENSAGEM_DE_ERRO_AO_DELETAR_RACA = "Existem personagens vinculados a essa raça.\nExclua-os primeiramente para que seja possível ecxluir essa raça.";
-                        MessageBox.Show(MENSAGEM_DE_ERRO_AO_DELETAR_RACA);
-                    }
-                    LimparFiltro();
-                    DefinirGridDeRacas(_filtroRaca);
+                    _servicoRaca.Deletar(idDaRacaSelecionada);
                 }
+                catch (Exception ex)
+                {
+                    var MENSAGEM_DE_ERRO_AO_DELETAR_RACA = "Existem personagens vinculados a essa raça.\nExclua-os primeiramente para que seja possível ecxluir essa raça.";
+                    MessageBox.Show(MENSAGEM_DE_ERRO_AO_DELETAR_RACA);
+                }
+                LimparFiltro();
+                DefinirGridDeRacas(_filtroRaca);
+            }
         }
         private void FormatarGridDePersonagens()
         {
@@ -278,6 +278,30 @@ namespace Forms
                 MessageBox.Show(MENSAGEM_ERRO_LISTA_VAZIA, TITULO_MESSAGE_BOX_ERRO_LISTA_VAZIA, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return ID_EM_CASO_DE_NULL;
             }
+        }
+
+        private void AoAlterarASelecaoDoComboboxDeRacasDeveFiltrar(object sender, EventArgs e)
+        {
+            _filtroRaca.Nome = filtroRacaBox.GetItemText(filtroRacaBox.SelectedItem);
+            DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
+        }
+
+        private void boxFiltroProfissao_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _filtroPersonagem.Profissao = (ProfissaoEnum)Enum.Parse(typeof(ProfissaoEnum), boxFiltroProfissao.Text);
+            DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
+        }
+
+        private void dataInicialTimePicker_ValueChanged(object sender, EventArgs e)
+        {
+            _filtroPersonagem.DataInicial = dataInicialTimePicker.Value;
+            DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
+        }
+
+        private void dataFinalTimePicker_ValueChanged(object sender, EventArgs e)
+        {
+            _filtroPersonagem.DataFinal = dataFinalTimePicker.Value;
+            DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
         }
     }
 }
