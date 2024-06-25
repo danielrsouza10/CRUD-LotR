@@ -79,11 +79,10 @@ namespace Forms.Forms
         private void BuscarDadosDoPersonagemSelecionado()
         {
             var DECREMENTO_PARA_ACESSAR_INDEX_RACA = 1;
-            var DECREMENTO_PARA_ACESSAR_INDEX_PROFISSAO = 1;
             boxNome.Text = _personagem.Nome;
             boxRacas.SelectedIndex = _personagem.IdRaca - DECREMENTO_PARA_ACESSAR_INDEX_RACA;
             boxProfissao.DataSource = Enum.GetValues(typeof(ProfissaoEnum));
-            boxProfissao.SelectedIndex = (int)(_personagem.Profissao - DECREMENTO_PARA_ACESSAR_INDEX_PROFISSAO);
+            boxProfissao.SelectedIndex = (int)(_personagem.Profissao);
             boxAltura.Value = (decimal)_personagem.Altura;
             boxIdade.Value = (int)_personagem.Idade;
             radioButtonSim.Checked = _personagem.EstaVivo;
