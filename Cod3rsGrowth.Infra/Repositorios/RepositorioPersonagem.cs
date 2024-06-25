@@ -43,7 +43,7 @@ public class RepositorioPersonagem : IRepositorio<Personagem>
     public bool VerificarNomeNoDb(string nome)
     {
         return _db.Personagem
-                    .Where(p => p.Nome.ToLower().Contains(nome.ToLower()))
+                    .Where(p => p.Nome.ToLower().Equals(nome.ToLower()))
                     .ToList().IsNullOrEmpty();
     }
 }

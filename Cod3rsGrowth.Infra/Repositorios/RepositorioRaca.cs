@@ -42,7 +42,7 @@ public class RepositorioRaca : IRepositorio<Raca>
     public bool VerificarNomeNoDb(string nome)
     {
         return _db.Raca
-                    .Where(p => p.Nome.ToLower().Contains(nome.ToLower()))
+                    .Where(p => p.Nome.ToLower().Equals(nome.ToLower()))
                     .ToList().IsNullOrEmpty();
     }
 }
