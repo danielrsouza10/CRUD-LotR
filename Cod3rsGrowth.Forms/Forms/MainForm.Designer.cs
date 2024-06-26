@@ -67,10 +67,10 @@
             // 
             // buttonAdicionar
             // 
-            buttonAdicionar.Location = new Point(1002, 695);
-            buttonAdicionar.Margin = new Padding(4, 5, 4, 5);
+            buttonAdicionar.Location = new Point(802, 556);
+            buttonAdicionar.Margin = new Padding(3, 4, 3, 4);
             buttonAdicionar.Name = "buttonAdicionar";
-            buttonAdicionar.Size = new Size(108, 39);
+            buttonAdicionar.Size = new Size(86, 31);
             buttonAdicionar.TabIndex = 1;
             buttonAdicionar.Text = "Adicionar";
             buttonAdicionar.UseVisualStyleBackColor = true;
@@ -78,10 +78,10 @@
             // 
             // button2
             // 
-            button2.Location = new Point(1118, 695);
-            button2.Margin = new Padding(4, 5, 4, 5);
+            button2.Location = new Point(894, 556);
+            button2.Margin = new Padding(3, 4, 3, 4);
             button2.Name = "button2";
-            button2.Size = new Size(108, 39);
+            button2.Size = new Size(86, 31);
             button2.TabIndex = 2;
             button2.Text = "Editar";
             button2.UseVisualStyleBackColor = true;
@@ -89,10 +89,10 @@
             // 
             // button3
             // 
-            button3.Location = new Point(1232, 695);
-            button3.Margin = new Padding(4, 5, 4, 5);
+            button3.Location = new Point(986, 556);
+            button3.Margin = new Padding(3, 4, 3, 4);
             button3.Name = "button3";
-            button3.Size = new Size(108, 39);
+            button3.Size = new Size(86, 31);
             button3.TabIndex = 3;
             button3.Text = "Remover";
             button3.UseVisualStyleBackColor = true;
@@ -100,31 +100,31 @@
             // 
             // barraDePesquisaDePersonagem
             // 
-            barraDePesquisaDePersonagem.Location = new Point(8, 5);
-            barraDePesquisaDePersonagem.Margin = new Padding(4, 5, 4, 5);
+            barraDePesquisaDePersonagem.Location = new Point(6, 4);
+            barraDePesquisaDePersonagem.Margin = new Padding(3, 4, 3, 4);
             barraDePesquisaDePersonagem.Multiline = true;
             barraDePesquisaDePersonagem.Name = "barraDePesquisaDePersonagem";
             barraDePesquisaDePersonagem.PlaceholderText = "Pesquise o personagem...";
-            barraDePesquisaDePersonagem.Size = new Size(812, 35);
+            barraDePesquisaDePersonagem.Size = new Size(650, 29);
             barraDePesquisaDePersonagem.TabIndex = 4;
             barraDePesquisaDePersonagem.TextChanged += AoDigitarNaBarraDePesquisaDePersonagemDeveListarNoDataGrid;
             // 
             // dataInicialTimePicker
             // 
-            dataInicialTimePicker.Location = new Point(944, 5);
-            dataInicialTimePicker.Margin = new Padding(4, 5, 4, 5);
+            dataInicialTimePicker.Location = new Point(755, 4);
+            dataInicialTimePicker.Margin = new Padding(3, 4, 3, 4);
             dataInicialTimePicker.Name = "dataInicialTimePicker";
-            dataInicialTimePicker.Size = new Size(363, 31);
+            dataInicialTimePicker.Size = new Size(291, 27);
             dataInicialTimePicker.TabIndex = 7;
             dataInicialTimePicker.ValueChanged += AoAlterarADataInicialDeveFiltrar;
             // 
             // vivoPersonagemCheckBox
             // 
             vivoPersonagemCheckBox.AutoSize = true;
-            vivoPersonagemCheckBox.Location = new Point(80, 54);
-            vivoPersonagemCheckBox.Margin = new Padding(4, 5, 4, 5);
+            vivoPersonagemCheckBox.Location = new Point(64, 43);
+            vivoPersonagemCheckBox.Margin = new Padding(3, 4, 3, 4);
             vivoPersonagemCheckBox.Name = "vivoPersonagemCheckBox";
-            vivoPersonagemCheckBox.Size = new Size(73, 29);
+            vivoPersonagemCheckBox.Size = new Size(60, 24);
             vivoPersonagemCheckBox.TabIndex = 8;
             vivoPersonagemCheckBox.Text = "Vivo";
             vivoPersonagemCheckBox.UseVisualStyleBackColor = true;
@@ -132,10 +132,9 @@
             // 
             // buttonReset
             // 
-            buttonReset.Location = new Point(15, 695);
-            buttonReset.Margin = new Padding(4);
+            buttonReset.Location = new Point(12, 556);
             buttonReset.Name = "buttonReset";
-            buttonReset.Size = new Size(118, 36);
+            buttonReset.Size = new Size(94, 29);
             buttonReset.TabIndex = 9;
             buttonReset.Text = "Reset";
             buttonReset.UseVisualStyleBackColor = true;
@@ -145,12 +144,12 @@
             // 
             tabControl.Controls.Add(tabPersonagens);
             tabControl.Controls.Add(tabRacas);
-            tabControl.Location = new Point(15, 6);
-            tabControl.Margin = new Padding(4);
+            tabControl.Location = new Point(12, 5);
             tabControl.Name = "tabControl";
             tabControl.SelectedIndex = 0;
-            tabControl.Size = new Size(1325, 681);
+            tabControl.Size = new Size(1060, 545);
             tabControl.TabIndex = 10;
+            tabControl.Selected += AoAlternarEntreTabsDeveRedefinirOGrid;
             // 
             // tabPersonagens
             // 
@@ -167,11 +166,10 @@
             tabPersonagens.Controls.Add(barraDePesquisaDePersonagem);
             tabPersonagens.Controls.Add(dataInicialTimePicker);
             tabPersonagens.Controls.Add(vivoPersonagemCheckBox);
-            tabPersonagens.Location = new Point(4, 34);
-            tabPersonagens.Margin = new Padding(4);
+            tabPersonagens.Location = new Point(4, 29);
             tabPersonagens.Name = "tabPersonagens";
-            tabPersonagens.Padding = new Padding(4);
-            tabPersonagens.Size = new Size(1317, 643);
+            tabPersonagens.Padding = new Padding(3, 3, 3, 3);
+            tabPersonagens.Size = new Size(1052, 512);
             tabPersonagens.TabIndex = 0;
             tabPersonagens.Text = "Personagens";
             tabPersonagens.UseVisualStyleBackColor = true;
@@ -179,40 +177,36 @@
             // labelRacas
             // 
             labelRacas.AutoSize = true;
-            labelRacas.Location = new Point(260, 55);
-            labelRacas.Margin = new Padding(4, 0, 4, 0);
+            labelRacas.Location = new Point(208, 44);
             labelRacas.Name = "labelRacas";
-            labelRacas.Size = new Size(61, 25);
+            labelRacas.Size = new Size(50, 20);
             labelRacas.TabIndex = 18;
             labelRacas.Text = "Raças:";
             // 
             // labelProfissao
             // 
             labelProfissao.AutoSize = true;
-            labelProfissao.Location = new Point(534, 55);
-            labelProfissao.Margin = new Padding(4, 0, 4, 0);
+            labelProfissao.Location = new Point(427, 44);
             labelProfissao.Name = "labelProfissao";
-            labelProfissao.Size = new Size(89, 25);
+            labelProfissao.Size = new Size(72, 20);
             labelProfissao.TabIndex = 17;
             labelProfissao.Text = "Profissão:";
             // 
             // labelFiltros
             // 
             labelFiltros.AutoSize = true;
-            labelFiltros.Location = new Point(8, 55);
-            labelFiltros.Margin = new Padding(4, 0, 4, 0);
+            labelFiltros.Location = new Point(6, 44);
             labelFiltros.Name = "labelFiltros";
-            labelFiltros.Size = new Size(64, 25);
+            labelFiltros.Size = new Size(52, 20);
             labelFiltros.TabIndex = 16;
             labelFiltros.Text = "Filtros:";
             // 
             // mortoPersonagemCheckBox
             // 
             mortoPersonagemCheckBox.AutoSize = true;
-            mortoPersonagemCheckBox.Location = new Point(162, 54);
-            mortoPersonagemCheckBox.Margin = new Padding(4);
+            mortoPersonagemCheckBox.Location = new Point(130, 43);
             mortoPersonagemCheckBox.Name = "mortoPersonagemCheckBox";
-            mortoPersonagemCheckBox.Size = new Size(88, 29);
+            mortoPersonagemCheckBox.Size = new Size(72, 24);
             mortoPersonagemCheckBox.TabIndex = 15;
             mortoPersonagemCheckBox.Text = "Morto";
             mortoPersonagemCheckBox.UseVisualStyleBackColor = true;
@@ -223,10 +217,9 @@
             boxFiltroProfissao.DataSource = personagemBindingSource1;
             boxFiltroProfissao.DropDownStyle = ComboBoxStyle.DropDownList;
             boxFiltroProfissao.FormattingEnabled = true;
-            boxFiltroProfissao.Location = new Point(631, 48);
-            boxFiltroProfissao.Margin = new Padding(4);
+            boxFiltroProfissao.Location = new Point(505, 38);
             boxFiltroProfissao.Name = "boxFiltroProfissao";
-            boxFiltroProfissao.Size = new Size(188, 33);
+            boxFiltroProfissao.Size = new Size(151, 28);
             boxFiltroProfissao.TabIndex = 14;
             boxFiltroProfissao.SelectedIndexChanged += AoAlterarASelecaoDoComboboxDeProfissaoDeveFiltrar;
             // 
@@ -239,10 +232,9 @@
             filtroRacaBox.DataSource = racaBindingSource;
             filtroRacaBox.DropDownStyle = ComboBoxStyle.DropDownList;
             filtroRacaBox.FormattingEnabled = true;
-            filtroRacaBox.Location = new Point(332, 48);
-            filtroRacaBox.Margin = new Padding(4);
+            filtroRacaBox.Location = new Point(266, 38);
             filtroRacaBox.Name = "filtroRacaBox";
-            filtroRacaBox.Size = new Size(188, 33);
+            filtroRacaBox.Size = new Size(151, 28);
             filtroRacaBox.TabIndex = 13;
             filtroRacaBox.SelectedIndexChanged += AoAlterarASelecaoDoComboboxDeRacasDeveFiltrar;
             // 
@@ -253,29 +245,26 @@
             // labelDataFinal
             // 
             labelDataFinal.AutoSize = true;
-            labelDataFinal.Location = new Point(828, 55);
-            labelDataFinal.Margin = new Padding(4, 0, 4, 0);
+            labelDataFinal.Location = new Point(662, 44);
             labelDataFinal.Name = "labelDataFinal";
-            labelDataFinal.Size = new Size(90, 25);
+            labelDataFinal.Size = new Size(76, 20);
             labelDataFinal.TabIndex = 12;
             labelDataFinal.Text = "Data Final";
             // 
             // labelDataInicial
             // 
             labelDataInicial.AutoSize = true;
-            labelDataInicial.Location = new Point(828, 10);
-            labelDataInicial.Margin = new Padding(4, 0, 4, 0);
+            labelDataInicial.Location = new Point(662, 8);
             labelDataInicial.Name = "labelDataInicial";
-            labelDataInicial.Size = new Size(98, 25);
+            labelDataInicial.Size = new Size(84, 20);
             labelDataInicial.TabIndex = 11;
             labelDataInicial.Text = "Data Inicial";
             // 
             // dataFinalTimePicker
             // 
-            dataFinalTimePicker.Location = new Point(944, 49);
-            dataFinalTimePicker.Margin = new Padding(4);
+            dataFinalTimePicker.Location = new Point(755, 39);
             dataFinalTimePicker.Name = "dataFinalTimePicker";
-            dataFinalTimePicker.Size = new Size(363, 31);
+            dataFinalTimePicker.Size = new Size(291, 27);
             dataFinalTimePicker.TabIndex = 10;
             dataFinalTimePicker.ValueChanged += AoAlterarADataFinalDeveFiltrar;
             // 
@@ -286,13 +275,12 @@
             gridPersonagens.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             gridPersonagens.BackgroundColor = SystemColors.Window;
             gridPersonagens.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            gridPersonagens.Location = new Point(8, 94);
-            gridPersonagens.Margin = new Padding(4);
+            gridPersonagens.Location = new Point(6, 75);
             gridPersonagens.Name = "gridPersonagens";
             gridPersonagens.ReadOnly = true;
             gridPersonagens.RowHeadersWidth = 51;
             gridPersonagens.RowTemplate.Height = 29;
-            gridPersonagens.Size = new Size(1300, 546);
+            gridPersonagens.Size = new Size(1040, 437);
             gridPersonagens.TabIndex = 9;
             // 
             // tabRacas
@@ -300,11 +288,10 @@
             tabRacas.Controls.Add(gridRacas);
             tabRacas.Controls.Add(barraDePesquisaDeRaca);
             tabRacas.Controls.Add(racaExtintaCheckBox);
-            tabRacas.Location = new Point(4, 34);
-            tabRacas.Margin = new Padding(4);
+            tabRacas.Location = new Point(4, 29);
             tabRacas.Name = "tabRacas";
-            tabRacas.Padding = new Padding(4);
-            tabRacas.Size = new Size(1317, 643);
+            tabRacas.Padding = new Padding(3, 3, 3, 3);
+            tabRacas.Size = new Size(1052, 512);
             tabRacas.TabIndex = 1;
             tabRacas.Text = "Raças";
             tabRacas.UseVisualStyleBackColor = true;
@@ -316,32 +303,31 @@
             gridRacas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             gridRacas.BackgroundColor = SystemColors.Control;
             gridRacas.ColumnHeadersHeight = 29;
-            gridRacas.Location = new Point(8, 49);
-            gridRacas.Margin = new Padding(4);
+            gridRacas.Location = new Point(6, 39);
             gridRacas.Name = "gridRacas";
             gridRacas.ReadOnly = true;
             gridRacas.RowHeadersWidth = 51;
-            gridRacas.Size = new Size(1300, 588);
+            gridRacas.Size = new Size(1040, 470);
             gridRacas.TabIndex = 0;
             // 
             // barraDePesquisaDeRaca
             // 
-            barraDePesquisaDeRaca.Location = new Point(8, 5);
-            barraDePesquisaDeRaca.Margin = new Padding(4, 5, 4, 5);
+            barraDePesquisaDeRaca.Location = new Point(6, 4);
+            barraDePesquisaDeRaca.Margin = new Padding(3, 4, 3, 4);
             barraDePesquisaDeRaca.Multiline = true;
             barraDePesquisaDeRaca.Name = "barraDePesquisaDeRaca";
             barraDePesquisaDeRaca.PlaceholderText = "Pesquise a raça...";
-            barraDePesquisaDeRaca.Size = new Size(1197, 35);
+            barraDePesquisaDeRaca.Size = new Size(958, 29);
             barraDePesquisaDeRaca.TabIndex = 9;
             barraDePesquisaDeRaca.TextChanged += AoDigitarNaBarraDePesquisaDeRacaDeveListarNoDataGrid;
             // 
             // racaExtintaCheckBox
             // 
             racaExtintaCheckBox.AutoSize = true;
-            racaExtintaCheckBox.Location = new Point(1213, 11);
-            racaExtintaCheckBox.Margin = new Padding(4, 5, 4, 5);
+            racaExtintaCheckBox.Location = new Point(970, 9);
+            racaExtintaCheckBox.Margin = new Padding(3, 4, 3, 4);
             racaExtintaCheckBox.Name = "racaExtintaCheckBox";
-            racaExtintaCheckBox.Size = new Size(90, 29);
+            racaExtintaCheckBox.Size = new Size(76, 24);
             racaExtintaCheckBox.TabIndex = 12;
             racaExtintaCheckBox.Text = "Extinta";
             racaExtintaCheckBox.UseVisualStyleBackColor = true;
@@ -353,16 +339,16 @@
             // 
             // MainForm
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
-            ClientSize = new Size(1355, 750);
+            ClientSize = new Size(1084, 600);
             Controls.Add(tabControl);
             Controls.Add(buttonReset);
             Controls.Add(button3);
             Controls.Add(button2);
             Controls.Add(buttonAdicionar);
-            Margin = new Padding(4, 5, 4, 5);
+            Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
             Name = "MainForm";
             Text = "O Senhor dos Anéis DB";

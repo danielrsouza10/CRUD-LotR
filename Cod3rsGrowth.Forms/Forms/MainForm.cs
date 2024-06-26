@@ -94,7 +94,7 @@ namespace Forms
         }
         private void AoDigitarNaBarraDePesquisaDeRacaDeveListarNoDataGrid(object sender, EventArgs e)
         {
-            
+
             if (racaExtintaCheckBox.Checked)
             {
                 try
@@ -109,7 +109,7 @@ namespace Forms
         }
         private void AoDarCheckNoBoxVivoDeveFiltarAListaDePersonagens(object sender, EventArgs e)
         {
-            if(vivoPersonagemCheckBox.Checked && mortoPersonagemCheckBox.Checked) mortoPersonagemCheckBox.Checked = false;
+            if (vivoPersonagemCheckBox.Checked && mortoPersonagemCheckBox.Checked) mortoPersonagemCheckBox.Checked = false;
             barraDePesquisaDePersonagem.Text = string.Empty;
             _filtroPersonagem.EstaVivo = vivoPersonagemCheckBox.Checked ? vivoPersonagemCheckBox.Checked : null;
             DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
@@ -304,6 +304,14 @@ namespace Forms
         {
             _filtroPersonagem.DataFinal = dataFinalTimePicker.Value.Date;
             DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
+        }
+
+        private void AoAlternarEntreTabsDeveRedefinirOGrid(object sender, TabControlEventArgs e)
+        {
+            filtroRacaBox.DataSource = _servicoRaca.ObterTodos(_filtroRaca);
+            LimparFiltro();
+            DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
+            DefinirGridDeRacas(_filtroRaca);
         }
     }
 }
