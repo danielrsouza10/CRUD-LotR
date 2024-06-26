@@ -8,6 +8,7 @@ using LinqToDB;
 using LinqToDB.AspNet;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Servico;
 using Servico.Servicos;
 using Testes.Interfaces;
 
@@ -20,21 +21,26 @@ namespace Forms
         /// </summary>
         [STAThread]
         static void Main()
-        {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
-            
+        {            
            ApplicationConfiguration.Initialize();
+
            var host = CreateHostBuilder().Build();
            ServiceProvider = host.Services;
            
-           Application.Run(new MainForm(ServiceProvider.GetRequiredService<ServicoPersonagem>(), ServiceProvider.GetRequiredService<ServicoRaca>()));
             
-            using (var serviceProvider = CreateServices())
-            using (var scope = serviceProvider.CreateScope())
+            using (var scope = ServiceProvider.CreateScope())
             {
-                UpdateDatabase(scope.ServiceProvider);
+                try
+                {
+                    UpdateDatabase(scope.ServiceProvider);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Falha na migração do banco de dados. {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
+
+           Application.Run(new MainForm(ServiceProvider.GetRequiredService<ServicoPersonagem>(), ServiceProvider.GetRequiredService<ServicoRaca>()));
         }
         public static IServiceProvider ServiceProvider { get; private set; }
         static IHostBuilder CreateHostBuilder()
@@ -42,28 +48,9 @@ namespace Forms
             return Host.CreateDefaultBuilder()
                 .ConfigureServices((services) =>
                 {
-                    services.AddScoped<PersonagemValidacao>();
-                    services.AddScoped<RacaValidacao>();
-                    services.AddScoped<ServicoPersonagem>();
-                    services.AddScoped<ServicoRaca>();
-                    services.AddScoped<DbOSenhorDosAneis>();
-                    services.AddScoped<IRepositorio<Personagem>, RepositorioPersonagem>();
-                    services.AddScoped<IRepositorio<Raca>, RepositorioRaca>();
-
-                    var connectionString = Environment.GetEnvironmentVariable("SQLSERVER_CONNECTION_STRING");
-                    services.AddLinqToDBContext<DbOSenhorDosAneis>((provider, options) => options.UseSqlServer(connectionString));
+                   ModuloDeInjecaoInfra.BindServices(services);
+                   ModuloDeInjecaoServico.BindServices(services);
                 });
-        }
-        private static ServiceProvider CreateServices()
-        {
-            var connectionString = Environment.GetEnvironmentVariable("SQLSERVER_CONNECTION_STRING");
-            return new ServiceCollection()
-                .AddFluentMigratorCore()
-                .ConfigureRunner(rb => rb
-                    .AddSqlServer().WithGlobalConnectionString(connectionString)
-                    .ScanIn(typeof(AddPersonagemTable).Assembly).For.Migrations())
-                .AddLogging(lb => lb.AddFluentMigratorConsole())
-                .BuildServiceProvider(false);
         }
         private static void UpdateDatabase(IServiceProvider serviceProvider)
         {

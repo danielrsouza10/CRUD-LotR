@@ -1,8 +1,4 @@
-﻿using Dominio;
-using System;
-using System.Collections.Generic;
-using Dominio.Interfaces;
-using Dominio.Filtros;
+﻿using Dominio.Filtros;
 
 namespace Testes.Interfaces
 {

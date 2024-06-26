@@ -11,19 +11,13 @@ namespace Testes
         {
             _serviceProvider = ObterServiceCollections().BuildServiceProvider();
         }
-
         public ServiceCollection ObterServiceCollections()
         {
             var serviceCollection = new ServiceCollection();
-            ModuloDeInjecao.BindServices(serviceCollection);
+            ModuloDeInjecaoTestes.BindServices(serviceCollection);
             ModuloDeInjecaoInfra.BindServices(serviceCollection);
             return serviceCollection;
-
         }
-
-        public void Dispose()
-        {
-            //throw new NotImplementedException();
-        }
+        public void Dispose() { }
     }
 }

@@ -1,6 +1,4 @@
-﻿using Dominio.ENUMS;
-using Dominio.Filtros;
-using Dominio.Modelos;
+﻿using Dominio.Modelos;
 using Servico.Servicos;
 
 namespace Forms.Forms
@@ -8,8 +6,8 @@ namespace Forms.Forms
     public partial class CriarAtualizarRacaForm : Form
     {
         private readonly ServicoRaca _servicoRaca;
-        private int _id;
-        private Raca _raca = new Raca();
+        private readonly int _id;
+        private readonly Raca _raca = new Raca();
 
         public CriarAtualizarRacaForm(ServicoRaca servicoRaca, int? id = null)
         {
@@ -24,37 +22,43 @@ namespace Forms.Forms
             if (_raca == null)
             {
                 ApresentarTelaParaCriacao();
+                return;
             }
-            else
-            {
-                ApresentarTelaParaEdicao();
-            }
+            ApresentarTelaParaEdicao();
         }
         private void AoClicarNoBotaoCriarOuAtualizar(object sender, EventArgs e)
         {
-            if(_raca == null)
+            var MENSAGEM_ERRO_RACA_MESMO_NOME = "Já existe uma raça com esse nome cadastrado.";
+            var TITULO_ERRO = "Erro";
+            if (_raca == null)
             {
                 try
                 {
                     CriarRaca();
                     this.Close();
                 }
+                catch (Microsoft.Data.SqlClient.SqlException)
+                {
+                    MessageBox.Show(MENSAGEM_ERRO_RACA_MESMO_NOME, TITULO_ERRO, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                return;
             }
-            else
+            try
             {
-                try
-                {
-                    EditarRaca();
-                    this.Close();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                EditarRaca();
+                this.Close();
+            }
+            catch (Microsoft.Data.SqlClient.SqlException)
+            {
+                MessageBox.Show(MENSAGEM_ERRO_RACA_MESMO_NOME, TITULO_ERRO, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void AoClicarNoBotaoCancelarDeveFecharACaixaDeDialogo(object sender, EventArgs e)
@@ -69,7 +73,7 @@ namespace Forms.Forms
         }
         private void ApresentarTelaParaEdicao()
         {
-            this.Text = "Editar Personagem";
+            this.Text = "Editar Raça";
             criarButton.Text = "Atualizar";
             BuscarDadosDaRacaSelecionada();
         }

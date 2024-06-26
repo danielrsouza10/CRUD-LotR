@@ -1,6 +1,9 @@
+using Dominio.ENUMS;
 using Dominio.Filtros;
 using Dominio.Modelos;
 using LinqToDB;
+using LinqToDB.Common;
+using System.Linq;
 using Testes.Interfaces;
 
 namespace Infra.Repositorios;
@@ -15,9 +18,10 @@ public class RepositorioPersonagem : IRepositorio<Personagem>
         if (filtro == null) return personagens.ToList();
         
         if (!string.IsNullOrEmpty(filtro.Nome)) personagens = from p in personagens where p.Nome.ToLower().Contains(filtro.Nome.ToLower()) select p;
-        if (!filtro.Id.Equals(null)) personagens = from p in personagens where p.Id == filtro.Id select p;
+        if (!filtro.Profissao.Equals((ProfissaoEnum)Enum.Parse(typeof(ProfissaoEnum), "Nenhum"))) personagens = from p in personagens where p.Profissao == filtro.Profissao select p;
         if (!filtro.EstaVivo.Equals(null)) personagens = from p in personagens where p.EstaVivo == filtro.EstaVivo select p;
-        if (!filtro.DataDoCadastro.Equals(null)) personagens = from p in personagens where p.DataDoCadastro == filtro.DataDoCadastro select p;
+        if (!filtro.DataInicial.Equals(null)) personagens = from p in personagens where p.DataDoCadastro.Date >= filtro.DataInicial select p;
+        if (!filtro.DataFinal.Equals(null)) personagens = from p in personagens where p.DataDoCadastro.Date <= filtro.DataFinal select p;
         
         return personagens.ToList();
     }
@@ -38,5 +42,5 @@ public class RepositorioPersonagem : IRepositorio<Personagem>
         _db.Personagem
             .Where(p => p.Id == id)
             .Delete();  
-    } 
+    }
 }

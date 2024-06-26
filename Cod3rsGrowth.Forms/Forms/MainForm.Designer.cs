@@ -33,29 +33,36 @@
             button2 = new Button();
             button3 = new Button();
             barraDePesquisaDePersonagem = new TextBox();
-            nomePersonagemRadioButton = new RadioButton();
-            idPersonagemRadioButton = new RadioButton();
-            dateTimePicker = new DateTimePicker();
+            dataInicialTimePicker = new DateTimePicker();
             vivoPersonagemCheckBox = new CheckBox();
             buttonReset = new Button();
             tabControl = new TabControl();
             tabPersonagens = new TabPage();
+            labelRacas = new Label();
+            labelProfissao = new Label();
+            labelFiltros = new Label();
+            mortoPersonagemCheckBox = new CheckBox();
+            boxFiltroProfissao = new ComboBox();
+            personagemBindingSource1 = new BindingSource(components);
+            filtroRacaBox = new ComboBox();
+            racaBindingSource = new BindingSource(components);
+            labelDataFinal = new Label();
+            labelDataInicial = new Label();
+            dataFinalTimePicker = new DateTimePicker();
             gridPersonagens = new DataGridView();
             tabRacas = new TabPage();
             gridRacas = new DataGridView();
             barraDePesquisaDeRaca = new TextBox();
-            idRacaRadioButton = new RadioButton();
-            nomeRacaRadioButton = new RadioButton();
             racaExtintaCheckBox = new CheckBox();
             personagemBindingSource = new BindingSource(components);
-            racaBindingSource = new BindingSource(components);
             tabControl.SuspendLayout();
             tabPersonagens.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)personagemBindingSource1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)racaBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridPersonagens).BeginInit();
             tabRacas.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)gridRacas).BeginInit();
             ((System.ComponentModel.ISupportInitialize)personagemBindingSource).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)racaBindingSource).BeginInit();
             SuspendLayout();
             // 
             // buttonAdicionar
@@ -98,48 +105,23 @@
             barraDePesquisaDePersonagem.Multiline = true;
             barraDePesquisaDePersonagem.Name = "barraDePesquisaDePersonagem";
             barraDePesquisaDePersonagem.PlaceholderText = "Pesquise o personagem...";
-            barraDePesquisaDePersonagem.Size = new Size(555, 29);
+            barraDePesquisaDePersonagem.Size = new Size(650, 29);
             barraDePesquisaDePersonagem.TabIndex = 4;
             barraDePesquisaDePersonagem.TextChanged += AoDigitarNaBarraDePesquisaDePersonagemDeveListarNoDataGrid;
             // 
-            // nomePersonagemRadioButton
+            // dataInicialTimePicker
             // 
-            nomePersonagemRadioButton.AutoSize = true;
-            nomePersonagemRadioButton.Checked = true;
-            nomePersonagemRadioButton.Location = new Point(567, 9);
-            nomePersonagemRadioButton.Margin = new Padding(3, 4, 3, 4);
-            nomePersonagemRadioButton.Name = "nomePersonagemRadioButton";
-            nomePersonagemRadioButton.Size = new Size(71, 24);
-            nomePersonagemRadioButton.TabIndex = 5;
-            nomePersonagemRadioButton.TabStop = true;
-            nomePersonagemRadioButton.Text = "Nome";
-            nomePersonagemRadioButton.UseVisualStyleBackColor = true;
-            nomePersonagemRadioButton.CheckedChanged += AoAlterarASelecaoDoImputRadioDeNomePersonagemDeveAtualizarAListaPersonagem;
-            // 
-            // idPersonagemRadioButton
-            // 
-            idPersonagemRadioButton.AutoSize = true;
-            idPersonagemRadioButton.Location = new Point(644, 8);
-            idPersonagemRadioButton.Margin = new Padding(3, 4, 3, 4);
-            idPersonagemRadioButton.Name = "idPersonagemRadioButton";
-            idPersonagemRadioButton.Size = new Size(43, 24);
-            idPersonagemRadioButton.TabIndex = 6;
-            idPersonagemRadioButton.TabStop = true;
-            idPersonagemRadioButton.Text = "Id";
-            idPersonagemRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // dateTimePicker
-            // 
-            dateTimePicker.Location = new Point(755, 7);
-            dateTimePicker.Margin = new Padding(3, 4, 3, 4);
-            dateTimePicker.Name = "dateTimePicker";
-            dateTimePicker.Size = new Size(291, 27);
-            dateTimePicker.TabIndex = 7;
+            dataInicialTimePicker.Location = new Point(755, 4);
+            dataInicialTimePicker.Margin = new Padding(3, 4, 3, 4);
+            dataInicialTimePicker.Name = "dataInicialTimePicker";
+            dataInicialTimePicker.Size = new Size(291, 27);
+            dataInicialTimePicker.TabIndex = 7;
+            dataInicialTimePicker.ValueChanged += AoAlterarADataInicialDeveFiltrar;
             // 
             // vivoPersonagemCheckBox
             // 
             vivoPersonagemCheckBox.AutoSize = true;
-            vivoPersonagemCheckBox.Location = new Point(691, 9);
+            vivoPersonagemCheckBox.Location = new Point(64, 43);
             vivoPersonagemCheckBox.Margin = new Padding(3, 4, 3, 4);
             vivoPersonagemCheckBox.Name = "vivoPersonagemCheckBox";
             vivoPersonagemCheckBox.Size = new Size(60, 24);
@@ -156,7 +138,7 @@
             buttonReset.TabIndex = 9;
             buttonReset.Text = "Reset";
             buttonReset.UseVisualStyleBackColor = true;
-            buttonReset.Click += AoClicarNoBotaoResetDeveCarregarAsListasSemFiltrosAplicados;
+            buttonReset.Click += AoClicarNoBotaoResetLimparFiltroEDefinirOGrid;
             // 
             // tabControl
             // 
@@ -167,48 +149,148 @@
             tabControl.SelectedIndex = 0;
             tabControl.Size = new Size(1060, 545);
             tabControl.TabIndex = 10;
+            tabControl.Selected += AoAlternarEntreTabsDeveRedefinirOGrid;
             // 
             // tabPersonagens
             // 
+            tabPersonagens.Controls.Add(labelRacas);
+            tabPersonagens.Controls.Add(labelProfissao);
+            tabPersonagens.Controls.Add(labelFiltros);
+            tabPersonagens.Controls.Add(mortoPersonagemCheckBox);
+            tabPersonagens.Controls.Add(boxFiltroProfissao);
+            tabPersonagens.Controls.Add(filtroRacaBox);
+            tabPersonagens.Controls.Add(labelDataFinal);
+            tabPersonagens.Controls.Add(labelDataInicial);
+            tabPersonagens.Controls.Add(dataFinalTimePicker);
             tabPersonagens.Controls.Add(gridPersonagens);
             tabPersonagens.Controls.Add(barraDePesquisaDePersonagem);
-            tabPersonagens.Controls.Add(dateTimePicker);
-            tabPersonagens.Controls.Add(idPersonagemRadioButton);
-            tabPersonagens.Controls.Add(nomePersonagemRadioButton);
+            tabPersonagens.Controls.Add(dataInicialTimePicker);
             tabPersonagens.Controls.Add(vivoPersonagemCheckBox);
             tabPersonagens.Location = new Point(4, 29);
             tabPersonagens.Name = "tabPersonagens";
-            tabPersonagens.Padding = new Padding(3);
+            tabPersonagens.Padding = new Padding(3, 3, 3, 3);
             tabPersonagens.Size = new Size(1052, 512);
             tabPersonagens.TabIndex = 0;
             tabPersonagens.Text = "Personagens";
             tabPersonagens.UseVisualStyleBackColor = true;
+            // 
+            // labelRacas
+            // 
+            labelRacas.AutoSize = true;
+            labelRacas.Location = new Point(208, 44);
+            labelRacas.Name = "labelRacas";
+            labelRacas.Size = new Size(50, 20);
+            labelRacas.TabIndex = 18;
+            labelRacas.Text = "Raças:";
+            // 
+            // labelProfissao
+            // 
+            labelProfissao.AutoSize = true;
+            labelProfissao.Location = new Point(427, 44);
+            labelProfissao.Name = "labelProfissao";
+            labelProfissao.Size = new Size(72, 20);
+            labelProfissao.TabIndex = 17;
+            labelProfissao.Text = "Profissão:";
+            // 
+            // labelFiltros
+            // 
+            labelFiltros.AutoSize = true;
+            labelFiltros.Location = new Point(6, 44);
+            labelFiltros.Name = "labelFiltros";
+            labelFiltros.Size = new Size(52, 20);
+            labelFiltros.TabIndex = 16;
+            labelFiltros.Text = "Filtros:";
+            // 
+            // mortoPersonagemCheckBox
+            // 
+            mortoPersonagemCheckBox.AutoSize = true;
+            mortoPersonagemCheckBox.Location = new Point(130, 43);
+            mortoPersonagemCheckBox.Name = "mortoPersonagemCheckBox";
+            mortoPersonagemCheckBox.Size = new Size(72, 24);
+            mortoPersonagemCheckBox.TabIndex = 15;
+            mortoPersonagemCheckBox.Text = "Morto";
+            mortoPersonagemCheckBox.UseVisualStyleBackColor = true;
+            mortoPersonagemCheckBox.CheckedChanged += AoDarCheckNoBoxMortoDeveFiltarAListaDePersonagens;
+            // 
+            // boxFiltroProfissao
+            // 
+            boxFiltroProfissao.DataSource = personagemBindingSource1;
+            boxFiltroProfissao.DropDownStyle = ComboBoxStyle.DropDownList;
+            boxFiltroProfissao.FormattingEnabled = true;
+            boxFiltroProfissao.Location = new Point(505, 38);
+            boxFiltroProfissao.Name = "boxFiltroProfissao";
+            boxFiltroProfissao.Size = new Size(151, 28);
+            boxFiltroProfissao.TabIndex = 14;
+            boxFiltroProfissao.SelectedIndexChanged += AoAlterarASelecaoDoComboboxDeProfissaoDeveFiltrar;
+            // 
+            // personagemBindingSource1
+            // 
+            personagemBindingSource1.DataSource = typeof(Dominio.Modelos.Personagem);
+            // 
+            // filtroRacaBox
+            // 
+            filtroRacaBox.DataSource = racaBindingSource;
+            filtroRacaBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            filtroRacaBox.FormattingEnabled = true;
+            filtroRacaBox.Location = new Point(266, 38);
+            filtroRacaBox.Name = "filtroRacaBox";
+            filtroRacaBox.Size = new Size(151, 28);
+            filtroRacaBox.TabIndex = 13;
+            filtroRacaBox.SelectedIndexChanged += AoAlterarASelecaoDoComboboxDeRacasDeveFiltrar;
+            // 
+            // racaBindingSource
+            // 
+            racaBindingSource.DataSource = typeof(Dominio.Modelos.Raca);
+            // 
+            // labelDataFinal
+            // 
+            labelDataFinal.AutoSize = true;
+            labelDataFinal.Location = new Point(662, 44);
+            labelDataFinal.Name = "labelDataFinal";
+            labelDataFinal.Size = new Size(76, 20);
+            labelDataFinal.TabIndex = 12;
+            labelDataFinal.Text = "Data Final";
+            // 
+            // labelDataInicial
+            // 
+            labelDataInicial.AutoSize = true;
+            labelDataInicial.Location = new Point(662, 8);
+            labelDataInicial.Name = "labelDataInicial";
+            labelDataInicial.Size = new Size(84, 20);
+            labelDataInicial.TabIndex = 11;
+            labelDataInicial.Text = "Data Inicial";
+            // 
+            // dataFinalTimePicker
+            // 
+            dataFinalTimePicker.Location = new Point(755, 39);
+            dataFinalTimePicker.Name = "dataFinalTimePicker";
+            dataFinalTimePicker.Size = new Size(291, 27);
+            dataFinalTimePicker.TabIndex = 10;
+            dataFinalTimePicker.ValueChanged += AoAlterarADataFinalDeveFiltrar;
             // 
             // gridPersonagens
             // 
             gridPersonagens.AllowUserToAddRows = false;
             gridPersonagens.AllowUserToDeleteRows = false;
             gridPersonagens.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            gridPersonagens.BackgroundColor = SystemColors.Control;
+            gridPersonagens.BackgroundColor = SystemColors.Window;
             gridPersonagens.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            gridPersonagens.Location = new Point(6, 39);
+            gridPersonagens.Location = new Point(6, 75);
             gridPersonagens.Name = "gridPersonagens";
             gridPersonagens.ReadOnly = true;
             gridPersonagens.RowHeadersWidth = 51;
             gridPersonagens.RowTemplate.Height = 29;
-            gridPersonagens.Size = new Size(1040, 469);
+            gridPersonagens.Size = new Size(1040, 437);
             gridPersonagens.TabIndex = 9;
             // 
             // tabRacas
             // 
             tabRacas.Controls.Add(gridRacas);
             tabRacas.Controls.Add(barraDePesquisaDeRaca);
-            tabRacas.Controls.Add(idRacaRadioButton);
-            tabRacas.Controls.Add(nomeRacaRadioButton);
             tabRacas.Controls.Add(racaExtintaCheckBox);
             tabRacas.Location = new Point(4, 29);
             tabRacas.Name = "tabRacas";
-            tabRacas.Padding = new Padding(3);
+            tabRacas.Padding = new Padding(3, 3, 3, 3);
             tabRacas.Size = new Size(1052, 512);
             tabRacas.TabIndex = 1;
             tabRacas.Text = "Raças";
@@ -235,40 +317,14 @@
             barraDePesquisaDeRaca.Multiline = true;
             barraDePesquisaDeRaca.Name = "barraDePesquisaDeRaca";
             barraDePesquisaDeRaca.PlaceholderText = "Pesquise a raça...";
-            barraDePesquisaDeRaca.Size = new Size(555, 29);
+            barraDePesquisaDeRaca.Size = new Size(958, 29);
             barraDePesquisaDeRaca.TabIndex = 9;
             barraDePesquisaDeRaca.TextChanged += AoDigitarNaBarraDePesquisaDeRacaDeveListarNoDataGrid;
-            // 
-            // idRacaRadioButton
-            // 
-            idRacaRadioButton.AutoSize = true;
-            idRacaRadioButton.Location = new Point(644, 8);
-            idRacaRadioButton.Margin = new Padding(3, 4, 3, 4);
-            idRacaRadioButton.Name = "idRacaRadioButton";
-            idRacaRadioButton.Size = new Size(43, 24);
-            idRacaRadioButton.TabIndex = 11;
-            idRacaRadioButton.TabStop = true;
-            idRacaRadioButton.Text = "Id";
-            idRacaRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // nomeRacaRadioButton
-            // 
-            nomeRacaRadioButton.AutoSize = true;
-            nomeRacaRadioButton.Checked = true;
-            nomeRacaRadioButton.Location = new Point(567, 9);
-            nomeRacaRadioButton.Margin = new Padding(3, 4, 3, 4);
-            nomeRacaRadioButton.Name = "nomeRacaRadioButton";
-            nomeRacaRadioButton.Size = new Size(71, 24);
-            nomeRacaRadioButton.TabIndex = 10;
-            nomeRacaRadioButton.TabStop = true;
-            nomeRacaRadioButton.Text = "Nome";
-            nomeRacaRadioButton.UseVisualStyleBackColor = true;
-            nomeRacaRadioButton.CheckedChanged += AoAlterarASelecaoDoImputRadioDeNomeRacaDeveAtualizarAListaRaca;
             // 
             // racaExtintaCheckBox
             // 
             racaExtintaCheckBox.AutoSize = true;
-            racaExtintaCheckBox.Location = new Point(691, 9);
+            racaExtintaCheckBox.Location = new Point(970, 9);
             racaExtintaCheckBox.Margin = new Padding(3, 4, 3, 4);
             racaExtintaCheckBox.Name = "racaExtintaCheckBox";
             racaExtintaCheckBox.Size = new Size(76, 24);
@@ -280,10 +336,6 @@
             // personagemBindingSource
             // 
             personagemBindingSource.DataSource = typeof(Dominio.Modelos.Personagem);
-            // 
-            // racaBindingSource
-            // 
-            racaBindingSource.DataSource = typeof(Dominio.Modelos.Raca);
             // 
             // MainForm
             // 
@@ -304,12 +356,13 @@
             tabControl.ResumeLayout(false);
             tabPersonagens.ResumeLayout(false);
             tabPersonagens.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)personagemBindingSource1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)racaBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridPersonagens).EndInit();
             tabRacas.ResumeLayout(false);
             tabRacas.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)gridRacas).EndInit();
             ((System.ComponentModel.ISupportInitialize)personagemBindingSource).EndInit();
-            ((System.ComponentModel.ISupportInitialize)racaBindingSource).EndInit();
             ResumeLayout(false);
         }
 
@@ -318,9 +371,7 @@
         private Button button2;
         private Button button3;
         private TextBox barraDePesquisaDePersonagem;
-        private RadioButton nomePersonagemRadioButton;
-        private RadioButton idPersonagemRadioButton;
-        private DateTimePicker dateTimePicker;
+        private DateTimePicker dataInicialTimePicker;
         private CheckBox vivoPersonagemCheckBox;
         private Button buttonReset;
         private TabControl tabControl;
@@ -328,8 +379,6 @@
         private TabPage tabRacas;
         private DataGridView gridPersonagens;
         private TextBox barraDePesquisaDeRaca;
-        private RadioButton idRacaRadioButton;
-        private RadioButton nomeRacaRadioButton;
         private CheckBox racaExtintaCheckBox;
         private DataGridView gridRacas;
         private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn1;
@@ -347,5 +396,15 @@
         private DataGridViewTextBoxColumn dataDoCadastroDataGridViewTextBoxColumn;
         private BindingSource personagemBindingSource;
         private BindingSource racaBindingSource;
+        private Label labelDataFinal;
+        private Label labelDataInicial;
+        private DateTimePicker dataFinalTimePicker;
+        private ComboBox filtroRacaBox;
+        private ComboBox boxFiltroProfissao;
+        private BindingSource personagemBindingSource1;
+        private CheckBox mortoPersonagemCheckBox;
+        private Label labelFiltros;
+        private Label labelRacas;
+        private Label labelProfissao;
     }
 }

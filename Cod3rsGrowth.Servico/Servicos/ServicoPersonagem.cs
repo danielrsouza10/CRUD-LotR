@@ -29,13 +29,10 @@ namespace Servico.Servicos
                 .Validate(personagem, options => options.IncludeRuleSets("Criacao"));
             if (!resultadoValidacao.IsValid)
             {
-                var erros = "";
-                const string SerapacaoEntreErros = ".\n";
                 foreach (var falha in resultadoValidacao.Errors)
                 {
-                    erros += falha.ErrorMessage + SerapacaoEntreErros;
+                    throw new Exception(falha.ErrorMessage);
                 }
-                throw new Exception(erros);
             }
             _servicoRepositorio.Criar(personagem);
         }
@@ -45,12 +42,10 @@ namespace Servico.Servicos
                 .Validate(personagem, options => options.IncludeRuleSets("Edicao"));
             if (!resultadoValidacao.IsValid)
             {
-                var erros = "";
                 foreach (var falha in resultadoValidacao.Errors)
                 {
-                    erros += falha.ErrorMessage + ".\n";
+                    throw new Exception(falha.ErrorMessage);
                 }
-                throw new Exception(erros);
             }
             return _servicoRepositorio.Editar(personagem);
         }

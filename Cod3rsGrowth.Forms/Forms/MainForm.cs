@@ -1,3 +1,4 @@
+using Dominio.ENUMS;
 using Dominio.Filtros;
 using Forms.Forms;
 using Servico.Servicos;
@@ -9,8 +10,8 @@ namespace Forms
     {
         private readonly ServicoPersonagem _servicoPersonagem;
         private readonly ServicoRaca _servicoRaca;
-        Filtro filtroPersonagem = new Filtro();
-        Filtro filtroRaca = new Filtro();
+        private readonly Filtro _filtroPersonagem = new Filtro();
+        private readonly Filtro _filtroRaca = new Filtro();
 
         public MainForm(ServicoPersonagem servicoPersonagem, ServicoRaca servicoRaca)
         {
@@ -20,19 +21,24 @@ namespace Forms
         }
         private void LimparFiltro()
         {
-            filtroPersonagem.Nome = null;
-            filtroPersonagem.EstaVivo = null;
-            filtroPersonagem.DataDoCadastro = null;
-            filtroPersonagem.Id = null;
-            filtroRaca.Nome = null;
-            filtroRaca.EstaExtinta = null;
-            filtroRaca.Id = null;
+            _filtroPersonagem.Nome = null;
+            _filtroPersonagem.EstaVivo = null;
+            _filtroPersonagem.DataFinal = null;
+            _filtroPersonagem.Profissao = (ProfissaoEnum)Enum.Parse(typeof(ProfissaoEnum), "Nenhum");
+            _filtroPersonagem.DataInicial = null;
+            _filtroPersonagem.DataFinal = null;
+            _filtroRaca.Nome = null;
+            _filtroRaca.EstaExtinta = null;
+            filtroRacaBox.SelectedItem = null;
         }
         private void IniciarFormPrincipal(object sender, EventArgs e)
         {
+            filtroRacaBox.DataSource = _servicoRaca.ObterTodos(_filtroRaca);
+            filtroRacaBox.DisplayMember = "Nome";
+            boxFiltroProfissao.DataSource = Enum.GetValues(typeof(ProfissaoEnum));
             LimparFiltro();
-            DefinirGridDePersonagens(filtroPersonagem, filtroRaca);
-            DefinirGridDeRacas(filtroRaca);
+            DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
+            DefinirGridDeRacas(_filtroRaca);
         }
         private void DefinirGridDePersonagens(Filtro filtroPersonagem, Filtro filtroRaca)
         {
@@ -65,69 +71,66 @@ namespace Forms
         private void AoClicarNaTabDePersonagensDeveListarTodasOsPersonagensNoDataGrid(object sender, EventArgs e)
         {
             LimparFiltro();
-            DefinirGridDePersonagens(filtroPersonagem, filtroRaca);
+            DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
         }
         private void AoClicarNaTabDeRacasDeveListarTodasAsRacasNoDataGrid(object sender, EventArgs e)
         {
-            DefinirGridDeRacas(filtroRaca);
+            LimparFiltro();
+            DefinirGridDeRacas(_filtroRaca);
         }
         private void AoDigitarNaBarraDePesquisaDePersonagemDeveListarNoDataGrid(object sender, EventArgs e)
         {
-            filtroPersonagem.Nome = nomePersonagemRadioButton.Checked ? barraDePesquisaDePersonagem.Text : null;
-            if (idPersonagemRadioButton.Checked)
+            if (vivoPersonagemCheckBox.Checked)
             {
                 try
                 {
-                    filtroPersonagem.Id = int.Parse(barraDePesquisaDePersonagem.Text);
-                    DefinirGridDePersonagens(filtroPersonagem, filtroRaca);
+                    _filtroPersonagem.EstaVivo = vivoPersonagemCheckBox.Checked;
+                    DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
                 }
                 catch { }
             }
-            DefinirGridDePersonagens(filtroPersonagem, filtroRaca);
+            _filtroPersonagem.Nome = barraDePesquisaDePersonagem.Text;
+            DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
         }
         private void AoDigitarNaBarraDePesquisaDeRacaDeveListarNoDataGrid(object sender, EventArgs e)
         {
-            filtroRaca.Nome = nomeRacaRadioButton.Checked ? barraDePesquisaDeRaca.Text : null;
-            filtroRaca.EstaExtinta = racaExtintaCheckBox.Checked ? racaExtintaCheckBox.Checked : null;
-            if (idRacaRadioButton.Checked)
+
+            if (racaExtintaCheckBox.Checked)
             {
                 try
                 {
-                    filtroRaca.Id = int.Parse(barraDePesquisaDeRaca.Text);
-                    DefinirGridDeRacas(filtroRaca);
+                    _filtroRaca.EstaExtinta = racaExtintaCheckBox.Checked;
+                    DefinirGridDeRacas(_filtroRaca);
                 }
                 catch { }
             }
-            DefinirGridDeRacas(filtroRaca);
+            _filtroRaca.Nome = barraDePesquisaDeRaca.Text;
+            DefinirGridDeRacas(_filtroRaca);
         }
         private void AoDarCheckNoBoxVivoDeveFiltarAListaDePersonagens(object sender, EventArgs e)
         {
+            if (vivoPersonagemCheckBox.Checked && mortoPersonagemCheckBox.Checked) mortoPersonagemCheckBox.Checked = false;
             barraDePesquisaDePersonagem.Text = string.Empty;
-            filtroPersonagem.EstaVivo = vivoPersonagemCheckBox.Checked ? vivoPersonagemCheckBox.Checked : null;
-            DefinirGridDePersonagens(filtroPersonagem, filtroRaca);
+            _filtroPersonagem.EstaVivo = vivoPersonagemCheckBox.Checked ? vivoPersonagemCheckBox.Checked : null;
+            DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
+        }
+        private void AoDarCheckNoBoxMortoDeveFiltarAListaDePersonagens(object sender, EventArgs e)
+        {
+            if (mortoPersonagemCheckBox.Checked && vivoPersonagemCheckBox.Checked) vivoPersonagemCheckBox.Checked = false;
+            barraDePesquisaDePersonagem.Text = string.Empty;
+            _filtroPersonagem.EstaVivo = mortoPersonagemCheckBox.Checked ? !mortoPersonagemCheckBox.Checked : null;
+            DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
         }
         private void AoDarCheckNoBoxExtintaDeveFiltarAListaDeRacas(object sender, EventArgs e)
         {
             barraDePesquisaDeRaca.Text = string.Empty;
-            filtroRaca.EstaExtinta = racaExtintaCheckBox.Checked ? racaExtintaCheckBox.Checked : null;
-            DefinirGridDeRacas(filtroRaca);
+            _filtroRaca.EstaExtinta = racaExtintaCheckBox.Checked ? racaExtintaCheckBox.Checked : null;
+            DefinirGridDeRacas(_filtroRaca);
         }
         private void AoSelecionarUmaDataDeveAdicionarOValorAoFiltro(object sender, EventArgs e)
         {
-            filtroPersonagem.DataDoCadastro = dateTimePicker.Value;
-            DefinirGridDePersonagens(filtroPersonagem, filtroRaca);
-        }
-        private void AoAlterarASelecaoDoImputRadioDeNomePersonagemDeveAtualizarAListaPersonagem(object sender, EventArgs e)
-        {
-            LimparFiltro();
-            barraDePesquisaDePersonagem.Text = string.Empty;
-            DefinirGridDePersonagens(filtroPersonagem, filtroRaca);
-        }
-        private void AoAlterarASelecaoDoImputRadioDeNomeRacaDeveAtualizarAListaRaca(object sender, EventArgs e)
-        {
-            LimparFiltro();
-            barraDePesquisaDeRaca.Text = string.Empty;
-            DefinirGridDeRacas(filtroRaca);
+            _filtroPersonagem.DataFinal = dataInicialTimePicker.Value;
+            DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
         }
         private void AoClicarNoBotaoAdicionarDeveAbrirAJanelaDeCriacao(object sender, EventArgs e)
         {
@@ -135,50 +138,45 @@ namespace Forms
             {
                 var criacaoPersonagem = new CriarAtualizarPersonagemForm(_servicoPersonagem, _servicoRaca);
                 criacaoPersonagem.ShowDialog();
-                DefinirGridDePersonagens(filtroPersonagem, filtroRaca);
+                DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
+                return;
             }
-            else if (tabControl.SelectedTab == tabRacas)
-            {
-                var criacaoRaca = new CriarAtualizarRacaForm(_servicoRaca);
-                criacaoRaca.ShowDialog();
-                DefinirGridDeRacas(filtroRaca);
-            }
+            var criacaoRaca = new CriarAtualizarRacaForm(_servicoRaca);
+            criacaoRaca.ShowDialog();
+            DefinirGridDeRacas(_filtroRaca);
         }
         private void AoClicarNoBotaoEditarDeveAbrirJanelaDeEdicao(object sender, EventArgs e)
         {
+            int idSelecionado;
             if (tabControl.SelectedTab == tabPersonagens)
             {
-                var idSelecionado = ObterIdDoPersonagemSelecionadoNoGrid();
+                idSelecionado = ObterIdDoPersonagemSelecionadoNoGrid();
                 var criacaoPersonagem = new CriarAtualizarPersonagemForm(_servicoPersonagem, _servicoRaca, idSelecionado);
                 criacaoPersonagem.ShowDialog();
-                DefinirGridDePersonagens(filtroPersonagem, filtroRaca);
+                DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
+                return;
             }
-            else if (tabControl.SelectedTab == tabRacas)
-            {
-                var idSelecionado = ObterIdDaRacaSelecionadoNoGrid();
-                var criacaoRaca = new CriarAtualizarRacaForm(_servicoRaca, idSelecionado);
-                criacaoRaca.ShowDialog();
-                DefinirGridDeRacas(filtroRaca);
-            }
+            idSelecionado = ObterIdDaRacaSelecionadoNoGrid();
+            var criacaoRaca = new CriarAtualizarRacaForm(_servicoRaca, idSelecionado);
+            criacaoRaca.ShowDialog();
+            DefinirGridDeRacas(_filtroRaca);
         }
-        private void AoClicarNoBotaoResetDeveCarregarAsListasSemFiltrosAplicados(object sender, EventArgs e)
+        private void AoClicarNoBotaoResetLimparFiltroEDefinirOGrid(object sender, EventArgs e)
         {
             LimparFiltro();
             barraDePesquisaDePersonagem.Text = string.Empty;
             barraDePesquisaDeRaca.Text = string.Empty;
-            DefinirGridDePersonagens(filtroPersonagem, filtroRaca);
-            DefinirGridDeRacas(filtroRaca);
+            DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
+            DefinirGridDeRacas(_filtroRaca);
         }
         private void AoClicarNoBotaoRemoverDeveVerificarTabAtivaERemoverDeAcordo(object sender, EventArgs e)
         {
             if (tabControl.SelectedTab == tabPersonagens)
             {
                 RemoverPersonagem();
+                return;
             }
-            else if (tabControl.SelectedTab == tabRacas)
-            {
-                RemoverRaca();
-            }
+            RemoverRaca();
         }
         private void RemoverPersonagem()
         {
@@ -186,7 +184,7 @@ namespace Forms
             var MENSAGEM_CONFIRMACAO_REMOCAO_DE_PERSONAGEM = "Tem certeza que quer remover o personagem selecionado?";
             var TITULO_MESSAGE_BOX = "Confirme sua escolha";
             var retornoDaConfirmacaoDoUsuario = MessageBox.Show(MENSAGEM_CONFIRMACAO_REMOCAO_DE_PERSONAGEM, TITULO_MESSAGE_BOX, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            
+
             if (retornoDaConfirmacaoDoUsuario == DialogResult.Yes)
             {
                 try
@@ -198,7 +196,7 @@ namespace Forms
                     MessageBox.Show(ex.Message);
                 }
                 LimparFiltro();
-                DefinirGridDePersonagens(filtroPersonagem, filtroRaca);
+                DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
             }
         }
         private void RemoverRaca()
@@ -207,38 +205,42 @@ namespace Forms
             var MENSAGEM_CONFIRMACAO_REMOCAO_DE_RACA = "Tem certeza que quer remover a raça selecionada?";
             var TITULO_MESSAGE_BOX = "Confirme sua escolha";
             var retornoDaConfirmacaoDoUsuario = MessageBox.Show(MENSAGEM_CONFIRMACAO_REMOCAO_DE_RACA, TITULO_MESSAGE_BOX, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            
-                if (retornoDaConfirmacaoDoUsuario == DialogResult.Yes)
+
+            if (retornoDaConfirmacaoDoUsuario == DialogResult.Yes)
+            {
+                try
                 {
-                    try
-                    {
-                        _servicoRaca.Deletar(idDaRacaSelecionada);
-                    }
-                    catch (Exception ex)
-                    {
-                        var MENSAGEM_DE_ERRO_AO_DELETAR_RACA = "Existem personagens vinculados a essa raça.\nExclua-os primeiramente para que seja possível ecxluir essa raça.";
-                        MessageBox.Show(MENSAGEM_DE_ERRO_AO_DELETAR_RACA);
-                    }
-                    LimparFiltro();
-                    DefinirGridDeRacas(filtroRaca);
+                    _servicoRaca.Deletar(idDaRacaSelecionada);
                 }
+                catch (Exception ex)
+                {
+                    var MENSAGEM_DE_ERRO_AO_DELETAR_RACA = "Existem personagens vinculados a essa raça.\nExclua-os primeiramente para que seja possível ecxluir essa raça.";
+                    MessageBox.Show(MENSAGEM_DE_ERRO_AO_DELETAR_RACA);
+                }
+                LimparFiltro();
+                DefinirGridDeRacas(_filtroRaca);
+            }
         }
         private void FormatarGridDePersonagens()
         {
             gridPersonagens.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            var POSICAO_ESTA_VIVO_NA_TABELA = 6;
-            var POSICAO_DATA_DE_CADASTRO_NA_TABELA = 7;
-            if (gridPersonagens.Columns.Count > 0)
+            var POSICAO_ESTA_VIVO_NA_TABELA = "EstaVivo";
+            var POSICAO_DATA_DE_CADASTRO_NA_TABELA = "DataDoCadastro";
+            var POSICAO_ALTURA_NA_TABELA = "Altura";
+            bool GRID_PERSONAGENS_EXISTE = gridPersonagens.Columns.Count > 0;
+            if (GRID_PERSONAGENS_EXISTE)
             {
                 gridPersonagens.Columns[POSICAO_ESTA_VIVO_NA_TABELA].HeaderText = "Esta vivo?";
+                gridPersonagens.Columns[POSICAO_DATA_DE_CADASTRO_NA_TABELA].HeaderText = "Data do cadastro";
                 gridPersonagens.Columns[POSICAO_DATA_DE_CADASTRO_NA_TABELA].DefaultCellStyle.Format = "dd/MM/yyyy";
+                gridPersonagens.Columns[POSICAO_ALTURA_NA_TABELA].DefaultCellStyle.Format = "0.00##";
             }
         }
         private void FormatarGridRacas()
         {
             gridRacas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            var POSICAO_HABILIDADE_RACIAL_NA_TABELA = 2;
-            var POSICAO_LOCALIZACAO_GEOGRAFICA_NA_TABELA = 3;
+            var POSICAO_LOCALIZACAO_GEOGRAFICA_NA_TABELA = 2;
+            var POSICAO_HABILIDADE_RACIAL_NA_TABELA = 3;
             var POSICAO_ESTA_EXTINTA_NA_TABELA = 4;
 
             gridRacas.Columns[POSICAO_HABILIDADE_RACIAL_NA_TABELA].HeaderText = "Habilidade Racial";
@@ -275,11 +277,44 @@ namespace Forms
             }
             catch (Exception ex)
             {
+                int ID_EM_CASO_DE_NULL = 0;
                 var MENSAGEM_ERRO_LISTA_VAZIA = "Lista vazia";
                 var TITULO_MESSAGE_BOX_ERRO_LISTA_VAZIA = "Erro";
                 MessageBox.Show(MENSAGEM_ERRO_LISTA_VAZIA, TITULO_MESSAGE_BOX_ERRO_LISTA_VAZIA, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return 0;
+                return ID_EM_CASO_DE_NULL;
             }
+        }
+
+        private void AoAlterarASelecaoDoComboboxDeRacasDeveFiltrar(object sender, EventArgs e)
+        {
+            _filtroRaca.Nome = filtroRacaBox.GetItemText(filtroRacaBox.SelectedItem);
+            DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
+        }
+
+        private void AoAlterarASelecaoDoComboboxDeProfissaoDeveFiltrar(object sender, EventArgs e)
+        {
+            _filtroPersonagem.Profissao = (ProfissaoEnum)Enum.Parse(typeof(ProfissaoEnum), boxFiltroProfissao.Text);
+            DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
+        }
+
+        private void AoAlterarADataInicialDeveFiltrar(object sender, EventArgs e)
+        {
+            _filtroPersonagem.DataInicial = dataInicialTimePicker.Value.Date;
+            DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
+        }
+
+        private void AoAlterarADataFinalDeveFiltrar(object sender, EventArgs e)
+        {
+            _filtroPersonagem.DataFinal = dataFinalTimePicker.Value.Date;
+            DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
+        }
+
+        private void AoAlternarEntreTabsDeveRedefinirOGrid(object sender, TabControlEventArgs e)
+        {
+            filtroRacaBox.DataSource = _servicoRaca.ObterTodos(_filtroRaca);
+            LimparFiltro();
+            DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
+            DefinirGridDeRacas(_filtroRaca);
         }
     }
 }

@@ -30,5 +30,10 @@ namespace Testes.Repositorios
    
             return personagemExistente;
         }
+
+        public bool VerificarNomeNoDb(string nome)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
