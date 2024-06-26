@@ -11,7 +11,7 @@ namespace Infra.Migrations
         {
             Create.Table("Personagem")
                 .WithColumn("Id").AsInt32().PrimaryKey().Identity().NotNullable()
-                .WithColumn("Nome").AsString().NotNullable()
+                .WithColumn("Nome").AsString().NotNullable().Unique()
                 .WithColumn("IdRaca").AsInt32().ForeignKey()
                 .WithColumn("Profissao").AsInt32().NotNullable()
                 .WithColumn("Idade").AsInt32().Nullable()
