@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Web.Controllers
+namespace Cod3rsGrowth.Web.Controllers
 {
     [ApiController]
     [Route("[controller]")]

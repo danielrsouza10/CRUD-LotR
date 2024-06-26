@@ -1,4 +1,4 @@
-namespace Web
+namespace Cod3rsGrowth.Web
 {
     public class WeatherForecast
     {
