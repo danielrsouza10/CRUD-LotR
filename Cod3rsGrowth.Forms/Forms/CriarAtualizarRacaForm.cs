@@ -28,12 +28,18 @@ namespace Forms.Forms
         }
         private void AoClicarNoBotaoCriarOuAtualizar(object sender, EventArgs e)
         {
-            if(_raca == null)
+            var MENSAGEM_ERRO_RACA_MESMO_NOME = "Já existe uma raça com esse nome cadastrado.";
+            var TITULO_ERRO = "Erro";
+            if (_raca == null)
             {
                 try
                 {
                     CriarRaca();
                     this.Close();
+                }
+                catch (Microsoft.Data.SqlClient.SqlException)
+                {
+                    MessageBox.Show(MENSAGEM_ERRO_RACA_MESMO_NOME, TITULO_ERRO, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 catch (Exception ex)
                 {
@@ -45,6 +51,10 @@ namespace Forms.Forms
             {
                 EditarRaca();
                 this.Close();
+            }
+            catch (Microsoft.Data.SqlClient.SqlException)
+            {
+                MessageBox.Show(MENSAGEM_ERRO_RACA_MESMO_NOME, TITULO_ERRO, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {

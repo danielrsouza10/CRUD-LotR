@@ -37,6 +37,8 @@ namespace Forms.Forms
         }
         private void AoClicarNoBotaoCriarOuAtualizar(object sender, EventArgs e)
         {
+            var MENSAGEM_ERRO_PERSONAGEM_MESMO_NOME = "Já existe um personagem com esse nome cadastrado.";
+            var TITULO_ERRO = "Erro";
             if (_personagem == null)
             {
                 try
@@ -44,9 +46,13 @@ namespace Forms.Forms
                     CriarPersonagem();
                     this.Close();
                 }
+                catch (Microsoft.Data.SqlClient.SqlException)
+                {
+                    MessageBox.Show(MENSAGEM_ERRO_PERSONAGEM_MESMO_NOME, TITULO_ERRO, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, TITULO_ERRO, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 return;
             }
@@ -55,9 +61,13 @@ namespace Forms.Forms
                 EditarPersonagem();
                 this.Close();
             }
+            catch (Microsoft.Data.SqlClient.SqlException)
+            {
+                MessageBox.Show(MENSAGEM_ERRO_PERSONAGEM_MESMO_NOME, TITULO_ERRO, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, TITULO_ERRO, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void ApresentarTelaParaCriacao()
