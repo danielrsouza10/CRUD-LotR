@@ -224,13 +224,16 @@ namespace Forms
         private void FormatarGridDePersonagens()
         {
             gridPersonagens.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            var POSICAO_ESTA_VIVO_NA_TABELA = 6;
-            var POSICAO_DATA_DE_CADASTRO_NA_TABELA = 7;
+            var POSICAO_ESTA_VIVO_NA_TABELA = "EstaVivo";
+            var POSICAO_DATA_DE_CADASTRO_NA_TABELA = "DataDoCadastro";
+            var POSICAO_ALTURA_NA_TABELA = "Altura";
             bool GRID_PERSONAGENS_EXISTE = gridPersonagens.Columns.Count > 0;
             if (GRID_PERSONAGENS_EXISTE)
             {
                 gridPersonagens.Columns[POSICAO_ESTA_VIVO_NA_TABELA].HeaderText = "Esta vivo?";
+                gridPersonagens.Columns[POSICAO_DATA_DE_CADASTRO_NA_TABELA].HeaderText = "Data do cadastro";
                 gridPersonagens.Columns[POSICAO_DATA_DE_CADASTRO_NA_TABELA].DefaultCellStyle.Format = "dd/MM/yyyy";
+                gridPersonagens.Columns[POSICAO_ALTURA_NA_TABELA].DefaultCellStyle.Format = "0.00##";
             }
         }
         private void FormatarGridRacas()
