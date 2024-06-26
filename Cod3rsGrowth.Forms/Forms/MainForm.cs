@@ -296,13 +296,13 @@ namespace Forms
 
         private void AoAlterarADataInicialDeveFiltrar(object sender, EventArgs e)
         {
-            _filtroPersonagem.DataInicial = dataInicialTimePicker.Value;
+            _filtroPersonagem.DataInicial = dataInicialTimePicker.Value.Date;
             DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
         }
 
         private void AoAlterarADataFinalDeveFiltrar(object sender, EventArgs e)
         {
-            _filtroPersonagem.DataFinal = dataFinalTimePicker.Value;
+            _filtroPersonagem.DataFinal = dataFinalTimePicker.Value.Date;
             DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
         }
     }

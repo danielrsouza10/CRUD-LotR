@@ -20,8 +20,8 @@ public class RepositorioPersonagem : IRepositorio<Personagem>
         if (!string.IsNullOrEmpty(filtro.Nome)) personagens = from p in personagens where p.Nome.ToLower().Contains(filtro.Nome.ToLower()) select p;
         if (!filtro.Profissao.Equals((ProfissaoEnum)Enum.Parse(typeof(ProfissaoEnum), "Nenhum"))) personagens = from p in personagens where p.Profissao == filtro.Profissao select p;
         if (!filtro.EstaVivo.Equals(null)) personagens = from p in personagens where p.EstaVivo == filtro.EstaVivo select p;
-        if (!filtro.DataInicial.Equals(null)) personagens = from p in personagens where p.DataDoCadastro >= filtro.DataInicial select p;
-        if (!filtro.DataFinal.Equals(null)) personagens = from p in personagens where p.DataDoCadastro <= filtro.DataFinal select p;
+        if (!filtro.DataInicial.Equals(null)) personagens = from p in personagens where p.DataDoCadastro.Date >= filtro.DataInicial select p;
+        if (!filtro.DataFinal.Equals(null)) personagens = from p in personagens where p.DataDoCadastro.Date <= filtro.DataFinal select p;
         
         return personagens.ToList();
     }
@@ -42,15 +42,5 @@ public class RepositorioPersonagem : IRepositorio<Personagem>
         _db.Personagem
             .Where(p => p.Id == id)
             .Delete();  
-    }
-    public bool VerificarNomeNoDb(string nome, int? id = null)
-    {
-        if(id.HasValue)
-        {
-            return _db.Personagem
-                        .Any(p => p.Nome.ToLower() == nome.ToLower() && p.Id != id.Value);
-        }
-        return _db.Personagem
-                        .Any(p=> p.Nome.ToLower().Equals(nome.ToLower()));
     }
 }
