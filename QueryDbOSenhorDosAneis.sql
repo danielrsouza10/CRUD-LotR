@@ -1,4 +1,4 @@
--- Inserindo as raças na tabela dbo.Raca
+ --Inserindo as raças na tabela dbo.Raca
 --INSERT INTO dbo.Raca (Nome, LocalizacaoGeografica, HabilidadeRacial, EstaExtinta) 
 --VALUES ('Humano', 'Gondor', 'Versatilidade', 0);
 
