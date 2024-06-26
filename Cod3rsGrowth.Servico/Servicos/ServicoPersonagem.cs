@@ -29,11 +29,8 @@ namespace Servico.Servicos
                 .Validate(personagem, options => options.IncludeRuleSets("Criacao"));
             if (!resultadoValidacao.IsValid)
             {
-                var erros = "";
-                const string SerapacaoEntreErros = ".\n";
                 foreach (var falha in resultadoValidacao.Errors)
                 {
-                    //erros += falha.ErrorMessage + SerapacaoEntreErros;
                     throw new Exception(falha.ErrorMessage);
                 }
             }
@@ -45,10 +42,8 @@ namespace Servico.Servicos
                 .Validate(personagem, options => options.IncludeRuleSets("Edicao"));
             if (!resultadoValidacao.IsValid)
             {
-                var erros = "";
                 foreach (var falha in resultadoValidacao.Errors)
                 {
-                    //erros += falha.ErrorMessage + SerapacaoEntreErros;
                     throw new Exception(falha.ErrorMessage);
                 }
             }
