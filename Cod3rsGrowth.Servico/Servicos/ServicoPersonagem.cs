@@ -20,7 +20,7 @@ namespace Servico.Servicos
         public void Deletar(int id) => _servicoRepositorio.Deletar(id);
         public Personagem ObterPorId(int id)
         {
-            if (id < 0) throw new Exception("O ID tem que ser maior que zero");
+            if (id < 0) throw new ArgumentOutOfRangeException("O ID tem que ser maior que zero");
             return _servicoRepositorio.ObterPorId(id);
         }
         public void Criar(Personagem personagem)
@@ -31,7 +31,7 @@ namespace Servico.Servicos
             {
                 foreach (var falha in resultadoValidacao.Errors)
                 {
-                    throw new Exception(falha.ErrorMessage);
+                    throw new ValidationException(falha.ErrorMessage);
                 }
             }
             _servicoRepositorio.Criar(personagem);
@@ -44,7 +44,7 @@ namespace Servico.Servicos
             {
                 foreach (var falha in resultadoValidacao.Errors)
                 {
-                    throw new Exception(falha.ErrorMessage);
+                    throw new ValidationException(falha.ErrorMessage);
                 }
             }
             return _servicoRepositorio.Editar(personagem);
