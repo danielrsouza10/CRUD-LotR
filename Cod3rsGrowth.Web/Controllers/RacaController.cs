@@ -27,7 +27,7 @@ namespace Cod3rsGrowth.Web.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet("racas/{id}")]
+        [HttpGet("raca/{id}")]
         public IActionResult ObterPorId([FromRoute] int id)
         {
             try
@@ -39,7 +39,7 @@ namespace Cod3rsGrowth.Web.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPost("racas")]
+        [HttpPost("raca")]
         public IActionResult Criar([FromBody] Raca raca) 
         {
             try
@@ -57,10 +57,10 @@ namespace Cod3rsGrowth.Web.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(ex.HResult);
+                return StatusCode(Convert.ToInt32(ex.Message));
             }
         }
-        [HttpPut("racas")]
+        [HttpPut("raca")]
         public IActionResult Editar([FromBody] Raca raca)
         {
             try
@@ -78,11 +78,11 @@ namespace Cod3rsGrowth.Web.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(ex.HResult);
+                return StatusCode(Convert.ToInt32(ex.Message));
             }
         }
 
-        [HttpDelete("racas")]
+        [HttpDelete("raca")]
         public IActionResult Deletar([FromBody] int id)
         {
             try

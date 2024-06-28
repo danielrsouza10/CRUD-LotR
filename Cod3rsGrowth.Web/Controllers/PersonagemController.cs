@@ -28,7 +28,7 @@ namespace Cod3rsGrowth.Web.Controllers
             }
         }
 
-        [HttpGet("personagens/{id}")]
+        [HttpGet("personagem/{id}")]
         public IActionResult ObterPorId([FromRoute] int id)
         {
             try
@@ -40,7 +40,7 @@ namespace Cod3rsGrowth.Web.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPost("personagens")]
+        [HttpPost("personagem")]
         public IActionResult Criar([FromBody]Personagem personagem) 
         {
             try
@@ -58,10 +58,10 @@ namespace Cod3rsGrowth.Web.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(ex.HResult);
+                return StatusCode(Convert.ToInt32(ex.Message));
             }
         }
-        [HttpPut("personagens")]
+        [HttpPut("personagem")]
         public IActionResult Editar([FromBody]Personagem personagem)
         {
             try
@@ -79,11 +79,11 @@ namespace Cod3rsGrowth.Web.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(ex.HResult);
+                return StatusCode(Convert.ToInt32(ex.Message));
             }
         }
 
-        [HttpDelete("personagens")]
+        [HttpDelete("personagem")]
         public IActionResult Deletar([FromBody] int id)
         {
             try
