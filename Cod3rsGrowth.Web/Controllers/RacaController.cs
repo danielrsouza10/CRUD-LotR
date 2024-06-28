@@ -27,8 +27,8 @@ namespace Cod3rsGrowth.Web.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet("racas/id")]
-        public IActionResult ObterPorId([FromBody] int id)
+        [HttpGet("racas/{id}")]
+        public IActionResult ObterPorId([FromRoute] int id)
         {
             try
             {

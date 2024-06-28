@@ -28,8 +28,8 @@ namespace Cod3rsGrowth.Web.Controllers
             }
         }
 
-        [HttpGet("personagens/id")]
-        public IActionResult ObterPorId([FromBody] int id)
+        [HttpGet("personagens/{id}")]
+        public IActionResult ObterPorId([FromRoute] int id)
         {
             try
             {
