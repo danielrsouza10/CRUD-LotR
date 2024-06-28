@@ -53,7 +53,8 @@ namespace Cod3rsGrowth.Web.Controllers
         {
             try
             {
-                return Ok(_servicoPersonagem.Editar(personagem));
+                _servicoPersonagem.Editar(personagem);
+                return Ok();
             }
             catch (FluentValidation.ValidationException ex)
             {
