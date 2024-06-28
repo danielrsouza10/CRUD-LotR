@@ -18,7 +18,7 @@ namespace Servico.Servicos
         }
 
         public IEnumerable<Raca> ObterTodos(Filtro filtro) => _servicoRepositorio.ObterTodos(filtro);
-        public Raca ObterPorId(int id) => id < 0 ? throw new Exception("O ID deve ser maior que zero") : _servicoRepositorio.ObterPorId(id);
+        public Raca ObterPorId(int id) => id < 0 ? throw new ArgumentOutOfRangeException("O ID deve ser maior que zero") : _servicoRepositorio.ObterPorId(id);
         public void Deletar(int id) => _servicoRepositorio.Deletar(id);
         public void Criar(Raca raca)
         {
@@ -28,7 +28,7 @@ namespace Servico.Servicos
             {
                 foreach (var falha in resultadoValidacao.Errors)
                 {
-                    throw new Exception(falha.ErrorMessage);
+                    throw new ValidationException(falha.ErrorMessage);
                 }
             }
             _servicoRepositorio.Criar(raca);
@@ -41,7 +41,7 @@ namespace Servico.Servicos
             {
                 foreach (var falha in resultadoValidacao.Errors)
                 {
-                    throw new Exception(falha.ErrorMessage);
+                    throw new ValidationException(falha.ErrorMessage);
                 }
             }
             return _servicoRepositorio.Editar(raca);
