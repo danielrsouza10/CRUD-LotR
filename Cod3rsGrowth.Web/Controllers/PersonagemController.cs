@@ -68,5 +68,19 @@ namespace Cod3rsGrowth.Web.Controllers
                 return StatusCode(ex.HResult);
             }
         }
+
+        [HttpDelete("personagens")]
+        public IActionResult Deletar([FromBody] int id)
+        {
+            try
+            {
+                _servicoPersonagem.Deletar((id));
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

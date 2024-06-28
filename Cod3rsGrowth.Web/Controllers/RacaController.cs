@@ -69,5 +69,19 @@ namespace Cod3rsGrowth.Web.Controllers
                 return StatusCode(ex.HResult);
             }
         }
+
+        [HttpDelete("racas")]
+        public IActionResult Deletar([FromBody] int id)
+        {
+            try
+            {
+                _servicoRaca.Deletar(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
