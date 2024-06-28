@@ -27,6 +27,18 @@ namespace Cod3rsGrowth.Web.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpGet("racas/id")]
+        public IActionResult ObterPorId([FromBody] int id)
+        {
+            try
+            {
+                return Ok(_servicoRaca.ObterPorId((id)));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
         [HttpPost("racas")]
         public IActionResult Criar([FromBody] Raca raca) 
         {

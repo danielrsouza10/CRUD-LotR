@@ -27,6 +27,19 @@ namespace Cod3rsGrowth.Web.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("personagens/id")]
+        public IActionResult ObterPorId([FromBody] int id)
+        {
+            try
+            {
+                return Ok(_servicoPersonagem.ObterPorId((id)));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
         [HttpPost("personagens")]
         public IActionResult Criar([FromBody]Personagem personagem) 
         {
