@@ -1,7 +1,11 @@
 ﻿using Dominio.Filtros;
 using Dominio.Modelos;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using Servico.CustomDetails;
+using Servico.CustomExceptions;
 using Servico.Servicos;
+using System;
 
 namespace Cod3rsGrowth.Web.Controllers
 {
@@ -9,10 +13,12 @@ namespace Cod3rsGrowth.Web.Controllers
     [ApiController]
     public class PersonagemController : ControllerBase
     {
+        private readonly ILogger<PersonagemController> _logger;
         private readonly ServicoPersonagem _servicoPersonagem;
-        public PersonagemController(ServicoPersonagem servicoPersonagem) 
-        { 
+        public PersonagemController(ServicoPersonagem servicoPersonagem, ILogger<PersonagemController> logger) 
+        {
             _servicoPersonagem = servicoPersonagem;
+            _logger = logger;
         }
 
         [HttpGet("personagens")]
@@ -24,21 +30,16 @@ namespace Cod3rsGrowth.Web.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                _logger.LogError(ex.Message);
+                return BadRequest();
             }
         }
 
         [HttpGet("personagem/{id}")]
         public IActionResult ObterPorId([FromRoute] int id)
         {
-            try
-            {
-                return Ok(_servicoPersonagem.ObterPorId((id)));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+                return Ok(_servicoPersonagem.ObterPorId(id));
+
         }
         [HttpPost("personagem")]
         public IActionResult Criar([FromBody]Personagem personagem) 
@@ -46,20 +47,23 @@ namespace Cod3rsGrowth.Web.Controllers
             try
             {
                 _servicoPersonagem.Criar(personagem);
-                return Ok();
             }
-            catch (FluentValidation.ValidationException ex)
+            catch (ValidationException vlex)
             {
-                return BadRequest(ex.Message);
+                _logger.LogError(vlex.Message);
+                return BadRequest();
             }
             catch (Microsoft.Data.SqlClient.SqlException sqlex) 
-            { 
-                return BadRequest(sqlex.Message);
+            {
+                _logger.LogError(sqlex.Message);
+                return BadRequest();
             }
             catch (Exception ex)
             {
-                return StatusCode(Convert.ToInt32(ex.Message));
+                _logger.LogError(ex.Message);
+                return BadRequest();
             }
+            return Ok();
         }
         [HttpPut("personagem")]
         public IActionResult Editar([FromBody]Personagem personagem)
@@ -71,15 +75,15 @@ namespace Cod3rsGrowth.Web.Controllers
             }
             catch (FluentValidation.ValidationException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest();
             }
             catch (Microsoft.Data.SqlClient.SqlException sqlex)
             {
-                return BadRequest(sqlex.Message);
+                return BadRequest();
             }
             catch (Exception ex)
             {
-                return StatusCode(Convert.ToInt32(ex.Message));
+                return BadRequest();
             }
         }
 
@@ -93,7 +97,7 @@ namespace Cod3rsGrowth.Web.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest();
             }
         }
     }
