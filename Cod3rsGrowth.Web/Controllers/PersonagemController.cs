@@ -11,90 +11,49 @@ namespace Cod3rsGrowth.Web.Controllers
     {
         private readonly ServicoPersonagem _servicoPersonagem;
         public PersonagemController(ServicoPersonagem servicoPersonagem) 
-        { 
+        {
             _servicoPersonagem = servicoPersonagem;
         }
 
         [HttpGet("personagens")]
         public IActionResult ObterTodos([FromQuery] Filtro filtro)
         {
-            try
-            {
-                return Ok(_servicoPersonagem.ObterTodos(filtro));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return Ok(_servicoPersonagem.ObterTodos(filtro));
         }
 
         [HttpGet("personagem/{id}")]
         public IActionResult ObterPorId([FromRoute] int id)
         {
-            try
+            var personagem = _servicoPersonagem.ObterPorId(id);
+            if (personagem == null)
             {
-                return Ok(_servicoPersonagem.ObterPorId((id)));
+                return NotFound();
             }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return Ok(personagem);
         }
         [HttpPost("personagem")]
         public IActionResult Criar([FromBody]Personagem personagem) 
         {
-            try
-            {
-                _servicoPersonagem.Criar(personagem);
-                return Ok();
-            }
-            catch (FluentValidation.ValidationException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (Microsoft.Data.SqlClient.SqlException sqlex) 
-            { 
-                return BadRequest(sqlex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(Convert.ToInt32(ex.Message));
-            }
+            _servicoPersonagem.Criar(personagem);
+            return Ok();
         }
         [HttpPut("personagem")]
         public IActionResult Editar([FromBody]Personagem personagem)
         {
-            try
-            {
-                _servicoPersonagem.Editar(personagem);
-                return Ok();
-            }
-            catch (FluentValidation.ValidationException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (Microsoft.Data.SqlClient.SqlException sqlex)
-            {
-                return BadRequest(sqlex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(Convert.ToInt32(ex.Message));
-            }
+            _servicoPersonagem.Editar(personagem);
+            return Ok();
         }
 
         [HttpDelete("personagem")]
         public IActionResult Deletar([FromBody] int id)
         {
-            try
+            var personagem = _servicoPersonagem.ObterPorId(id);
+            if (personagem == null)
             {
-                _servicoPersonagem.Deletar((id));
-                return Ok();
+                return NotFound();
             }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _servicoPersonagem.Deletar((id));
+            return Ok();
         }
     }
 }

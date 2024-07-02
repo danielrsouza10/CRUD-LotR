@@ -20,7 +20,6 @@ namespace Servico.Servicos
         public void Deletar(int id) => _servicoRepositorio.Deletar(id);
         public Personagem ObterPorId(int id)
         {
-            if (id < 0) throw new ArgumentOutOfRangeException("O ID tem que ser maior que zero");
             return _servicoRepositorio.ObterPorId(id);
         }
         public void Criar(Personagem personagem)
@@ -29,10 +28,7 @@ namespace Servico.Servicos
                 .Validate(personagem, options => options.IncludeRuleSets("Criacao"));
             if (!resultadoValidacao.IsValid)
             {
-                foreach (var falha in resultadoValidacao.Errors)
-                {
-                    throw new ValidationException(falha.ErrorMessage);
-                }
+                throw new ValidationException(resultadoValidacao.Errors);
             }
             _servicoRepositorio.Criar(personagem);
         }
@@ -42,10 +38,7 @@ namespace Servico.Servicos
                 .Validate(personagem, options => options.IncludeRuleSets("Edicao"));
             if (!resultadoValidacao.IsValid)
             {
-                foreach (var falha in resultadoValidacao.Errors)
-                {
-                    throw new ValidationException(falha.ErrorMessage);
-                }
+                throw new ValidationException(resultadoValidacao.Errors);
             }
             return _servicoRepositorio.Editar(personagem);
         }

@@ -1,14 +1,6 @@
-using Dominio.Modelos;
-using Dominio.Validacao;
-using FluentMigrator.Runner;
-using Infra.Migrations;
 using Infra;
-using Infra.Repositorios;
-using Servico.Servicos;
-using Testes.Interfaces;
-using LinqToDB.AspNet;
-using LinqToDB;
 using Servico;
+using Cod3rsGrowth.Web.ExceptionHanlder;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +10,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.ConfigureProblemDetailsModelState();
+
 
 ModuloDeInjecaoInfra.BindServices(builder.Services);
 ModuloDeInjecaoServico.BindServices(builder.Services);
@@ -30,6 +25,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseProblemDetailsExceptionHandler(app.Services.GetRequiredService<ILoggerFactory>());
 
 app.UseHttpsRedirection();
 
