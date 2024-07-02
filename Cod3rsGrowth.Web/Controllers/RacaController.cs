@@ -18,82 +18,41 @@ namespace Cod3rsGrowth.Web.Controllers
         [HttpGet("racas")]
         public IActionResult ObterTodos([FromQuery] Filtro filtro)
         {
-            try
-            {
                 return Ok(_servicoRaca.ObterTodos(filtro));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
         }
         [HttpGet("raca/{id}")]
         public IActionResult ObterPorId([FromRoute] int id)
         {
-            try
+            var raca = _servicoRaca.ObterPorId(id);
+            if (raca == null)
             {
-                return Ok(_servicoRaca.ObterPorId((id)));
+                return NotFound();
             }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return Ok(raca);
         }
         [HttpPost("raca")]
         public IActionResult Criar([FromBody] Raca raca) 
         {
-            try
-            {
-                _servicoRaca.Criar(raca);
-                return Ok();
-            }
-            catch (FluentValidation.ValidationException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (Microsoft.Data.SqlClient.SqlException sqlex)
-            {
-                return BadRequest(sqlex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(Convert.ToInt32(ex.Message));
-            }
+            _servicoRaca.Criar(raca);
+            return Ok();
         }
         [HttpPut("raca")]
         public IActionResult Editar([FromBody] Raca raca)
         {
-            try
-            {
-                _servicoRaca.Editar(raca);
-                return Ok();
-            }
-            catch (FluentValidation.ValidationException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (Microsoft.Data.SqlClient.SqlException sqlex)
-            {
-                return BadRequest(sqlex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(Convert.ToInt32(ex.Message));
-            }
+            _servicoRaca.Editar(raca);
+            return Ok();
         }
 
         [HttpDelete("raca")]
         public IActionResult Deletar([FromBody] int id)
         {
-            try
+            var raca = _servicoRaca.ObterPorId(id);
+            if (raca == null)
             {
-                _servicoRaca.Deletar(id);
-                return Ok();
+                return NotFound();
             }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _servicoRaca.Deletar(id);
+            return Ok();
         }
     }
 }

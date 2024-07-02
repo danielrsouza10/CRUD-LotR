@@ -26,10 +26,7 @@ namespace Servico.Servicos
                 .Validate(raca, options => options.IncludeRuleSets("Criacao"));
             if (!resultadoValidacao.IsValid)
             {
-                foreach (var falha in resultadoValidacao.Errors)
-                {
-                    throw new ValidationException(falha.ErrorMessage);
-                }
+                throw new ValidationException(resultadoValidacao.Errors);
             }
             _servicoRepositorio.Criar(raca);
         }
@@ -39,10 +36,7 @@ namespace Servico.Servicos
                 .Validate(raca, options => options.IncludeRuleSets("Edicao"));
             if (!resultadoValidacao.IsValid)
             {
-                foreach (var falha in resultadoValidacao.Errors)
-                {
-                    throw new ValidationException(falha.ErrorMessage);
-                }
+                throw new ValidationException(resultadoValidacao.Errors);
             }
             return _servicoRepositorio.Editar(raca);
         }
