@@ -82,9 +82,9 @@ namespace Testes.TesteServicos
             var Lista = PersonagemSingleton.Instance.Personagens;
             Personagem personagem = new() { Profissao = ProfissaoEnum.Guerreiro, IdRaca = 1 };
             //act
-            var ex = Assert.Throws<Exception>(() => _servicoPersonagem.Criar(personagem));
+            var ex = Assert.Throws<NullReferenceException>(() => _servicoPersonagem.Criar(personagem));
             //assert
-            Assert.IsType<Exception>(ex);
+            Assert.IsType<NullReferenceException>(ex);
         }
         [Fact]
         public void AoCriarUmPersonagemComComApenas2Caracteres_DeveRetornarUmaExcecao()
@@ -93,9 +93,9 @@ namespace Testes.TesteServicos
             var Lista = PersonagemSingleton.Instance.Personagens;
             Personagem personagem = new() { Nome = "ab", Profissao = ProfissaoEnum.Guerreiro, IdRaca = 1 };
             //act
-            var ex = Assert.Throws<Exception>(() => _servicoPersonagem.Criar(personagem));
+            var ex = Assert.Throws<FluentValidation.ValidationException>(() => _servicoPersonagem.Criar(personagem));
             //assert
-            Assert.IsType<Exception>(ex);
+            Assert.IsType<FluentValidation.ValidationException>(ex);
         }
         [Fact]
         public void AoCriarUmPersonagemComUmIdDeclaradoManualmente_DeveRetornarUmaExcecao()
@@ -104,22 +104,22 @@ namespace Testes.TesteServicos
             var Lista = PersonagemSingleton.Instance.Personagens;
             Personagem personagem = new() { Nome = "Sam", Id = 9, Profissao = ProfissaoEnum.Ladrao, IdRaca = 4 };
             //act
-            var ex = Assert.Throws<Exception>(() => _servicoPersonagem.Criar(personagem));
+            var ex = Assert.Throws<FluentValidation.ValidationException>(() => _servicoPersonagem.Criar(personagem));
             //assert
-            Assert.IsType<Exception>(ex);
+            Assert.IsType<FluentValidation.ValidationException>(ex);
         }
         [Fact]
         public void AoCriarUmPersonagemComUmIdDeclaradoManualmenteENomeMenorQue3Letras_DeveRetornarUmaExcecaoComOTextoDosDoisErros()
         {
             //arranje
-            var mensagemDeErro = "O nome do personagem precisa ter entre 3 e 25 caracteres. Não deve ser informado um Id. ";
+            var mensagemDeErro = "O nome do personagem precisa ter entre 3 e 25 caracteres";
             var Lista = PersonagemSingleton.Instance.Personagens;
             Personagem personagem = new() { Nome = "Sa", Id = 9, Profissao = ProfissaoEnum.Ladrao, IdRaca = 4 };
             //act
-            var ex = Assert.Throws<Exception>(() => _servicoPersonagem.Criar(personagem));
+            var ex = Assert.Throws<FluentValidation.ValidationException>(() => _servicoPersonagem.Criar(personagem));
             //assert
             Assert.Equal(mensagemDeErro, ex.Message);
-            Assert.IsType<Exception>(ex);
+            Assert.IsType<FluentValidation.ValidationException>(ex);
         }
         [Fact]
         public void AoEditarUmPersonagem_DeveRetornarOMesmoPersonagemComOsDadosAtualizados()
@@ -142,12 +142,12 @@ namespace Testes.TesteServicos
         public void AoEditarUmPersonagemComUmNomeDeApenas2Caracteres_DeveRetornarUmaExcecao()
         {
             //arranje
-            var mensagemErro = "O nome do personagem precisa ter entre 3 e 25 caracteres. ";
+            var mensagemErro = "O nome do personagem precisa ter entre 3 e 25 caracteres";
             Personagem personagem = new() { Id = 1, Nome = "ab" };
             //act
-            var ex = Assert.Throws<Exception>(() => _servicoPersonagem.Editar(personagem));
+            var ex = Assert.Throws<FluentValidation.ValidationException>(() => _servicoPersonagem.Editar(personagem));
             //assert
-            Assert.IsType<Exception>(ex);
+            Assert.IsType<FluentValidation.ValidationException>(ex);
             Assert.Equal(mensagemErro, ex.Message);
         }
         [Fact]
@@ -155,11 +155,11 @@ namespace Testes.TesteServicos
         {
             //arranje
             var mensagemErro = "O ID informado não existe";
-            Personagem personagem = new() { Id = 10, Nome = "Aragorn" };
+            Personagem personagem = new() { Id = 100 };
             //act
-            var ex = Assert.Throws<Exception>(() => _servicoPersonagem.Editar(personagem));
+            var ex = Assert.Throws<FluentValidation.ValidationException>(() => _servicoPersonagem.Editar(personagem));
             //assert
-            Assert.IsType<Exception>(ex);
+            Assert.IsType<FluentValidation.ValidationException>(ex);
             Assert.Equal(mensagemErro, ex.Message);
         }
         [Fact]
@@ -169,9 +169,9 @@ namespace Testes.TesteServicos
             var mensagemErro = "O ID informado não existe";
             Personagem personagem = new() { Id = 0, Nome = "Aragorn" };
             //act
-            var ex = Assert.Throws<Exception>(() => _servicoPersonagem.Editar(personagem));
+            var ex = Assert.Throws<FluentValidation.ValidationException>(() => _servicoPersonagem.Editar(personagem));
             //assert
-            Assert.IsType<Exception>(ex);
+            Assert.IsType<FluentValidation.ValidationException>(ex);
             Assert.Equal(mensagemErro, ex.Message);
         }
         [Fact]

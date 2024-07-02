@@ -80,30 +80,11 @@ namespace Forms
         }
         private void AoDigitarNaBarraDePesquisaDePersonagemDeveListarNoDataGrid(object sender, EventArgs e)
         {
-            if (vivoPersonagemCheckBox.Checked)
-            {
-                try
-                {
-                    _filtroPersonagem.EstaVivo = vivoPersonagemCheckBox.Checked;
-                    DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
-                }
-                catch { }
-            }
             _filtroPersonagem.Nome = barraDePesquisaDePersonagem.Text;
             DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
         }
         private void AoDigitarNaBarraDePesquisaDeRacaDeveListarNoDataGrid(object sender, EventArgs e)
         {
-
-            if (racaExtintaCheckBox.Checked)
-            {
-                try
-                {
-                    _filtroRaca.EstaExtinta = racaExtintaCheckBox.Checked;
-                    DefinirGridDeRacas(_filtroRaca);
-                }
-                catch { }
-            }
             _filtroRaca.Nome = barraDePesquisaDeRaca.Text;
             DefinirGridDeRacas(_filtroRaca);
         }
