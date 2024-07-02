@@ -48,9 +48,9 @@ namespace Cod3rsGrowth.Web.Controllers
             {
                 _servicoPersonagem.Criar(personagem);
             }
-            catch (ValidationException vlex)
+            catch (ValidationException veex)
             {
-                _logger.LogError(vlex.Message);
+                _logger.LogError(veex.Message);
                 return BadRequest();
             }
             catch (Microsoft.Data.SqlClient.SqlException sqlex) 
