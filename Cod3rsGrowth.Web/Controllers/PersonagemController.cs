@@ -21,39 +21,39 @@ namespace Cod3rsGrowth.Web.Controllers
             return Ok(_servicoPersonagem.ObterTodos(filtro));
         }
 
-        [HttpGet("personagem/{id}")]
-        public IActionResult ObterPorId([FromRoute] int id)
-        {
-            var personagem = _servicoPersonagem.ObterPorId(id);
-            if (personagem == null)
-            {
-                return NotFound();
-            }
-            return Ok(personagem);
-        }
-        [HttpPost("personagem")]
-        public IActionResult Criar([FromBody]Personagem personagem) 
-        {
-            _servicoPersonagem.Criar(personagem);
-            return Ok();
-        }
-        [HttpPut("personagem")]
-        public IActionResult Editar([FromBody]Personagem personagem)
-        {
-            _servicoPersonagem.Editar(personagem);
-            return Ok();
-        }
+        //[HttpGet("personagem/{id}")]
+        //public IActionResult ObterPorId([FromRoute] int id)
+        //{
+        //    var personagem = _servicoPersonagem.ObterPorId(id);
+        //    if (personagem == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return Ok(personagem);
+        //}
+        //[HttpPost("personagem")]
+        //public IActionResult Criar([FromBody]Personagem personagem) 
+        //{
+        //    _servicoPersonagem.Criar(personagem);
+        //    return Ok();
+        //}
+        //[HttpPut("personagem")]
+        //public IActionResult Editar([FromBody]Personagem personagem)
+        //{
+        //    _servicoPersonagem.Editar(personagem);
+        //    return Ok();
+        //}
 
-        [HttpDelete("personagem")]
-        public IActionResult Deletar([FromBody] int id)
-        {
-            var personagem = _servicoPersonagem.ObterPorId(id);
-            if (personagem == null)
-            {
-                return NotFound();
-            }
-            _servicoPersonagem.Deletar((id));
-            return Ok();
-        }
+        //[HttpDelete("personagem")]
+        //public IActionResult Deletar([FromBody] int id)
+        //{
+        //    var personagem = _servicoPersonagem.ObterPorId(id);
+        //    if (personagem == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    _servicoPersonagem.Deletar((id));
+        //    return Ok();
+        //}
     }
 }
