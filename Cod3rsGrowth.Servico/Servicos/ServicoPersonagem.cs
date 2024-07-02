@@ -21,16 +21,6 @@ namespace Servico.Servicos
         public void Deletar(int id) => _servicoRepositorio.Deletar(id);
         public Personagem ObterPorId(int id)
         {
-            if (id < 0) throw new PersonagemCustomExceptions("api/personagem")
-            {
-                Detail = "O ID tem que ser maior que zero"
-            };
-            var personagem = _servicoRepositorio.ObterPorId(id);
-            if (personagem == null)
-                throw new PersonagemCustomExceptions("api/personagem")
-                {
-                    Detail = "Personagem não encontrado"
-                };
             return _servicoRepositorio.ObterPorId(id);
         }
         public void Criar(Personagem personagem)
@@ -39,12 +29,7 @@ namespace Servico.Servicos
                 .Validate(personagem, options => options.IncludeRuleSets("Criacao"));
             if (!resultadoValidacao.IsValid)
             {
-                string erros = string.Empty;
-                foreach (var falha in resultadoValidacao.Errors)
-                {
-                    erros += falha.ErrorMessage;
-                }
-                throw new ValidationException(erros);
+                throw new ValidationException(resultadoValidacao.Errors);
             }
             _servicoRepositorio.Criar(personagem);
         }
