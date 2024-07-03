@@ -1,11 +1,6 @@
 ﻿using Dominio.Validacao;
 using Microsoft.Extensions.DependencyInjection;
 using Servico.Servicos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Servico
 {

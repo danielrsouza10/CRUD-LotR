@@ -2,8 +2,6 @@ using Dominio.ENUMS;
 using Dominio.Filtros;
 using Dominio.Modelos;
 using LinqToDB;
-using LinqToDB.Common;
-using System.Linq;
 using Testes.Interfaces;
 
 namespace Infra.Repositorios;
@@ -42,5 +40,15 @@ public class RepositorioPersonagem : IRepositorio<Personagem>
         _db.Personagem
             .Where(p => p.Id == id)
             .Delete();  
+    }
+    public bool VerificarNomeNoDb(string nome, int? id = null)
+    {
+        if (id.HasValue)
+        {
+            return _db.Personagem
+                        .Any(p => p.Nome.ToLower() == nome.ToLower() && p.Id != id.Value);
+        }
+        return _db.Personagem
+                        .Any(p => p.Nome.ToLower().Equals(nome.ToLower()));
     }
 }

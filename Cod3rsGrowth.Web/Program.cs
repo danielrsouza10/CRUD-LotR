@@ -1,3 +1,7 @@
+using Infra;
+using Servico;
+using Cod3rsGrowth.Web.ExceptionHanlder;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,6 +11,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.ConfigureProblemDetailsModelState();
+
+
+ModuloDeInjecaoInfra.BindServices(builder.Services);
+ModuloDeInjecaoServico.BindServices(builder.Services);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -15,6 +25,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseProblemDetailsExceptionHandler(app.Services.GetRequiredService<ILoggerFactory>());
 
 app.UseHttpsRedirection();
 

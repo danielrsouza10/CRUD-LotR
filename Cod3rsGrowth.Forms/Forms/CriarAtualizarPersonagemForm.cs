@@ -24,7 +24,7 @@ namespace Forms.Forms
         }
         public void CriacaoPersonagem_Load(object sender, EventArgs e)
         {
-            if(_personagem == null)
+            if (_personagem == null)
             {
                 ApresentarTelaParaCriacao();
                 return;
@@ -38,7 +38,8 @@ namespace Forms.Forms
         private void AoClicarNoBotaoCriarOuAtualizar(object sender, EventArgs e)
         {
             var MENSAGEM_ERRO_PERSONAGEM_MESMO_NOME = "Já existe um personagem com esse nome cadastrado.";
-            var TITULO_ERRO = "Erro";
+            string TITULO_ERRO = "Erro";
+            char QUEBRA_DE_LINHA = '\n';
             if (_personagem == null)
             {
                 try
@@ -49,6 +50,11 @@ namespace Forms.Forms
                 catch (Microsoft.Data.SqlClient.SqlException)
                 {
                     MessageBox.Show(MENSAGEM_ERRO_PERSONAGEM_MESMO_NOME, TITULO_ERRO, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (FluentValidation.ValidationException vleex)
+                {
+                    string MENSAGEM_ERRO_FLUENT_VALIDATION = string.Join(QUEBRA_DE_LINHA, vleex.Errors.Select(e => e.ErrorMessage));
+                    MessageBox.Show(MENSAGEM_ERRO_FLUENT_VALIDATION, TITULO_ERRO, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 catch (Exception ex)
                 {
@@ -64,6 +70,11 @@ namespace Forms.Forms
             catch (Microsoft.Data.SqlClient.SqlException)
             {
                 MessageBox.Show(MENSAGEM_ERRO_PERSONAGEM_MESMO_NOME, TITULO_ERRO, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (FluentValidation.ValidationException vleex)
+            {
+                string MENSAGEM_ERRO_FLUENT_VALIDATION = string.Join(QUEBRA_DE_LINHA, vleex.Errors.Select(e => e.ErrorMessage));
+                MessageBox.Show(MENSAGEM_ERRO_FLUENT_VALIDATION, TITULO_ERRO, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {

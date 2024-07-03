@@ -30,6 +30,10 @@ namespace Testes.Repositorios
             return racaExistente;
         }
         public void Deletar(int id) => _listaDeRacas.Remove(ObterPorId(id));
+        public bool VerificarNomeNoDb(string nome, int? id = null)
+        {
+            throw new NotImplementedException();
+        }
 
         public bool VerificarNomeNoDb(string nome)
         {
