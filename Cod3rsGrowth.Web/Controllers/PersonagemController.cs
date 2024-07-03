@@ -42,17 +42,16 @@ namespace Cod3rsGrowth.Web.Controllers
             _servicoPersonagem.Editar(personagem);
             return Ok();
         }
-
-        //[HttpDelete("personagem")]
-        //public IActionResult Deletar([FromBody] int id)
-        //{
-        //    var personagem = _servicoPersonagem.ObterPorId(id);
-        //    if (personagem == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    _servicoPersonagem.Deletar((id));
-        //    return Ok();
-        //}
+        [HttpDelete("personagem")]
+        public IActionResult Deletar([FromBody] int id)
+        {
+            var personagem = _servicoPersonagem.ObterPorId(id);
+            if (personagem == null)
+            {
+                return NotFound();
+            }
+            _servicoPersonagem.Deletar((id));
+            return Ok();
+        }
     }
 }
