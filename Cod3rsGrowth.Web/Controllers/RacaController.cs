@@ -18,7 +18,7 @@ namespace Cod3rsGrowth.Web.Controllers
         [HttpGet("racas")]
         public IActionResult ObterTodos([FromQuery] Filtro filtro)
         {
-                return Ok(_servicoRaca.ObterTodos(filtro));
+            return Ok(_servicoRaca.ObterTodos(filtro));
         }
         [HttpGet("raca/{id}")]
         public IActionResult ObterPorId([FromRoute] int id)
@@ -31,10 +31,10 @@ namespace Cod3rsGrowth.Web.Controllers
             return Ok(raca);
         }
         [HttpPost("raca")]
-        public IActionResult Criar([FromBody] Raca raca) 
+        public IActionResult Criar([FromBody] Raca raca)
         {
             _servicoRaca.Criar(raca);
-            return Ok();
+            return Created(raca.Id.ToString(), raca);
         }
         [HttpPut("raca")]
         public IActionResult Editar([FromBody] Raca raca)
@@ -42,7 +42,6 @@ namespace Cod3rsGrowth.Web.Controllers
             _servicoRaca.Editar(raca);
             return Ok();
         }
-
         [HttpDelete("raca")]
         public IActionResult Deletar([FromBody] int id)
         {
