@@ -30,12 +30,12 @@ namespace Cod3rsGrowth.Web.Controllers
             }
             return Ok(personagem);
         }
-        //[HttpPost("personagem")]
-        //public IActionResult Criar([FromBody]Personagem personagem) 
-        //{
-        //    _servicoPersonagem.Criar(personagem);
-        //    return Ok();
-        //}
+        [HttpPost("personagem")]
+        public IActionResult Criar([FromBody] Personagem personagem)
+        {
+            _servicoPersonagem.Criar(personagem);
+            return Created(personagem.Id.ToString(), personagem);
+        }
         //[HttpPut("personagem")]
         //public IActionResult Editar([FromBody]Personagem personagem)
         //{
