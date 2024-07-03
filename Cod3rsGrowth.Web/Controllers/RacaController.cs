@@ -30,12 +30,12 @@ namespace Cod3rsGrowth.Web.Controllers
             }
             return Ok(raca);
         }
-        //[HttpPost("raca")]
-        //public IActionResult Criar([FromBody] Raca raca) 
-        //{
-        //    _servicoRaca.Criar(raca);
-        //    return Ok();
-        //}
+        [HttpPost("raca")]
+        public IActionResult Criar([FromBody] Raca raca)
+        {
+            _servicoRaca.Criar(raca);
+            return Created(raca.Id.ToString(), raca);
+        }
         //[HttpPut("raca")]
         //public IActionResult Editar([FromBody] Raca raca)
         //{
