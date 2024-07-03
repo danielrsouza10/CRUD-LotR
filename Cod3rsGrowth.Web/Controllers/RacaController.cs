@@ -36,13 +36,12 @@ namespace Cod3rsGrowth.Web.Controllers
             _servicoRaca.Criar(raca);
             return Created(raca.Id.ToString(), raca);
         }
-        //[HttpPut("raca")]
-        //public IActionResult Editar([FromBody] Raca raca)
-        //{
-        //    _servicoRaca.Editar(raca);
-        //    return Ok();
-        //}
-
+        [HttpPut("raca")]
+        public IActionResult Editar([FromBody] Raca raca)
+        {
+            _servicoRaca.Editar(raca);
+            return Ok();
+        }
         //[HttpDelete("raca")]
         //public IActionResult Deletar([FromBody] int id)
         //{
