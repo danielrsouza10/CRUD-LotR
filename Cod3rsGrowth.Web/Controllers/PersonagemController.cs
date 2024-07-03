@@ -10,7 +10,7 @@ namespace Cod3rsGrowth.Web.Controllers
     public class PersonagemController : ControllerBase
     {
         private readonly ServicoPersonagem _servicoPersonagem;
-        public PersonagemController(ServicoPersonagem servicoPersonagem) 
+        public PersonagemController(ServicoPersonagem servicoPersonagem)
         {
             _servicoPersonagem = servicoPersonagem;
         }
@@ -36,12 +36,12 @@ namespace Cod3rsGrowth.Web.Controllers
             _servicoPersonagem.Criar(personagem);
             return Created(personagem.Id.ToString(), personagem);
         }
-        //[HttpPut("personagem")]
-        //public IActionResult Editar([FromBody]Personagem personagem)
-        //{
-        //    _servicoPersonagem.Editar(personagem);
-        //    return Ok();
-        //}
+        [HttpPut("personagem")]
+        public IActionResult Editar([FromBody] Personagem personagem)
+        {
+            _servicoPersonagem.Editar(personagem);
+            return Ok();
+        }
 
         //[HttpDelete("personagem")]
         //public IActionResult Deletar([FromBody] int id)
