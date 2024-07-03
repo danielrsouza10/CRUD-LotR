@@ -42,16 +42,16 @@ namespace Cod3rsGrowth.Web.Controllers
             _servicoRaca.Editar(raca);
             return Ok();
         }
-        //[HttpDelete("raca")]
-        //public IActionResult Deletar([FromBody] int id)
-        //{
-        //    var raca = _servicoRaca.ObterPorId(id);
-        //    if (raca == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    _servicoRaca.Deletar(id);
-        //    return Ok();
-        //}
+        [HttpDelete("raca")]
+        public IActionResult Deletar([FromBody] int id)
+        {
+            var raca = _servicoRaca.ObterPorId(id);
+            if (raca == null)
+            {
+                return NotFound();
+            }
+            _servicoRaca.Deletar(id);
+            return Ok();
+        }
     }
 }
