@@ -30,6 +30,8 @@ namespace Forms.Forms
         {
             var MENSAGEM_ERRO_RACA_MESMO_NOME = "Já existe uma raça com esse nome cadastrado.";
             var TITULO_ERRO = "Erro";
+            char QUEBRA_DE_LINHA = '\n';
+
             if (_raca == null)
             {
                 try
@@ -43,7 +45,7 @@ namespace Forms.Forms
                 }
                 catch (FluentValidation.ValidationException vleex)
                 {
-                    string MENSAGEM_ERRO_FLUENT_VALIDATION = string.Join('\n', vleex.Errors.Select(e => e.ErrorMessage));
+                    string MENSAGEM_ERRO_FLUENT_VALIDATION = string.Join(QUEBRA_DE_LINHA, vleex.Errors.Select(e => e.ErrorMessage));
                     MessageBox.Show(MENSAGEM_ERRO_FLUENT_VALIDATION, TITULO_ERRO, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 catch (Exception ex)
@@ -63,7 +65,7 @@ namespace Forms.Forms
             }
             catch (FluentValidation.ValidationException vleex)
             {
-                string MENSAGEM_ERRO_FLUENT_VALIDATION = string.Join('\n', vleex.Errors.Select(e => e.ErrorMessage));
+                string MENSAGEM_ERRO_FLUENT_VALIDATION = string.Join(QUEBRA_DE_LINHA, vleex.Errors.Select(e => e.ErrorMessage));
                 MessageBox.Show(MENSAGEM_ERRO_FLUENT_VALIDATION, TITULO_ERRO, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
