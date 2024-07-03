@@ -41,6 +41,11 @@ namespace Forms.Forms
                 {
                     MessageBox.Show(MENSAGEM_ERRO_RACA_MESMO_NOME, TITULO_ERRO, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                catch (FluentValidation.ValidationException vleex)
+                {
+                    string MENSAGEM_ERRO_FLUENT_VALIDATION = string.Join('\n', vleex.Errors.Select(e => e.ErrorMessage));
+                    MessageBox.Show(MENSAGEM_ERRO_FLUENT_VALIDATION, TITULO_ERRO, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -55,6 +60,11 @@ namespace Forms.Forms
             catch (Microsoft.Data.SqlClient.SqlException)
             {
                 MessageBox.Show(MENSAGEM_ERRO_RACA_MESMO_NOME, TITULO_ERRO, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (FluentValidation.ValidationException vleex)
+            {
+                string MENSAGEM_ERRO_FLUENT_VALIDATION = string.Join('\n', vleex.Errors.Select(e => e.ErrorMessage));
+                MessageBox.Show(MENSAGEM_ERRO_FLUENT_VALIDATION, TITULO_ERRO, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
