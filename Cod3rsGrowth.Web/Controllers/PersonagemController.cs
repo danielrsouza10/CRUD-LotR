@@ -34,7 +34,7 @@ namespace Cod3rsGrowth.Web.Controllers
         public IActionResult Criar([FromBody] Personagem personagem)
         {
             _servicoPersonagem.Criar(personagem);
-            return Created(personagem.Id.ToString(), personagem);
+            return Ok();
         }
         [HttpPut("personagem")]
         public IActionResult Editar([FromBody] Personagem personagem)
