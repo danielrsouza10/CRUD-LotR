@@ -15,11 +15,11 @@ namespace Cod3rsGrowth.Web.Controllers
             _servicoRaca = servicoRaca;
         }
 
-        //[HttpGet("racas")]
-        //public IActionResult ObterTodos([FromQuery] Filtro filtro)
-        //{
-        //        return Ok(_servicoRaca.ObterTodos(filtro));
-        //}
+        [HttpGet("racas")]
+        public IActionResult ObterTodos([FromQuery] Filtro filtro)
+        {
+            return Ok(_servicoRaca.ObterTodos(filtro));
+        }
         //[HttpGet("raca/{id}")]
         //public IActionResult ObterPorId([FromRoute] int id)
         //{
