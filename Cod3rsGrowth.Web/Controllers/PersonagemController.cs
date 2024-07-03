@@ -20,17 +20,16 @@ namespace Cod3rsGrowth.Web.Controllers
         {
             return Ok(_servicoPersonagem.ObterTodos(filtro));
         }
-
-        //[HttpGet("personagem/{id}")]
-        //public IActionResult ObterPorId([FromRoute] int id)
-        //{
-        //    var personagem = _servicoPersonagem.ObterPorId(id);
-        //    if (personagem == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return Ok(personagem);
-        //}
+        [HttpGet("personagem/{id}")]
+        public IActionResult ObterPorId([FromRoute] int id)
+        {
+            var personagem = _servicoPersonagem.ObterPorId(id);
+            if (personagem == null)
+            {
+                return NotFound();
+            }
+            return Ok(personagem);
+        }
         //[HttpPost("personagem")]
         //public IActionResult Criar([FromBody]Personagem personagem) 
         //{
