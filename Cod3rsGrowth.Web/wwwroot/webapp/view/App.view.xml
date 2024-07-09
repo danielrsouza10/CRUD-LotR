@@ -1,0 +1,13 @@
+<mvc:View
+    controllerName="ui5.o_senhor_dos_aneis.controller.App"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc">
+    <Text text="Personagens" />
+    <Input
+        placeholder="{/personagem/nome}"
+        valueLiveUpdate="true"
+        width="60%" />
+    <Button
+        text="{i18n>showHelloButtonText}"
+        press=".onShowHello" />
+</mvc:View>
