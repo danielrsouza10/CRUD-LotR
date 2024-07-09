@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Newtonsoft.Json;
 
-namespace Cod3rsGrowth.Web.ExceptionHanlder
+namespace Cod3rsGrowth.Web.ExceptionHandler
 {
     public static class ProblemDetailsExtensions
     {
@@ -31,14 +31,14 @@ namespace Cod3rsGrowth.Web.ExceptionHanlder
                             .GroupBy(error => error.PropertyName)
                             .ToDictionary(group => group.Key, group => group.First().ErrorMessage);
                         }
-                        else if(exception is SqlException sqlRequestException)
+                        else if (exception is SqlException sqlRequestException)
                         {
                             problemDetails.Title = "O Id da raça não existe";
                             problemDetails.Status = StatusCodes.Status500InternalServerError;
                             problemDetails.Detail = sqlRequestException.StackTrace;
                             problemDetails.Extensions["Erros:"] = sqlRequestException.Message;
                         }
-                        else if(exception is Exception requestException)
+                        else if (exception is Exception requestException)
                         {
                             problemDetails.Title = "Um erro inesperado ocorreu";
                             problemDetails.Status = StatusCodes.Status500InternalServerError;
