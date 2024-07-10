@@ -4,7 +4,7 @@ sap.ui.define(
     "use strict";
 
     return Controller.extend("ui5.o_senhor_dos_aneis.controller.App", {
-      onShowHello() {
+      async onSearch() {
         // read msg from i18n model
         const oBundle = this.getView().getModel("i18n").getResourceBundle();
         const sRecipient = this.getView()
