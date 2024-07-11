@@ -8,24 +8,7 @@
       <pages>
         <Page title="O Senhor dos Anéis">
           <content>
-            <Panel
-              headerText="Personagens"
-              class="sapUiResponsiveMargin"
-              width="auto">
-              <content>
-                <Input
-                  placeholder="Nome do personagem"
-                  value="{/personagem/nome}"
-                  valueLiveUpdate="true"
-                  width="60%" />
-                <Button
-                  id="searchButton"
-                  text="{i18n>searchButtonText}"
-                  press=".onSearch"
-                  class="sapUiSmallMarginEnd mySearchButton" />
-                <FormattedText htmlText="Teste" class="myCustomText"></FormattedText>
-              </content>
-            </Panel>
+            <mvc:XMLView viewName="ui5.o_senhor_dos_aneis.view.Search" />
           </content>
         </Page>
       </pages>

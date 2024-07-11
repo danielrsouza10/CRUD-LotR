@@ -39,17 +39,39 @@
                 }
             }
         },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "type": "View",
+                "viewType": "XML",
+                "path": "sap.ui.o_senhor_dos_aneis.view",
+                "controlId": "app",
+                "controlAggregation": "pages",
+                "transition": "slide",
+                "bypassed": {
+                    "target": "notFound"
+                },
+                "async": true
+            },
+            "routes": [
+                {
+                    "pattern": "",
+                    "name": "appHome",
+                    "target": "home"
+                }
+            ],
+            "targets": {
+                "notFound": {
+                    "id": "notFound",
+                    "name": "NotFound",
+                    "transition": "show"
+                }
+            }
+        },
         "rootView": {
             "viewName": "ui5.o_senhor_dos_aneis.view.App",
             "type": "XML",
             "id": "app"
-        },
-        "resources": {
-            "css": [
-                {
-                    "uri": "css/style.css"
-                }
-            ]
         }
     }
 }
