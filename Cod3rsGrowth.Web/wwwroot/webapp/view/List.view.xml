@@ -1,0 +1,9 @@
+<mvc:View
+    controllerName="ui5.o_senhor_dos_aneis.controller.List"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc">
+    <Table
+        headerText="Lista de Personagens"
+        class="sapUiResponsiveMargin"
+        width="auto" />
+</mvc:View>
