@@ -26,6 +26,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseStaticFiles(new StaticFileOptions()
+{
+    ServeUnknownFileTypes = true
+});
+
 app.UseProblemDetailsExceptionHandler(app.Services.GetRequiredService<ILoggerFactory>());
 
 app.UseHttpsRedirection();
