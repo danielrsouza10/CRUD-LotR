@@ -1,6 +1,6 @@
 using Infra;
 using Servico;
-using Cod3rsGrowth.Web.ExceptionHanlder;
+using Cod3rsGrowth.Web.ExceptionHandler;
 
 var builder = WebApplication.CreateBuilder(args);
 

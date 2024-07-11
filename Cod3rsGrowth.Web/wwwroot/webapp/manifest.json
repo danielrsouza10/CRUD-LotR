@@ -19,6 +19,11 @@
         }
     },
     "sap.ui5": {
+        "rootView": {
+            "viewName": "ui5.o_senhor_dos_aneis.view.App",
+            "type": "XML",
+            "id": "app"
+        },
         "dependencies": {
             "minUI5Version": "1.108.0",
             "libs": {
@@ -39,17 +44,39 @@
                 }
             }
         },
-        "rootView": {
-            "viewName": "ui5.o_senhor_dos_aneis.view.App",
-            "type": "XML",
-            "id": "app"
-        },
-        "resources": {
-            "css": [
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "type": "View",
+                "viewType": "XML",
+                "path": "ui5.o_senhor_dos_aneis.view",
+                "controlId": "app",
+                "controlAggregation": "pages",
+                "transition": "slide",
+                "bypassed": {
+                    "target": "notFound"
+                },
+                "async": true
+            },
+            "routes": [
                 {
-                    "uri": "css/style.css"
+                    "pattern": "",
+                    "name": "appHome",
+                    "target": "home"
                 }
-            ]
+            ],
+            "targets": {
+                "home": {
+                    "id": "home",
+                    "name": "Home",
+                    "level": 1
+                },
+                "notFound": {
+                    "id": "notFound",
+                    "name": "NotFound",
+                    "transition": "show"
+                }
+            }
         }
     }
 }

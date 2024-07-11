@@ -1,0 +1,13 @@
+<mvc:View
+    controllerName="ui5.o_senhor_dos_aneis.controller.NotFound"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc">
+    <MessagePage
+        title="NotFound"
+        text="Desculpa, mas a página não foi encontrada"
+        description="Por favor, verifique a URL e tente novamente"
+        showNavButton="true"
+        navButtonPress="onNavBack">
+    </MessagePage>
+
+</mvc:View>

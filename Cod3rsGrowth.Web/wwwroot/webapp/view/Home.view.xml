@@ -1,0 +1,10 @@
+<mvc:View
+    controllerName="ui5.o_senhor_dos_aneis.controller.Home"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc">
+    <Page title="O Senhor dos Anéis">
+        <content>
+            <mvc:XMLView viewName="ui5.o_senhor_dos_aneis.view.Search" />
+        </content>
+    </Page>
+</mvc:View>
