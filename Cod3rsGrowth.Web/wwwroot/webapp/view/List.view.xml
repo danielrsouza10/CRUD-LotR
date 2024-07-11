@@ -5,5 +5,15 @@
     <Table
         headerText="Lista de Personagens"
         class="sapUiResponsiveMargin"
-        width="auto" />
+        width="auto" >
+        <headerToolbar>
+            <Toolbar>
+                <Title text="Personagens" />
+                <ToolbarSpacer />
+                <SearchField
+                    width="50%"
+                />
+            </Toolbar>
+        </headerToolbar>
+    </Table>
 </mvc:View>
