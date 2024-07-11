@@ -4,14 +4,8 @@
   xmlns:mvc="sap.ui.core.mvc"
   displayBlock="true">
   <Shell>
-    <App class="myApp">
-      <pages>
-        <Page title="O Senhor dos Anéis">
-          <content>
-            <mvc:XMLView viewName="ui5.o_senhor_dos_aneis.view.Search" />
-          </content>
-        </Page>
-      </pages>
+    <App id="app" class="myApp">
+
     </App>
   </Shell>
 

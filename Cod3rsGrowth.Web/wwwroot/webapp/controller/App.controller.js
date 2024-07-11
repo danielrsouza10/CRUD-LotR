@@ -1,5 +1,7 @@
-sap.ui.define(["sap/ui/core/mvc/Controller"], (Controller) => {
+sap.ui.define(["../controller/BaseController"], (BaseController) => {
   "use strict";
 
-  return Controller.extend("ui5.o_senhor_dos_aneis.controller.App", {});
+  return BaseController.extend("ui5.o_senhor_dos_aneis.controller.App", {
+    onInit: function () {},
+  });
 });

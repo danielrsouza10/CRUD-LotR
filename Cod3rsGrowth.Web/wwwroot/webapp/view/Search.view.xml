@@ -17,7 +17,6 @@
                 text="{i18n>searchButtonText}"
                 press=".onSearch"
                 class="sapUiSmallMarginEnd mySearchButton" />
-            <FormattedText htmlText="Teste" class="myCustomText"></FormattedText>
         </content>
     </Panel>
 </mvc:View>
