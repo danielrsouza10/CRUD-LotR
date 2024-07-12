@@ -15,5 +15,38 @@
                 />
             </Toolbar>
         </headerToolbar>
+        <columns>
+            <Column
+					minScreenWidth="Small"
+					demandPopin="true"
+					width="5em">
+					<Text text="Id" />
+				</Column>
+                <Column>
+					<Text text="Nome" />
+				</Column>
+                <Column
+					minScreenWidth="Small"
+					demandPopin="true">
+					<Text text="Raça" />
+				</Column>
+				<Column
+					minScreenWidth="Tablet"
+					demandPopin="false">
+					<Text text="Profissão" />
+				</Column>
+				<Column>
+					<Text text="Altura" />
+				</Column>
+                <Column>
+					<Text text="Peso" />
+				</Column>
+                <Column>
+					<Text text="Esta vivo?" />
+				</Column>
+                <Column>
+					<Text text="Data do Cadastro" />
+				</Column>
+        </columns>
     </Table>
 </mvc:View>
