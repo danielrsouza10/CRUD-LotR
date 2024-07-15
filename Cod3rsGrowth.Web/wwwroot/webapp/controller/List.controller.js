@@ -1,4 +1,4 @@
-sap.ui.define(
+﻿sap.ui.define(
   [
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
@@ -13,12 +13,10 @@ sap.ui.define(
           unidadeMedida: "m",
         });
         this.getView().setModel(oViewModel, "view");
-        console.log("entrou")
         this.loadPersonagens();
       },
       async loadPersonagens() {
         const stringUrl = "https://localhost:7244/api/Personagem/personagens";
-console.log("entrou")
         try {
           const response = await fetch(stringUrl);
           if (!response.ok) {

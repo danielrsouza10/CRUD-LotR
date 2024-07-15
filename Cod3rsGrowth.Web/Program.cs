@@ -45,9 +45,11 @@ app.UseProblemDetailsExceptionHandler(app.Services.GetRequiredService<ILoggerFac
 
 app.UseHttpsRedirection();
 
+app.UseRouting();
+
 app.UseCors("AllowAllOrigins");
 
-app.UseRouting();
+
 
 app.UseAuthorization();
 
