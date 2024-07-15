@@ -1,52 +1,40 @@
 <mvc:View
     controllerName="ui5.o_senhor_dos_aneis.controller.List"
     xmlns="sap.m"
-    xmlns:mvc="sap.ui.core.mvc">
-    <Table
-        headerText="Lista de Personagens"
+    xmlns:mvc="sap.ui.core.mvc"
+>
+    <List
+        id="listaDePersonagens"
+        headerText="Header Text"
         class="sapUiResponsiveMargin"
-        width="auto" >
+        width="auto"
+        items="{path: '/'}"
+    >
         <headerToolbar>
             <Toolbar>
                 <Title text="Personagens" />
                 <ToolbarSpacer />
                 <SearchField
                     width="50%"
+                    search=".onFiltrarPersonagens"
                 />
             </Toolbar>
         </headerToolbar>
-        <columns>
-            <Column
-					minScreenWidth="Small"
-					demandPopin="true"
-					width="5em">
-					<Text text="Id" />
-				</Column>
-                <Column>
-					<Text text="Nome" />
-				</Column>
-                <Column
-					minScreenWidth="Small"
-					demandPopin="true">
-					<Text text="Raça" />
-				</Column>
-				<Column
-					minScreenWidth="Tablet"
-					demandPopin="false">
-					<Text text="Profissão" />
-				</Column>
-				<Column>
-					<Text text="Altura" />
-				</Column>
-                <Column>
-					<Text text="Peso" />
-				</Column>
-                <Column>
-					<Text text="Esta vivo?" />
-				</Column>
-                <Column>
-					<Text text="Data do Cadastro" />
-				</Column>
-        </columns>
-    </Table>
+        <items>
+            <ObjectListItem
+                title="{nome}"
+                number="{
+                parts: [
+                    'altura',
+                    'view>unidadeMedida/'
+                ],
+                type: 'sap.ui.model.type.Unit',
+                formatOptions: {
+                    showMeasure: false
+                }
+            }"
+                numberUnit="{view>/unidadeMedida}"
+            />
+        </items>
+    </List>
 </mvc:View>

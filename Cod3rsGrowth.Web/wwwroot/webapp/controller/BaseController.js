@@ -10,17 +10,17 @@ sap.ui.define(
     return Controller.extend(
       "ui5.o_senhor_dos_aneis.controller.BaseController",
       {
-        getRouter: function () {
+        getRouter: () => {
           return UIComponent.getRouterFor(this);
         },
 
-        onNavBack: function () {
-          var oHistory, sPreviousHash;
+        onNavBack: () => {
+          var historico, hashAnterior;
 
-          oHistory = History.getInstance();
-          sPreviousHash = oHistory.getPreviousHash();
+          historico = History.getInstance();
+          hashAnterior = historico.getPreviousHash();
 
-          if (sPreviousHash !== undefined) {
+          if (hashAnterior !== undefined) {
             window.history.go(-1);
           } else {
             this.getRouter().navTo("appHome", {}, true /*no history*/);
