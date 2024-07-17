@@ -2,6 +2,8 @@ using Dominio.ENUMS;
 using Dominio.Filtros;
 using Dominio.Modelos;
 using LinqToDB;
+using Newtonsoft.Json.Linq;
+using System;
 using Testes.Interfaces;
 
 namespace Infra.Repositorios;
@@ -12,16 +14,53 @@ public class RepositorioPersonagem : IRepositorio<Personagem>
     public IEnumerable<Personagem> ObterTodos(Filtro filtro)
     {
         var personagens = from p in _db.Personagem select p;
-        
-        if (filtro == null) return personagens.ToList();
-        
-        if (!string.IsNullOrEmpty(filtro.Nome)) personagens = from p in personagens where p.Nome.ToLower().Contains(filtro.Nome.ToLower()) select p;
-        if (!filtro.Profissao.Equals((ProfissaoEnum)Enum.Parse(typeof(ProfissaoEnum), "Nenhum"))) personagens = from p in personagens where p.Profissao == filtro.Profissao select p;
-        if (!filtro.EstaVivo.Equals(null)) personagens = from p in personagens where p.EstaVivo == filtro.EstaVivo select p;
-        if (!filtro.DataInicial.Equals(null)) personagens = from p in personagens where p.DataDoCadastro.Date >= filtro.DataInicial select p;
-        if (!filtro.DataFinal.Equals(null)) personagens = from p in personagens where p.DataDoCadastro.Date <= filtro.DataFinal select p;
-        
-        return personagens.ToList();
+
+        if (filtro != null)
+        {
+            if (!string.IsNullOrEmpty(filtro.Nome))
+            {
+                personagens = from p in personagens where p.Nome.ToLower().Contains(filtro.Nome.ToLower()) select p;
+            }
+
+            if (filtro.Profissao != ProfissaoEnum.Nenhum)
+            {
+                personagens = from p in personagens where p.Profissao == filtro.Profissao select p;
+            }
+
+            if (filtro.EstaVivo.HasValue)
+            {
+                personagens = from p in personagens where p.EstaVivo == filtro.EstaVivo select p;
+            }
+
+            if (filtro.DataInicial.HasValue)
+            {
+                personagens = from p in personagens where p.DataDoCadastro.Date >= filtro.DataInicial.Value select p;
+            }
+
+            if (filtro.DataFinal.HasValue)
+            {
+                personagens = from p in personagens where p.DataDoCadastro.Date <= filtro.DataFinal.Value select p;
+            }
+        }
+
+        var racas = from r in _db.Raca select r;
+
+        var listaDePersonagens = from personagem in personagens
+                             join raca in racas on personagem.IdRaca equals raca.Id
+                             select new Personagem
+                             {
+                                 Id = personagem.Id,
+                                 Nome = personagem.Nome,
+                                 IdRaca = raca.Id,
+                                 Raca = raca.Nome,
+                                 Profissao = personagem.Profissao,
+                                 Idade = personagem.Idade,
+                                 Altura = personagem.Altura,
+                                 EstaVivo = personagem.EstaVivo,
+                                 DataDoCadastro = personagem.DataDoCadastro
+                             };
+
+        return listaDePersonagens.ToList();
     }
     public Personagem ObterPorId(int id)
     {
