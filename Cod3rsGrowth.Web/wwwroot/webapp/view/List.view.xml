@@ -1,13 +1,14 @@
 <mvc:View
     controllerName="ui5.o_senhor_dos_aneis.controller.List"
+    xmlns:f="sap.f"
     xmlns="sap.m"
+    xmlns:core="sap.ui.core"
     xmlns:mvc="sap.ui.core.mvc"
 >
     <List
         id="listaDePersonagens"
-        headerText="Header Text"
-        class="sapUiResponsiveMargin"
-        width="auto"
+        headerText="Custom Content"
+        mode="Delete"
         items="{path: '/'}"
     >
         <headerToolbar>
@@ -20,21 +21,43 @@
                 />
             </Toolbar>
         </headerToolbar>
-        <items>
-            <ObjectListItem
-                title="{nome}"
-                number="{
-                parts: [
-                    'altura',
-                    'view>unidadeMedida/'
-                ],
-                type: 'sap.ui.model.type.Unit',
-                formatOptions: {
-                    showMeasure: false
-                }
-            }"
-                numberUnit="{view>/unidadeMedida}"
-            />
-        </items>
+        <CustomListItem>
+            <HBox>
+                <core:Icon
+                    size="2rem"
+                    src="sap-icon://attachment-photo"
+                    class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
+                />
+                <VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
+                    <ObjectIdentifier title="{nome}" />
+
+                    <Label
+                        text="{
+                        path: 'profissao',
+                        formatter: '.formatter.descricaoDaProfissao'
+                    }"
+                    />
+                    <Label
+                        text="{
+                        path: 'estaVivo',
+                        formatter: '.formatter.formatarBooleanVivoMorto'
+                    }"
+                    />
+                    <ObjectNumber
+                        number="{
+                     parts:['idRaca']
+                    }"
+                        numberUnit="m"
+                    />
+                    <Label text="{profissao}" />
+                    <Label text="{dataDoCadastro}" />
+                    <Label
+                        text="{
+                     path: 'profissao',
+                     type: 'sap.ui.mdc.enums.FieldDisplay.Description'}"
+                    />
+                </VBox>
+            </HBox>
+        </CustomListItem>
     </List>
 </mvc:View>

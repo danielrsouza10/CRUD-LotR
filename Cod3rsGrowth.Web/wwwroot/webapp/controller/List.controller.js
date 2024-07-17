@@ -4,15 +4,13 @@
     "sap/ui/model/json/JSONModel",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
+    "../model/formatter",
   ],
-  function (Controller, JSONModel, Filter, FilterOperator) {
+  function (Controller, JSONModel, Filter, FilterOperator, formatter) {
     "use strict";
     return Controller.extend("ui5.o_senhor_dos_aneis.controller.List", {
+      formatter: formatter,
       onInit() {
-        const oViewModel = new JSONModel({
-          unidadeMedida: "m",
-        });
-        this.getView().setModel(oViewModel, "view");
         this.loadPersonagens();
       },
       async loadPersonagens() {
@@ -34,7 +32,7 @@
         const STRING_QUERY = evento.getParameter("query");
         if (STRING_QUERY) {
           ARRAY_DE_FILTRO.push(
-            new Filter("Nome", FilterOperator.Contains, STRING_QUERY)
+            new Filter("nome", FilterOperator.Contains, STRING_QUERY)
           );
         }
 
