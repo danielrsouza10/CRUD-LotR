@@ -43,24 +43,7 @@ public class RepositorioPersonagem : IRepositorio<Personagem>
             }
         }
 
-        var racas = from r in _db.Raca select r;
-
-        var listaDePersonagens = from personagem in personagens
-                             join raca in racas on personagem.IdRaca equals raca.Id
-                             select new Personagem
-                             {
-                                 Id = personagem.Id,
-                                 Nome = personagem.Nome,
-                                 IdRaca = raca.Id,
-                                 Raca = raca.Nome,
-                                 Profissao = personagem.Profissao,
-                                 Idade = personagem.Idade,
-                                 Altura = personagem.Altura,
-                                 EstaVivo = personagem.EstaVivo,
-                                 DataDoCadastro = personagem.DataDoCadastro
-                             };
-
-        return listaDePersonagens.ToList();
+        return personagens.ToList();
     }
     public Personagem ObterPorId(int id)
     {

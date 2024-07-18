@@ -8,31 +8,64 @@
   ],
   function (Controller, JSONModel, Filter, FilterOperator, formatter) {
     "use strict";
+    const ARRAY_DE_FILTRO = [];
     return Controller.extend("ui5.o_senhor_dos_aneis.controller.List", {
       formatter: formatter,
       onInit() {
         this.loadPersonagens();
+        this.loadRacas();
       },
-      async loadPersonagens() {
+      loadPersonagens() {
         const stringUrl = "https://localhost:7244/api/Personagem/personagens";
-        try {
-          const response = await fetch(stringUrl);
-          if (!response.ok) {
-            throw new Error("Sem resposta" + response.statusText);
-          }
-          const dados = await response.json();
-          const objetoModelo = new JSONModel(dados);
-          this.getView().setModel(objetoModelo);
-        } catch (error) {
-          console.error("Houve um problema de fetch", error);
-        }
+        fetch(stringUrl)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Sem resposta: " + response.statusText);
+            }
+            return response.json();
+          })
+          .then((dados) => {
+            const objetoModelo = new JSONModel(dados);
+            this.getView().setModel(objetoModelo, "personagens");
+          })
+          .catch((error) => {
+            console.error("Houve um problema de fetch", error);
+          });
+      },
+      loadRacas() {
+        const stringUrl = "https://localhost:7244/api/Raca/racas";
+        fetch(stringUrl)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Sem resposta: " + response.statusText);
+            }
+            return response.json();
+          })
+          .then((dados) => {
+            const objetoModelo = new JSONModel(dados);
+            this.getView().setModel(objetoModelo, "racas");
+          })
+          .catch((error) => {
+            console.error("Houve um problema de fetch", error);
+          });
       },
       onFiltrarPersonagens(evento) {
-        const ARRAY_DE_FILTRO = [];
         const STRING_QUERY = evento.getParameter("query");
         if (STRING_QUERY) {
           ARRAY_DE_FILTRO.push(
             new Filter("nome", FilterOperator.Contains, STRING_QUERY)
+          );
+        }
+
+        const LISTA_DE_PERSONAGENS = this.byId("listaDePersonagens");
+        const BINDING = LISTA_DE_PERSONAGENS.getBinding("items");
+        BINDING.filter(ARRAY_DE_FILTRO);
+      },
+      onChangeComboBoxRacas(evento) {
+        const STRING_QUERY = evento.mParameters.selectedItem.mProperties.text;
+        if (STRING_QUERY) {
+          ARRAY_DE_FILTRO.push(
+            new Filter("raca", FilterOperator.Contains, STRING_QUERY)
           );
         }
 

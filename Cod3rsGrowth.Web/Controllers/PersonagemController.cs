@@ -1,4 +1,6 @@
-﻿using Dominio.Filtros;
+﻿using Cod3rsGrowth.Web.Controllers.DTOs;
+using Dominio.ENUMS;
+using Dominio.Filtros;
 using Dominio.Modelos;
 using Microsoft.AspNetCore.Mvc;
 using Servico.Servicos;
@@ -10,15 +12,35 @@ namespace Cod3rsGrowth.Web.Controllers
     public class PersonagemController : ControllerBase
     {
         private readonly ServicoPersonagem _servicoPersonagem;
-        public PersonagemController(ServicoPersonagem servicoPersonagem)
+        private readonly ServicoRaca _servicoRaca;
+
+        public PersonagemController(ServicoPersonagem servicoPersonagem, ServicoRaca servicoRaca)
         {
             _servicoPersonagem = servicoPersonagem;
+            _servicoRaca = servicoRaca;
         }
 
         [HttpGet("personagens")]
         public IActionResult ObterTodos([FromQuery] Filtro filtro)
         {
-            return Ok(_servicoPersonagem.ObterTodos(filtro));
+            var personagens = _servicoPersonagem.ObterTodos(filtro);
+            var racas = _servicoRaca.ObterTodos(filtro);
+            var listaDePersonagem = (from p in personagens
+                                    join r in racas on p.IdRaca equals r.Id
+                                    select new PersonagemDTO
+                                    {
+                                        Id = p.Id,
+                                        Nome = p.Nome,
+                                        IdRaca = r.Id,
+                                        Raca = r.Nome,
+                                        Profissao = p.Profissao.PegarDescricaoEnum(),
+                                        Idade = p.Idade,
+                                        Altura = p.Altura,
+                                        EstaVivo = p.EstaVivo,
+                                        DataDoCadastro = p.DataDoCadastro
+                                    }).ToList();
+
+            return Ok(listaDePersonagem);
         }
         [HttpGet("personagem/{id}")]
         public IActionResult ObterPorId([FromRoute] int id)

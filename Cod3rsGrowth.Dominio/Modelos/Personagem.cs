@@ -13,7 +13,6 @@ namespace Dominio.Modelos
         public string Nome { get; set; }
         [Column("IdRaca"), NotNull]
         public int IdRaca { get; set; }
-        public string Raca { get; set; }
         [Column("Profissao"), NotNull]
         public ProfissaoEnum Profissao { get; set; }
         [Column("Idade")]
