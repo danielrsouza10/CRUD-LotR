@@ -8,7 +8,7 @@
   ],
   function (Controller, JSONModel, Filter, FilterOperator, formatter) {
     "use strict";
-    const ARRAY_DE_FILTRO = [];
+    // const ARRAY_DE_FILTRO = [];
     return Controller.extend("ui5.o_senhor_dos_aneis.controller.List", {
       formatter: formatter,
       onInit() {
@@ -50,10 +50,11 @@
           });
       },
       onFiltrarPersonagens(evento) {
-        const STRING_QUERY = evento.getParameter("query");
-        if (STRING_QUERY) {
+        const ARRAY_DE_FILTRO = [];
+        const INPUT_SEARCH_BAR = evento.getParameter("query");
+        if (INPUT_SEARCH_BAR) {
           ARRAY_DE_FILTRO.push(
-            new Filter("nome", FilterOperator.Contains, STRING_QUERY)
+            new Filter("nome", FilterOperator.Contains, INPUT_SEARCH_BAR)
           );
         }
 
@@ -61,18 +62,19 @@
         const BINDING = LISTA_DE_PERSONAGENS.getBinding("items");
         BINDING.filter(ARRAY_DE_FILTRO);
       },
-      onChangeComboBoxRacas(evento) {
-        const STRING_QUERY = evento.mParameters.selectedItem.mProperties.text;
-        if (STRING_QUERY) {
-          ARRAY_DE_FILTRO.push(
-            new Filter("raca", FilterOperator.Contains, STRING_QUERY)
-          );
-        }
+      // onChangeComboBoxRacas(evento) {
+      //   const ARRAY_DE_FILTRO = [];
+      //   const STRING_QUERY = evento.mParameters.selectedItem.mProperties.text;
+      //   if (STRING_QUERY) {
+      //     ARRAY_DE_FILTRO.push(
+      //       new Filter("raca", FilterOperator.Contains, STRING_QUERY)
+      //     );
+      //   }
 
-        const LISTA_DE_PERSONAGENS = this.byId("listaDePersonagens");
-        const BINDING = LISTA_DE_PERSONAGENS.getBinding("items");
-        BINDING.filter(ARRAY_DE_FILTRO);
-      },
+      //   const LISTA_DE_PERSONAGENS = this.byId("listaDePersonagens");
+      //   const BINDING = LISTA_DE_PERSONAGENS.getBinding("items");
+      //   BINDING.filter(ARRAY_DE_FILTRO);
+      // },
     });
   }
 );
