@@ -62,6 +62,30 @@
         const BINDING = LISTA_DE_PERSONAGENS.getBinding("items");
         BINDING.filter(ARRAY_DE_FILTRO);
       },
+      async onOpenFilterDialog() {
+        // create dialog lazily
+        this.oDialog ??= await this.loadFragment({
+          name: "ui5.o_senhor_dos_aneis.view.FilterDialog",
+        });
+
+        this.oDialog.open();
+      },
+      onCloseFilterDialog(evento) {
+        const ARRAY_DE_FILTRO = [];
+        const SELECTED_RACA_COMBO_BOX =
+          this.byId("comboBoxRacas").mProperties.selectedKey;
+        console.log(SELECTED_RACA_COMBO_BOX);
+        if (INPUT_SEARCH_BAR) {
+          ARRAY_DE_FILTRO.push(
+            new Filter("nome", FilterOperator.Contains, INPUT_SEARCH_BAR)
+          );
+        }
+
+        const LISTA_DE_PERSONAGENS = this.byId("listaDePersonagens");
+        const BINDING = LISTA_DE_PERSONAGENS.getBinding("items");
+        BINDING.filter(ARRAY_DE_FILTRO);
+        this.byId("filterDialog").close();
+      },
       // onChangeComboBoxRacas(evento) {
       //   const ARRAY_DE_FILTRO = [];
       //   const STRING_QUERY = evento.mParameters.selectedItem.mProperties.text;
