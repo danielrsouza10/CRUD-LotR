@@ -1,6 +1,7 @@
 <core:FragmentDefinition
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
+    controllerName="ui5.o_senhor_dos_aneis.controller.List"
 >
     <Dialog
         id="filterDialog"
@@ -17,8 +18,9 @@
             />
         </Select>
         <Select
-            id="enumComboBox"
+            id="profissaoComboBox"
             width="20%"
+            change=".onChangeProfissaoBoxRacas"
         >
             <core:Item
                 key="0"
