@@ -8,7 +8,13 @@
   ],
   function (Controller, JSONModel, Filter, FilterOperator, formatter) {
     "use strict";
-    const ARRAY_DE_FILTRO = [];
+    let filtro = [];
+    let filtroNome = "";
+    let filtroRaca = "";
+    let filtroProfissao = "";
+    let filtroDataInicial = "";
+    let filtroDataFinal = "";
+
     return Controller.extend("ui5.o_senhor_dos_aneis.controller.List", {
       formatter: formatter,
       onInit() {
@@ -50,74 +56,61 @@
           });
       },
       onFiltrarPersonagens(evento) {
-        const INPUT_SEARCH_BAR = evento.getParameter("query");
-        if (INPUT_SEARCH_BAR) {
-          ARRAY_DE_FILTRO.push(
-            new Filter("nome", FilterOperator.Contains, INPUT_SEARCH_BAR)
-          );
-        }
-
-        const LISTA_DE_PERSONAGENS = this.byId("listaDePersonagens");
-        const BINDING = LISTA_DE_PERSONAGENS.getBinding("items");
-        BINDING.filter(ARRAY_DE_FILTRO);
+        filtroNome = evento.getParameter("query");
+        this.aplicarFiltro();
       },
-      onChangeSearchField(evento) {
-        const INPUT_SEARCH_BAR = evento.getParameter("query");
-        if (INPUT_SEARCH_BAR) {
-          ARRAY_DE_FILTRO.push(
-            new Filter("nome", FilterOperator.Contains, INPUT_SEARCH_BAR)
-          );
-        }
-
-        const LISTA_DE_PERSONAGENS = this.byId("listaDePersonagens");
-        const BINDING = LISTA_DE_PERSONAGENS.getBinding("items");
-        BINDING.filter(ARRAY_DE_FILTRO);
-      },
-      async onOpenFilterDialog() {
+      async onOpenDialogoDeFiltro() {
         // create dialog lazily
         this.oDialog ??= await this.loadFragment({
           name: "ui5.o_senhor_dos_aneis.view.FilterDialog",
         });
 
         this.oDialog.open();
+        this.limparFiltro();
       },
-      onCloseFilterDialog(evento) {
+      onCloseDialogoDeFiltro() {
+        this.aplicarFiltro();
+        this.limparFiltro();
         this.byId("filterDialog").close();
       },
       onChangeComboBoxRacas(evento) {
-        const STRING_QUERY =
-          evento.getParameters().selectedItem.mProperties.text;
-        if (STRING_QUERY) {
-          ARRAY_DE_FILTRO.push(
-            new Filter("raca", FilterOperator.Contains, STRING_QUERY)
-          );
+        const itemSelecionado = evento.getParameter("selectedItem");
+        if (itemSelecionado) {
+          filtroRaca = itemSelecionado.getText();
         }
-
-        const LISTA_DE_PERSONAGENS = this.byId("listaDePersonagens");
-        const BINDING = LISTA_DE_PERSONAGENS.getBinding("items");
-        BINDING.filter(ARRAY_DE_FILTRO);
       },
-      onChangeProfissaoBoxRacas(evento) {
-        const SELECTED_PROFISSAO_COMBO_BOX =
-          evento.getParameters().selectedItem.mProperties.text;
-        if (SELECTED_PROFISSAO_COMBO_BOX) {
-          ARRAY_DE_FILTRO.push(
-            new Filter(
-              "profissao",
-              FilterOperator.Contains,
-              SELECTED_PROFISSAO_COMBO_BOX
-            )
-          );
+      onChangeComboBoxProfissoes(evento) {
+        const itemSelecionado = evento.getParameter("selectedItem");
+        if (itemSelecionado && itemSelecionado.getText() != "Nenhum") {
+          filtroProfissao = itemSelecionado.getText();
+        } else {
+          filtroProfissao = "";
         }
-        const LISTA_DE_PERSONAGENS = this.byId("listaDePersonagens");
-        const BINDING = LISTA_DE_PERSONAGENS.getBinding("items");
-        BINDING.filter(ARRAY_DE_FILTRO);
       },
       onReset() {
-        ARRAY_DE_FILTRO.length = 0;
-        const LISTA_DE_PERSONAGENS = this.byId("listaDePersonagens");
-        const BINDING = LISTA_DE_PERSONAGENS.getBinding("items");
-        BINDING.filter(ARRAY_DE_FILTRO);
+        filtro = [];
+        const listaDePersonagens = this.getView().byId("listaDePersonagens");
+        const binding = listaDePersonagens.getBinding("items");
+        binding.filter(filtro);
+      },
+      aplicarFiltro() {
+        if (filtroNome) {
+          filtro.push(new Filter("nome", FilterOperator.Contains, filtroNome));
+        }
+        if (filtroRaca) {
+          filtro.push(new Filter("raca", FilterOperator.Contains, filtroRaca));
+        }
+        if (filtroProfissao) {
+          filtro.push(
+            new Filter("profissao", FilterOperator.Contains, filtroProfissao)
+          );
+        }
+        const listaDePersonagens = this.getView().byId("listaDePersonagens");
+        const binding = listaDePersonagens.getBinding("items");
+        binding.filter(filtro);
+      },
+      limparFiltro() {
+        filtro = [];
       },
     });
   }

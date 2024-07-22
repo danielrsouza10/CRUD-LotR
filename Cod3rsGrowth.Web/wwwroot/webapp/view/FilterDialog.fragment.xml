@@ -21,7 +21,7 @@
         <Select
             id="profissaoComboBox"
             width="20%"
-            change=".onChangeProfissaoBoxRacas"
+            change=".onChangeComboBoxProfissoes"
         >
             <core:Item
                 key="0"
@@ -97,7 +97,7 @@
         <beginButton>
             <Button
                 text="Ok"
-                press=".onCloseFilterDialog"
+                press=".onCloseDialogoDeFiltro"
             />
         </beginButton>
     </Dialog>

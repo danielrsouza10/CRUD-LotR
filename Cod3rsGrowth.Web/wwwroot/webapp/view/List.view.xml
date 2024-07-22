@@ -30,7 +30,6 @@
                         <SearchField
                             width="50%"
                             search=".onFiltrarPersonagens"
-                            change=".onChangeSearchField"
                         />
                         <Button
                             type="Transparent"
@@ -42,7 +41,7 @@
                             type="Transparent"
                             text="Filter"
                             icon="sap-icon://filter"
-                            press=".onOpenFilterDialog"
+                            press=".onOpenDialogoDeFiltro"
                         />
                         <OverflowToolbarButton
                             tooltip="Sort"
