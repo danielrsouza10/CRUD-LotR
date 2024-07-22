@@ -1,6 +1,7 @@
 <core:FragmentDefinition
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
+    xmlns:u="sap.ui.unified"
     controllerName="ui5.o_senhor_dos_aneis.controller.List"
 >
     <Dialog
@@ -87,6 +88,12 @@
                 text="Ex-Hobbit"
             />
         </Select>
+        <u:Calendar
+            id="calendar"
+            select="handleCalendarSelect"
+            intervalSelection="true"
+            weekNumberSelect="handleWeekNumberSelect"
+        />
         <beginButton>
             <Button
                 text="Ok"
