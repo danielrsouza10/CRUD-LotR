@@ -8,7 +8,8 @@
   ],
   function (Controller, JSONModel, Filter, FilterOperator, formatter) {
     "use strict";
-    let filtro = [];
+    const stringBaseUrlPersonagens =
+      "https://localhost:7244/api/Personagem/personagens";
     let filtroNome = "";
     let filtroRaca = "";
     let filtroProfissao = "";
@@ -17,13 +18,15 @@
 
     return Controller.extend("ui5.o_senhor_dos_aneis.controller.List", {
       formatter: formatter,
+
       onInit() {
         this.loadPersonagens();
         this.loadRacas();
       },
       loadPersonagens() {
-        const stringUrl = "https://localhost:7244/api/Personagem/personagens";
-        fetch(stringUrl)
+        let url = this.construirUrlComParametros();
+
+        fetch(url)
           .then((response) => {
             if (!response.ok) {
               throw new Error("Sem resposta: " + response.statusText);
@@ -39,8 +42,8 @@
           });
       },
       loadRacas() {
-        const stringUrl = "https://localhost:7244/api/Raca/racas";
-        fetch(stringUrl)
+        const stringUrlRacas = "https://localhost:7244/api/Raca/racas";
+        fetch(stringUrlRacas)
           .then((response) => {
             if (!response.ok) {
               throw new Error("Sem resposta: " + response.statusText);
@@ -55,23 +58,37 @@
             console.error("Houve um problema de fetch", error);
           });
       },
+      construirUrlComParametros() {
+        let url = stringBaseUrlPersonagens;
+        let parametros = [];
+
+        if (filtroNome) {
+          parametros.push(`NomeDoPersonagem=${encodeURIComponent(filtroNome)}`);
+        }
+        if (filtroRaca) {
+          parametros.push(`NomeDaRaca=${encodeURIComponent(filtroRaca)}`);
+        }
+        if (filtroProfissao) {
+          parametros.push(`Profissao=${encodeURIComponent(filtroProfissao)}`);
+        }
+        if (filtroDataInicial) {
+          parametros.push(
+            `DataInicial=${encodeURIComponent(filtroDataInicial)}`
+          );
+        }
+        if (filtroDataFinal) {
+          parametros.push(`DataFinal=${encodeURIComponent(filtroDataFinal)}`);
+        }
+
+        if (parametros.length > 0) {
+          url += "?" + parametros.join("&");
+        }
+
+        return url;
+      },
       onFiltrarPersonagens(evento) {
         filtroNome = evento.getParameter("query");
-        this.aplicarFiltro();
-      },
-      async onOpenDialogoDeFiltro() {
-        // create dialog lazily
-        this.oDialog ??= await this.loadFragment({
-          name: "ui5.o_senhor_dos_aneis.view.FilterDialog",
-        });
-
-        this.oDialog.open();
-        this.limparFiltro();
-      },
-      onCloseDialogoDeFiltro() {
-        this.aplicarFiltro();
-        this.limparFiltro();
-        this.byId("filterDialog").close();
+        this.loadPersonagens();
       },
       onChangeComboBoxRacas(evento) {
         const itemSelecionado = evento.getParameter("selectedItem");
@@ -87,30 +104,39 @@
           filtroProfissao = "";
         }
       },
+      onDataInicialSelecionada(evento) {
+        filtroDataInicial = evento
+          .getSource()
+          .getProperty("dateValue")
+          .toISOString();
+        console.log(filtroDataInicial);
+      },
+      onDataFinalSelecionada(evento) {
+        filtroDataFinal = evento
+          .getSource()
+          .getProperty("dateValue")
+          .toISOString();
+        console.log(filtroDataFinal);
+      },
       onReset() {
-        filtro = [];
-        const listaDePersonagens = this.getView().byId("listaDePersonagens");
-        const binding = listaDePersonagens.getBinding("items");
-        binding.filter(filtro);
+        filtroNome = "";
+        filtroRaca = "";
+        filtroProfissao = "";
+        filtroDataInicial = "";
+        filtroDataFinal = "";
+        this.loadPersonagens();
       },
-      aplicarFiltro() {
-        if (filtroNome) {
-          filtro.push(new Filter("nome", FilterOperator.Contains, filtroNome));
-        }
-        if (filtroRaca) {
-          filtro.push(new Filter("raca", FilterOperator.Contains, filtroRaca));
-        }
-        if (filtroProfissao) {
-          filtro.push(
-            new Filter("profissao", FilterOperator.Contains, filtroProfissao)
-          );
-        }
-        const listaDePersonagens = this.getView().byId("listaDePersonagens");
-        const binding = listaDePersonagens.getBinding("items");
-        binding.filter(filtro);
+      async onOpenDialogoDeFiltro() {
+        // create dialog lazily
+        this.oDialog ??= await this.loadFragment({
+          name: "ui5.o_senhor_dos_aneis.view.FilterDialog",
+        });
+
+        this.oDialog.open();
       },
-      limparFiltro() {
-        filtro = [];
+      onCloseDialogoDeFiltro() {
+        this.loadPersonagens();
+        this.byId("filterDialog").close();
       },
     });
   }

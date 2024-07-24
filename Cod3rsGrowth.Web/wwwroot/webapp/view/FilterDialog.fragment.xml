@@ -88,11 +88,13 @@
                 text="Ex-Hobbit"
             />
         </Select>
-        <u:Calendar
-            id="calendar"
-            select="handleCalendarSelect"
-            intervalSelection="true"
-            weekNumberSelect="handleWeekNumberSelect"
+        <DatePicker
+            id="dataInicial"
+            change=".onDataInicialSelecionada"
+        />
+        <DatePicker
+            id="dataFinal"
+            change=".onDataFinalSelecionada"
         />
         <beginButton>
             <Button
