@@ -10,11 +10,12 @@ sap.ui.define(
     return Controller.extend(
       "ui5.o_senhor_dos_aneis.controller.BaseController",
       {
-        getRouter: () => {
+        getRouter: function () {
           return UIComponent.getRouterFor(this);
         },
 
-        onNavBack: () => {
+        onNavBack: function () {
+          console.log("oi");
           var historico, hashAnterior;
 
           historico = History.getInstance();
@@ -26,7 +27,8 @@ sap.ui.define(
             this.getRouter().navTo("appHome", {}, true /*no history*/);
           }
         },
-        onNavToListPersonagens: () => {
+
+        onNavToListPersonagens: function () {
           this.getRouter().navTo("listaDePersonagens");
         },
       }

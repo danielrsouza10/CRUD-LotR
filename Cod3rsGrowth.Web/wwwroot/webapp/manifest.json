@@ -83,7 +83,8 @@
                 },
                 "personagens": {
                     "id": "listaDePersonagens",
-                    "name": "personagens.ListPersonagens",
+                    "path": "ui5.o_senhor_dos_aneis.view",
+                    "name": "ListaPersonagens",
                     "level": "2"
                 }
             }

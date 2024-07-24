@@ -11,8 +11,12 @@
                 press=".onDisplayNotFound"
                 class="sapUiTinyMarginEnd"
             />
-
-            <mvc:XMLView viewName="ui5.o_senhor_dos_aneis.view.List" />
+            <Button
+                id="personagensListBtn"
+                text="{i18n>ShowPersonagensList}"
+                press=".onNavToPersonagens"
+                class="sapUiTinyMarginEnd"
+            />
         </content>
     </Page>
 </mvc:View>

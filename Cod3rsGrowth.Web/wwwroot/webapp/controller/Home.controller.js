@@ -7,5 +7,8 @@ sap.ui.define(["../controller/BaseController"], function (BaseController) {
         fromTarget: "home",
       });
     },
+    onNavToPersonagens: function () {
+      this.getOwnerComponent().getRouter().navTo("listaDePersonagens");
+    },
   });
 });

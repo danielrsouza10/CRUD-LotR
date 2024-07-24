@@ -1,18 +1,16 @@
 <mvc:View
     height="100%"
-    controllerName="ui5.o_senhor_dos_aneis.controller.List"
-    xmlns:f="sap.f"
+    controllerName="ui5.o_senhor_dos_aneis.controller.ListaPersonagens"
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns:tnt="sap.tnt"
-    xmlns:fb="sap.ui.comp.filterbar"
 >
     <Page
-        showHeader="false"
+        showHeader="true"
         enableScrolling="true"
         class="sapUiContentPadding"
-        showNavButton="false"
+        showNavButton="true"
+        navButtonPress="onNavBack"
     >
         <content>
             <List
