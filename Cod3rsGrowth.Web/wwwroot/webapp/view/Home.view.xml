@@ -5,6 +5,13 @@
 >
     <Page title="O Senhor dos Anéis">
         <content>
+            <Button
+                id="displayNotFoundBtn"
+                text="{i18n>DisplayNotFound}"
+                press=".onDisplayNotFound"
+                class="sapUiTinyMarginEnd"
+            />
+
             <mvc:XMLView viewName="ui5.o_senhor_dos_aneis.view.List" />
         </content>
     </Page>

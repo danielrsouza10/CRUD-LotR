@@ -65,8 +65,8 @@
                     "target": "home"
                 },
                 {
-                    "pattern": "/api/Personagem/personagens",
-                    "name": "personagens",
+                    "pattern": "personagens",
+                    "name": "listaDePersonagens",
                     "target": "personagens"
                 }
             ],
@@ -82,9 +82,9 @@
                     "transition": "show"
                 },
                 "personagens": {
-                    "id": "notFound",
-                    "name": "NotFound",
-                    "transition": "show"
+                    "id": "listaDePersonagens",
+                    "name": "personagens.ListPersonagens",
+                    "level": "2"
                 }
             }
         }
