@@ -17,6 +17,12 @@
                 press=".onNavToPersonagens"
                 class="sapUiTinyMarginEnd"
             />
+            <Button
+                id="racasListBtn"
+                text="{i18n>ShowRacasList}"
+                press=".onNavToRacas"
+                class="sapUiTinyMarginEnd"
+            />
         </content>
     </Page>
 </mvc:View>

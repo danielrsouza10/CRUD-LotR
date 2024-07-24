@@ -61,6 +61,8 @@ sap.ui.define(
         },
         construirUrlComParametros() {
           let url = stringBaseUrlPersonagens;
+          let urlPadrao =
+            "https://localhost:7244//webapp/index.html#/personagens";
           let parametros = [];
 
           if (filtroNome) {
@@ -85,8 +87,9 @@ sap.ui.define(
 
           if (parametros.length > 0) {
             url += "?" + parametros.join("&");
+            urlPadrao += "?" + parametros.join("&");
           }
-          // window.history.replaceState(null, null, url);
+          window.history.replaceState(null, null, urlPadrao);
           return url;
         },
         onFiltrarPersonagens(evento) {

@@ -68,6 +68,11 @@
                     "pattern": "personagens",
                     "name": "listaDePersonagens",
                     "target": "personagens"
+                },
+                {
+                    "pattern": "racas",
+                    "name": "listaDeRacas",
+                    "target": "racas"
                 }
             ],
             "targets": {
@@ -85,6 +90,12 @@
                     "id": "listaDePersonagens",
                     "path": "ui5.o_senhor_dos_aneis.view",
                     "name": "ListaPersonagens",
+                    "level": "2"
+                },
+                "racas": {
+                    "id": "listaDeRacas",
+                    "path": "ui5.o_senhor_dos_aneis.view",
+                    "name": "ListaRacas",
                     "level": "2"
                 }
             }

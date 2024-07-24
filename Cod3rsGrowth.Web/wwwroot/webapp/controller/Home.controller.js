@@ -10,5 +10,8 @@ sap.ui.define(["../controller/BaseController"], function (BaseController) {
     onNavToPersonagens: function () {
       this.getOwnerComponent().getRouter().navTo("listaDePersonagens");
     },
+    onNavToRacas: function () {
+      this.getOwnerComponent().getRouter().navTo("listaDeRacas");
+    }
   });
 });

@@ -1,0 +1,128 @@
+<mvc:View
+    height="100%"
+    controllerName="ui5.o_senhor_dos_aneis.controller.ListaRacas"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+>
+    <Page
+        showHeader="true"
+        enableScrolling="true"
+        class="sapUiContentPadding"
+        showNavButton="true"
+        navButtonPress="onNavBack"
+    >
+        <content>
+            <List
+                id="listaDeRacas"
+                headerText="Custom Content"
+                mode="Delete"
+                items="{racas>/}"
+                growing="true"
+                growingThreshold="5"
+            >
+                <headerToolbar>
+                    <OverflowToolbar id="listToolbar">
+                        <Title text="Racas" />
+                        <ToolbarSpacer />
+                        <SearchField
+                            width="50%"
+                            search=".onFiltrarRacas"
+                        />
+                        <Button
+                            type="Transparent"
+                            text="Reset"
+                            press=".onReset"
+                        />
+                        <OverflowToolbarButton
+                            tooltip="Filter"
+                            type="Transparent"
+                            text="Filter"
+                            icon="sap-icon://filter"
+                            press=".onOpenDialogoDeFiltro"
+                        />
+                        <OverflowToolbarButton
+                            tooltip="Sort"
+                            type="Transparent"
+                            text="Sort"
+                            icon="sap-icon://sort"
+                            press="onSort"
+                        />
+                        <OverflowToolbarButton
+                            tooltip="Group"
+                            type="Transparent"
+                            text="Group"
+                            icon="sap-icon://group-2"
+                            press="onGroup"
+                        />
+                    </OverflowToolbar>
+                </headerToolbar>
+
+                <CustomListItem id="customListRaca">
+                    <HBox>
+                        <core:Icon
+                            size="2rem"
+                            src="sap-icon://attachment-photo"
+                            class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
+                        />
+                        <VBox
+                            class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
+                        >
+                            <ObjectIdentifier
+                                title="{racas>nome}"
+                                class="sapUiTinyMarginBottom"
+                            />
+                            <FlexBox>
+                                <Label
+                                    text="Localização Geográfica:"
+                                    class="sapUiTinyMarginEnd"
+                                />
+                                <Text text="{racas>localizacaoGeografica}" />
+                            </FlexBox>
+                            <FlexBox>
+                                <Label
+                                    text="Habilidade Racial:"
+                                    class="sapUiTinyMarginEnd"
+                                />
+                                <Text text="{racas>habilidadeRacial}" />
+                            </FlexBox>
+                            <FlexBox>
+                                <Label
+                                    text="Esta Extinta:"
+                                    class="sapUiTinyMarginEnd"
+                                />
+                                <Text
+                                    text="{ 
+                                        path: 'racas>estaExtinta', 
+                                        formatter: '.formatter.formatarBooleanEstaExtinta'
+                                    }"
+                                />
+                            </FlexBox>
+                        </VBox>
+                    </HBox>
+                </CustomListItem>
+            </List>
+        </content>
+        <footer>
+            <OverflowToolbar id="otbFooter">
+                <ToolbarSpacer />
+                <Button
+                    type="Accept"
+                    text="Adicionar"
+                >
+                    <layoutData>
+                        <OverflowToolbarLayoutData priority="High" />
+                    </layoutData>
+                </Button>
+                <Button
+                    type="Reject"
+                    text="Remover"
+                >
+                    <layoutData>
+                        <OverflowToolbarLayoutData priority="Low" />
+                    </layoutData>
+                </Button>
+            </OverflowToolbar>
+        </footer>
+    </Page>
+</mvc:View>

@@ -2,15 +2,26 @@ sap.ui.define([], () => {
   "use strict";
 
   return {
-    formatarBooleanVivoMorto(valorVivoOuMorto) {
+    formatarBooleanVivoMorto(valorEstaExtinta) {
+      const pacoteDeRecursos = this.getOwnerComponent()
+        .getModel("i18n")
+        .getResourceBundle();
+      switch (valorEstaExtinta) {
+        case true:
+          return pacoteDeRecursos.getText("trueVivoMorto");
+        case false:
+          return pacoteDeRecursos.getText("falseVivoMorto");
+      }
+    },
+    formatarBooleanEstaExtinta(valorVivoOuMorto) {
       const pacoteDeRecursos = this.getOwnerComponent()
         .getModel("i18n")
         .getResourceBundle();
       switch (valorVivoOuMorto) {
         case true:
-          return pacoteDeRecursos.getText("true");
+          return pacoteDeRecursos.getText("trueEstaExtinta");
         case false:
-          return pacoteDeRecursos.getText("false");
+          return pacoteDeRecursos.getText("falseEstaExtinta");
       }
     },
     formatarCorVivoMorto(valorVivoOuMorto) {
