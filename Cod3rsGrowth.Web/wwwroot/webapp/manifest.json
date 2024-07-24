@@ -63,6 +63,11 @@
                     "pattern": "",
                     "name": "appHome",
                     "target": "home"
+                },
+                {
+                    "pattern": "/api/Personagem/personagens",
+                    "name": "personagens",
+                    "target": "personagens"
                 }
             ],
             "targets": {
@@ -72,6 +77,11 @@
                     "level": 1
                 },
                 "notFound": {
+                    "id": "notFound",
+                    "name": "NotFound",
+                    "transition": "show"
+                },
+                "personagens": {
                     "id": "notFound",
                     "name": "NotFound",
                     "transition": "show"

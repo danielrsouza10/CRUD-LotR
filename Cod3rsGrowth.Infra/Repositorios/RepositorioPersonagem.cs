@@ -2,8 +2,6 @@ using Dominio.ENUMS;
 using Dominio.Filtros;
 using Dominio.Modelos;
 using LinqToDB;
-using Newtonsoft.Json.Linq;
-using System;
 using Testes.Interfaces;
 
 namespace Infra.Repositorios;
@@ -17,9 +15,9 @@ public class RepositorioPersonagem : IRepositorio<Personagem>
 
         if (filtro != null)
         {
-            if (!string.IsNullOrEmpty(filtro.Nome))
+            if (!string.IsNullOrEmpty(filtro.NomeDoPersonagem))
             {
-                personagens = from p in personagens where p.Nome.ToLower().Contains(filtro.Nome.ToLower()) select p;
+                personagens = personagens.Where(p => p.Nome.ToLower().Contains(filtro.NomeDoPersonagem.ToLower())); ;
             }
 
             if (filtro.Profissao != ProfissaoEnum.Nenhum)
@@ -42,7 +40,6 @@ public class RepositorioPersonagem : IRepositorio<Personagem>
                 personagens = from p in personagens where p.DataDoCadastro.Date <= filtro.DataFinal.Value select p;
             }
         }
-
         return personagens.ToList();
     }
     public Personagem ObterPorId(int id)

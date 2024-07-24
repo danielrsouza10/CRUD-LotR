@@ -83,7 +83,7 @@
         if (parametros.length > 0) {
           url += "?" + parametros.join("&");
         }
-
+        window.history.replaceState(null, null, url);
         return url;
       },
       onFiltrarPersonagens(evento) {

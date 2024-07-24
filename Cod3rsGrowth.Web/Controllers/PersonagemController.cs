@@ -1,5 +1,4 @@
-﻿using Cod3rsGrowth.Web.Controllers.DTOs;
-using Dominio.ENUMS;
+﻿using Dominio.ENUMS;
 using Dominio.Filtros;
 using Dominio.Modelos;
 using Microsoft.AspNetCore.Mvc;
@@ -25,20 +24,21 @@ namespace Cod3rsGrowth.Web.Controllers
         {
             var personagens = _servicoPersonagem.ObterTodos(filtro);
             var racas = _servicoRaca.ObterTodos(filtro);
+
             var listaDePersonagem = (from p in personagens
-                                    join r in racas on p.IdRaca equals r.Id
-                                    select new PersonagemDTO
-                                    {
-                                        Id = p.Id,
-                                        Nome = p.Nome,
-                                        IdRaca = r.Id,
-                                        Raca = r.Nome,
-                                        Profissao = p.Profissao.PegarDescricaoEnum(),
-                                        Idade = p.Idade,
-                                        Altura = p.Altura,
-                                        EstaVivo = p.EstaVivo,
-                                        DataDoCadastro = p.DataDoCadastro
-                                    }).ToList();
+                                     join r in racas on p.IdRaca equals r.Id
+                                     select new
+                                     {
+                                         Id = p.Id,
+                                         Nome = p.Nome,
+                                         IdRaca = r.Id,
+                                         Raca = r.Nome,
+                                         Profissao = p.Profissao.PegarDescricaoEnum(),
+                                         Idade = p.Idade,
+                                         Altura = p.Altura,
+                                         EstaVivo = p.EstaVivo,
+                                         DataDoCadastro = p.DataDoCadastro
+                                     }).ToList();
 
             return Ok(listaDePersonagem);
         }
