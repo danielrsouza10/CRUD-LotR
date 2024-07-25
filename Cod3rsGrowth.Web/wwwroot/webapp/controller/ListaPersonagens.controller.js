@@ -3,7 +3,7 @@ sap.ui.define(
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
     "ui5/o_senhor_dos_aneis/model/formatter",
-    "../controller/BaseController",
+    "./BaseController",
   ],
   function (BaseController, JSONModel, formatter) {
     "use strict";

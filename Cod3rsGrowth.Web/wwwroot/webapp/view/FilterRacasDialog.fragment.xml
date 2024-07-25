@@ -9,8 +9,8 @@
         title="Filter"
     >
         <Select
-            id="comboBoxRacas"
-            change=".onChangeComboBoxRacas"
+            id="comboBoxHabilidades"
+            change=".onChangeComboBoxHabilidades"
             items="{racas>/}"
         >
             <core:Item
