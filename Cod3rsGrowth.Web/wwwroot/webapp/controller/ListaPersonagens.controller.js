@@ -14,6 +14,8 @@ sap.ui.define(
     let filtroProfissao = "";
     let filtroDataInicial = "";
     let filtroDataFinal = "";
+    let filtroVivo = "";
+    let filtroMorto = "";
 
     return BaseController.extend(
       "ui5.o_senhor_dos_aneis.controller.ListaPersonagens",
@@ -84,6 +86,12 @@ sap.ui.define(
           if (filtroDataFinal) {
             parametros.push(`DataFinal=${encodeURIComponent(filtroDataFinal)}`);
           }
+          if (filtroVivo) {
+            parametros.push(`EstaVivo=${encodeURIComponent(filtroVivo)}`);
+          }
+          if (!filtroMorto) {
+            parametros.push(`EstaVivo=${encodeURIComponent(filtroMorto)}`);
+          }
 
           if (parametros.length > 0) {
             url += "?" + parametros.join("&");
@@ -115,14 +123,19 @@ sap.ui.define(
             .getSource()
             .getProperty("dateValue")
             .toISOString();
-          console.log(filtroDataInicial);
         },
         onDataFinalSelecionada(evento) {
           filtroDataFinal = evento
             .getSource()
             .getProperty("dateValue")
             .toISOString();
-          console.log(filtroDataFinal);
+        },
+        onCheckVivoBox(evento) {
+          filtroVivo = evento.getParameter("selected");
+        },
+        onCheckMortoBox(evento) {
+          filtroMorto = !evento.getParameter("selected");
+          console.log(filtroMorto);
         },
         onReset() {
           filtroNome = "";
@@ -130,6 +143,8 @@ sap.ui.define(
           filtroProfissao = "";
           filtroDataInicial = "";
           filtroDataFinal = "";
+          filtroVivo = "";
+          filtroMorto = "";
           this.loadPersonagens();
         },
         async onOpenDialogoDeFiltro() {

@@ -96,6 +96,16 @@
             id="dataFinal"
             change=".onDataFinalSelecionada"
         />
+        <CheckBox
+            text="Vivo"
+            valueState="Information"
+            select=".onCheckVivoBox"
+        />
+        <CheckBox
+            text="Morto"
+            valueState="Error"
+            select=".onCheckMortoBox"
+        />
         <beginButton>
             <Button
                 text="Ok"
