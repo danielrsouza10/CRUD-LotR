@@ -23,9 +23,7 @@ sap.ui.define(
           if (hashAnterior !== undefined) {
             window.history.go(-1);
           } else {
-            this.getOwnerComponent()
-              .getRouter()
-              .navTo("home", {}, true /*no history*/);
+            this.getRouter().navTo("home", {}, true /*no history*/);
           }
         },
         onNavToPersonagens: function () {
