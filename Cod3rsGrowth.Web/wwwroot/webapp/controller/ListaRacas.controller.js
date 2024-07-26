@@ -64,8 +64,6 @@ sap.ui.define(
         onReset() {
           filtroNomeDaRaca = "";
           filtroEstaExtinta = "";
-          filtroHabilidadeRacial = "";
-          filtroLocalizacaoGeografica = "";
           this.getView().byId("searchFieldRacas").setValue("");
           this.loadRacas();
         },

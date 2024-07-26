@@ -3,17 +3,17 @@ sap.ui.define(
   (Opa5, Press) => {
     "use strict";
 
-    const sViewName = "ui5.o_senhor_dos_aneis.view.App";
+    const sViewName = "ui5.o_senhor_dos_aneis.view.Home";
 
     Opa5.createPageObjects({
       onTheAppPage: {
         actions: {
           iPressSearchButton() {
             return this.waitFor({
-              id: "searchButton",
+              id: "personagensListBtn",
               viewName: sViewName,
               actions: new Press(),
-              errorMessage: "Did not find the 'Search' button on the App view",
+              errorMessage: "Did not find the 'ShowPersonagensList' button on the Home view",
             });
           },
         },
