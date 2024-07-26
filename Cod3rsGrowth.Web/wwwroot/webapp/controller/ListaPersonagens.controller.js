@@ -1,14 +1,12 @@
 sap.ui.define(
   [
-    "sap/ui/core/mvc/Controller",
+    "ui5/o_senhor_dos_aneis/controller/BaseController",
     "sap/ui/model/json/JSONModel",
     "ui5/o_senhor_dos_aneis/model/formatter",
-    "./BaseController",
   ],
   function (BaseController, JSONModel, formatter) {
     "use strict";
-    const stringBaseUrlPersonagens =
-      "https://localhost:7244/api/Personagem/personagens";
+
     let filtroNome = "";
     let filtroRaca = "";
     let filtroProfissao = "";
@@ -62,10 +60,11 @@ sap.ui.define(
             });
         },
         construirUrlComParametros() {
-          let url = stringBaseUrlPersonagens;
+          let url = "https://localhost:7244/api/Personagem/personagens";
           let urlPadrao =
             "https://localhost:7244//webapp/index.html#/personagens";
           let parametros = [];
+          let query = "";
 
           if (filtroNome) {
             parametros.push(
@@ -88,16 +87,24 @@ sap.ui.define(
           }
           if (filtroVivo) {
             parametros.push(`EstaVivo=${encodeURIComponent(filtroVivo)}`);
+            filtroVivo = "";
           }
-          if (!filtroMorto) {
-            parametros.push(`EstaVivo=${encodeURIComponent(filtroMorto)}`);
-          }
-
+          // if (!filtroVivo) {
+          //   parametros.push(`EstaVivo=${encodeURIComponent(!filtroVivo)}`);
+          //   filtroVivo = "";
+          // }
           if (parametros.length > 0) {
+            query += "?" + parametros.join("&");
             url += "?" + parametros.join("&");
             urlPadrao += "?" + parametros.join("&");
           }
+          this.getRouter().navTo(
+            "personagens",
+            parametros.length == 0 ? {} : { "?query": query }
+          );
+          
           window.history.replaceState(null, null, urlPadrao);
+
           return url;
         },
         onFiltrarPersonagens(evento) {
@@ -133,10 +140,10 @@ sap.ui.define(
         onCheckVivoBox(evento) {
           filtroVivo = evento.getParameter("selected");
         },
-        onCheckMortoBox(evento) {
-          filtroMorto = !evento.getParameter("selected");
-          console.log(filtroMorto);
-        },
+        // onCheckMortoBox(evento) {
+        //   filtroMorto = !evento.getParameter("selected");
+        //   console.log(filtroMorto);
+        // },
         onReset() {
           filtroNome = "";
           filtroRaca = "";
@@ -145,12 +152,13 @@ sap.ui.define(
           filtroDataFinal = "";
           filtroVivo = "";
           filtroMorto = "";
+          this.getView().byId("searchFieldPersonagens").setValue("");
           this.loadPersonagens();
         },
         async onOpenDialogoDeFiltro() {
           // create dialog lazily
           this.oDialog ??= await this.loadFragment({
-            name: "ui5.o_senhor_dos_aneis.view.FilterDialog",
+            name: "ui5.o_senhor_dos_aneis.view.FilterPersonagensDialog",
           });
 
           this.oDialog.open();

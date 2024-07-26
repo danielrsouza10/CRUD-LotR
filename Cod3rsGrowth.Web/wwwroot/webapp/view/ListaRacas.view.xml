@@ -11,6 +11,7 @@
         class="sapUiContentPadding"
         showNavButton="true"
         navButtonPress="onNavBack"
+        title="O Senhor dos Anéis"
     >
         <content>
             <List
@@ -26,6 +27,7 @@
                         <Title text="Racas" />
                         <ToolbarSpacer />
                         <SearchField
+                            id="searchFieldRacas"
                             width="50%"
                             search=".onFiltrarRacas"
                         />
@@ -33,27 +35,6 @@
                             type="Transparent"
                             text="Reset"
                             press=".onReset"
-                        />
-                        <OverflowToolbarButton
-                            tooltip="Filter"
-                            type="Transparent"
-                            text="Filter"
-                            icon="sap-icon://filter"
-                            press=".onOpenDialogoDeFiltro"
-                        />
-                        <OverflowToolbarButton
-                            tooltip="Sort"
-                            type="Transparent"
-                            text="Sort"
-                            icon="sap-icon://sort"
-                            press="onSort"
-                        />
-                        <OverflowToolbarButton
-                            tooltip="Group"
-                            type="Transparent"
-                            text="Group"
-                            icon="sap-icon://group-2"
-                            press="onGroup"
                         />
                     </OverflowToolbar>
                 </headerToolbar>

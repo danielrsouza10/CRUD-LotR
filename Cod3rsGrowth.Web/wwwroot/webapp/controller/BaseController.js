@@ -15,7 +15,6 @@ sap.ui.define(
         },
 
         onNavBack: function () {
-          console.log("oi");
           var historico, hashAnterior;
 
           historico = History.getInstance();
@@ -24,12 +23,16 @@ sap.ui.define(
           if (hashAnterior !== undefined) {
             window.history.go(-1);
           } else {
-            this.getRouter().navTo("appHome", {}, true /*no history*/);
+            this.getOwnerComponent()
+              .getRouter()
+              .navTo("home", {}, true /*no history*/);
           }
         },
-
-        onNavToListPersonagens: function () {
+        onNavToPersonagens: function () {
           this.getRouter().navTo("listaDePersonagens");
+        },
+        onNavToRacas: function () {
+          this.getRouter().navTo("listaDeRacas");
         },
       }
     );

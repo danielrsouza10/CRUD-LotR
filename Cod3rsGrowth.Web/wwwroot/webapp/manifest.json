@@ -65,7 +65,7 @@
                     "target": "home"
                 },
                 {
-                    "pattern": "personagens",
+                    "pattern": "personagens:?query:",
                     "name": "listaDePersonagens",
                     "target": "personagens"
                 },
@@ -74,6 +74,7 @@
                     "name": "listaDeRacas",
                     "target": "racas"
                 }
+                
             ],
             "targets": {
                 "home": {

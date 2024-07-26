@@ -1,9 +1,8 @@
 sap.ui.define(
   [
-    "sap/ui/core/mvc/Controller",
+    "../controller/BaseController",
     "sap/ui/model/json/JSONModel",
     "ui5/o_senhor_dos_aneis/model/formatter",
-    "../controller/BaseController",
   ],
   function (BaseController, JSONModel, formatter) {
     "use strict";
@@ -65,19 +64,10 @@ sap.ui.define(
         onReset() {
           filtroNomeDaRaca = "";
           filtroEstaExtinta = "";
+          filtroHabilidadeRacial = "";
+          filtroLocalizacaoGeografica = "";
+          this.getView().byId("searchFieldRacas").setValue("");
           this.loadRacas();
-        },
-        async onOpenDialogoDeFiltro() {
-          // create dialog lazily
-          this.oDialog ??= await this.loadFragment({
-            name: "ui5.o_senhor_dos_aneis.view.FilterDialog",
-          });
-
-          this.oDialog.open();
-        },
-        onCloseDialogoDeFiltro() {
-          this.loadRacas();
-          this.byId("filterDialog").close();
         },
       }
     );

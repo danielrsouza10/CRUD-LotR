@@ -6,12 +6,6 @@
     <Page title="O Senhor dos Anéis">
         <content>
             <Button
-                id="displayNotFoundBtn"
-                text="{i18n>DisplayNotFound}"
-                press=".onDisplayNotFound"
-                class="sapUiTinyMarginEnd"
-            />
-            <Button
                 id="personagensListBtn"
                 text="{i18n>ShowPersonagensList}"
                 press=".onNavToPersonagens"
