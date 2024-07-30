@@ -11,7 +11,8 @@
         class="sapUiContentPadding"
         showNavButton="true"
         navButtonPress="onNavBack"
-        title="O Senhor dos Anéis"
+        title="{i18n>TituloPaginaRacas}"
+        id="paginaListaDeRacas"
     >
         <content>
             <List
@@ -29,12 +30,12 @@
                         <SearchField
                             id="searchFieldRacas"
                             width="50%"
-                            search=".onFiltrarRacas"
+                            search=".aoFiltrarRacas"
                         />
                         <Button
                             type="Transparent"
                             text="Reset"
-                            press=".onReset"
+                            press=".aoResetarFiltros"
                         />
                     </OverflowToolbar>
                 </headerToolbar>

@@ -70,11 +70,10 @@
                     "target": "personagens"
                 },
                 {
-                    "pattern": "racas",
+                    "pattern": "racas:?query:",
                     "name": "listaDeRacas",
                     "target": "racas"
                 }
-                
             ],
             "targets": {
                 "home": {

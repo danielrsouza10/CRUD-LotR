@@ -9,24 +9,24 @@ sap.ui.define(
   function (Opa5, AggregationLengthEquals, I18NText, Properties, Press) {
     "use strict";
 
-    var nomeView = "ListaPersonagens",
-      idPagina = "paginaListaDePersonagens",
-      idLista = "listaDePersonagens",
+    var nomeView = "ListaRacas",
+      idPagina = "paginaListaDeRacas",
+      idLista = "listaDeRacas",
       tituloDaPagina = "O Senhor dos Anéis";
     Opa5.createPageObjects({
-      naPaginaDaListaDePersonagens: {
+      naPaginaDaListaDeRacas: {
         actions: {
-          euApertoParaCarregarMaisItensDaListaDePersonagens: function () {
+          euApertoParaCarregarMaisItensDaListaDeRacas: function () {
             return this.waitFor({
               id: idLista,
               viewName: nomeView,
               actions: new Press(),
-              errorMessage: "A Lista não tem a opção de listar mais itens",
+              errorMessage: "A Lista de raças não tem a opção de listar mais itens",
             });
           },
         },
         assertions: {
-          oTituloDaPaginaDePersonagensDeveraSer: function () {
+          oTituloDaPaginaDeRacasDeveraSer: function () {
             return this.waitFor({
               success: function () {
                 return this.waitFor({
@@ -44,20 +44,20 @@ sap.ui.define(
               },
             });
           },
-          aUrlDaPaginaDePersonagensDeveraSer: function () {
+          aUrlDaPaginaDeRacasDeveraSer: function () {
             return this.waitFor({
               success: function () {
                 const hash = Opa5.getHashChanger().getHash();
                 Opa5.assert.strictEqual(
                   hash,
-                  "personagens",
-                  "Navegou para a pagina de personagens"
+                  "racas",
+                  "Navegou para a pagina de racas"
                 );
               },
               errorMessage: "A URL é diferente da esperada",
             });
           },
-          aListaDeveApresentar10Personagens: function () {
+          aListaDeveApresentar10Racas: function () {
             return this.waitFor({
               id: idLista,
               viewName: nomeView,

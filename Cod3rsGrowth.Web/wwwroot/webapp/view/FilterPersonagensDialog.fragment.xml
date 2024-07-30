@@ -10,7 +10,7 @@
     >
         <Select
             id="comboBoxRacas"
-            change=".onChangeComboBoxRacas"
+            change=".aoMudarRacaNaComboBox"
             items="{racas>/}"
         >
             <core:Item
@@ -21,7 +21,7 @@
         <Select
             id="profissaoComboBox"
             width="20%"
-            change=".onChangeComboBoxProfissoes"
+            change=".aoMudarProfissaoNaComboBox"
         >
             <core:Item
                 key="0"
@@ -90,16 +90,16 @@
         </Select>
         <DatePicker
             id="dataInicial"
-            change=".onDataInicialSelecionada"
+            change=".aoSelecionarDataInicial"
         />
         <DatePicker
             id="dataFinal"
-            change=".onDataFinalSelecionada"
+            change=".aoSelecionarDataFinal"
         />
         <CheckBox
             text="Vivo"
             valueState="Information"
-            select=".onCheckVivoBox"
+            select=".aoChecarVivo"
         />
         <CheckBox
             text="Morto"
@@ -109,7 +109,7 @@
         <beginButton>
             <Button
                 text="Ok"
-                press=".onCloseDialogoDeFiltro"
+                press=".aoFecharDialogoDeFiltro"
             />
         </beginButton>
     </Dialog>

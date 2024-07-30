@@ -6,13 +6,13 @@
     xmlns:mvc="sap.ui.core.mvc"
 >
     <Page
-        id="listaDePersonagensPage"
+        id="paginaListaDePersonagens"
+        title="{i18n>TituloPaginaPersonagens}"
         showHeader="true"
         enableScrolling="true"
         showNavButton="true"
         navButtonPress=".onNavBack"
         class="sapUiContentPadding"
-        title="O Senhor dos Anéis"
     >
         <content>
             <List
@@ -29,20 +29,20 @@
                         <ToolbarSpacer />
                         <SearchField
                             width="50%"
-                            search=".onFiltrarPersonagens"
+                            search=".aoFiltrarPersonagens"
                             id="searchFieldPersonagens"
                         />
                         <Button
                             type="Transparent"
                             text="Reset"
-                            press=".onReset"
+                            press=".aoResetarFiltros"
                         />
                         <OverflowToolbarButton
                             tooltip="Filter"
                             type="Transparent"
                             text="Filter"
                             icon="sap-icon://filter"
-                            press=".onOpenDialogoDeFiltro"
+                            press=".aoAbrirDialogoDeFiltro"
                         />
                         <OverflowToolbarButton
                             tooltip="Sort"
