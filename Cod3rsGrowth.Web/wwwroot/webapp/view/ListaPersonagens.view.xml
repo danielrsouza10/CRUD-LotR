@@ -1,62 +1,64 @@
 <mvc:View
-    height="100%"
-    controllerName="ui5.o_senhor_dos_aneis.controller.ListaPersonagens"
-    xmlns="sap.m"
-    xmlns:core="sap.ui.core"
-    xmlns:mvc="sap.ui.core.mvc"
+        xmlns:core="sap.ui.core"
+        xmlns:mvc="sap.ui.core.mvc"
+        height="100%"
+        controllerName="ui5.o_senhor_dos_aneis.controller.ListaPersonagens"
+        xmlns="sap.m"
 >
     <Page
-        id="paginaListaDePersonagens"
-        title="{i18n>TituloPaginaPersonagens}"
-        showHeader="true"
-        enableScrolling="true"
-        showNavButton="true"
-        navButtonPress=".onNavBack"
-        class="sapUiContentPadding"
+            id="paginaListaDePersonagens"
+            title="{i18n>TituloPaginaPersonagens}"
+            showHeader="true"
+            enableScrolling="true"
+            showNavButton="true"
+            navButtonPress=".onNavBack"
+            class="sapUiContentPadding"
     >
         <content>
             <List
-                id="listaDePersonagens"
-                headerText="Custom Content"
-                mode="Delete"
-                items="{personagens>/}"
-                growing="true"
-                growingThreshold="5"
+                    id="listaDePersonagens"
+                    headerText="Custom Content"
+                    mode="Delete"
+                    items="{personagens>/}"
+                    growing="true"
+                    growingThreshold="5"
             >
                 <headerToolbar>
                     <OverflowToolbar id="listToolbar">
-                        <Title text="Personagens" />
-                        <ToolbarSpacer />
+                        <Title text="Personagens"/>
+                        <ToolbarSpacer/>
                         <SearchField
-                            width="50%"
-                            search=".aoFiltrarPersonagens"
-                            id="searchFieldPersonagens"
+                                width="50%"
+                                search=".aoFiltrarPersonagens"
+                                id="searchFieldPersonagens"
                         />
                         <Button
-                            type="Transparent"
-                            text="Reset"
-                            press=".aoResetarFiltros"
+                                type="Transparent"
+                                text="Reset"
+                                press=".aoResetarFiltros"
+                                id="resetBtn"
                         />
                         <OverflowToolbarButton
-                            tooltip="Filter"
-                            type="Transparent"
-                            text="Filter"
-                            icon="sap-icon://filter"
-                            press=".aoAbrirDialogoDeFiltro"
+                                tooltip="Filter"
+                                type="Transparent"
+                                text="Filter"
+                                icon="sap-icon://filter"
+                                press=".aoAbrirDialogoDeFiltro"
+                                id="filtroBtn"
                         />
                         <OverflowToolbarButton
-                            tooltip="Sort"
-                            type="Transparent"
-                            text="Sort"
-                            icon="sap-icon://sort"
-                            press="onSort"
+                                tooltip="Sort"
+                                type="Transparent"
+                                text="Sort"
+                                icon="sap-icon://sort"
+                                press="onSort"
                         />
                         <OverflowToolbarButton
-                            tooltip="Group"
-                            type="Transparent"
-                            text="Group"
-                            icon="sap-icon://group-2"
-                            press="onGroup"
+                                tooltip="Group"
+                                type="Transparent"
+                                text="Group"
+                                icon="sap-icon://group-2"
+                                press="onGroup"
                         />
                     </OverflowToolbar>
                 </headerToolbar>
@@ -64,38 +66,38 @@
                 <CustomListItem id="customListPersonagens">
                     <HBox>
                         <core:Icon
-                            size="2rem"
-                            src="sap-icon://attachment-photo"
-                            class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
+                                size="2rem"
+                                src="sap-icon://attachment-photo"
+                                class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
                         />
                         <VBox
-                            class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
+                                class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
                         >
                             <ObjectIdentifier
-                                title="{personagens>nome}"
-                                class="sapUiTinyMarginBottom"
+                                    title="{personagens>nome}"
+                                    class="sapUiTinyMarginBottom"
                             />
                             <FlexBox>
                                 <Label
-                                    text="Raça:"
-                                    class="sapUiTinyMarginEnd"
+                                        text="Raça:"
+                                        class="sapUiTinyMarginEnd"
                                 />
-                                <Text text="{personagens>raca}" />
+                                <Text text="{personagens>raca}"/>
                             </FlexBox>
                             <FlexBox>
                                 <Label
-                                    text="Profissão:"
-                                    class="sapUiTinyMarginEnd"
+                                        text="Profissão:"
+                                        class="sapUiTinyMarginEnd"
                                 />
-                                <Text text="{personagens>profissao}" />
+                                <Text text="{personagens>profissao}"/>
                             </FlexBox>
                             <FlexBox>
                                 <Label
-                                    text="Condição:"
-                                    class="sapUiTinyMarginEnd"
+                                        text="Condição:"
+                                        class="sapUiTinyMarginEnd"
                                 />
                                 <Text
-                                    text="{
+                                        text="{
                                         path: 'personagens>estaVivo',
                                         formatter: '.formatter.formatarBooleanVivoMorto'
                                     }"
@@ -103,11 +105,11 @@
                             </FlexBox>
                             <FlexBox>
                                 <Label
-                                    text="Data do Cadastro:"
-                                    class="sapUiTinyMarginEnd"
+                                        text="Data do Cadastro:"
+                                        class="sapUiTinyMarginEnd"
                                 />
                                 <Text
-                                    text="{
+                                        text="{
                                     path: 'personagens>dataDoCadastro',
                                     formatter: '.formatter.formatarDataDeCadastro'
                                 }"
@@ -120,21 +122,21 @@
         </content>
         <footer>
             <OverflowToolbar id="otbFooter">
-                <ToolbarSpacer />
+                <ToolbarSpacer/>
                 <Button
-                    type="Accept"
-                    text="Adicionar"
+                        type="Accept"
+                        text="Adicionar"
                 >
                     <layoutData>
-                        <OverflowToolbarLayoutData priority="High" />
+                        <OverflowToolbarLayoutData priority="High"/>
                     </layoutData>
                 </Button>
                 <Button
-                    type="Reject"
-                    text="Remover"
+                        type="Reject"
+                        text="Remover"
                 >
                     <layoutData>
-                        <OverflowToolbarLayoutData priority="Low" />
+                        <OverflowToolbarLayoutData priority="Low"/>
                     </layoutData>
                 </Button>
             </OverflowToolbar>
