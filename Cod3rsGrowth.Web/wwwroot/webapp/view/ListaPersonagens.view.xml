@@ -47,18 +47,20 @@
                                 id="filtroBtn"
                         />
                         <OverflowToolbarButton
+                        id="organizarBtn"
                                 tooltip="Sort"
                                 type="Transparent"
                                 text="Sort"
                                 icon="sap-icon://sort"
-                                press="onSort"
+                                press=".aoOrganizar"
                         />
                         <OverflowToolbarButton
+                        id="agruparBtn"
                                 tooltip="Group"
                                 type="Transparent"
                                 text="Group"
                                 icon="sap-icon://group-2"
-                                press="onGroup"
+                                press=".aoAgrupar"
                         />
                     </OverflowToolbar>
                 </headerToolbar>
@@ -97,10 +99,11 @@
                                         class="sapUiTinyMarginEnd"
                                 />
                                 <Text
-                                        text="{
-                                        path: 'personagens>estaVivo',
-                                        formatter: '.formatter.formatarBooleanVivoMorto'
+                                    text="{
+                                    path: 'personagens>estaVivo',
+                                    formatter: '.formatter.formatarBooleanVivoMorto'
                                     }"
+                                    
                                 />
                             </FlexBox>
                             <FlexBox>
