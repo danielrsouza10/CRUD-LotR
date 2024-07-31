@@ -57,8 +57,8 @@ sap.ui.define(
                         }
                     });
 
-                    const newUrl = `${currentUrl.pathname}?${params.toString()}`;
-                    window.history.replaceState(null, null, newUrl);
+                    // const newUrl = `${currentUrl.pathname}?${params.toString()}`;
+                    // window.history.replaceState(null, null, newUrl);
                 },
 
                 aoFiltrarPersonagens: function (oEvent) {

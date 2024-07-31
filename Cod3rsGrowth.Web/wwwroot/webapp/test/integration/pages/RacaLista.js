@@ -11,40 +11,47 @@ sap.ui.define(
     function (Opa5, AggregationLengthEquals, I18NText, Properties, Press, EnterText) {
         "use strict";
 
-        var nomeView = "ListaRacas",
-            idPagina = "paginaListaDeRacas",
-            idLista = "listaDeRacas",
-            idSearchField = "searchFieldRacas",
-            buscaRaca = "Humano",
-            idBotaoReset = "resetBtn",
-            tituloDaPagina = "O Senhor dos Anéis";
+        const NOME_VIEW = "ListaRacas",
+            ID_PAGINA = "paginaListaDeRacas",
+            ID_LISTA = "listaDeRacas",
+            ID_SEARCH_FIELD = "searchFieldRacas",
+            ID_BOTAO_RESET = "resetBtn",
+            TITULO_DA_PAGINA = "O Senhor dos Anéis";
         Opa5.createPageObjects({
             naPaginaDaListaDeRacas: {
                 actions: {
                     euApertoParaCarregarMaisItensDaListaDeRacas: function () {
                         return this.waitFor({
-                            id: idLista,
-                            viewName: nomeView,
+                            id: ID_LISTA,
+                            viewName: NOME_VIEW,
                             actions: new Press(),
                             errorMessage: "A Lista de raças não tem a opção de listar mais itens",
                         });
                     },
-                    euDigitoONomeDeUmaRacaNoSearchField: function () {
+                    euDigitoONomeDeUmaRacaNoSearchField: function (nomeDaRaca) {
                         return this.waitFor({
-                            id: idSearchField,
-                            viewName: nomeView,
+                            id: ID_SEARCH_FIELD,
+                            viewName: NOME_VIEW,
                             actions: new EnterText({
-                                text: buscaRaca
+                                text: nomeDaRaca
                             }),
                             errorMessage: "SearchField não encontrado."
                         });
                     },
                     euPressionoBotaoReset: function () {
                         return this.waitFor({
-                            id: idBotaoReset,
-                            viewName: nomeView,
+                            id: ID_BOTAO_RESET,
+                            viewName: NOME_VIEW,
                             actions: new Press(),
                             errorMessage: "Não foi possível encontrar ou pressionar o botão reset"
+                        });
+                    },
+                    euPressionoBotaoVoltar: function () {
+                        return this.waitFor({
+                            id: ID_PAGINA,
+                            viewName: NOME_VIEW,
+                            actions: new Press(),
+                            errorMessage: "Não foi possível encontrar o botão voltar na página"
                         });
                     },
                 },
@@ -53,10 +60,10 @@ sap.ui.define(
                         return this.waitFor({
                             success: function () {
                                 return this.waitFor({
-                                    id: idPagina,
-                                    viewName: nomeView,
+                                    id: ID_PAGINA,
+                                    viewName: NOME_VIEW,
                                     matchers: new Properties({
-                                        title: tituloDaPagina,
+                                        title: TITULO_DA_PAGINA,
                                     }),
                                     success: function (pagina) {
                                         Opa5.assert.ok(pagina, "O título da página está correto.");
@@ -82,8 +89,8 @@ sap.ui.define(
                     },
                     aListaDeveApresentar10Racas: function () {
                         return this.waitFor({
-                            id: idLista,
-                            viewName: nomeView,
+                            id: ID_LISTA,
+                            viewName: NOME_VIEW,
                             matchers: new AggregationLengthEquals({
                                 name: "items",
                                 length: 10,
@@ -97,8 +104,8 @@ sap.ui.define(
                     },
                     aListaDeveApresentar5Racas: function () {
                         return this.waitFor({
-                            id: idLista,
-                            viewName: nomeView,
+                            id: ID_LISTA,
+                            viewName: NOME_VIEW,
                             matchers: new AggregationLengthEquals({
                                 name: "items",
                                 length: 5,
@@ -112,8 +119,8 @@ sap.ui.define(
                     },
                     aListaDeveApresentarApenas1Raca: function () {
                         return this.waitFor({
-                            id: idLista,
-                            viewName: nomeView,
+                            id: ID_LISTA,
+                            viewName: NOME_VIEW,
                             matchers: new AggregationLengthEquals({
                                 name: "items",
                                 length: 1,
@@ -123,6 +130,21 @@ sap.ui.define(
                             },
                             errorMessage:
                                 "A lista nao contem apenas 1 raça ou não foi possível verificar o seu tamanho",
+                        });
+                    },
+                    aListaDeveEstarVazia: function () {
+                        return this.waitFor({
+                            id: ID_LISTA,
+                            viewName: NOME_VIEW,
+                            matchers: new AggregationLengthEquals({
+                                name: "items",
+                                length: 0,
+                            }),
+                            success: function () {
+                                Opa5.assert.ok(true, "A lista está vazia");
+                            },
+                            errorMessage:
+                                "A lista nao está vazia ou não foi possível verificar o seu tamanho",
                         });
                     },
                 },

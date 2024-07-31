@@ -10,63 +10,63 @@ sap.ui.define(
     function (Opa5, AggregationLengthEquals, I18NText, Properties, Press, EnterText) {
         "use strict";
 
-        var nomeView = "ListaPersonagens",
-            idPagina = "paginaListaDePersonagens",
-            idLista = "listaDePersonagens",
-            idSearchField = "searchFieldPersonagens",
-            idBotaoReset = "resetBtn",
-            idBotaoFiltro = "filtroBtn",
-            idComboBoxProfissoes = "profissaoComboBox",
-            idComboBoxRacas = "comboBoxRacas",
-            idBotaoOk = "okBtn",
-            tituloDaPagina = "O Senhor dos Anéis",
-            buscaPersonagem = "Aragorn",
-            keyProfissao = "1",
-            keyRaca = "2";
-        ;
+        const NOME_VIEW = "ListaPersonagens",
+            ID_PAGINA = "paginaListaDePersonagens",
+            ID_LISTA = "listaDePersonagens",
+            ID_SEARCH_FIELD = "searchFieldPersonagens",
+            ID_BOTAO_RESET = "resetBtn",
+            ID_BOTAO_FILTRO = "filtroBtn",
+            ID_COMBOBOX_PROFISSAO = "profissaoComboBox",
+            ID_COMBOBOX_RACAS = "comboBoxRacas",
+            ID_BOTAO_OK = "okBtn",
+            ID_DATA_INICIAL = "dataInicial",
+            ID_DATA_FINAL = "dataFinal",
+            TITULO_DA_PAGINA = "O Senhor dos Anéis",
+            KEY_PROFISSAO = "1",
+            KEY_RACA = "2";
         Opa5.createPageObjects({
             naPaginaDaListaDePersonagens: {
                 actions: {
                     euApertoParaCarregarMaisItensDaListaDePersonagens: function () {
                         return this.waitFor({
-                            id: idLista,
-                            viewName: nomeView,
+                            id: ID_LISTA,
+                            viewName: NOME_VIEW,
                             actions: new Press(),
                             errorMessage: "A Lista não tem a opção de listar mais itens",
                         });
                     },
-                    euDigitoONomeDeUmPersonagemNoSearchField: function () {
+                    euDigitoONomeDeUmPersonagemNoSearchField: function (nomePersonagem) {
                         return this.waitFor({
-                            id: idSearchField,
-                            viewName: nomeView,
+                            id: ID_SEARCH_FIELD,
+                            viewName: NOME_VIEW,
                             actions: new EnterText({
-                                text: buscaPersonagem
+                                text: nomePersonagem,
                             }),
                             errorMessage: "SearchField não encontrado."
                         });
                     },
                     euPressionoBotaoReset: function () {
                         return this.waitFor({
-                            id: idBotaoReset,
-                            viewName: nomeView,
+                            id: ID_BOTAO_RESET,
+                            viewName: NOME_VIEW,
                             actions: new Press(),
                             errorMessage: "Não foi possível encontrar ou pressionar o botão reset"
                         });
                     },
                     euPressionoBotaoFiltro: function () {
                         return this.waitFor({
-                            id: idBotaoFiltro,
-                            viewName: nomeView,
+                            id: ID_BOTAO_FILTRO,
+                            viewName: NOME_VIEW,
                             actions: new Press(),
                             errorMessage: "Não foi possível encontrar ou pressionar o botão de filtro"
                         });
                     },
                     euSelecionoUmaProfissao: function () {
                         return this.waitFor({
-                            id: idComboBoxProfissoes,
-                            viewName: nomeView,
+                            id: ID_COMBOBOX_PROFISSAO,
+                            viewName: NOME_VIEW,
                             actions: function (comboBox) {
-                                comboBox.setSelectedKey(keyProfissao);
+                                comboBox.setSelectedKey(KEY_PROFISSAO);
                                 comboBox.fireChange({selectedItem: comboBox.getSelectedItem()});
                             },
                             errorMessage: "Não foi possível selecionar a profissão no ComboBox"
@@ -74,14 +74,42 @@ sap.ui.define(
                     },
                     euSelecionoUmaRaca: function () {
                         return this.waitFor({
-                            id: idComboBoxRacas,
-                            viewName: nomeView,
+                            id: ID_COMBOBOX_RACAS,
+                            viewName: NOME_VIEW,
                             actions: function (comboBox) {
-                                comboBox.setSelectedKey(keyRaca);
+                                comboBox.setSelectedKey(KEY_RACA);
                                 comboBox.fireChange({selectedItem: comboBox.getSelectedItem()});
                             },
                             errorMessage: "Não foi possível selecionar a raça no ComboBox"
                         });
+                    },
+                    euSelecionoUmaDataInicial: function (dataInicial) {
+                        return this.waitFor({
+                            id: ID_DATA_INICIAL,
+                            viewName: NOME_VIEW,
+                            actions: new EnterText({
+                                text: dataInicial
+                            }),
+                            errorMessage: "Não foi possível selecionar uma data inicial"
+                        });
+                    },
+                    euSelecionoUmaDataFinal: function (dataFinal) {
+                        return this.waitFor({
+                            id: ID_DATA_FINAL,
+                            viewName: NOME_VIEW,
+                            actions: new EnterText({
+                                text: dataFinal
+                            }),
+                            errorMessage: "Não foi possível selecionar uma data final"
+                        });
+                    },
+                    euDouCheckEmVivo: function () {
+                        return this.waitFor({
+                            id: "checkBoxVivo",
+                            viewName: NOME_VIEW,
+                            actions: new Press(),
+                            errorMessage: "Não foi possível dar check no box 'Vivo'"
+                        })
                     },
                     euPressionoBotaoOk: function () {
                         return this.waitFor({
@@ -89,12 +117,12 @@ sap.ui.define(
                             controlType: "sap.m.Button",
                             check: function (botoes) {
                                 return botoes.some(function (botao) {
-                                    return botao.getId(idBotaoOk);
+                                    return botao.getId(ID_BOTAO_OK);
                                 });
                             },
                             success: function (botoes) {
                                 var botao = botoes.find(function (botao) {
-                                    return botao.getId(idBotaoOk);
+                                    return botao.getId(ID_BOTAO_OK);
                                 });
                                 if (botao) {
                                     botao.firePress();
@@ -105,17 +133,24 @@ sap.ui.define(
                             errorMessage: "Não foi possível encontrar o diálogo de filtro"
                         });
                     },
-
+                    euPressionoBotaoVoltar: function () {
+                        return this.waitFor({
+                            id: ID_PAGINA,
+                            viewName: NOME_VIEW,
+                            actions: new Press(),
+                            errorMessage: "Não foi possível encontrar o botão voltar na página"
+                        });
+                    },
                 },
                 assertions: {
                     oTituloDaPaginaDePersonagensDeveraSer: function () {
                         return this.waitFor({
                             success: function () {
                                 return this.waitFor({
-                                    id: idPagina,
-                                    viewName: nomeView,
+                                    id: ID_PAGINA,
+                                    viewName: NOME_VIEW,
                                     matchers: new Properties({
-                                        title: tituloDaPagina,
+                                        title: TITULO_DA_PAGINA,
                                     }),
                                     success: function (pagina) {
                                         Opa5.assert.ok(pagina, "O título da página está correto.");
@@ -141,8 +176,8 @@ sap.ui.define(
                     },
                     aListaDeveApresentar10Personagens: function () {
                         return this.waitFor({
-                            id: idLista,
-                            viewName: nomeView,
+                            id: ID_LISTA,
+                            viewName: NOME_VIEW,
                             matchers: new AggregationLengthEquals({
                                 name: "items",
                                 length: 10,
@@ -156,14 +191,14 @@ sap.ui.define(
                     },
                     aListaDeveApresentar5Personagens: function () {
                         return this.waitFor({
-                            id: idLista,
-                            viewName: nomeView,
+                            id: ID_LISTA,
+                            viewName: NOME_VIEW,
                             matchers: new AggregationLengthEquals({
                                 name: "items",
                                 length: 5,
                             }),
                             success: function () {
-                                Opa5.assert.ok(true, "A lista contem 10 personagens");
+                                Opa5.assert.ok(true, "A lista contem 5 personagens");
                             },
                             errorMessage:
                                 "A lista nao contem 10 personagens ou não foi possível verificar o seu tamanho",
@@ -171,8 +206,8 @@ sap.ui.define(
                     },
                     aListaDeveApresentarApenas1Personagem: function () {
                         return this.waitFor({
-                            id: idLista,
-                            viewName: nomeView,
+                            id: ID_LISTA,
+                            viewName: NOME_VIEW,
                             matchers: new AggregationLengthEquals({
                                 name: "items",
                                 length: 1,
@@ -186,8 +221,8 @@ sap.ui.define(
                     },
                     aListaDeveEstarVazia: function () {
                         return this.waitFor({
-                            id: idLista,
-                            viewName: nomeView,
+                            id: ID_LISTA,
+                            viewName: NOME_VIEW,
                             matchers: new AggregationLengthEquals({
                                 name: "items",
                                 length: 0,

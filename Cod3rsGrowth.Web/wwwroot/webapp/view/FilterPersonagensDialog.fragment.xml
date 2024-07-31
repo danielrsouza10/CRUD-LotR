@@ -99,6 +99,7 @@
                 text="Vivo"
                 valueState="Information"
                 select=".aoChecarVivo"
+                id="checkBoxVivo"
         />
         <CheckBox
                 text="Morto"
