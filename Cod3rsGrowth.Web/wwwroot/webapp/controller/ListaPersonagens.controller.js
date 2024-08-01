@@ -17,6 +17,9 @@ sap.ui.define(
   ) => {
     "use strict";
 
+    const ROTA_PERSONAGENS = "listaDePersonagens";
+    const LISTA_VAZIA = 0;
+
     return BaseController.extend(
       "ui5.o_senhor_dos_aneis.controller.ListaPersonagens",
       {
@@ -24,36 +27,36 @@ sap.ui.define(
 
         onInit: function () {
           this.filtros = {};
+          const rota = "listaDePersonagens";
+          this.vincularRota(rota, this.aoCoincidirRota);
+        },
+
+        aoCoincidirRota: function () {
           this.loadPersonagens();
           this.loadRacas();
         },
 
         loadPersonagens: async function () {
-          const personagens = await PersonagemService.obterTodos(this.filtros);
-          const modelo = new JSONModel(personagens);
-
-          this.getView().setModel(modelo, "personagens");
-
           this.getRouter().navTo(
-            "personagens",
-            Object.keys(this.filtros).length === 0
+            ROTA_PERSONAGENS,
+            Object.keys(this.filtros).length === LISTA_VAZIA
               ? {}
               : { "?query": this.filtros }
           );
+
+          const personagens = await PersonagemService.obterTodos(this.filtros);
+          const modelo = new JSONModel(personagens);
+          const modeloPersonagem = "personagens";
+
+          this.getView().setModel(modelo, modeloPersonagem);
         },
 
         loadRacas: async function () {
           const racas = await RacaService.obterTodos(this.filtros);
           const modelo = new JSONModel(racas);
+          const modeloRaca = "racas";
 
-          this.getView().setModel(modelo, "racas");
-
-          this.getRouter().navTo(
-            "racas",
-            Object.keys(this.filtros).length === 0
-              ? {}
-              : { "?query": this.filtros }
-          );
+          this.getView().setModel(modelo, modeloRaca);
         },
 
         aoFiltrarPersonagens: function (oEvent) {
@@ -120,6 +123,7 @@ sap.ui.define(
           }
           this.loadPersonagens();
         },
+
         aoChecarMorto: function (oEvent) {
           const filtroMorto = oEvent.getParameter("selected");
           if (filtroMorto) {
@@ -129,8 +133,9 @@ sap.ui.define(
         },
 
         aoResetarFiltros: function () {
+          const stringVazia = "";
           this.filtros = {};
-          this.byId("searchFieldPersonagens").setValue("");
+          this.byId("searchFieldPersonagens").setValue(stringVazia);
           this.loadPersonagens();
         },
 

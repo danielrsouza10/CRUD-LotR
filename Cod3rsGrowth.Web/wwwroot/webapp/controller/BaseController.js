@@ -10,6 +10,14 @@ sap.ui.define(
     return Controller.extend(
       "ui5.o_senhor_dos_aneis.controller.BaseController",
       {
+        vincularRota: function (rota, aoCoincidirRota) {
+          var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+          var oRoute = oRouter.getRoute(rota);
+          if (oRoute) {
+            oRoute.attachPatternMatched(aoCoincidirRota, this);
+          }
+        },
+
         getRouter: function () {
           return UIComponent.getRouterFor(this);
         },

@@ -5,7 +5,7 @@
 >
     <Dialog
         id="filterDialog"
-        title="Filter"
+        title="{i18n>Filter}"
     >
         <Select
             id="comboBoxRacas"
@@ -24,67 +24,67 @@
         >
             <core:Item
                 key="0"
-                text="Nenhum"
+                text="{i18n>Nenhum}"
             />
             <core:Item
                 key="1"
-                text="Guerreiro"
+                text="{i18n>Guerreiro}"
             />
             <core:Item
                 key="2"
-                text="Arqueiro"
+                text="{i18n>Arqueiro}"
             />
             <core:Item
                 key="3"
-                text="Mago"
+                text="{i18n>Mago}"
             />
             <core:Item
                 key="4"
-                text="Ladrao"
+                text="{i18n>Ladrao}"
             />
             <core:Item
                 key="5"
-                text="Jardineiro"
+                text="{i18n>Jardineiro}"
             />
             <core:Item
                 key="6"
-                text="Aventureiro"
+                text="{i18n>Aventureiro}"
             />
             <core:Item
                 key="7"
-                text="Rei"
+                text="{i18n>Rei}"
             />
             <core:Item
                 key="8"
-                text="Senhora de Lothlorien"
+                text="{i18n>SenhoraDeLothlorien}"
             />
             <core:Item
                 key="9"
-                text="Senhor de Valfenda"
+                text="{i18n>SenhorDeValfenda}"
             />
             <core:Item
                 key="10"
-                text="Escudeira"
+                text="{i18n>Escudeira}"
             />
             <core:Item
                 key="11"
-                text="Capitao"
+                text="{i18n>Capitao}"
             />
             <core:Item
                 key="12"
-                text="Princesa"
+                text="{i18n>Princesa}"
             />
             <core:Item
                 key="13"
-                text="Ent"
+                text="{i18n>Ent}"
             />
             <core:Item
                 key="14"
-                text="Cavaleiro"
+                text="{i18n>Cavaleiro}"
             />
             <core:Item
                 key="15"
-                text="Ex-Hobbit"
+                text="{i18n>ExHobbit}"
             />
         </Select>
         <DatePicker
@@ -96,20 +96,20 @@
             change=".aoSelecionarDataFinal"
         />
         <CheckBox
-            text="Vivo"
+            text="{i18n>CheckBoxVivo}"
             valueState="Information"
             select=".aoChecarVivo"
             id="checkBoxVivo"
         />
         <CheckBox
-            text="Morto"
+            text="{i18n>CheckBoxMorto}"
             valueState="Error"
             select=".aoChecarMorto"
             id="checkBoxMorto"
         />
         <beginButton>
             <Button
-                text="Ok"
+                text="{i18n>Ok}"
                 press=".aoFecharDialogoDeFiltro"
                 id="okBtn"
             />

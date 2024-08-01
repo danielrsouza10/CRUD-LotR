@@ -8,6 +8,9 @@ sap.ui.define(
   (BaseController, JSONModel, formatter, RacaService) => {
     "use strict";
 
+    const ROTA_RACAS = "racas";
+    const LISTA_VAZIA = 0;
+
     return BaseController.extend(
       "ui5.o_senhor_dos_aneis.controller.ListaRacas",
       {
@@ -15,21 +18,27 @@ sap.ui.define(
 
         onInit: function () {
           this.filtros = {};
+          const rota = "listaDeRacas";
+          this.vincularRota(rota, this.aoCoincidirRota);
+        },
+
+        aoCoincidirRota: function () {
           this.loadRacas();
         },
 
         loadRacas: async function () {
-          const racas = await RacaService.obterTodos(this.filtros);
-          const modelo = new JSONModel(racas);
-
-          this.getView().setModel(modelo, "racas");
-
           this.getRouter().navTo(
-            "racas",
-            Object.keys(this.filtros).length === 0
+            ROTA_RACAS,
+            Object.keys(this.filtros).length === LISTA_VAZIA
               ? {}
               : { "?query": this.filtros }
           );
+
+          const racas = await RacaService.obterTodos(this.filtros);
+          const modelo = new JSONModel(racas);
+          const modeloRaca = "racas";
+
+          this.getView().setModel(modelo, modeloRaca);
         },
 
         aoFiltrarRacas: function (oEvent) {
@@ -51,8 +60,9 @@ sap.ui.define(
         },
 
         aoResetarFiltros: function () {
+          const stringVazia = "";
           this.filtros = {};
-          this.byId("searchFieldRacas").setValue("");
+          this.byId("searchFieldRacas").setValue(stringVazia);
           this.loadRacas();
         },
       }
