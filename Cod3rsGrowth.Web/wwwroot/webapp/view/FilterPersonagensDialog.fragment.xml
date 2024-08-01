@@ -1,116 +1,116 @@
 <core:FragmentDefinition
-        xmlns:core="sap.ui.core"
-        xmlns="sap.m"
-        controllerName="ui5.o_senhor_dos_aneis.controller.List"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    controllerName="ui5.o_senhor_dos_aneis.controller.List"
 >
     <Dialog
-            id="filterDialog"
-            title="Filter"
+        id="filterDialog"
+        title="Filter"
     >
         <Select
-                id="comboBoxRacas"
-                change=".aoMudarRacaNaComboBox"
-                items="{racas>/}"
+            id="comboBoxRacas"
+            change=".aoMudarRacaNaComboBox"
+            items="{racas>/}"
         >
             <core:Item
-                    key="{racas>id}"
-                    text="{racas>nome}"
+                key="{racas>id}"
+                text="{racas>nome}"
             />
         </Select>
         <Select
-                id="profissaoComboBox"
-                width="20%"
-                change=".aoMudarProfissaoNaComboBox"
+            id="profissaoComboBox"
+            width="20%"
+            change=".aoMudarProfissaoNaComboBox"
         >
             <core:Item
-                    key="0"
-                    text="Nenhum"
+                key="0"
+                text="Nenhum"
             />
             <core:Item
-                    key="1"
-                    text="Guerreiro"
+                key="1"
+                text="Guerreiro"
             />
             <core:Item
-                    key="2"
-                    text="Arqueiro"
+                key="2"
+                text="Arqueiro"
             />
             <core:Item
-                    key="3"
-                    text="Mago"
+                key="3"
+                text="Mago"
             />
             <core:Item
-                    key="4"
-                    text="Ladrao"
+                key="4"
+                text="Ladrao"
             />
             <core:Item
-                    key="5"
-                    text="Jardineiro"
+                key="5"
+                text="Jardineiro"
             />
             <core:Item
-                    key="6"
-                    text="Aventureiro"
+                key="6"
+                text="Aventureiro"
             />
             <core:Item
-                    key="7"
-                    text="Rei"
+                key="7"
+                text="Rei"
             />
             <core:Item
-                    key="8"
-                    text="Senhora de Lothlorien"
+                key="8"
+                text="Senhora de Lothlorien"
             />
             <core:Item
-                    key="9"
-                    text="Senhor de Valfenda"
+                key="9"
+                text="Senhor de Valfenda"
             />
             <core:Item
-                    key="10"
-                    text="Escudeira"
+                key="10"
+                text="Escudeira"
             />
             <core:Item
-                    key="11"
-                    text="Capitao"
+                key="11"
+                text="Capitao"
             />
             <core:Item
-                    key="12"
-                    text="Princesa"
+                key="12"
+                text="Princesa"
             />
             <core:Item
-                    key="13"
-                    text="Ent"
+                key="13"
+                text="Ent"
             />
             <core:Item
-                    key="14"
-                    text="Cavaleiro"
+                key="14"
+                text="Cavaleiro"
             />
             <core:Item
-                    key="15"
-                    text="Ex-Hobbit"
+                key="15"
+                text="Ex-Hobbit"
             />
         </Select>
         <DatePicker
-                id="dataInicial"
-                change=".aoSelecionarDataInicial"
+            id="dataInicial"
+            change=".aoSelecionarDataInicial"
         />
         <DatePicker
-                id="dataFinal"
-                change=".aoSelecionarDataFinal"
+            id="dataFinal"
+            change=".aoSelecionarDataFinal"
         />
         <CheckBox
-                text="Vivo"
-                valueState="Information"
-                select=".aoChecarVivo"
-                id="checkBoxVivo"
+            text="Vivo"
+            valueState="Information"
+            select=".aoChecarVivo"
+            id="checkBoxVivo"
         />
         <CheckBox
-                text="Morto"
-                valueState="Error"
-                select=".onCheckMortoBox"
+            text="Morto"
+            valueState="Error"
+            select=".aoChecarMorto"
         />
         <beginButton>
             <Button
-                    text="Ok"
-                    press=".aoFecharDialogoDeFiltro"
-                    if="okBtn"
+                text="Ok"
+                press=".aoFecharDialogoDeFiltro"
+                if="okBtn"
             />
         </beginButton>
     </Dialog>

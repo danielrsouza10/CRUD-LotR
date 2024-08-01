@@ -4,8 +4,9 @@ sap.ui.define(
     "sap/ui/model/json/JSONModel",
     "sap/ui/model/Sorter",
     "ui5/o_senhor_dos_aneis/model/formatter",
+    "ui5/o_senhor_dos_aneis/services/PersonagemService",
   ],
-  (BaseController, JSONModel, Sorter, formatter) => {
+  (BaseController, JSONModel, Sorter, formatter, PersonagemService) => {
     "use strict";
 
     return BaseController.extend(
@@ -17,93 +18,96 @@ sap.ui.define(
           this.filtros = {};
           this.loadPersonagens();
           this.loadRacas();
-
-          var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-          var oRoute = oRouter.getRoute("personagens");
-          if (oRoute) {
-            oRoute.attachPatternMatched(this._onRouteMatched, this);
-          }
         },
 
         _onRouteMatched: function () {
           this.loadPersonagens();
         },
 
-        loadPersonagens: function () {
-          let url = this.construirUrlComParametros();
+        loadPersonagens: async function () {
+          const personagens = await PersonagemService.obterTodos(this.filtros);
+          const modelo = new JSONModel(personagens);
 
-          fetch(url)
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error("Sem resposta: " + response.statusText);
-              }
-              return response.json();
-            })
-            .then((dados) => {
-              const objetoModelo = new JSONModel(dados);
-              this.getView().setModel(objetoModelo, "personagens");
-            })
-            .catch((error) => {
-              console.error("Houve um problema de fetch", error);
-            });
+          this.getView().setModel(modelo, "personagens");
 
-          const currentUrl = new URL(window.location.href);
-          const params = new URLSearchParams(currentUrl.search);
-
-          Object.keys(this.filtros).forEach((key) => {
-            if (this.filtros[key]) {
-              params.set(key, this.filtros[key]);
-            } else {
-              params.delete(key);
-            }
-          });
-
-          // const newUrl = `${currentUrl.pathname}?${params.toString()}`;
-          // window.history.replaceState(null, null, newUrl);
+          this.getRouter().navTo(
+            "personagens",
+            Object.keys(this.filtros).length === 0
+              ? {}
+              : { "?query": this.filtros }
+          );
         },
 
         aoFiltrarPersonagens: function (oEvent) {
-          var nome = oEvent.getParameter("query");
-          this.filtros.nome = nome ? encodeURIComponent(nome) : "";
+          const filtroNome = oEvent.getSource().getValue();
+
+          if (filtroNome) {
+            this.filtros.nomeDoPersonagem = filtroNome;
+          } else {
+            delete this.filtros.nomeDoPersonagem;
+          }
           this.loadPersonagens();
         },
 
         aoMudarRacaNaComboBox: function (oEvent) {
-          var raca = oEvent.getParameter("selectedItem").getText();
-          this.filtros.raca = raca ? encodeURIComponent(raca) : "";
+          const filtroRaca = oEvent.getParameter("selectedItem").getText();
+          if (filtroRaca) {
+            this.filtros.nomeDaRaca = filtroRaca;
+          } else {
+            delete this.filtros.nomeDaRaca;
+          }
           this.loadPersonagens();
         },
 
         aoMudarProfissaoNaComboBox: function (oEvent) {
-          var profissao = oEvent.getParameter("selectedItem").getText();
-          this.filtros.profissao =
-            profissao && profissao !== "Nenhum"
-              ? encodeURIComponent(profissao)
-              : "";
+          const filtroProfissao = oEvent.getParameter("selectedItem").getText();
+          if (filtroProfissao) {
+            this.filtros.profissao = filtroProfissao;
+          } else {
+            delete this.filtros.profissao;
+          }
           this.loadPersonagens();
         },
 
         aoSelecionarDataInicial: function (oEvent) {
-          var dataInicial = oEvent
+          const filtroDataInicial = oEvent
             .getSource()
             .getProperty("dateValue")
             .toISOString();
-          this.filtros.dataInicial = encodeURIComponent(dataInicial);
+          if (filtroDataInicial) {
+            this.filtros.dataInicial = filtroDataInicial;
+          } else {
+            delete this.filtros.dataInicial;
+          }
           this.loadPersonagens();
         },
 
         aoSelecionarDataFinal: function (oEvent) {
-          var dataFinal = oEvent
+          const filtroDataFinal = oEvent
             .getSource()
             .getProperty("dateValue")
             .toISOString();
-          this.filtros.dataFinal = encodeURIComponent(dataFinal);
+          if (filtroDataFinal) {
+            this.filtros.dataFinal = filtroDataFinal;
+          } else {
+            delete this.filtros.dataFinal;
+          }
           this.loadPersonagens();
         },
 
         aoChecarVivo: function (oEvent) {
-          var vivo = oEvent.getParameter("selected");
-          this.filtros.vivo = vivo ? "true" : "";
+          const filtroVivo = oEvent.getParameter("selected");
+          if (filtroVivo) {
+            this.filtros.estaVivo = true;
+          }
+          //   this.filtros.vivo = vivo ? "true" : "";
+          this.loadPersonagens();
+        },
+        aoChecarMorto: function (oEvent) {
+          const filtroMorto = oEvent.getParameter("selected");
+          if (filtroMorto) {
+            this.filtros.estaVivo = false;
+          }
           this.loadPersonagens();
         },
 
