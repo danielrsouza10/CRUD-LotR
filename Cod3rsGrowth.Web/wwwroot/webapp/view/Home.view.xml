@@ -3,17 +3,17 @@
         controllerName="ui5.o_senhor_dos_aneis.controller.Home"
         xmlns="sap.m"
 >
-    <Page title="O Senhor dos Anéis" id="paginaHome">
+    <Page title="{i18n>Titulo}" id="paginaHome">
         <content>
             <Button
                     id="personagensListBtn"
-                    text="{i18n>ShowPersonagensList}"
+                    text="{i18n>ShowPaginaDePersonagens}"
                     press=".onNavToPersonagens"
                     class="sapUiTinyMarginEnd"
             />
             <Button
                     id="racasListBtn"
-                    text="{i18n>ShowRacasList}"
+                    text="{i18n>ShowPaginaDeRacas}"
                     press=".onNavToRacas"
                     class="sapUiTinyMarginEnd"
             />

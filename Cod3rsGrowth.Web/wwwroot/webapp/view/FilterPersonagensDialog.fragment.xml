@@ -105,12 +105,13 @@
             text="Morto"
             valueState="Error"
             select=".aoChecarMorto"
+            id="checkBoxMorto"
         />
         <beginButton>
             <Button
                 text="Ok"
                 press=".aoFecharDialogoDeFiltro"
-                if="okBtn"
+                id="okBtn"
             />
         </beginButton>
     </Dialog>
