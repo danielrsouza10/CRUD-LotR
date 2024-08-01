@@ -5,8 +5,16 @@ sap.ui.define(
     "sap/ui/model/Sorter",
     "ui5/o_senhor_dos_aneis/model/formatter",
     "ui5/o_senhor_dos_aneis/services/PersonagemService",
+    "ui5/o_senhor_dos_aneis/services/RacaService",
   ],
-  (BaseController, JSONModel, Sorter, formatter, PersonagemService) => {
+  (
+    BaseController,
+    JSONModel,
+    Sorter,
+    formatter,
+    PersonagemService,
+    RacaService
+  ) => {
     "use strict";
 
     return BaseController.extend(
@@ -18,10 +26,6 @@ sap.ui.define(
           this.filtros = {};
           this.loadPersonagens();
           this.loadRacas();
-        },
-
-        _onRouteMatched: function () {
-          this.loadPersonagens();
         },
 
         loadPersonagens: async function () {
@@ -38,8 +42,22 @@ sap.ui.define(
           );
         },
 
+        loadRacas: async function () {
+          const racas = await RacaService.obterTodos(this.filtros);
+          const modelo = new JSONModel(racas);
+
+          this.getView().setModel(modelo, "racas");
+
+          this.getRouter().navTo(
+            "racas",
+            Object.keys(this.filtros).length === 0
+              ? {}
+              : { "?query": this.filtros }
+          );
+        },
+
         aoFiltrarPersonagens: function (oEvent) {
-          const filtroNome = oEvent.getSource().getValue();
+          const filtroNome = oEvent.getParameter("query");
 
           if (filtroNome) {
             this.filtros.nomeDoPersonagem = filtroNome;
@@ -100,7 +118,6 @@ sap.ui.define(
           if (filtroVivo) {
             this.filtros.estaVivo = true;
           }
-          //   this.filtros.vivo = vivo ? "true" : "";
           this.loadPersonagens();
         },
         aoChecarMorto: function (oEvent) {
@@ -148,48 +165,6 @@ sap.ui.define(
             };
           });
           binding.sort(sorter);
-        },
-
-        loadRacas: function () {
-          const stringUrlRacas = "https://localhost:7244/api/Raca/racas";
-          fetch(stringUrlRacas)
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error("Sem resposta: " + response.statusText);
-              }
-              return response.json();
-            })
-            .then((dados) => {
-              const objetoModelo = new JSONModel(dados);
-              this.getView().setModel(objetoModelo, "racas");
-            })
-            .catch((error) => {
-              console.error("Houve um problema de fetch", error);
-            });
-        },
-
-        construirUrlComParametros: function () {
-          let url = "https://localhost:7244/api/Personagem/personagens";
-          let parametros = [];
-
-          if (this.filtros.nome)
-            parametros.push(`NomeDoPersonagem=${this.filtros.nome}`);
-          if (this.filtros.raca)
-            parametros.push(`NomeDaRaca=${this.filtros.raca}`);
-          if (this.filtros.profissao)
-            parametros.push(`Profissao=${this.filtros.profissao}`);
-          if (this.filtros.dataInicial)
-            parametros.push(`DataInicial=${this.filtros.dataInicial}`);
-          if (this.filtros.dataFinal)
-            parametros.push(`DataFinal=${this.filtros.dataFinal}`);
-          if (this.filtros.vivo)
-            parametros.push(`EstaVivo=${this.filtros.vivo}`);
-
-          if (parametros.length > 0) {
-            url += "?" + parametros.join("&");
-          }
-
-          return url;
         },
       }
     );

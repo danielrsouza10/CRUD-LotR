@@ -3,11 +3,10 @@ sap.ui.define(
     "../controller/BaseController",
     "sap/ui/model/json/JSONModel",
     "ui5/o_senhor_dos_aneis/model/formatter",
+    "ui5/o_senhor_dos_aneis/services/RacaService",
   ],
-  (BaseController, JSONModel, formatter) => {
+  (BaseController, JSONModel, formatter, RacaService) => {
     "use strict";
-
-    const stringBaseUrlRacas = "https://localhost:7244/api/Raca/racas";
 
     return BaseController.extend(
       "ui5.o_senhor_dos_aneis.controller.ListaRacas",
@@ -17,48 +16,37 @@ sap.ui.define(
         onInit: function () {
           this.filtros = {};
           this.loadRacas();
-
-          var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-          var oRoute = oRouter.getRoute("racas");
-          if (oRoute) {
-            oRoute.attachPatternMatched(this._onRouteMatched, this);
-          }
         },
 
-        _onRouteMatched: function () {
-          this.loadRacas();
-        },
+        loadRacas: async function () {
+          const racas = await RacaService.obterTodos(this.filtros);
+          const modelo = new JSONModel(racas);
 
-        loadRacas: function () {
-          let url = this.construirUrlComParametros();
+          this.getView().setModel(modelo, "racas");
 
-          fetch(url)
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error("Sem resposta: " + response.statusText);
-              }
-              return response.json();
-            })
-            .then((dados) => {
-              const objetoModelo = new JSONModel(dados);
-              this.getView().setModel(objetoModelo, "racas");
-            })
-            .catch((error) => {
-              console.error("Houve um problema de fetch", error);
-            });
+          this.getRouter().navTo(
+            "racas",
+            Object.keys(this.filtros).length === 0
+              ? {}
+              : { "?query": this.filtros }
+          );
         },
 
         aoFiltrarRacas: function (oEvent) {
-          var nomeDaRaca = oEvent.getParameter("query");
-          this.filtros.nomeDaRaca = nomeDaRaca
-            ? encodeURIComponent(nomeDaRaca)
-            : "";
+          const filtroRaca = oEvent.getParameter("query");
+          if (filtroRaca) {
+            this.filtros.nomeDaRaca = filtroRaca;
+          } else {
+            delete this.filtros.nomeDaRaca;
+          }
           this.loadRacas();
         },
 
         aoChecarExtinta: function (oEvent) {
-          var estaExtinta = oEvent.getParameter("selected");
-          this.filtros.estaExtinta = estaExtinta ? "true" : "";
+          var filtroExtinta = oEvent.getParameter("selected");
+          if (filtroExtinta) {
+            this.filtros.estaExtinta = true;
+          }
           this.loadRacas();
         },
 
@@ -66,22 +54,6 @@ sap.ui.define(
           this.filtros = {};
           this.byId("searchFieldRacas").setValue("");
           this.loadRacas();
-        },
-
-        construirUrlComParametros: function () {
-          let url = stringBaseUrlRacas;
-          let parametros = [];
-
-          if (this.filtros.nomeDaRaca)
-            parametros.push(`NomeDaRaca=${this.filtros.nomeDaRaca}`);
-          if (this.filtros.estaExtinta)
-            parametros.push(`EstaExtinta=${this.filtros.estaExtinta}`);
-
-          if (parametros.length > 0) {
-            url += "?" + parametros.join("&");
-          }
-
-          return url;
         },
       }
     );
