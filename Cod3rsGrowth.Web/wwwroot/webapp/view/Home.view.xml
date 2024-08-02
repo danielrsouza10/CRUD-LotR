@@ -1,10 +1,22 @@
 <mvc:View
-    controllerName="ui5.o_senhor_dos_aneis.controller.Home"
-    xmlns="sap.m"
-    xmlns:mvc="sap.ui.core.mvc">
-    <Page title="O Senhor dos Anéis">
+        xmlns:mvc="sap.ui.core.mvc"
+        controllerName="ui5.o_senhor_dos_aneis.controller.Home"
+        xmlns="sap.m"
+>
+    <Page title="{i18n>Titulo}" id="paginaHome">
         <content>
-            <mvc:XMLView viewName="ui5.o_senhor_dos_aneis.view.Search" />
+            <Button
+                    id="personagensListBtn"
+                    text="{i18n>ShowPaginaDePersonagens}"
+                    press=".onNavToPersonagens"
+                    class="sapUiTinyMarginEnd"
+            />
+            <Button
+                    id="racasListBtn"
+                    text="{i18n>ShowPaginaDeRacas}"
+                    press=".onNavToRacas"
+                    class="sapUiTinyMarginEnd"
+            />
         </content>
     </Page>
 </mvc:View>

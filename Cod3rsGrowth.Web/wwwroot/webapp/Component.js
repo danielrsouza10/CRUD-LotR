@@ -16,15 +16,6 @@ sap.ui.define(
         // call the init function of the parent
         UIComponent.prototype.init.apply(this, arguments);
 
-        //set data model on view
-        const oData = {
-          personagem: {
-            nome: "Aragorn",
-          },
-        };
-        const oModel = new JSONModel(oData);
-        this.setModel(oModel);
-
         // set i18n model on view
         const i18nModel = new ResourceModel({
           bundleName: "ui5.o_senhor_dos_aneis.i18n.i18n",

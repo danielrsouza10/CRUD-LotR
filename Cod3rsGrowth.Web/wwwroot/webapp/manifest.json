@@ -63,6 +63,16 @@
                     "pattern": "",
                     "name": "appHome",
                     "target": "home"
+                },
+                {
+                    "pattern": "personagens:?query:",
+                    "name": "listaDePersonagens",
+                    "target": "personagens"
+                },
+                {
+                    "pattern": "racas:?query:",
+                    "name": "listaDeRacas",
+                    "target": "racas"
                 }
             ],
             "targets": {
@@ -75,6 +85,18 @@
                     "id": "notFound",
                     "name": "NotFound",
                     "transition": "show"
+                },
+                "personagens": {
+                    "id": "listaDePersonagens",
+                    "path": "ui5.o_senhor_dos_aneis.view",
+                    "name": "ListaPersonagens",
+                    "level": "2"
+                },
+                "racas": {
+                    "id": "listaDeRacas",
+                    "path": "ui5.o_senhor_dos_aneis.view",
+                    "name": "ListaRacas",
+                    "level": "2"
                 }
             }
         }

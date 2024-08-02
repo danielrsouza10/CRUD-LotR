@@ -1,0 +1,147 @@
+<mvc:View
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    height="100%"
+    controllerName="ui5.o_senhor_dos_aneis.controller.ListaPersonagens"
+    xmlns="sap.m"
+>
+    <Page
+        id="paginaListaDePersonagens"
+        title="{i18n>TituloPaginaPersonagens}"
+        showHeader="true"
+        enableScrolling="true"
+        showNavButton="true"
+        navButtonPress=".onNavBack"
+        class="sapUiContentPadding"
+    >
+        <content>
+            <List
+                id="listaDePersonagens"
+                headerText="Custom Content"
+                mode="Delete"
+                items="{personagens>/}"
+                growing="true"
+                growingThreshold="5"
+            >
+                <headerToolbar>
+                    <OverflowToolbar id="listToolbar">
+                        <Title text="{i18n>TituloListaPersonagens}" />
+                        <ToolbarSpacer />
+                        <SearchField
+                            width="50%"
+                            search=".aoFiltrarPersonagens"
+                            id="searchFieldPersonagens"
+                        />
+                        <Button
+                            type="Transparent"
+                            text="{i18n>TituloBotaoReset}"
+                            press=".aoResetarFiltros"
+                            id="resetBtn"
+                        />
+                        <OverflowToolbarButton
+                            tooltip="Filter"
+                            type="Transparent"
+                            text="Filter"
+                            icon="sap-icon://filter"
+                            press=".aoAbrirDialogoDeFiltro"
+                            id="filtroBtn"
+                        />
+                        <OverflowToolbarButton
+                            id="organizarBtn"
+                            tooltip="Sort"
+                            type="Transparent"
+                            text="Sort"
+                            icon="sap-icon://sort"
+                            press=".aoOrganizar"
+                        />
+                        <OverflowToolbarButton
+                            id="agruparBtn"
+                            tooltip="Group"
+                            type="Transparent"
+                            text="Group"
+                            icon="sap-icon://group-2"
+                            press=".aoAgrupar"
+                        />
+                    </OverflowToolbar>
+                </headerToolbar>
+
+                <CustomListItem id="customListPersonagens">
+                    <HBox>
+                        <core:Icon
+                            size="2rem"
+                            src="sap-icon://attachment-photo"
+                            class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
+                        />
+                        <VBox
+                            class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
+                        >
+                            <ObjectIdentifier
+                                title="{personagens>nome}"
+                                class="sapUiTinyMarginBottom"
+                            />
+                            <FlexBox>
+                                <Label
+                                    text="{i18n>LabelRaca}:"
+                                    class="sapUiTinyMarginEnd"
+                                />
+                                <Text text="{personagens>raca}" />
+                            </FlexBox>
+                            <FlexBox>
+                                <Label
+                                    text="{i18n>LabelProfissao}:"
+                                    class="sapUiTinyMarginEnd"
+                                />
+                                <Text text="{personagens>profissao}" />
+                            </FlexBox>
+                            <FlexBox>
+                                <Label
+                                    text="{i18n>LabelCondicao}:"
+                                    class="sapUiTinyMarginEnd"
+                                />
+                                <Text
+                                    text="{
+                                    path: 'personagens>estaVivo',
+                                    formatter: '.formatter.formatarBooleanVivoMorto'
+                                    }"
+                                />
+                            </FlexBox>
+                            <FlexBox>
+                                <Label
+                                    text="{i18n>LabelDataDoCadastro}:"
+                                    class="sapUiTinyMarginEnd"
+                                />
+                                <Text
+                                    text="{
+                                    path: 'personagens>dataDoCadastro',
+                                    formatter: '.formatter.formatarDataDeCadastro'
+                                }"
+                                />
+                            </FlexBox>
+                        </VBox>
+                    </HBox>
+                </CustomListItem>
+            </List>
+        </content>
+        <footer>
+            <OverflowToolbar id="otbFooter">
+                <ToolbarSpacer />
+                <Button
+                    type="Accept"
+                    text="{i18n>BotaoAdicionar}"
+                >
+                    <layoutData>
+                        <OverflowToolbarLayoutData priority="High" />
+                    </layoutData>
+                </Button>
+                <Button
+                    type="Reject"
+                    text="{i18n>BotaoRemover}"
+                >
+                    <layoutData>
+                        <OverflowToolbarLayoutData priority="Low" />
+                    </layoutData>
+                </Button>
+            </OverflowToolbar>
+        </footer>
+    </Page>
+</mvc:View>

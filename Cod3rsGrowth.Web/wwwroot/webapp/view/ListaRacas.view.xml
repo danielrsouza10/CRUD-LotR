@@ -1,0 +1,111 @@
+<mvc:View
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    height="100%"
+    controllerName="ui5.o_senhor_dos_aneis.controller.ListaRacas"
+    xmlns="sap.m"
+>
+    <Page
+        showHeader="true"
+        enableScrolling="true"
+        class="sapUiContentPadding"
+        showNavButton="true"
+        navButtonPress="onNavBack"
+        title="{i18n>TituloPaginaRacas}"
+        id="paginaListaDeRacas"
+    >
+        <content>
+            <List
+                id="listaDeRacas"
+                headerText="Custom Content"
+                mode="Delete"
+                items="{racas>/}"
+                growing="true"
+                growingThreshold="5"
+            >
+                <headerToolbar>
+                    <OverflowToolbar id="listToolbar">
+                        <Title text="{i18n>TituloListaRacas}" />
+                        <ToolbarSpacer />
+                        <SearchField
+                            id="searchFieldRacas"
+                            width="50%"
+                            search=".aoFiltrarRacas"
+                        />
+                        <Button
+                            type="Transparent"
+                            text="{i18n>TituloBotaoReset}"
+                            press=".aoResetarFiltros"
+                            id="resetBtn"
+                        />
+                    </OverflowToolbar>
+                </headerToolbar>
+
+                <CustomListItem id="customListRaca">
+                    <HBox>
+                        <core:Icon
+                            size="2rem"
+                            src="sap-icon://attachment-photo"
+                            class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
+                        />
+                        <VBox
+                            class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
+                        >
+                            <ObjectIdentifier
+                                title="{racas>nome}"
+                                class="sapUiTinyMarginBottom"
+                            />
+                            <FlexBox>
+                                <Label
+                                    text="{i18n>LabelLocalizacaoGeografica}:"
+                                    class="sapUiTinyMarginEnd"
+                                />
+                                <Text text="{racas>localizacaoGeografica}" />
+                            </FlexBox>
+                            <FlexBox>
+                                <Label
+                                    text="{i18n>LabelHabilidadeRacial}:"
+                                    class="sapUiTinyMarginEnd"
+                                />
+                                <Text text="{racas>habilidadeRacial}" />
+                            </FlexBox>
+                            <FlexBox>
+                                <Label
+                                    text="{i18n>LabelExtinta}:"
+                                    class="sapUiTinyMarginEnd"
+                                />
+                                <Text
+                                    text="{
+                                        path: 'racas>estaExtinta', 
+                                        formatter: '.formatter.formatarBooleanEstaExtinta'
+                                    }"
+                                />
+                            </FlexBox>
+                        </VBox>
+                    </HBox>
+                </CustomListItem>
+            </List>
+        </content>
+        <footer>
+            <OverflowToolbar id="otbFooter">
+                <ToolbarSpacer />
+                <Button
+                    type="Accept"
+                    text="{i18n>BotaoAdicionar}"
+                >
+                    <layoutData>
+                        <OverflowToolbarLayoutData priority="High" />
+                    </layoutData>
+                </Button>
+                <Button
+                    type="Reject"
+                    text="{i18n>BotaoRemover}"
+                >
+                    <layoutData>
+                        <OverflowToolbarLayoutData priority="Low" />
+                    </layoutData>
+                </Button>
+            </OverflowToolbar>
+        </footer>
+    </Page>
+</mvc:View>

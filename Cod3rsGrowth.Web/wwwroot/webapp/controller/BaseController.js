@@ -10,20 +10,28 @@ sap.ui.define(
     return Controller.extend(
       "ui5.o_senhor_dos_aneis.controller.BaseController",
       {
+        vincularRota: function (rota, aoCoincidirRota) {
+          var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+          var oRoute = oRouter.getRoute(rota);
+          if (oRoute) {
+            oRoute.attachPatternMatched(aoCoincidirRota, this);
+          }
+        },
+
         getRouter: function () {
           return UIComponent.getRouterFor(this);
         },
 
         onNavBack: function () {
-          var oHistory, sPreviousHash;
+          var historico, hashAnterior;
 
-          oHistory = History.getInstance();
-          sPreviousHash = oHistory.getPreviousHash();
+          historico = History.getInstance();
+          hashAnterior = historico.getPreviousHash();
 
-          if (sPreviousHash !== undefined) {
+          if (hashAnterior !== undefined) {
             window.history.go(-1);
           } else {
-            this.getRouter().navTo("appHome", {}, true /*no history*/);
+            this.getRouter().navTo("home", {}, true);
           }
         },
       }
