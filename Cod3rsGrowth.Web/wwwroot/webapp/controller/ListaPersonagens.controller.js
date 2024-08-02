@@ -171,6 +171,10 @@ sap.ui.define(
           });
           binding.sort(sorter);
         },
+        onNavToCriarPersonagem: function () {
+          const rotaCriarPersonagem = "criarPersonagem";
+          this.getRouter().navTo(rotaCriarPersonagem);
+        },
       }
     );
   }

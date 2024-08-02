@@ -73,6 +73,16 @@
                     "pattern": "racas:?query:",
                     "name": "listaDeRacas",
                     "target": "racas"
+                },
+                {
+                    "pattern": "criarPersonagem",
+                    "name": "criarPersonagem",
+                    "target": "criarPersonagem"
+                },
+                {
+                    "pattern": "criarRaca",
+                    "name": "criarRaca",
+                    "target": "criarRaca"
                 }
             ],
             "targets": {
@@ -97,6 +107,18 @@
                     "path": "ui5.o_senhor_dos_aneis.view",
                     "name": "ListaRacas",
                     "level": "2"
+                },
+                "criarPersonagem": {
+                    "id": "criarPersonagem",
+                    "path": "ui5.o_senhor_dos_aneis.view",
+                    "name": "criarPersonagem",
+                    "level": "3"
+                },
+                "criarRaca": {
+                    "id": "criarRaca",
+                    "path": "ui5.o_senhor_dos_aneis.view",
+                    "name": "criarRaca",
+                    "level": "3"
                 }
             }
         }

@@ -92,6 +92,9 @@
                 <Button
                     type="Accept"
                     text="{i18n>BotaoAdicionar}"
+                    id="criarRacaBtn"
+                    press=".onNavToCriarRaca"
+                    class="sapUiTinyMarginEnd"
                 >
                     <layoutData>
                         <OverflowToolbarLayoutData priority="High" />

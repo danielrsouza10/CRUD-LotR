@@ -65,6 +65,10 @@ sap.ui.define(
           this.byId("searchFieldRacas").setValue(stringVazia);
           this.loadRacas();
         },
+        onNavToCriarRaca: function () {
+          const rotaCriarRaca = "criarRaca";
+          this.getRouter().navTo(rotaCriarRaca);
+        },
       }
     );
   }
