@@ -28,9 +28,9 @@
                         <Title text="{i18n>TituloListaPersonagens}" />
                         <ToolbarSpacer />
                         <SearchField
+                            id="searchFieldPersonagens"
                             width="50%"
                             search=".aoFiltrarPersonagens"
-                            id="searchFieldPersonagens"
                         />
                         <Button
                             type="Transparent"

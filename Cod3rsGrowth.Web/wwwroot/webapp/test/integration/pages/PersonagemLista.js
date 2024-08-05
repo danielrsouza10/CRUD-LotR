@@ -2,19 +2,11 @@ sap.ui.define(
   [
     "sap/ui/test/Opa5",
     "sap/ui/test/matchers/AggregationLengthEquals",
-    "sap/ui/test/matchers/I18NText",
     "sap/ui/test/matchers/Properties",
     "sap/ui/test/actions/Press",
     "sap/ui/test/actions/EnterText",
   ],
-  function (
-    Opa5,
-    AggregationLengthEquals,
-    I18NText,
-    Properties,
-    Press,
-    EnterText
-  ) {
+  function (Opa5, AggregationLengthEquals, Properties, Press, EnterText) {
     "use strict";
 
     const NOME_VIEW = "ListaPersonagens",

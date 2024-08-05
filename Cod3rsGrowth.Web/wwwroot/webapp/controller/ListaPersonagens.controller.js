@@ -28,6 +28,7 @@ sap.ui.define(
         onInit: function () {
           this.filtros = {};
           const rota = "listaDePersonagens";
+
           this.vincularRota(rota, this.aoCoincidirRota);
         },
 
@@ -41,7 +42,8 @@ sap.ui.define(
             ROTA_PERSONAGENS,
             Object.keys(this.filtros).length === LISTA_VAZIA
               ? {}
-              : { "?query": this.filtros }
+              : { "?query": this.filtros },
+            true
           );
 
           const personagens = await PersonagemService.obterTodos(this.filtros);
@@ -60,10 +62,10 @@ sap.ui.define(
         },
 
         aoFiltrarPersonagens: function (oEvent) {
-          const filtroNome = oEvent.getParameter("query");
+          const filtroNomeDoPersonagem = oEvent.getParameter("query");
 
-          if (filtroNome) {
-            this.filtros.nomeDoPersonagem = filtroNome;
+          if (filtroNomeDoPersonagem) {
+            this.filtros.nomeDoPersonagem = filtroNomeDoPersonagem;
           } else {
             delete this.filtros.nomeDoPersonagem;
           }
