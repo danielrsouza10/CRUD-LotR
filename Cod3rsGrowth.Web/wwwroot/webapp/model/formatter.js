@@ -61,5 +61,31 @@ sap.ui.define([], () => {
       let ano = dataFormatada.getFullYear();
       return dia + stringBarra + mes + stringBarra + ano;
     },
+    formatarIconePersonagem(raca) {
+      switch (raca) {
+        case "Humano":
+          return "icons/icons8-humano-48.png";
+        case "Elfo":
+          return "icons/icons8-legolas-48.png";
+        case "Ent":
+          return "icons/icons8-ent-48.png";
+        case "Anão":
+          return "icons/icons8-anão-64.png";
+        case "Dragão":
+          return "icons/icons8-dragão-48.png";
+        case "Maiar":
+          return "icons/icons8-gandalf-48.png";
+        case "Orc":
+          return "icons/icons8-orc-48.png";
+        case "Hobbit":
+          return "icons/icons8-frodo-48.png";
+        case "Troll":
+          return "icons/icons8-troll-48.png";
+        case "Ex-Hobbit":
+          return "icons/icons8-gollum-48.png";
+        default:
+          return "icons/icons8-o-um-anel-48.png";
+      }
+    },
   };
 });

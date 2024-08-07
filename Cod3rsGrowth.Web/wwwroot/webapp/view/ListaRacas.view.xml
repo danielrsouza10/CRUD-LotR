@@ -22,6 +22,7 @@
                 items="{racas>/}"
                 growing="true"
                 growingThreshold="5"
+                enableBusyIndicator="true"
             >
                 <headerToolbar>
                     <OverflowToolbar id="listToolbar">

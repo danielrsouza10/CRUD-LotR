@@ -11,8 +11,6 @@ sap.ui.define([], function () {
         urlPersonagens.searchParams.append(key, filtros[key]);
       });
 
-      console.log(urlPersonagens.href);
-
       try {
         const response = await fetch(urlPersonagens.href);
         if (!response.ok) {
