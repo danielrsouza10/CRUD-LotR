@@ -3,8 +3,16 @@ sap.ui.define(
     "../controller/BaseController",
     "sap/ui/model/json/JSONModel",
     "ui5/o_senhor_dos_aneis/services/RacaService",
+    "ui5/o_senhor_dos_aneis/services/PersonagemService",
+    "sap/m/MessageBox",
   ],
-  function (BaseController, JSONModel, RacaService) {
+  function (
+    BaseController,
+    JSONModel,
+    RacaService,
+    PersonagemService,
+    MessageBox
+  ) {
     "use strict";
 
     return BaseController.extend(
@@ -26,13 +34,13 @@ sap.ui.define(
         },
 
         _verificarTamanhoString: function (str) {
-          let tamanhoMinimo = 3;
+          const tamanhoMinimo = 3;
           return str.length < tamanhoMinimo;
         },
 
         _validarInputUsuario: function (objetoInput) {
           let erroValidacao = false;
-          let nomeInseridoInput = objetoInput.getValue();
+          const nomeInseridoInput = objetoInput.getValue();
 
           let contemCaracteresEspeciais =
             this._verificarCaracteresEspeciais(nomeInseridoInput);
@@ -58,6 +66,12 @@ sap.ui.define(
           return erroValidacao;
         },
 
+        _exibirErros: function (erros) {
+          const tituloMessageBox = "erros.title";
+          console.log(erros);
+          MessageBox.show(erros.title);
+        },
+
         loadRacas: async function () {
           const racas = await RacaService.obterTodos(this.filtros);
           const modelo = new JSONModel(racas);
@@ -69,6 +83,14 @@ sap.ui.define(
           const objetoInput = oEvent.getSource();
           this._validarInputUsuario(objetoInput);
           console.log(objetoInput);
+        },
+
+        onCriarPersonagem: async function (oEvent) {
+          try {
+            const personagem = await PersonagemService.adicionarPersonagem();
+          } catch (erros) {
+            this._exibirErros(erros);
+          }
         },
       }
     );

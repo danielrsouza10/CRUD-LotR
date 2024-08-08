@@ -198,8 +198,9 @@
                     type="Accept"
                     text="{i18n>BotaoAdicionar}"
                     id="criarPersonagemBtn"
-                    press=".onNavToCriarPersonagem"
+                    press=".onCriarPersonagem"
                     class="sapUiTinyMarginEnd"
+                    enabled="true"
                 >
                     <layoutData>
                         <OverflowToolbarLayoutData priority="High" />
