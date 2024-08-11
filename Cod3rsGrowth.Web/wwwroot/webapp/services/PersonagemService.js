@@ -24,21 +24,13 @@ sap.ui.define([], function () {
         throw erro;
       }
     },
-    adicionarPersonagem: async function () {
+    adicionarPersonagem: async function (personagem) {
       let urlPersonagens = new URL(URL_POST_PERSONAGEM);
 
       try {
         const response = await fetch(urlPersonagens.href, {
           method: "POST",
-          body: JSON.stringify({
-            nome: "Teste",
-            idRaca: 1,
-            profissao: 1,
-            idade: 87,
-            altura: 1.98,
-            estaVivo: true,
-            dataDoCadastro: "2011-06-18T10:34:09",
-          }),
+          body: JSON.stringify(personagem),
           headers: {
             "Content-type": "application/json; charset=UTF-8",
           },

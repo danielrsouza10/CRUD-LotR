@@ -25,13 +25,13 @@
                 <HBox alignItems="Center">
                     <Label
                         labelFor="inputNome"
-                        text="{i18n>Nome}:"
+                        text="{i18n>LabelNome}:"
                         class="sapUiSmallMargin"
                         width="4rem"
                     />
                     <Input
                         id="inputNome"
-                        placeholder="{i18n>Nome}"
+                        placeholder="{i18n>PlaceholderNome}"
                         change=".aoMudarNome"
                         width="13rem"
                     />
@@ -139,28 +139,29 @@
                 <HBox alignItems="Center">
                     <Label
                         labelFor="inputIdade"
-                        text="{i18n>Idade}:"
+                        text="{i18n>LabelIdade}:"
                         class="sapUiSmallMargin"
                         width="4rem"
                     />
                     <Input
                         id="inputIdade"
-                        placeholder="{i18n>Idade}"
+                        placeholder="{i18n>PlaceholderIdade}"
                         type="Number"
                         change=".aoMudarIdade"
                         width="50%"
+
                     />
                 </HBox>
                 <HBox alignItems="Center">
                     <Label
                         labelFor="inputAltura"
-                        text="{i18n>Altura}:"
+                        text="{i18n>LabelAltura}:"
                         class="sapUiSmallMargin"
                         width="4rem"
                     />
                     <Input
                         id="inputAltura"
-                        placeholder="{i18n>Altura}"
+                        placeholder="{i18n>PlaceholderAltura}"
                         type="Number"
                         change=".aoMudarAltura"
                         width="50%"
@@ -177,6 +178,7 @@
                         id="radioBtnVivoMorto"
                         columns="2"
                         valueState="None"
+                        select="aoSelecionarCondicao"
                     >
                         <RadioButton
                             id="radioBtnVivo"
@@ -198,7 +200,7 @@
                     type="Accept"
                     text="{i18n>BotaoAdicionar}"
                     id="criarPersonagemBtn"
-                    press=".onCriarPersonagem"
+                    press=".aoCriarPersonagem"
                     class="sapUiTinyMarginEnd"
                     enabled="true"
                 >
