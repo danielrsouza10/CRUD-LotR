@@ -39,6 +39,8 @@ sap.ui.define([], function () {
           const erro = await response.json();
           throw erro;
         }
+        const mensagemDeSucesso = "Personagem adicionado com sucesso!";
+        MessageBox.show(mensagemDeSucesso);
         return await response.json();
       } catch (erro) {
         throw erro;

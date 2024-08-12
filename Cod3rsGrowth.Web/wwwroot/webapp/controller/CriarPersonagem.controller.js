@@ -42,10 +42,7 @@ sap.ui.define(
             ? "Success"
             : "Error";
           objeto.setValueState(valueState);
-
-          if (this._validarNome(nomeInserido)) {
-            this.personagem.nome = nomeInserido;
-          }
+          this.personagem.nome = nomeInserido;
 
           console.log(this.personagem);
         },
@@ -54,32 +51,32 @@ sap.ui.define(
           const racaSelecionada = objeto.getSelectedKey();
           this.personagem.idRaca = parseInt(racaSelecionada);
           console.log(this.personagem);
-          return "";
         },
         aoMudarProfissaoNaComboBox: function (oEvent) {
           const objeto = oEvent.getSource();
           const profissaoSelecionada = objeto.getSelectedKey();
           this.personagem.profissao = parseInt(profissaoSelecionada);
           console.log(this.personagem);
-          return "";
         },
         aoMudarIdade: function (oEvent) {
           const objeto = oEvent.getSource();
           const idadeInserida = objeto.getValue();
-          if (this._validarIdade(idadeInserida)) {
-            this.personagem.idade = parseInt(idadeInserida);
-          }
+          let valueState = this._validarIdade(idadeInserida)
+            ? "Success"
+            : "Error";
+          objeto.setValueState(valueState);
+          this.personagem.idade = parseInt(idadeInserida);
           console.log(this.personagem);
-          return "";
         },
         aoMudarAltura: function (oEvent) {
           const objeto = oEvent.getSource();
           const alturaInserida = objeto.getValue();
-          if (this._validarAltura(alturaInserida)) {
-            this.personagem.altura = parseInt(alturaInserida);
-          }
+          let valueState = this._validarAltura(alturaInserida)
+            ? "Success"
+            : "Error";
+          objeto.setValueState(valueState);
+          this.personagem.altura = parseInt(alturaInserida);
           console.log(this.personagem);
-          return "";
         },
         aoSelecionarCondicao: function (oEvent) {
           const condicaoSelecionada = oEvent.getSource().getSelectedIndex();
@@ -99,64 +96,51 @@ sap.ui.define(
           if (this.personagem.estaVivo == null) {
             this.personagem.estaVivo = true;
           }
-          try {
-            const personagemCriado =
-              await PersonagemService.adicionarPersonagem(this.personagem);
-            MessageBox.show("Personagem adicionado com sucesso!");
-          } catch (erros) {
-            this._exibirErros(erros);
+          if (this._validarNovoPersonagem(this.personagem)) {
+            try {
+              const personagemCriado =
+                await PersonagemService.adicionarPersonagem(this.personagem);
+            } catch (erros) {
+              this._exibirErros(erros);
+            }
           }
         },
 
-        // _validarInputUsuario: function (nomeInserido) {
-        //   let erroValidacao = false;
-        //   const nomeInseridoInput = nomeInserido.getValue();
-        //   const alturaInseridaInput = nomeInserido.getValue(); //alterar quando implementar
-        //   const idadeInseridaInput = nomeInserido.getValue(); //alterar quando implementar
-
-        // let contemCaracteresEspeciais =
-        //   this._verificarCaracteresEspeciais(nomeInseridoInput);
-        // let tamanhoDaString = this._verificarTamanhoString(nomeInseridoInput);
-        //   let verificarAltura = this._verificarInputAltura(alturaInseridaInput);
-        //   let verificarIdade = this._verificarInputIdade(idadeInseridaInput);
-
-        //   if (
-        //     !contemCaracteresEspeciais &&
-        //     tamanhoDaString &&
-        //     verificarAltura &&
-        //     verificarIdade
-        //   ) {
-        //     erroValidacao = true;
-        //     return erroValidacao;
-        //     let valueState = this._verificarTamanhoString(nomeInseridoInput)
-        //       ? "Error"
-        //       : "Success"; //valor visual do input do usuario no front
-        //     nomeInserido.setValueState(valueState);
-        //   }
-
-        //   this._verificarCaracteresEspeciais(textoInput);
-
-        //   try {
-        //     binding.getType().validateValue(inputUsuario.getValue());
-        // 	valueState = "Success";
-        //   } catch (exception) {
-        //     valueState = "Error";
-        //     erroValidacao = true;
-        //   }
-        //   nomeInserido.setValueState(valueState);
-
-        //   return erroValidacao;
-        // },
+        _validarNovoPersonagem: function (personagem) {
+          let personagemValido = false;
+          const nomeInseridoInput = this._validarNome(personagem.nome);
+          if (!nomeInseridoInput) {
+            return personagemValido;
+          }
+          const idadeInseridaInput = this._validarIdade(personagem.idade);
+          if (!idadeInseridaInput) {
+            return personagemValido;
+          }
+          const alturaInseridaInput = this._validarAltura(personagem.altura);
+          if (!alturaInseridaInput) {
+            return personagemValido;
+          }
+          personagemValido = true;
+          return personagemValido;
+        },
 
         _validarNome: function (nomeInserido) {
           let nomeValido = false;
           const contemCaracteresEspeciais =
             this._verificarCaracteresEspeciais(nomeInserido);
-          const tamanhoDaString = this._verificarTamanhoString(nomeInserido);
-          if (!contemCaracteresEspeciais && tamanhoDaString) {
-            nomeValido = true;
+          if (contemCaracteresEspeciais) {
+            const mensagemDeErro =
+              "O nome não deve conter números ou caracteres especiais";
+            MessageBox.error(mensagemDeErro);
             return nomeValido;
           }
+          const tamanhoDaString = this._verificarTamanhoString(nomeInserido);
+          if (!tamanhoDaString) {
+            const mensagemDeErro = "O nome precisa ter pelo menos 3 caracteres";
+            MessageBox.error(mensagemDeErro);
+            return nomeValido;
+          }
+          nomeValido = true;
           return nomeValido;
         },
 
@@ -172,19 +156,33 @@ sap.ui.define(
 
         _validarIdade(idadeInserida) {
           const idadeMinima = 0;
-          return idadeInserida >= idadeMinima;
+          let idadeValida = false;
+          if (idadeInserida < idadeMinima) {
+            const mensagemDeErro = "Idade inválida";
+            MessageBox.error(mensagemDeErro);
+            return idadeValida;
+          }
+          idadeValida = true;
+          return idadeValida;
         },
 
         _validarAltura(alturaInserida) {
           const alturaMinima = 0;
-          return alturaInserida >= alturaMinima;
+          let alturaValida = false;
+          if (alturaInserida < alturaMinima) {
+            const mensagemDeErro = "Altura inválida";
+            MessageBox.error(mensagemDeErro);
+            return alturaValida;
+          }
+          alturaValida = true;
+          return alturaValida;
         },
 
         _exibirErros: function (erros) {
           const tituloMessageBox = "erros.errors";
           let mensagemDeErro = Object.values(erros).join(" ");
           console.log(erros);
-          MessageBox.show(mensagemDeErro);
+          MessageBox.error(mensagemDeErro);
         },
       }
     );
