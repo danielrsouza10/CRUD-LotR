@@ -27,6 +27,7 @@ sap.ui.define(
 
         aoCoincidirRota: function () {
           this.loadRacas();
+          this._limparInputs();
         },
         loadRacas: async function () {
           const racas = await RacaService.obterTodos(this.filtros);
@@ -205,19 +206,29 @@ sap.ui.define(
             dependentOn: this.getView(),
           });
         },
+
         _limparInputs: function () {
           const stringVazia = "";
           const chaveRacaInicial = 1;
           const indexProfissaoInicial = 0;
           const condicaoInicial = 0;
+          const valueStatePadrao = "None";
 
           this.byId("inputNome").setValue(stringVazia);
+          this.byId("inputNome").setValueState(valueStatePadrao);
+
           this.byId("comboBoxRacas").setSelectedKey(chaveRacaInicial);
+
           this.byId("comboBoxProfissoes").setSelectedIndex(
             indexProfissaoInicial
           );
+
           this.byId("inputIdade").setValue(stringVazia);
+          this.byId("inputIdade").setValueState(valueStatePadrao);
+
           this.byId("inputAltura").setValue(stringVazia);
+          this.byId("inputAltura").setValueState(valueStatePadrao);
+
           this.byId("radioBtnVivoMorto").setSelectedIndex(condicaoInicial);
         },
       }
