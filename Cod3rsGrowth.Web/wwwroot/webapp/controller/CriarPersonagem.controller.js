@@ -21,6 +21,7 @@ sap.ui.define(
         onInit: function () {
           this.filtros = {};
           this.personagem = {};
+          this.errosDeValidacao = {};
           const rota = "criarPersonagem";
           this.vincularRota(rota, this.aoCoincidirRota);
         },
@@ -91,7 +92,7 @@ sap.ui.define(
                 dependentOn: this.getView(),
               });
               this._limparInputs();
-              const tempoParaVisualizarMensagem = 3000;
+              const tempoParaVisualizarMensagem = 2000;
               setTimeout(() => this.onNavBack(), tempoParaVisualizarMensagem);
             } catch (erros) {
               this._exibirErros(erros);
@@ -102,18 +103,13 @@ sap.ui.define(
         _validarNovoPersonagem: function (personagem) {
           let personagemValido = false;
           const nomeInseridoInput = this._validarNome(personagem.nome);
-          if (!nomeInseridoInput) {
-            return personagemValido;
-          }
           const idadeInseridaInput = this._validarIdade(personagem.idade);
-          if (!idadeInseridaInput) {
-            return personagemValido;
-          }
           const alturaInseridaInput = this._validarAltura(personagem.altura);
-          if (!alturaInseridaInput) {
+          if (nomeInseridoInput && idadeInseridaInput && alturaInseridaInput) {
+            personagemValido = true;
             return personagemValido;
           }
-          personagemValido = true;
+          this._exibirErros(this.errosDeValidacao);
           return personagemValido;
         },
 
@@ -121,58 +117,47 @@ sap.ui.define(
           let nomeValido = false;
           const contemCaracteresEspeciais =
             this._verificarCaracteresEspeciais(nomeInserido);
-          if (contemCaracteresEspeciais) {
-            const mensagemDeErro =
-              "O nome não pode conter números, espaços ou caracteres especiais";
-            const tituloErro = "Nome Inválido";
-            MessageBox.error(mensagemDeErro, {
-              title: tituloErro,
-              contentWidth: "35%",
-              dependentOn: this.getView(),
-            });
-            return nomeValido;
-          }
           const tamanhoDaString = this._verificarTamanhoString(nomeInserido);
-          if (!tamanhoDaString) {
-            const mensagemDeErro = "O nome precisa ter pelo menos 3 caracteres";
-            const tituloErro = "Nome Inválido";
-            MessageBox.error(mensagemDeErro, {
-              title: tituloErro,
-              contentWidth: "35%",
-              dependentOn: this.getView(),
-            });
+          if (!contemCaracteresEspeciais && tamanhoDaString) {
+            nomeValido = true;
             return nomeValido;
           }
-          nomeValido = true;
           return nomeValido;
         },
 
         _verificarCaracteresEspeciais: function (str) {
           const regex = /[^a-zA-Z]/;
+          if (regex.test(str)) {
+            const mensagemDeErro =
+              "O nome não pode conter números, espaços ou caracteres especiais";
+            this.errosDeValidacao.caracteresEspeciais = mensagemDeErro;
+            return regex.test(str);
+          }
+          delete this.errosDeValidacao.caracteresEspeciais;
           return regex.test(str);
         },
 
         _verificarTamanhoString: function (str) {
           const tamanhoMinimo = 3;
-          if (str !== null) {
+          if (str.length < tamanhoMinimo) {
+            const mensagemDeErro = "O nome precisa ter pelo menos 3 caracteres";
+            this.errosDeValidacao.tamanhoDaString = mensagemDeErro;
             return str.length >= tamanhoMinimo;
           }
-          return false;
+          delete this.errosDeValidacao.tamanhoDaString;
+          return str.length >= tamanhoMinimo;
         },
 
         _validarIdade(idadeInserida) {
           const idadeMinima = 0;
           let idadeValida = false;
           if (idadeInserida < idadeMinima) {
-            const mensagemDeErro = "O valor precisa ser maior do que zero";
-            const tituloErro = "Idade inválida";
-            MessageBox.error(mensagemDeErro, {
-              title: tituloErro,
-              contentWidth: "35%",
-              dependentOn: this.getView(),
-            });
+            const mensagemDeErro =
+              "O valor da idade precisa ser maior do que zero";
+            this.errosDeValidacao.idadeMinima = mensagemDeErro;
             return idadeValida;
           }
+          delete this.errosDeValidacao.idadeMinima;
           idadeValida = true;
           return idadeValida;
         },
@@ -181,30 +166,51 @@ sap.ui.define(
           const alturaMinima = 0;
           let alturaValida = false;
           if (alturaInserida < alturaMinima) {
-            const mensagemDeErro = "O valor precisa ser maior do que zero";
-            const tituloErro = "Altura inválida";
-            MessageBox.error(mensagemDeErro, {
-              title: tituloErro,
-              contentWidth: "35%",
-              dependentOn: this.getView(),
-            });
+            const mensagemDeErro =
+              "O valor da altura precisa ser maior do que zero";
+            this.errosDeValidacao.alturaMinima = mensagemDeErro;
             return alturaValida;
           }
+          delete this.errosDeValidacao.alturaMinima;
           alturaValida = true;
           return alturaValida;
         },
 
         _exibirErros: function (erros) {
           console.log(erros);
-          let mensagemDeErro = Object.values(erros.extensions.erros).join(" ");
-          const tituloErro = erros.title;
-          const detalhesDoErro = erros.details;
-          MessageBox.error(mensagemDeErro, {
-            title: tituloErro,
-            details: detalhesDoErro,
-            contentWidth: "35%",
-            dependentOn: this.getView(),
-          });
+          console.log(typeof erros);
+          if (erros.status) {
+            let mensagemDeErro = Object.values(erros.extensions.erros).join(
+              ". "
+            );
+            const tituloErro = erros.title;
+            const detalhesDoErro = erros.detail;
+            MessageBox.error(mensagemDeErro, {
+              title: tituloErro,
+              details: detalhesDoErro,
+              contentWidth: "60%",
+              dependentOn: this.getView(),
+            });
+          }
+          if (
+            this.errosDeValidacao.caracteresEspeciais ||
+            this.errosDeValidacao.tamanhoDaString ||
+            this.errosDeValidacao.idadeMinima ||
+            this.errosDeValidacao.alturaMinima
+          ) {
+            let mensagemDeErro = Object.values(this.errosDeValidacao).join(
+              ".\n"
+            );
+            const tituloErro = "Erro ao criar personagem";
+            const detailsErro =
+              "Corrija os campos acima para prosseguir com a criação do personagem";
+            MessageBox.error(mensagemDeErro, {
+              title: tituloErro,
+              details: detailsErro,
+              contentWidth: "35%",
+              dependentOn: this.getView(),
+            });
+          }
         },
 
         _limparInputs: function () {
