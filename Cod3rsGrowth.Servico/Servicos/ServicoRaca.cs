@@ -20,7 +20,7 @@ namespace Servico.Servicos
         public IEnumerable<Raca> ObterTodos(Filtro filtro) => _servicoRepositorio.ObterTodos(filtro);
         public Raca ObterPorId(int id) => id < 0 ? throw new ArgumentOutOfRangeException("O ID deve ser maior que zero") : _servicoRepositorio.ObterPorId(id);
         public void Deletar(int id) => _servicoRepositorio.Deletar(id);
-        public void Criar(Raca raca)
+        public int Criar(Raca raca)
         {
             var resultadoValidacao = _racaValidacao
                 .Validate(raca, options => options.IncludeRuleSets("Criacao"));
@@ -28,7 +28,7 @@ namespace Servico.Servicos
             {
                 throw new ValidationException(resultadoValidacao.Errors);
             }
-            _servicoRepositorio.Criar(raca);
+            return _servicoRepositorio.Criar(raca);
         }
         public Raca Editar(Raca raca)
         {
