@@ -1,4 +1,4 @@
-sap.ui.define([], function () {
+sap.ui.define(["sap/m/MessageBox"], function (MessageBox) {
   "use strict";
 
   const URL_TODOS_OS_PERSONAGENS =
@@ -39,8 +39,7 @@ sap.ui.define([], function () {
           const erro = await response.json();
           throw erro;
         }
-        const mensagemDeSucesso = "Personagem adicionado com sucesso!";
-        MessageBox.show(mensagemDeSucesso);
+
         return await response.json();
       } catch (erro) {
         throw erro;

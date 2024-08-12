@@ -42,21 +42,6 @@ sap.ui.define(
             ? "Success"
             : "Error";
           objeto.setValueState(valueState);
-          this.personagem.nome = nomeInserido;
-
-          console.log(this.personagem);
-        },
-        aoMudarRacaNaComboBox: function (oEvent) {
-          const objeto = oEvent.getSource();
-          const racaSelecionada = objeto.getSelectedKey();
-          this.personagem.idRaca = parseInt(racaSelecionada);
-          console.log(this.personagem);
-        },
-        aoMudarProfissaoNaComboBox: function (oEvent) {
-          const objeto = oEvent.getSource();
-          const profissaoSelecionada = objeto.getSelectedKey();
-          this.personagem.profissao = parseInt(profissaoSelecionada);
-          console.log(this.personagem);
         },
         aoMudarIdade: function (oEvent) {
           const objeto = oEvent.getSource();
@@ -65,8 +50,6 @@ sap.ui.define(
             ? "Success"
             : "Error";
           objeto.setValueState(valueState);
-          this.personagem.idade = parseInt(idadeInserida);
-          console.log(this.personagem);
         },
         aoMudarAltura: function (oEvent) {
           const objeto = oEvent.getSource();
@@ -75,31 +58,40 @@ sap.ui.define(
             ? "Success"
             : "Error";
           objeto.setValueState(valueState);
-          this.personagem.altura = parseInt(alturaInserida);
-          console.log(this.personagem);
-        },
-        aoSelecionarCondicao: function (oEvent) {
-          const condicaoSelecionada = oEvent.getSource().getSelectedIndex();
-          const condicaoVivo = 0;
-          this.personagem.estaVivo =
-            condicaoSelecionada == condicaoVivo ? true : false;
-          console.log(this.personagem);
         },
 
         aoCriarPersonagem: async function (oEvent) {
-          if (this.personagem.idRaca == null) {
-            this.personagem.idRaca = 1;
-          }
-          if (this.personagem.profissao == null) {
-            this.personagem.profissao = 1;
-          }
-          if (this.personagem.estaVivo == null) {
-            this.personagem.estaVivo = true;
-          }
+          this.personagem.nome = this.byId("inputNome").getValue();
+          this.personagem.idRaca = parseInt(
+            this.byId("comboBoxRacas").getSelectedKey()
+          );
+          this.personagem.profissao = parseInt(
+            this.byId("comboBoxProfissoes").getSelectedIndex()
+          );
+          this.personagem.idade = parseInt(this.byId("inputIdade").getValue());
+          this.personagem.altura = parseFloat(
+            this.byId("inputAltura").getValue()
+          );
+          const condicaoVivo = 0;
+          this.personagem.estaVivo =
+            this.byId("radioBtnVivoMorto").getSelectedIndex() == condicaoVivo
+              ? true
+              : false;
+          console.log(this.personagem);
+
           if (this._validarNovoPersonagem(this.personagem)) {
             try {
               const personagemCriado =
                 await PersonagemService.adicionarPersonagem(this.personagem);
+              const mensagemDeSucesso = "Personagem adicionado com sucesso!";
+              MessageBox.show(mensagemDeSucesso, {
+                icon: sap.m.MessageBox.Icon.SUCCESS,
+                title: "Sucesso",
+                dependentOn: this.getView(),
+              });
+              this._limparInputs();
+              const tempoParaVisualizarMensagem = 3000;
+              setTimeout(() => this.onNavBack(), tempoParaVisualizarMensagem);
             } catch (erros) {
               this._exibirErros(erros);
             }
@@ -130,14 +122,24 @@ sap.ui.define(
             this._verificarCaracteresEspeciais(nomeInserido);
           if (contemCaracteresEspeciais) {
             const mensagemDeErro =
-              "O nome não deve conter números ou caracteres especiais";
-            MessageBox.error(mensagemDeErro);
+              "O nome não pode conter números, espaços ou caracteres especiais";
+            const tituloErro = "Nome Inválido";
+            MessageBox.error(mensagemDeErro, {
+              title: tituloErro,
+              contentWidth: "35%",
+              dependentOn: this.getView(),
+            });
             return nomeValido;
           }
           const tamanhoDaString = this._verificarTamanhoString(nomeInserido);
           if (!tamanhoDaString) {
             const mensagemDeErro = "O nome precisa ter pelo menos 3 caracteres";
-            MessageBox.error(mensagemDeErro);
+            const tituloErro = "Nome Inválido";
+            MessageBox.error(mensagemDeErro, {
+              title: tituloErro,
+              contentWidth: "35%",
+              dependentOn: this.getView(),
+            });
             return nomeValido;
           }
           nomeValido = true;
@@ -151,15 +153,23 @@ sap.ui.define(
 
         _verificarTamanhoString: function (str) {
           const tamanhoMinimo = 3;
-          return str.length >= tamanhoMinimo;
+          if (str !== null) {
+            return str.length >= tamanhoMinimo;
+          }
+          return false;
         },
 
         _validarIdade(idadeInserida) {
           const idadeMinima = 0;
           let idadeValida = false;
           if (idadeInserida < idadeMinima) {
-            const mensagemDeErro = "Idade inválida";
-            MessageBox.error(mensagemDeErro);
+            const mensagemDeErro = "O valor precisa ser maior do que zero";
+            const tituloErro = "Idade inválida";
+            MessageBox.error(mensagemDeErro, {
+              title: tituloErro,
+              contentWidth: "35%",
+              dependentOn: this.getView(),
+            });
             return idadeValida;
           }
           idadeValida = true;
@@ -170,8 +180,13 @@ sap.ui.define(
           const alturaMinima = 0;
           let alturaValida = false;
           if (alturaInserida < alturaMinima) {
-            const mensagemDeErro = "Altura inválida";
-            MessageBox.error(mensagemDeErro);
+            const mensagemDeErro = "O valor precisa ser maior do que zero";
+            const tituloErro = "Altura inválida";
+            MessageBox.error(mensagemDeErro, {
+              title: tituloErro,
+              contentWidth: "35%",
+              dependentOn: this.getView(),
+            });
             return alturaValida;
           }
           alturaValida = true;
@@ -179,10 +194,31 @@ sap.ui.define(
         },
 
         _exibirErros: function (erros) {
-          const tituloMessageBox = "erros.errors";
-          let mensagemDeErro = Object.values(erros).join(" ");
           console.log(erros);
-          MessageBox.error(mensagemDeErro);
+          let mensagemDeErro = Object.values(erros.extensions.erros).join(" ");
+          const tituloErro = erros.title;
+          const detalhesDoErro = erros.details;
+          MessageBox.error(mensagemDeErro, {
+            title: tituloErro,
+            details: detalhesDoErro,
+            contentWidth: "35%",
+            dependentOn: this.getView(),
+          });
+        },
+        _limparInputs: function () {
+          const stringVazia = "";
+          const chaveRacaInicial = 1;
+          const indexProfissaoInicial = 0;
+          const condicaoInicial = 0;
+
+          this.byId("inputNome").setValue(stringVazia);
+          this.byId("comboBoxRacas").setSelectedKey(chaveRacaInicial);
+          this.byId("comboBoxProfissoes").setSelectedIndex(
+            indexProfissaoInicial
+          );
+          this.byId("inputIdade").setValue(stringVazia);
+          this.byId("inputAltura").setValue(stringVazia);
+          this.byId("radioBtnVivoMorto").setSelectedIndex(condicaoInicial);
         },
       }
     );
