@@ -111,7 +111,7 @@
         "criarPersonagem": {
           "id": "criarPersonagem",
           "path": "ui5.o_senhor_dos_aneis.view",
-          "name": "criarPersonagem",
+          "name": "CriarPersonagem",
           "level": "3"
         },
         "criarRaca": {

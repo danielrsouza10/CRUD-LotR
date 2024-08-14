@@ -188,7 +188,7 @@ sap.ui.define(
             MessageBox.error(mensagemDeErro, {
               title: tituloErro,
               details: detalhesDoErro,
-              contentWidth: "60%",
+              contentWidth: "400px",
               dependentOn: this.getView(),
             });
           }
@@ -207,7 +207,7 @@ sap.ui.define(
             MessageBox.error(mensagemDeErro, {
               title: tituloErro,
               details: detailsErro,
-              contentWidth: "35%",
+              contentWidth: "300px",
               dependentOn: this.getView(),
             });
           }

@@ -149,7 +149,6 @@
                         type="Number"
                         change=".aoMudarIdade"
                         width="50%"
-
                     />
                 </HBox>
                 <HBox alignItems="Center">
