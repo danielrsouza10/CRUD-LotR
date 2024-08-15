@@ -19,7 +19,7 @@
             fitContainer="true"
         >
             <Panel
-                headerText="Detalhes do Personagem"
+                headerText="{i18n>headerTextCriarPersonagem}"
                 class="sapUiContentPadding"
             >
                 <HBox alignItems="Center">
