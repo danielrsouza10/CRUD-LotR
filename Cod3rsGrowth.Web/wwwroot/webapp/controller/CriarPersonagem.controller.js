@@ -14,19 +14,24 @@ sap.ui.define(
     MessageBox
   ) {
     "use strict";
-
+    const ID_INPUT_NOME = "inputNome",
+      ID_COMBOBOX_RACAS = "comboBoxRacas",
+      ID_COMBOBOX_PROFISSOES = "comboBoxProfissoes",
+      ID_INPUT_IDADE = "inputIdade",
+      ID_INPUT_ALTURA = "inputAltura",
+      ID_RADIO_BTN_VIVOMORTO = "radioBtnVivoMorto";
     return BaseController.extend(
       "ui5.o_senhor_dos_aneis.controller.CriarPersonagem",
       {
         onInit: function () {
-          this.filtros = {};
-          this.personagem = {};
-          this.errosDeValidacao = {};
           const rota = "criarPersonagem";
           this.vincularRota(rota, this.aoCoincidirRota);
         },
 
         aoCoincidirRota: function () {
+          this.filtros = {};
+          this.personagem = {};
+          this.errosDeValidacao = {};
           this.loadRacas();
           this._limparInputs();
         },
@@ -55,6 +60,7 @@ sap.ui.define(
         },
         aoMudarAltura: function (oEvent) {
           const objeto = oEvent.getSource();
+          this._aoMudarInput(objeto);
           const alturaInserida = objeto.getValue();
           let valueState = this._validarAltura(alturaInserida)
             ? "Success"
@@ -63,23 +69,24 @@ sap.ui.define(
         },
 
         aoCriarPersonagem: async function (oEvent) {
-          this.personagem.nome = this.byId("inputNome").getValue();
+          this.personagem.nome = this.byId(ID_INPUT_NOME).getValue();
           this.personagem.idRaca = parseInt(
-            this.byId("comboBoxRacas").getSelectedKey()
+            this.byId(ID_COMBOBOX_RACAS).getSelectedKey()
           );
           this.personagem.profissao = parseInt(
-            this.byId("comboBoxProfissoes").getSelectedIndex()
+            this.byId(ID_COMBOBOX_PROFISSOES).getSelectedIndex()
           );
-          this.personagem.idade = parseInt(this.byId("inputIdade").getValue());
+          this.personagem.idade = parseInt(
+            this.byId(ID_INPUT_IDADE).getValue()
+          );
           this.personagem.altura = parseFloat(
-            this.byId("inputAltura").getValue()
+            this.byId(ID_INPUT_ALTURA).getValue()
           );
           const condicaoVivo = 0;
           this.personagem.estaVivo =
-            this.byId("radioBtnVivoMorto").getSelectedIndex() == condicaoVivo
+            this.byId(ID_RADIO_BTN_VIVOMORTO).getSelectedIndex() == condicaoVivo
               ? true
               : false;
-          console.log(this.personagem);
 
           if (this._validarNovoPersonagem(this.personagem)) {
             try {
@@ -99,6 +106,8 @@ sap.ui.define(
             }
           }
         },
+
+        _aoMudarInput: function (objeto) {},
 
         _validarNovoPersonagem: function (personagem) {
           let personagemValido = false;
@@ -177,11 +186,10 @@ sap.ui.define(
         },
 
         _exibirErros: function (erros) {
-          console.log(erros);
-          console.log(typeof erros);
+          const espacoEntreErros = ".\n";
           if (erros.status) {
             let mensagemDeErro = Object.values(erros.extensions.erros).join(
-              ". "
+              espacoEntreErros
             );
             const tituloErro = erros.title;
             const detalhesDoErro = erros.detail;
@@ -199,7 +207,7 @@ sap.ui.define(
             this.errosDeValidacao.alturaMinima
           ) {
             let mensagemDeErro = Object.values(this.errosDeValidacao).join(
-              ".\n"
+              espacoEntreErros
             );
             const tituloErro = "Erro ao criar personagem";
             const detailsErro =
@@ -220,22 +228,22 @@ sap.ui.define(
           const condicaoInicial = 0;
           const valueStatePadrao = "None";
 
-          this.byId("inputNome").setValue(stringVazia);
-          this.byId("inputNome").setValueState(valueStatePadrao);
+          this.byId(ID_INPUT_NOME).setValue(stringVazia);
+          this.byId(ID_INPUT_NOME).setValueState(valueStatePadrao);
 
-          this.byId("comboBoxRacas").setSelectedKey(chaveRacaInicial);
+          this.byId(ID_COMBOBOX_RACAS).setSelectedKey(chaveRacaInicial);
 
-          this.byId("comboBoxProfissoes").setSelectedIndex(
+          this.byId(ID_COMBOBOX_PROFISSOES).setSelectedIndex(
             indexProfissaoInicial
           );
 
-          this.byId("inputIdade").setValue(stringVazia);
-          this.byId("inputIdade").setValueState(valueStatePadrao);
+          this.byId(ID_INPUT_IDADE).setValue(stringVazia);
+          this.byId(ID_INPUT_IDADE).setValueState(valueStatePadrao);
 
-          this.byId("inputAltura").setValue(stringVazia);
-          this.byId("inputAltura").setValueState(valueStatePadrao);
+          this.byId(ID_INPUT_ALTURA).setValue(stringVazia);
+          this.byId(ID_INPUT_ALTURA).setValueState(valueStatePadrao);
 
-          this.byId("radioBtnVivoMorto").setSelectedIndex(condicaoInicial);
+          this.byId(ID_RADIO_BTN_VIVOMORTO).setSelectedIndex(condicaoInicial);
         },
       }
     );
