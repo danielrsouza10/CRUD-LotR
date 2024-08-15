@@ -175,7 +175,7 @@ sap.ui.define(
         },
         onNavToCriarPersonagem: function () {
           const rotaCriarPersonagem = "criarPersonagem";
-          this.getRouter().navTo(rotaCriarPersonagem);
+          this.onNavTo(rotaCriarPersonagem);
         },
       }
     );

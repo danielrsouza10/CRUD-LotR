@@ -35,6 +35,7 @@ sap.ui.define(
           this.loadRacas();
           this._limparInputs();
         },
+
         loadRacas: async function () {
           const racas = await RacaService.obterTodos(this.filtros);
           const modelo = new JSONModel(racas);
@@ -42,51 +43,21 @@ sap.ui.define(
 
           this.getView().setModel(modelo, modeloRaca);
         },
+
         aoMudarNome: function (oEvent) {
-          const objeto = oEvent.getSource();
-          const nomeInserido = objeto.getValue();
-          let valueState = this._validarNome(nomeInserido)
-            ? "Success"
-            : "Error";
-          objeto.setValueState(valueState);
+          this._aoMudarInput(oEvent, this._validarNome.bind(this));
         },
+
         aoMudarIdade: function (oEvent) {
-          const objeto = oEvent.getSource();
-          const idadeInserida = objeto.getValue();
-          let valueState = this._validarIdade(idadeInserida)
-            ? "Success"
-            : "Error";
-          objeto.setValueState(valueState);
+          this._aoMudarInput(oEvent, this._validarIdade.bind(this));
         },
+
         aoMudarAltura: function (oEvent) {
-          const objeto = oEvent.getSource();
-          this._aoMudarInput(objeto);
-          const alturaInserida = objeto.getValue();
-          let valueState = this._validarAltura(alturaInserida)
-            ? "Success"
-            : "Error";
-          objeto.setValueState(valueState);
+          this._aoMudarInput(oEvent, this._validarAltura.bind(this));
         },
 
         aoCriarPersonagem: async function (oEvent) {
-          this.personagem.nome = this.byId(ID_INPUT_NOME).getValue();
-          this.personagem.idRaca = parseInt(
-            this.byId(ID_COMBOBOX_RACAS).getSelectedKey()
-          );
-          this.personagem.profissao = parseInt(
-            this.byId(ID_COMBOBOX_PROFISSOES).getSelectedIndex()
-          );
-          this.personagem.idade = parseInt(
-            this.byId(ID_INPUT_IDADE).getValue()
-          );
-          this.personagem.altura = parseFloat(
-            this.byId(ID_INPUT_ALTURA).getValue()
-          );
-          const condicaoVivo = 0;
-          this.personagem.estaVivo =
-            this.byId(ID_RADIO_BTN_VIVOMORTO).getSelectedIndex() == condicaoVivo
-              ? true
-              : false;
+          this._pegarValoresDoPersonagemNaTela();
 
           if (this._validarNovoPersonagem(this.personagem)) {
             try {
@@ -107,7 +78,14 @@ sap.ui.define(
           }
         },
 
-        _aoMudarInput: function (objeto) {},
+        _aoMudarInput: function (oEvent, funcaoDeValidacao) {
+          const objeto = oEvent.getSource();
+          const nomeInserido = objeto.getValue();
+          let valueState = funcaoDeValidacao(nomeInserido)
+            ? "Success"
+            : "Error";
+          objeto.setValueState(valueState);
+        },
 
         _validarNovoPersonagem: function (personagem) {
           let personagemValido = false;
@@ -219,6 +197,27 @@ sap.ui.define(
               dependentOn: this.getView(),
             });
           }
+        },
+
+        _pegarValoresDoPersonagemNaTela: function () {
+          this.personagem.nome = this.byId(ID_INPUT_NOME).getValue();
+          this.personagem.idRaca = parseInt(
+            this.byId(ID_COMBOBOX_RACAS).getSelectedKey()
+          );
+          this.personagem.profissao = parseInt(
+            this.byId(ID_COMBOBOX_PROFISSOES).getSelectedIndex()
+          );
+          this.personagem.idade = parseInt(
+            this.byId(ID_INPUT_IDADE).getValue()
+          );
+          this.personagem.altura = parseFloat(
+            this.byId(ID_INPUT_ALTURA).getValue()
+          );
+          const condicaoVivo = 0;
+          this.personagem.estaVivo =
+            this.byId(ID_RADIO_BTN_VIVOMORTO).getSelectedIndex() == condicaoVivo
+              ? true
+              : false;
         },
 
         _limparInputs: function () {
