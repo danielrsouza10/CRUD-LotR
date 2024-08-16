@@ -1,5 +1,10 @@
 sap.ui.define(
-  ["sap/ui/test/opaQunit", "../pages/CriarPersonagem", "../pages/Home"],
+  [
+    "sap/ui/test/opaQunit",
+    "../pages/CriarPersonagem",
+    "../pages/PersonagemLista",
+    "../pages/Home",
+  ],
   function (opaTest) {
     "use strict";
 
@@ -10,7 +15,7 @@ sap.ui.define(
       function (Given, When, Then) {
         // Arrangements
         Given.iStartMyApp({
-          hash: "#/personagem/criarPersonagem",
+          hash: "personagem/criarPersonagem",
         });
 
         //Actions
@@ -33,7 +38,7 @@ sap.ui.define(
       "Deve retornar um erro ao adicionar um personagem sem preencher nenhum input field",
       function (Given, When, Then) {
         Given.iStartMyApp({
-          hash: "#/personagem/criarPersonagem",
+          hash: "personagem/criarPersonagem",
         });
         //Actions
         When.naPaginaDeCriarPersonagem.aTelaFoiCarregadaCorretamente();
@@ -119,7 +124,7 @@ sap.ui.define(
       }
     );
     opaTest(
-      "Deve retornar a pagina home quando pressiono o botao cancelar",
+      "Deve retornar a pagina de listagem de personagens quando pressiono o botao cancelar",
       function (Given, When, Then) {
         //Actions
         When.naPaginaDeCriarPersonagem.euPressionoBotaoFechar();
@@ -127,23 +132,27 @@ sap.ui.define(
         When.naPaginaDeCriarPersonagem.euPressionoOBotaoCancelar();
 
         // Assertions
-        Then.naPaginaHome.oTituloDaPaginaHomeDeveraSer();
+        Then.naPaginaDaListaDePersonagens
+          .oTituloDaPaginaDePersonagensDeveraSer()
+          .and.aUrlDaPaginaDePersonagensDeveraSer();
         // Cleanup
         Then.iTeardownMyApp();
       }
     );
     opaTest(
-      "Deve retornar a pagina home quando pressiono o botao de voltar",
+      "Deve retornar a pagina anterior quando pressiono o botao de voltar",
       function (Given, When, Then) {
         Given.iStartMyApp({
-          hash: "#/personagem/criarPersonagem",
+          hash: "personagem/criarPersonagem",
         });
         //Actions
         When.naPaginaDeCriarPersonagem.aTelaFoiCarregadaCorretamente();
         When.naPaginaDeCriarPersonagem.euPressionoBotaoVoltar();
 
         // Assertions
-        Then.naPaginaHome.oTituloDaPaginaHomeDeveraSer();
+        Then.naPaginaDaListaDePersonagens
+          .oTituloDaPaginaDePersonagensDeveraSer()
+          .and.aUrlDaPaginaDePersonagensDeveraSer();
         // Cleanup
         Then.iTeardownMyApp();
       }
@@ -153,7 +162,7 @@ sap.ui.define(
       function (Given, When, Then) {
         // Arrangements
         Given.iStartMyApp({
-          hash: "#/personagem/criarPersonagem",
+          hash: "personagem/criarPersonagem",
         });
         //Actions
         When.naPaginaDeCriarPersonagem.aTelaFoiCarregadaCorretamente();

@@ -3,16 +3,17 @@ sap.ui.define(
   function (opaTest) {
     "use strict";
 
-    QUnit.module("Personagens");
+    QUnit.module("Lista de Personagens");
 
     opaTest(
       "Deve ser possível carregar mais itens da lista de personagens",
       function (Given, When, Then) {
         // Arrangements
-        Given.iStartMyApp();
+        Given.iStartMyApp({
+          hash: "personagens",
+        });
 
         //Actions
-        When.naPaginaHome.euApertoOBotaoDePersonagens();
         When.naPaginaDaListaDePersonagens.euApertoParaCarregarMaisItensDaListaDePersonagens();
 
         // Assertions

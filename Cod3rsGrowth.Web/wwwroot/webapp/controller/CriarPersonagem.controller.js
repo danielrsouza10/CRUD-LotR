@@ -78,6 +78,11 @@ sap.ui.define(
           }
         },
 
+        onNavToListaDePersonagens: function () {
+          const rotaListaDePersonagens = "listaDePersonagens";
+          this.onNavTo(rotaListaDePersonagens);
+        },
+
         _aoMudarInput: function (oEvent, funcaoDeValidacao) {
           const objeto = oEvent.getSource();
           const nomeInserido = objeto.getValue();
