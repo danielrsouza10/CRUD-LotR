@@ -1,6 +1,7 @@
 using Infra;
 using Servico;
 using Cod3rsGrowth.Web.ExceptionHandler;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +35,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseFileServer(new FileServerOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(app.Environment.ContentRootPath, "wwwroot", "webapp")),
+    EnableDirectoryBrowsing = true
+});
 
 app.UseStaticFiles(new StaticFileOptions()
 {
