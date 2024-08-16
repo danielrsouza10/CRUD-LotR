@@ -1,10 +1,6 @@
 sap.ui.define(
-  [
-    "sap/ui/core/UIComponent",
-    "sap/ui/model/json/JSONModel",
-    "sap/ui/model/resource/ResourceModel",
-  ],
-  (UIComponent, JSONModel, ResourceModel) => {
+  ["sap/ui/core/UIComponent", "sap/ui/model/resource/ResourceModel"],
+  (UIComponent, ResourceModel) => {
     "use strict";
 
     return UIComponent.extend("ui5.o_senhor_dos_aneis.Component", {
