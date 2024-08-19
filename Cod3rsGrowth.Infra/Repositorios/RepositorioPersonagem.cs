@@ -47,7 +47,7 @@ public class RepositorioPersonagem : IRepositorio<Personagem>
         var personagens = _db.Personagem;
         return personagens.FirstOrDefault(p => p.Id == id);
     }
-    public void Criar(Personagem personagem) => _db.Insert(personagem);
+    public int Criar(Personagem personagem) => _db.InsertWithInt32Identity(personagem);
     public Personagem Editar(Personagem personagem)
     {
         var personagens = _db.Personagem.ToList();

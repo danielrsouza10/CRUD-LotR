@@ -31,8 +31,11 @@ sap.ui.define(
           if (hashAnterior !== undefined) {
             window.history.go(-1);
           } else {
-            this.getRouter().navTo("home", {}, true);
+            this.getRouter().navTo("appHome", {});
           }
+        },
+        onNavTo: function (rota, parametros) {
+          this.getRouter().navTo(rota, parametros);
         },
       }
     );

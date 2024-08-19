@@ -24,7 +24,7 @@ public class RepositorioRaca : IRepositorio<Raca>
         var racas = _db.Raca;
         return racas.FirstOrDefault(r => r.Id == id);
     }
-    public void Criar(Raca raca) => _db.Insert(raca);
+    public int Criar(Raca raca) => _db.InsertWithInt32Identity(raca);
     public Raca Editar(Raca raca)
     {
         var racas = _db.Raca.ToList();

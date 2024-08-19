@@ -27,7 +27,7 @@ namespace Cod3rsGrowth.Web.ExceptionHandler
                             problemDetails.Title = "Ocorreram um ou mais erros de validação";
                             problemDetails.Status = StatusCodes.Status400BadRequest;
                             problemDetails.Detail = validationRequestException.StackTrace;
-                            problemDetails.Extensions["Erros:"] = validationRequestException.Errors
+                            problemDetails.Extensions["Erros"] = validationRequestException.Errors
                             .GroupBy(error => error.PropertyName)
                             .ToDictionary(group => group.Key, group => group.First().ErrorMessage);
                         }
@@ -36,14 +36,14 @@ namespace Cod3rsGrowth.Web.ExceptionHandler
                             problemDetails.Title = "O Id da raça não existe";
                             problemDetails.Status = StatusCodes.Status500InternalServerError;
                             problemDetails.Detail = sqlRequestException.StackTrace;
-                            problemDetails.Extensions["Erros:"] = sqlRequestException.Message;
+                            problemDetails.Extensions["Erros"] = sqlRequestException.Message;
                         }
                         else if (exception is Exception requestException)
                         {
                             problemDetails.Title = "Um erro inesperado ocorreu";
                             problemDetails.Status = StatusCodes.Status500InternalServerError;
                             problemDetails.Detail = requestException.StackTrace;
-                            problemDetails.Extensions["Erros:"] = requestException.Message;
+                            problemDetails.Extensions["Erros"] = requestException.Message;
                         }
                         else
                         {

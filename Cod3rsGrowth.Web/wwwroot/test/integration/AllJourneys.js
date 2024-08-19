@@ -5,6 +5,7 @@ sap.ui.define(
     "./journeys/HomeJourney",
     "./journeys/PersonagemListaJourney",
     "./journeys/RacaListaJourney",
+    "./journeys/CriarPersonagemJourney",
   ],
   function (Opa5, Startup) {
     "use strict";

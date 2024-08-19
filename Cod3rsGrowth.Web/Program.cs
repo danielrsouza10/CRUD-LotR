@@ -1,6 +1,7 @@
 using Infra;
 using Servico;
 using Cod3rsGrowth.Web.ExceptionHandler;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,8 +23,11 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.ConfigureProblemDetailsModelState();
 
+var comando = args.FirstOrDefault();
+var connectionString = comando is "--teste" ? Environment.GetEnvironmentVariable("SQLSERVER_CONNECTION_STRING_TESTE") : Environment.GetEnvironmentVariable("SQLSERVER_CONNECTION_STRING");
 
-ModuloDeInjecaoInfra.BindServices(builder.Services);
+
+ModuloDeInjecaoInfra.BindServices(builder.Services, connectionString);
 ModuloDeInjecaoServico.BindServices(builder.Services);
 
 var app = builder.Build();
@@ -34,6 +38,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseFileServer(new FileServerOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(app.Environment.ContentRootPath, "wwwroot", "webapp")),
+    EnableDirectoryBrowsing = true
+});
 
 app.UseStaticFiles(new StaticFileOptions()
 {

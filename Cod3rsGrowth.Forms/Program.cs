@@ -42,13 +42,19 @@ namespace Forms
 
            Application.Run(new MainForm(ServiceProvider.GetRequiredService<ServicoPersonagem>(), ServiceProvider.GetRequiredService<ServicoRaca>()));
         }
+
+       
         public static IServiceProvider ServiceProvider { get; private set; }
+
+
         static IHostBuilder CreateHostBuilder()
         {
+            
+            var connectionString = Environment.GetEnvironmentVariable("SQLSERVER_CONNECTION_STRING");
             return Host.CreateDefaultBuilder()
                 .ConfigureServices((services) =>
                 {
-                   ModuloDeInjecaoInfra.BindServices(services);
+                   ModuloDeInjecaoInfra.BindServices(services, connectionString);
                    ModuloDeInjecaoServico.BindServices(services);
                 });
         }

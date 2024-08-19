@@ -8,7 +8,7 @@ sap.ui.define(
   (BaseController, JSONModel, formatter, RacaService) => {
     "use strict";
 
-    const ROTA_RACAS = "racas";
+    const ROTA_RACAS = "listaDeRacas";
     const LISTA_VAZIA = 0;
 
     return BaseController.extend(
@@ -31,7 +31,8 @@ sap.ui.define(
             ROTA_RACAS,
             Object.keys(this.filtros).length === LISTA_VAZIA
               ? {}
-              : { "?query": this.filtros }
+              : { "?query": this.filtros },
+            true
           );
 
           const racas = await RacaService.obterTodos(this.filtros);
@@ -64,6 +65,10 @@ sap.ui.define(
           this.filtros = {};
           this.byId("searchFieldRacas").setValue(stringVazia);
           this.loadRacas();
+        },
+        onNavToCriarRaca: function () {
+          const rotaCriarRaca = "criarRaca";
+          this.onNavTo(rotaCriarRaca);
         },
       }
     );
