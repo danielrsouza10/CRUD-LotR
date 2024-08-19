@@ -23,8 +23,11 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.ConfigureProblemDetailsModelState();
 
+var comando = args.FirstOrDefault();
+var connectionString = comando is "--teste" ? Environment.GetEnvironmentVariable("SQLSERVER_CONNECTION_STRING_TESTE") : Environment.GetEnvironmentVariable("SQLSERVER_CONNECTION_STRING");
 
-ModuloDeInjecaoInfra.BindServices(builder.Services);
+
+ModuloDeInjecaoInfra.BindServices(builder.Services, connectionString);
 ModuloDeInjecaoServico.BindServices(builder.Services);
 
 var app = builder.Build();
