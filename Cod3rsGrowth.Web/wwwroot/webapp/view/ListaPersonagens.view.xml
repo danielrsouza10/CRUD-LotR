@@ -70,7 +70,7 @@
                     <Image
                         src="{
                                     path: 'personagens>raca',
-                                    formatter: '.formatter.formatarIconePersonagem'
+                                    formatter: '.formatter.formatarIconeListagem'
                                 }"
                         width="2rem"
                         height="2rem"

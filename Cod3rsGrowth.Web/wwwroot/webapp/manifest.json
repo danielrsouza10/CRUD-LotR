@@ -117,7 +117,7 @@
         "criarRaca": {
           "id": "criarRaca",
           "path": "ui5.o_senhor_dos_aneis.view",
-          "name": "criarRaca",
+          "name": "CriarRaca",
           "level": "3"
         }
       }
