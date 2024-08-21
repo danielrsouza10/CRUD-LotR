@@ -37,6 +37,7 @@ sap.ui.define(
     opaTest(
       "Deve retornar um erro ao adicionar um raça sem preencher nenhum input field",
       function (Given, When, Then) {
+        // Arrangements
         Given.iStartMyApp({
           hash: "raca/criarRaca",
         });
@@ -46,13 +47,18 @@ sap.ui.define(
 
         // Assertions
         Then.naPaginaDeCriarRaca.deveAparecerUmaMessageBoxDeErro();
+        // Cleanup
+        Then.iTeardownMyApp();
       }
     );
     opaTest(
       "Deve retornar um erro ao adicionar um raça com o nome menor que 3 caracteres",
       function (Given, When, Then) {
+        // Arrangements
+        Given.iStartMyApp({
+          hash: "raca/criarRaca",
+        });
         //Actions
-        When.naPaginaDeCriarRaca.euPressionoBotaoFechar();
         When.naPaginaDeCriarRaca.aTelaFoiCarregadaCorretamente();
         When.naPaginaDeCriarRaca.euDigitoUmNomeNoInputField("Al");
         When.naPaginaDeCriarRaca.euDigitoUmaLocalizacaoGeograficaNoInputField(
@@ -64,13 +70,18 @@ sap.ui.define(
 
         // Assertions
         Then.naPaginaDeCriarRaca.deveAparecerUmaMessageBoxDeErro();
+        // Cleanup
+        Then.iTeardownMyApp();
       }
     );
     opaTest(
       "Deve retornar um erro ao adicionar um raça com o nome com caracteres invalidos",
       function (Given, When, Then) {
+        // Arrangements
+        Given.iStartMyApp({
+          hash: "raca/criarRaca",
+        });
         //Actions
-        When.naPaginaDeCriarRaca.euPressionoBotaoFechar();
         When.naPaginaDeCriarRaca.aTelaFoiCarregadaCorretamente();
         When.naPaginaDeCriarRaca.euDigitoUmNomeNoInputField("****");
         When.naPaginaDeCriarRaca.euDigitoUmaLocalizacaoGeograficaNoInputField(
@@ -83,20 +94,25 @@ sap.ui.define(
 
         // Assertions
         Then.naPaginaDeCriarRaca.deveAparecerUmaMessageBoxDeErro();
+        // Cleanup
+        Then.iTeardownMyApp();
       }
     );
     opaTest(
       "Deve retornar a pagina de listagem de raças quando pressiono o botao cancelar",
       function (Given, When, Then) {
+        // Arrangements
+        Given.iStartMyApp({
+          hash: "raca/criarRaca",
+        });
         //Actions
-        When.naPaginaDeCriarRaca.euPressionoBotaoFechar();
         When.naPaginaDeCriarRaca.aTelaFoiCarregadaCorretamente();
         When.naPaginaDeCriarRaca.euPressionoOBotaoCancelar();
 
         // Assertions
         Then.naPaginaDaListaDeRacas
           .oTituloDaPaginaDeRacasDeveraSer()
-          .and.aUrlDaPaginaDePersonagensDeveraSer();
+          .and.aUrlDaPaginaDeRacasDeveraSer();
         // Cleanup
         Then.iTeardownMyApp();
       }
@@ -104,6 +120,7 @@ sap.ui.define(
     opaTest(
       "Deve retornar a pagina anterior quando pressiono o botao de voltar",
       function (Given, When, Then) {
+        // Arrangements
         Given.iStartMyApp({
           hash: "raca/criarRaca",
         });
@@ -114,7 +131,7 @@ sap.ui.define(
         // Assertions
         Then.naPaginaDaListaDeRacas
           .oTituloDaPaginaDeRacasDeveraSer()
-          .and.aUrlDaPaginaDePersonagensDeveraSer();
+          .and.aUrlDaPaginaDeRacasDeveraSer();
         // Cleanup
         Then.iTeardownMyApp();
       }
