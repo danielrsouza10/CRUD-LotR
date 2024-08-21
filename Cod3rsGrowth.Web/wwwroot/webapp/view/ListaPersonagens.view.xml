@@ -65,7 +65,13 @@
                 </OverflowToolbar>
             </headerToolbar>
 
-            <CustomListItem id="customListPersonagens">
+            <CustomListItem
+                id="customListPersonagens"
+                highlight="{
+                path: 'personagens>estaVivo',
+                formatter: '.formatter.formatarStatusCondicaoNaLista'
+            }"
+            >
                 <HBox>
                     <Image
                         src="{

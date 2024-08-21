@@ -42,7 +42,15 @@
                     </OverflowToolbar>
                 </headerToolbar>
 
-                <CustomListItem id="customListRaca">
+                <CustomListItem
+                    type="Navigation"
+                    id="customListRaca"
+                    press=".aoSelecionarRacaNaLista"
+                    highlight="{
+                                    path: 'racas>estaExtinta',
+                                    formatter: '.formatter.formatarStatusExtintoNaLista'
+                                }"
+                >
                     <HBox>
                         <Image
                             src="{

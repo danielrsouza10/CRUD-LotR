@@ -87,5 +87,17 @@ sap.ui.define([], () => {
           return "icons/icons8-o-um-anel-48.png";
       }
     },
+    formatarStatusExtintoNaLista(extinto) {
+      if (!extinto) {
+        return "Success";
+      }
+      return "Error";
+    },
+    formatarStatusCondicaoNaLista(vivo) {
+      if (!vivo) {
+        return "Error";
+      }
+      return "Success";
+    },
   };
 });

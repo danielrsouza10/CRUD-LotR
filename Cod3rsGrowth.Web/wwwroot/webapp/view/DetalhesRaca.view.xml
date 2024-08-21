@@ -1,0 +1,12 @@
+<mvc:View
+    controllerName="ui5.o_senhor_dos_aneis.controller.DetalhesRaca"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+>
+    <Page>
+        <content>
+            <Text text="Ola detalhes de raça" />
+        </content>
+    </Page>
+</mvc:View>

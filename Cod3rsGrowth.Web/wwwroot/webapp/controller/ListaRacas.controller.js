@@ -41,6 +41,14 @@ sap.ui.define(
 
           this.getView().setModel(modelo, modeloRaca);
         },
+        aoSelecionarRacaNaLista: function (oEvent) {
+          const idRacaSelecionada = oEvent
+            .getSource()
+            .getBindingContext("racas")
+            .getProperty("id");
+          const rotaDetalhesRaca = "detalhesRaca";
+          this.onNavTo(rotaDetalhesRaca, { id: idRacaSelecionada });
+        },
 
         aoFiltrarRacas: function (oEvent) {
           const filtroRaca = oEvent.getParameter("query");
