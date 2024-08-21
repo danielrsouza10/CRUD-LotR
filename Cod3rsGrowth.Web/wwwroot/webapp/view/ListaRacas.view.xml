@@ -18,7 +18,7 @@
             <List
                 id="listaDeRacas"
                 headerText="Custom Content"
-                mode="Delete"
+                mode="None"
                 items="{racas>/}"
                 growing="true"
                 growingThreshold="5"

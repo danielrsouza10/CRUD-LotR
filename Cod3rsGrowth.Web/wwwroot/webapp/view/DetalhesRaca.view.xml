@@ -4,9 +4,59 @@
     xmlns:mvc="sap.ui.core.mvc"
     displayBlock="true"
 >
-    <Page>
-        <content>
-            <Text text="Ola detalhes de raça" />
+    <Page id="paginaDetalhesRaca"
+        title="{i18n>TituloPaginaDetalhesRaca}"
+        showHeader="true"
+        enableScrolling="true"
+        showNavButton="true"
+        navButtonPress=".onNavBack"
+        class="sapUiResponsiveContentPadding">
+         <content>
+            <HBox>
+                <Image
+                    src="{
+                            path: 'raca>/nome',
+                            formatter: '.formatter.formatarIconeListagem'
+                        }"
+                    width="2rem"
+                    height="2rem"
+                    class="sapUiSmallMargin"
+                />
+                <VBox
+                    class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
+                >
+                    <ObjectIdentifier
+                        title="{raca>/nome}"
+                        class="sapUiTinyMarginBottom"
+                    />
+                    <FlexBox>
+                        <Label
+                            text="{i18n>LabelLocalizacaoGeografica}:"
+                            class="sapUiTinyMarginEnd"
+                        />
+                        <Text text="{raca>/localizacaoGeografica}" />
+                    </FlexBox>
+                    <FlexBox>
+                        <Label
+                            text="{i18n>LabelHabilidadeRacial}:"
+                            class="sapUiTinyMarginEnd"
+                        />
+                        <Text text="{raca>/habilidadeRacial}" />
+                    </FlexBox>
+                    <FlexBox>
+                        <Label
+                            text="{i18n>LabelExtinta}:"
+                            class="sapUiTinyMarginEnd"
+                        />
+                        <Text
+                            text="{
+                                path: 'raca>/estaExtinta', 
+                                formatter: '.formatter.formatarBooleanEstaExtinta'
+                            }"
+                        />
+                    </FlexBox>
+                </VBox>
+            </HBox>
         </content>
     </Page>
 </mvc:View>

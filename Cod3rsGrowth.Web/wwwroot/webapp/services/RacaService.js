@@ -24,21 +24,19 @@ sap.ui.define([], function () {
       }
     },
 
-    obterRaca: async function (idRaca) {
+    obterRaca: function (idRaca) {
       const urlRaca = new URL(`${URL_OBTER_RACA}/${idRaca}`);
 
-      // fetch(urlRaca.href)
-      //   .then((response) => response.json())
-      //   .catch((erro) => erro.json());
-      try {
-        const response = await fetch(urlRaca.href);
-        if (!response.ok) {
-          throw new Error("Sem resposta: " + response.statusText);
-        }
-        return response.json();
-      } catch (erro) {
-        throw new Error("Sem resposta: " + erro);
-      }
+      return fetch(urlRaca.href)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Sem resposta: " + response.statusText);
+          }
+          return response.json();
+        })
+        .catch((erro) => {
+          throw new Error("Sem resposta: " + erro.message);
+        });
     },
 
     adicionarRaca: async function (raca) {
