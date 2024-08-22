@@ -13,8 +13,9 @@ namespace Testes
     {
         public static void BindServices(IServiceCollection services)
         {
+            var connectionString = Environment.GetEnvironmentVariable("SQLSERVER_CONNECTION_STRING_TESTE");
             ModuloDeInjecaoServico.BindServices(services);
-            ModuloDeInjecaoInfra.BindServices(services);
+            ModuloDeInjecaoInfra.BindServices(services, connectionString);
             services.AddScoped<IRepositorio<Personagem>, RepositorioMockPersonagens>();
             services.AddScoped<IRepositorio<Raca>, RepositorioMockRacas>();
         }

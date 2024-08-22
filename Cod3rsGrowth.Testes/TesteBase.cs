@@ -13,9 +13,10 @@ namespace Testes
         }
         public ServiceCollection ObterServiceCollections()
         {
+            var connectionString = Environment.GetEnvironmentVariable("SQLSERVER_CONNECTION_STRING_TESTE");
             var serviceCollection = new ServiceCollection();
             ModuloDeInjecaoTestes.BindServices(serviceCollection);
-            ModuloDeInjecaoInfra.BindServices(serviceCollection);
+            ModuloDeInjecaoInfra.BindServices(serviceCollection, connectionString);
             return serviceCollection;
         }
         public void Dispose() { }

@@ -14,11 +14,12 @@ namespace Testes.Repositorios
         public IEnumerable<Raca> ObterTodos(Filtro filtro) => _listaDeRacas;
         public Raca ObterPorId(int id) => _listaDeRacas.Find(r => r.Id == id) ?? throw new Exception("O ID informado não existe");
 
-        public void Criar(Raca raca)
+        public int Criar(Raca raca)
         {
             const int IncrementoParaONovoId = 1;
             raca.Id = _listaDeRacas.Any() ? _listaDeRacas.Max(r => r.Id) + IncrementoParaONovoId : IncrementoParaONovoId;
             _listaDeRacas.Add(raca);
+            return raca.Id;
         }
 
         public Raca Editar(Raca raca)
