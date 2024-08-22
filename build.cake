@@ -1,6 +1,6 @@
 #addin nuget:?package=Cake.Docker&version=1.3.0
 
-var target = Argument("target", "Clean");
+var target = Argument("target", "Publish");
 var configuration = Argument("configuration", "Release");
 var solutionFolder = "./";
 var publishFolder = "./Publish";
