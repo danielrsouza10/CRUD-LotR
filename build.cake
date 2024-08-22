@@ -1,22 +1,34 @@
-var target = Argument("target", "Test");
+#addin nuget:?package=Cake.Docker&version=1.3.0
+
+var target = Argument("target", "Clean");
 var configuration = Argument("configuration", "Release");
+var solutionFolder = "./";
+var publishFolder = "./Publish";
+var publishDockerFolder = "./PublishDocker";
 
 //////////////////////////////////////////////////////////////////////
 // TASKS
 //////////////////////////////////////////////////////////////////////
+
 Task("Clean")
-    .WithCriteria(c => HasArgument("rebuild"))
     .Does(() =>
 {
-    CleanDirectory($"./Cod3rsGrowth/bin/{configuration}");
+    CleanDirectory(publishFolder);
+});
+Task("Restore")
+    .Does(() =>
+{
+    DotNetRestore(solutionFolder);
 });
 
 Task("Build")
     .IsDependentOn("Clean")
+    .IsDependentOn("Restore")
     .Does(() =>
 {
-    DotNetBuild("./Cod3rsGrowth.sln", new DotNetBuildSettings
+    DotNetBuild(solutionFolder, new DotNetBuildSettings
     {
+        NoRestore = true,
         Configuration = configuration,
     });
 });
@@ -25,12 +37,38 @@ Task("Test")
     .IsDependentOn("Build")
     .Does(() =>
 {
-    DotNetTest("./Cod3rsGrowth.sln", new DotNetTestSettings
+    DotNetTest(solutionFolder, new DotNetTestSettings
     {
-        Configuration = configuration,
+        NoRestore = true,
         NoBuild = true,
+        Configuration = configuration,
     });
 });
+
+Task("Publish")
+    .IsDependentOn("Test")
+    .Does(() =>
+    {
+        DotNetPublish(solutionFolder, new DotNetPublishSettings
+        {
+            NoRestore = true,
+            NoBuild = true,
+            Configuration = configuration,
+            OutputDirectory = publishFolder,
+        });
+    });
+
+// Task("Docker-Build")
+//  .IsDependentOn("Test")
+// .Does(() =>
+// {
+//     var settings = new DockerImageBuildSettings { Tag = new[] { "dockerapp:latest" } };
+//     DockerBuild(settings, "./");
+// });
+
+Task("ExecuteBuild")
+    .IsDependentOn("Publish");
+
 
 
 //////////////////////////////////////////////////////////////////////
