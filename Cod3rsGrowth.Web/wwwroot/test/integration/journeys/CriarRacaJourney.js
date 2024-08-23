@@ -2,7 +2,7 @@ sap.ui.define(
   [
     "sap/ui/test/opaQunit",
     "../pages/CriarRaca",
-    "../pages/RacaLista",
+    "../pages/ListaRacas",
     "../pages/Home",
   ],
   function (opaTest) {

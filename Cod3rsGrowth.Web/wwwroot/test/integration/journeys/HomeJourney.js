@@ -2,8 +2,8 @@ sap.ui.define(
   [
     "sap/ui/test/opaQunit",
     "../pages/Home",
-    "../pages/PersonagemLista",
-    "../pages/RacaLista",
+    "../pages/ListaPersonagens",
+    "../pages/ListaRacas",
     "../pages/NotFound",
   ],
   function (opaTest) {
