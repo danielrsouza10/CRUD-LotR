@@ -16,8 +16,7 @@
     >
         <List
             id="listaDePersonagens"
-            headerText="Custom Content"
-            mode="Delete"
+            mode="None"
             items="{personagens>/}"
             growing="true"
             growingThreshold="5"
@@ -66,6 +65,7 @@
             </headerToolbar>
 
             <CustomListItem
+                type="Navigation"
                 id="customListPersonagens"
                 highlight="{
                 path: 'personagens>estaVivo',

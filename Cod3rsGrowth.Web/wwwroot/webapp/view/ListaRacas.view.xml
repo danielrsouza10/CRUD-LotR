@@ -17,7 +17,6 @@
         <content>
             <List
                 id="listaDeRacas"
-                headerText="Custom Content"
                 mode="None"
                 items="{racas>/}"
                 growing="true"
@@ -32,6 +31,12 @@
                             id="searchFieldRacas"
                             width="50%"
                             search=".aoFiltrarRacas"
+                        />
+                        <CheckBox
+                            id="checkBoxExtinta"
+                            text="{i18n>LabelCheckboxExtinta}"
+                            select=".aoChecarExtinta"
+
                         />
                         <Button
                             type="Transparent"

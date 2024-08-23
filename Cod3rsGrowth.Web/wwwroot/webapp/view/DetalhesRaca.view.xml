@@ -1,62 +1,65 @@
 <mvc:View
+    height="100%"
     controllerName="ui5.o_senhor_dos_aneis.controller.DetalhesRaca"
     xmlns="sap.m"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
     xmlns:mvc="sap.ui.core.mvc"
     displayBlock="true"
 >
-    <Page id="paginaDetalhesRaca"
+    <Page
+        id="paginaDetalhesRaca"
         title="{i18n>TituloPaginaDetalhesRaca}"
         showHeader="true"
         enableScrolling="true"
         showNavButton="true"
         navButtonPress=".onNavBack"
-        class="sapUiResponsiveContentPadding">
-         <content>
-            <HBox>
-                <Image
-                    src="{
-                            path: 'raca>/nome',
-                            formatter: '.formatter.formatarIconeListagem'
-                        }"
-                    width="2rem"
-                    height="2rem"
-                    class="sapUiSmallMargin"
-                />
-                <VBox
-                    class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
-                >
-                    <ObjectIdentifier
-                        title="{raca>/nome}"
-                        class="sapUiTinyMarginBottom"
-                    />
-                    <FlexBox>
-                        <Label
-                            text="{i18n>LabelLocalizacaoGeografica}:"
-                            class="sapUiTinyMarginEnd"
-                        />
-                        <Text text="{raca>/localizacaoGeografica}" />
-                    </FlexBox>
-                    <FlexBox>
-                        <Label
-                            text="{i18n>LabelHabilidadeRacial}:"
-                            class="sapUiTinyMarginEnd"
-                        />
-                        <Text text="{raca>/habilidadeRacial}" />
-                    </FlexBox>
-                    <FlexBox>
-                        <Label
-                            text="{i18n>LabelExtinta}:"
-                            class="sapUiTinyMarginEnd"
-                        />
-                        <Text
-                            text="{
+        class="sapUiResponsiveContentPadding"
+    >
+        <ObjectHeader
+            icon="{
+                        path: 'raca>/nome',
+                        formatter: '.formatter.formatarIconeListagem'
+                    }"
+            iconDensityAware="false"
+            iconAlt="{raca>/nome}"
+            imageShape="Circle"
+            responsive="true"
+            id="objectHeader"
+            fullScreenOptimized="true"
+            binding="{raca>/}"
+            intro="{i18n>LabelId}:{raca>/id}"
+            title="{raca>/nome}"
+            titleActive="false"
+            backgroundDesign="Translucent"
+            class="sapUiResponsivePadding--header"
+        >
+            <ObjectAttribute
+                title="{i18n>LabelLocalizacaoGeografica}"
+                text="{raca>/localizacaoGeografica}"
+            />
+            <ObjectAttribute
+                title="{i18n>LabelHabilidadeRacial}"
+                text="{raca>/habilidadeRacial}"
+            />
+
+            <statuses>
+                <ObjectStatus
+                    title="{i18n>LabelExtinta}"
+                    text="{
                                 path: 'raca>/estaExtinta', 
                                 formatter: '.formatter.formatarBooleanEstaExtinta'
                             }"
-                        />
-                    </FlexBox>
-                </VBox>
-            </HBox>
-        </content>
+                    state="{
+                                    path: 'raca>/estaExtinta',
+                                    formatter: '.formatter.formatarStatusExtintoNaLista'
+                                }"
+                />
+            </statuses>
+            <markers>
+                <ObjectMarker type="Flagged" />
+                <ObjectMarker type="Favorite" />
+            </markers>
+        </ObjectHeader>
     </Page>
 </mvc:View>
