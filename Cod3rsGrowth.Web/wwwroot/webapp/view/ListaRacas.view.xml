@@ -36,7 +36,6 @@
                             id="checkBoxExtinta"
                             text="{i18n>LabelCheckboxExtinta}"
                             select=".aoChecarExtinta"
-
                         />
                         <Button
                             type="Transparent"
@@ -49,7 +48,7 @@
 
                 <CustomListItem
                     type="Navigation"
-                    id="customListRaca"
+                    id="customListItemRaca"
                     press=".aoSelecionarRacaNaLista"
                     highlight="{
                                     path: 'racas>estaExtinta',

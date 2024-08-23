@@ -57,5 +57,23 @@ sap.ui.define(
         Then.iTeardownMyApp();
       }
     );
+    opaTest(
+      "Deve selecionar uma raça e navegar até a página de detalhes",
+      function (Given, When, Then) {
+        // Arrangements
+        Given.iStartMyApp({
+          hash: "racas",
+        });
+        //Actions
+        When.naPaginaDaListaDeRacas.euSelecionoUmaRacaNaLista("3");
+
+        // Assertions
+        Then.naPaginaDeDetalhesDaRaca.oTituloDaPaginaDetalhesDaRacaDeveraSer();
+        Then.naPaginaDeDetalhesDaRaca.oIdDaRacaNoDetalheCorrespondeAoIdDaRota();
+
+        // Cleanup
+        Then.iTeardownMyApp();
+      }
+    );
   }
 );
