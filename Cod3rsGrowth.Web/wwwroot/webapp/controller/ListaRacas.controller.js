@@ -62,7 +62,6 @@ sap.ui.define(
 
         aoChecarExtinta: function (oEvent) {
           var filtroExtinta = oEvent.getParameter("selected");
-          console.log(oEvent);
           if (filtroExtinta) {
             this.filtros.estaExtinta = true;
             return this.loadRacas();
@@ -72,10 +71,13 @@ sap.ui.define(
         },
 
         aoResetarFiltros: function () {
-          const stringVazia = "";
+          const stringVazia = "",
+            idBarraDePesquisa = "searchFieldRacas",
+            idCheckBoxExtinta = "checkBoxExtinta";
+
           this.filtros = {};
-          this.byId("searchFieldRacas").setValue(stringVazia);
-          this.byId("checkBoxExtinta").setSelected(false);
+          this.byId(idBarraDePesquisa).setValue(stringVazia);
+          this.byId(idCheckBoxExtinta).setSelected(false);
           this.loadRacas();
         },
         onNavToCriarRaca: function () {
