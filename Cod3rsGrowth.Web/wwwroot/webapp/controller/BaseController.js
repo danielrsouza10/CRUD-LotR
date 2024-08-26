@@ -23,12 +23,18 @@ sap.ui.define(
         },
 
         onNavBack: function () {
-          var historico, hashAnterior;
+          var historico, hashAnterior, hashAtual, hashNotFound;
 
           historico = History.getInstance();
           hashAnterior = historico.getPreviousHash();
+          hashAtual = historico._oHashChanger._oRouterHashChanger.hash;
+          hashNotFound = "notFound";
 
-          if (hashAnterior !== undefined) {
+          if (
+            hashAnterior !== undefined &&
+            hashAnterior !== hashNotFound &&
+            hashAtual !== hashNotFound
+          ) {
             window.history.go(-1);
           } else {
             this.getRouter().navTo("appHome", {});

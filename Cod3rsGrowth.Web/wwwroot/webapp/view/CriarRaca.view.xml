@@ -11,5 +11,112 @@
         showNavButton="true"
         navButtonPress=".onNavBack"
         class="sapUiContentPadding"
-    />
+    >
+        <VBox
+            justifyContent="Center"
+            alignItems="Center"
+            fitContainer="true"
+        >
+            <Panel
+                headerText="{i18n>headerTextCriarRaca}"
+                class="sapUiContentPadding"
+            >
+                <HBox alignItems="Center">
+                    <Label
+                        labelFor="inputNome"
+                        text="{i18n>LabelNome}:"
+                        class="sapUiSmallMargin"
+                        width="5rem"
+                    />
+                    <Input
+                        id="inputNome"
+                        placeholder="{i18n>PlaceholderNome}"
+                        change=".aoMudarNome"
+                        width="15rem"
+                    />
+                </HBox>
+
+                <HBox alignItems="Center">
+                    <Label
+                        labelFor="inputLocalizacaoGeografica"
+                        text="{i18n>LabelLocalizacao}:"
+                        class="sapUiSmallMargin"
+                        width="5rem"
+                    />
+                    <Input
+                        id="inputLocalizacaoGeografica"
+                        placeholder="{i18n>PlaceholderLocalizacaoGeografica}"
+                        change=".aoMudarLocalizacaoGeografica"
+                        width="15rem"
+                    />
+                </HBox>
+                <HBox alignItems="Center">
+                    <Label
+                        labelFor="inputHabilidadeRacial"
+                        text="{i18n>LabelHabilidade}:"
+                        class="sapUiSmallMargin"
+                        width="5rem"
+                    />
+                    <Input
+                        id="inputHabilidadeRacial"
+                        placeholder="{i18n>PlaceholHabilidadeRacial}"
+                        change=".aoMudarHabilidadeRacial"
+                        width="15rem"
+                    />
+                </HBox>
+                <HBox alignItems="Center">
+                    <Label
+                        labelFor="radioBtnExtinta"
+                        text="{i18n>LabelCondicao}:"
+                        width="5rem"
+                        class="sapUiSmallMargin"
+                    />
+                    <RadioButtonGroup
+                        id="radioBtnExtintaOuNao"
+                        columns="2"
+                        valueState="None"
+                        select="aoSelecionarCondicao"
+                    >
+                        <RadioButton
+                            id="radioBtnExtinta"
+                            text="{i18n>radioBtnExtinta}"
+                        />
+                        <RadioButton
+                            id="radioBtnNaoExtinta"
+                            text="{i18n>radioBtnNaoExtinta}"
+                        />
+                    </RadioButtonGroup>
+                </HBox>
+            </Panel>
+        </VBox>
+
+        <footer>
+            <OverflowToolbar id="otbFooter">
+                <ToolbarSpacer />
+                <Button
+                    type="Accept"
+                    text="{i18n>BotaoAdicionar}"
+                    id="criarRacaBtn"
+                    press=".aoCriarRaca"
+                    class="sapUiTinyMarginEnd"
+                    enabled="true"
+                >
+                    <layoutData>
+                        <OverflowToolbarLayoutData priority="High" />
+                    </layoutData>
+                </Button>
+                <Button
+                    type="Reject"
+                    text="{i18n>BotaoCancelar}"
+                    id="cancelarRacaBtn"
+                    class="sapUiTinyMarginEnd"
+                    press=".onNavToListaDeRacas"
+                >
+                    <layoutData>
+                        <OverflowToolbarLayoutData priority="Low" />
+                    </layoutData>
+                </Button>
+            </OverflowToolbar>
+        </footer>
+    </Page>
 </mvc:View>

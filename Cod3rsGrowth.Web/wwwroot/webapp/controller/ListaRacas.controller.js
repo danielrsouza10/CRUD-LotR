@@ -41,6 +41,14 @@ sap.ui.define(
 
           this.getView().setModel(modelo, modeloRaca);
         },
+        aoSelecionarRacaNaLista: function (oEvent) {
+          const idRacaSelecionada = oEvent
+            .getSource()
+            .getBindingContext("racas")
+            .getProperty("id");
+          const rotaDetalhesRaca = "detalhesRaca";
+          this.onNavTo(rotaDetalhesRaca, { id: idRacaSelecionada });
+        },
 
         aoFiltrarRacas: function (oEvent) {
           const filtroRaca = oEvent.getParameter("query");
@@ -56,14 +64,20 @@ sap.ui.define(
           var filtroExtinta = oEvent.getParameter("selected");
           if (filtroExtinta) {
             this.filtros.estaExtinta = true;
+            return this.loadRacas();
           }
-          this.loadRacas();
+          delete this.filtros.estaExtinta;
+          return this.loadRacas();
         },
 
         aoResetarFiltros: function () {
-          const stringVazia = "";
+          const stringVazia = "",
+            idBarraDePesquisa = "searchFieldRacas",
+            idCheckBoxExtinta = "checkBoxExtinta";
+
           this.filtros = {};
-          this.byId("searchFieldRacas").setValue(stringVazia);
+          this.byId(idBarraDePesquisa).setValue(stringVazia);
+          this.byId(idCheckBoxExtinta).setSelected(false);
           this.loadRacas();
         },
         onNavToCriarRaca: function () {

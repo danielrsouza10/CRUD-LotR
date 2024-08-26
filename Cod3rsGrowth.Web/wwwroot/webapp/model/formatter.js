@@ -61,7 +61,7 @@ sap.ui.define([], () => {
       let ano = dataFormatada.getFullYear();
       return dia + stringBarra + mes + stringBarra + ano;
     },
-    formatarIconePersonagem(raca) {
+    formatarIconeListagem(raca) {
       switch (raca) {
         case "Humano":
           return "icons/icons8-humano-48.png";
@@ -86,6 +86,18 @@ sap.ui.define([], () => {
         default:
           return "icons/icons8-o-um-anel-48.png";
       }
+    },
+    formatarStatusExtintoNaLista(extinto) {
+      if (!extinto) {
+        return "Success";
+      }
+      return "Error";
+    },
+    formatarStatusCondicaoNaLista(vivo) {
+      if (!vivo) {
+        return "Error";
+      }
+      return "Success";
     },
   };
 });

@@ -83,6 +83,16 @@
           "pattern": "raca/criarRaca",
           "name": "criarRaca",
           "target": "criarRaca"
+        },
+        {
+          "pattern": "raca/{id}",
+          "name": "detalhesRaca",
+          "target": "detalhesRaca"
+        },
+        {
+          "pattern": "notFound",
+          "name": "notFound",
+          "target": "notFound"
         }
       ],
       "targets": {
@@ -117,7 +127,13 @@
         "criarRaca": {
           "id": "criarRaca",
           "path": "ui5.o_senhor_dos_aneis.view",
-          "name": "criarRaca",
+          "name": "CriarRaca",
+          "level": "3"
+        },
+        "detalhesRaca": {
+          "id": "detalhesRaca",
+          "path": "ui5.o_senhor_dos_aneis.view",
+          "name": "DetalhesRaca",
           "level": "3"
         }
       }

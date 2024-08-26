@@ -16,8 +16,7 @@
     >
         <List
             id="listaDePersonagens"
-            headerText="Custom Content"
-            mode="Delete"
+            mode="None"
             items="{personagens>/}"
             growing="true"
             growingThreshold="5"
@@ -65,12 +64,19 @@
                 </OverflowToolbar>
             </headerToolbar>
 
-            <CustomListItem id="customListPersonagens">
+            <CustomListItem
+                type="Navigation"
+                id="customListPersonagens"
+                highlight="{
+                path: 'personagens>estaVivo',
+                formatter: '.formatter.formatarStatusCondicaoNaLista'
+            }"
+            >
                 <HBox>
                     <Image
                         src="{
                                     path: 'personagens>raca',
-                                    formatter: '.formatter.formatarIconePersonagem'
+                                    formatter: '.formatter.formatarIconeListagem'
                                 }"
                         width="2rem"
                         height="2rem"

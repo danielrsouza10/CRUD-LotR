@@ -3,9 +3,11 @@ sap.ui.define(
     "sap/ui/test/Opa5",
     "./arrangements/Startup",
     "./journeys/HomeJourney",
-    "./journeys/PersonagemListaJourney",
-    "./journeys/RacaListaJourney",
+    "./journeys/ListaPersonagensJourney",
+    "./journeys/ListaRacasJourney",
     "./journeys/CriarPersonagemJourney",
+    "./journeys/CriarRacaJourney",
+    "./journeys/DetalhesRacaJourney",
   ],
   function (Opa5, Startup) {
     "use strict";
