@@ -1,5 +1,10 @@
 sap.ui.define(
-  ["sap/ui/test/opaQunit", "../pages/Home", "../pages/ListaRacas"],
+  [
+    "sap/ui/test/opaQunit",
+    "../pages/Home",
+    "../pages/ListaRacas",
+    "../pages/DetalhesRaca",
+  ],
   function (opaTest) {
     "use strict";
 
@@ -65,11 +70,12 @@ sap.ui.define(
           hash: "racas",
         });
         //Actions
-        When.naPaginaDaListaDeRacas.euSelecionoUmaRacaNaLista("3");
+        When.naPaginaDaListaDeRacas.euSelecionoUmaRacaNaLista("Humano");
 
         // Assertions
         Then.naPaginaDeDetalhesDaRaca.oTituloDaPaginaDetalhesDaRacaDeveraSer();
-        Then.naPaginaDeDetalhesDaRaca.oIdDaRacaNoDetalheCorrespondeAoIdDaRota();
+        Then.naPaginaDeDetalhesDaRaca.aUrlDaPaginaDeDetalhesDaRacaDeveraSer(1);
+        Then.naPaginaDeDetalhesDaRaca.oNomeNosDetalhesDaRacaDeveraSer("Humano");
 
         // Cleanup
         Then.iTeardownMyApp();

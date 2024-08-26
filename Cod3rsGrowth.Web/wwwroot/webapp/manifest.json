@@ -88,6 +88,11 @@
           "pattern": "raca/{id}",
           "name": "detalhesRaca",
           "target": "detalhesRaca"
+        },
+        {
+          "pattern": "notFound",
+          "name": "notFound",
+          "target": "notFound"
         }
       ],
       "targets": {

@@ -54,6 +54,7 @@
                                     path: 'racas>estaExtinta',
                                     formatter: '.formatter.formatarStatusExtintoNaLista'
                                 }"
+                                
                 >
                     <HBox>
                         <Image

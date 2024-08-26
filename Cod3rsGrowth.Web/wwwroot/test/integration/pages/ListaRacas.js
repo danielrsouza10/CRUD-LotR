@@ -2,7 +2,6 @@ sap.ui.define(
   [
     "sap/ui/test/Opa5",
     "sap/ui/test/matchers/AggregationLengthEquals",
-    "sap/ui/test/matchers/I18NText",
     "sap/ui/test/matchers/Properties",
     "sap/ui/test/actions/Press",
     "sap/ui/test/actions/EnterText",
@@ -10,7 +9,6 @@ sap.ui.define(
   function (
     Opa5,
     AggregationLengthEquals,
-    I18NText,
     Properties,
     Press,
     EnterText
@@ -64,15 +62,15 @@ sap.ui.define(
                 "Não foi possível encontrar o botão voltar na página",
             });
           },
-          euSelecionoUmaRacaNaLista: function (indexSelecionado) {
+          euSelecionoUmaRacaNaLista: function (racaSelecionada) {
             return this.waitFor({
-              controlType: "sap.m.List",
-              matchers: new Properties({
-                title: racaSelecionada
-              }),
+              controlType: "sap.m.ObjectIdentifier",
               viewName: NOME_VIEW,
+              matchers: new Properties({
+                title: racaSelecionada,
+              }),
               actions: new Press(),
-              errorMessage: "Não foi possível selecionar o item na lista"
+              errorMessage: "Não foi possível selecionar o item na lista",
             });
           },
         },

@@ -1,25 +1,27 @@
 sap.ui.define(
-  ["sap/ui/opaQunit", "../pages/DetalhesRaca", "../pages/ListaRacas"],
+  [
+    "sap/ui/test/opaQunit",
+    "../pages/NotFound",
+    "../pages/DetalhesRaca",
+    "../pages/ListaRacas",
+    "../pages/Home",
+  ],
   function (opaTest) {
     "use strict";
 
     QUnit.module("Detalhes da Raça");
 
     opaTest(
-      "Deve carregar a página corretamente",
+      "Deve carregar a página da raça de id 1 corretamente",
       function (Given, When, Then) {
         //Arrangements
         Given.iStartMyApp({
-          hash: "racas",
+          hash: "raca/1",
         });
 
-        //Actions
-        When.naPaginaDaListaDeRacas.euSelecionoUmaRacaNaLista();
-
         //Assertions
-        Then.naPaginaDeDetalhesDaRaca.aTelaFoiCarregadaCorretamente();
         Then.naPaginaDeDetalhesDaRaca.oTituloDaPaginaDetalhesDaRacaDeveraSer();
-        Then.naPaginaDeDetalhesDaRaca.oIdDaRacaNoDetalheCorrespondeAoIdDaRota();
+        Then.naPaginaDeDetalhesDaRaca.aUrlDaPaginaDeDetalhesDaRacaDeveraSer(1);
 
         //Cleanup
         Then.iTeardownMyApp();
@@ -28,13 +30,33 @@ sap.ui.define(
       opaTest(
         "Deve carregar a página de notFound quando o ID da raça não existir",
         function (Given, When, Then) {
-          //Arrangements
+          //Arrangements;
           Given.iStartMyApp({
             hash: "raca/0",
           });
 
-          //Assertions
+          //Assertions;
           Then.naPaginaDeNotFound.oTituloDaPaginaNotFoundDeveraSer();
+
+          //Cleanup;
+          Then.iTeardownMyApp();
+        }
+      ),
+      opaTest(
+        "Deve navegar para a págima home ao pressionar o botão voltar",
+        function (Given, When, Then) {
+          //Arrangements
+          Given.iStartMyApp({
+            hash: "raca/1",
+          });
+
+          //Actions
+          When.naPaginaDeDetalhesDaRaca.euPressionoBotaoVoltar();
+
+          //Assertions
+          Then.naPaginaHome
+            .oTituloDaPaginaHomeDeveraSer()
+            .and.aUrlDaPaginaHomeDeveraSer();
 
           //Cleanup
           Then.iTeardownMyApp();

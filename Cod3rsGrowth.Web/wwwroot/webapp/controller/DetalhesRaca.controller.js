@@ -29,18 +29,9 @@ sap.ui.define(
             const modeloRaca = "raca";
 
             this.getView().setModel(modelo, modeloRaca);
-            console.log(modelo);
           } catch (erros) {
-            const mensagemDeErro =
-              "Não foi possivel carregar a raça selecionada";
-            console.log(mensagemDeErro);
-            MessageBox.show(mensagemDeErro, {
-              icon: sap.m.MessageBox.Icon.ERROR,
-              title: "Erro",
-              dependentOn: this.getView(),
-            });
-            const tempoParaVisualizarMensagem = 2000;
-            setTimeout(() => this.onNavBack(), tempoParaVisualizarMensagem);
+            const rotaNotFound = "notFound";
+            this.onNavTo(rotaNotFound, this);
           }
         },
       }
