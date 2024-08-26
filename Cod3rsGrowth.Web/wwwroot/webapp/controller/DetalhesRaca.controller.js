@@ -3,11 +3,10 @@ sap.ui.define(
     "../controller/BaseController",
     "ui5/o_senhor_dos_aneis/services/RacaService",
     "sap/ui/model/json/JSONModel",
-    "sap/m/MessageBox",
     "ui5/o_senhor_dos_aneis/model/formatter",
   ],
 
-  function (BaseController, RacaService, JSONModel, MessageBox, formatter) {
+  function (BaseController, RacaService, JSONModel, formatter) {
     "use strict";
     return BaseController.extend(
       "ui5.o_senhor_dos_aneis.controller.DetalhesRaca",
@@ -19,9 +18,15 @@ sap.ui.define(
           this.vincularRota(rota, this.aoCoincidirRota);
         },
         aoCoincidirRota: function (oEvent) {
-          this._carregarModeloDoPersonagem(oEvent);
+          this._carregarModeloDaRaca(oEvent);
         },
-        _carregarModeloDoPersonagem: async function (oEvent) {
+        onNavToEditarRaca: function () {
+          const modelo = "raca",
+            rotaEditarRaca = "editarRaca",
+            idRacaSelecionada = this.getView().getModel(modelo).getData().id;
+          this.onNavTo(rotaEditarRaca, { id: idRacaSelecionada });
+        },
+        _carregarModeloDaRaca: async function (oEvent) {
           try {
             const idRaca = oEvent.getParameter("arguments").id;
             const raca = await RacaService.obterRaca(idRaca);

@@ -33,6 +33,7 @@
                         placeholder="{i18n>PlaceholderNome}"
                         change=".aoMudarNome"
                         width="15rem"
+                        value="{raca>/nome}"
                     />
                 </HBox>
 
@@ -48,6 +49,7 @@
                         placeholder="{i18n>PlaceholderLocalizacaoGeografica}"
                         change=".aoMudarLocalizacaoGeografica"
                         width="15rem"
+                        value="{raca>/localizacaoGeografica}"
                     />
                 </HBox>
                 <HBox alignItems="Center">
@@ -62,6 +64,7 @@
                         placeholder="{i18n>PlaceholHabilidadeRacial}"
                         change=".aoMudarHabilidadeRacial"
                         width="15rem"
+                        value="{raca>/habilidadeRacial}"
                     />
                 </HBox>
                 <HBox alignItems="Center">

@@ -2,9 +2,10 @@ sap.ui.define(
   [
     "../controller/BaseController",
     "ui5/o_senhor_dos_aneis/services/RacaService",
+    "sap/ui/model/json/JSONModel",
     "sap/m/MessageBox",
   ],
-  function (BaseController, RacaService, MessageBox) {
+  function (BaseController, RacaService, JSONModel, MessageBox) {
     "use strict";
     const ID_INPUT_NOME = "inputNome",
       ID_INPUT_LOCALIZACAO = "inputLocalizacaoGeografica",
@@ -14,15 +15,18 @@ sap.ui.define(
       "ui5.o_senhor_dos_aneis.controller.CriarRaca",
       {
         onInit: function () {
-          const rota = "criarRaca";
-          this.vincularRota(rota, this.aoCoincidirRota);
+          const rotaCriacao = "criarRaca";
+          const rotaEdicao = "editarRaca";
+          this.vincularRota(rotaCriacao, this.aoCoincidirRota);
+          this.vincularRota(rotaEdicao, this.aoCoincidirRota);
         },
 
-        aoCoincidirRota: function () {
+        aoCoincidirRota: function (oEvent) {
           this.filtros = {};
           this.raca = {};
           this.errosDeValidacao = {};
           this._limparInputs();
+          this._carregarModeloDaRaca(oEvent);
         },
 
         aoMudarNome: function (oEvent) {
@@ -54,6 +58,25 @@ sap.ui.define(
           const rotaListaDeRacas = "listaDeRacas";
           this.onNavTo(rotaListaDeRacas);
         },
+
+        _carregarModeloDaRaca: async function (oEvent) {
+          if (oEvent.getParameter("arguments").id) {
+            try {
+              console.log(this.getView().getModel());
+              const idRaca = oEvent.getParameter("arguments").id;
+              const raca = await RacaService.obterRaca(idRaca);
+              console.log(oEvent.getParameter("arguments").id);
+              const modelo = new JSONModel(raca);
+              const modeloRaca = "raca";
+
+              this.getView().setModel(modelo, modeloRaca);
+            } catch (erros) {
+              console.log("Não foi possível obter a raça");
+            }
+          }
+        },
+
+        _carregarDadosDaRacaNaTela: function () {},
 
         _aoMudarInput: function (oEvent, funcaoDeValidacao) {
           const objeto = oEvent.getSource();

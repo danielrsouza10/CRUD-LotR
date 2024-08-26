@@ -82,7 +82,8 @@ sap.ui.define(
         },
         onNavToCriarRaca: function () {
           const rotaCriarRaca = "criarRaca";
-          this.onNavTo(rotaCriarRaca);
+          const parametros = "criarNovaRaca";
+          this.onNavTo(rotaCriarRaca, parametros);
         },
       }
     );

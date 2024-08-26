@@ -26,7 +26,7 @@ sap.ui.define([], function () {
 
     obterRaca: function (idRaca) {
       const urlRaca = new URL(`${URL_OBTER_RACA}/${idRaca}`);
-
+      console.log(urlRaca);
       return fetch(urlRaca.href)
         .then((response) => {
           if (!response.ok) {
