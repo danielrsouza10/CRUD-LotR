@@ -194,9 +194,7 @@ sap.ui.define(
                 });
                 //Actions
                 When.naPaginaDeEditarRaca.aTelaFoiCarregadaCorretamente();
-                When.naPaginaDeEditarRaca.euDigitoUmNomeNoInputField("Dragao");
-                When.naPaginaDeEditarRaca.euSelecionoCondicaoNaoExtinta();
-                When.naPaginaDeEditarRaca.euSelecionoCondicaoExinta();
+                When.naPaginaDeEditarRaca.euDigitoUmNomeNoInputField("Dragão");
                 When.naPaginaDeEditarRaca.euPressionoOBotaoEditar();
 
                 // Assertions

@@ -4,11 +4,11 @@ sap.ui.define(
     "./arrangements/Startup",
     // "./journeys/HomeJourney",
     // "./journeys/ListaPersonagensJourney",
-    // "./journeys/ListaRacasJourney",
+    "./journeys/ListaRacasJourney",
     // "./journeys/CriarPersonagemJourney",
-    // "./journeys/CriarRacaJourney",
+    "./journeys/CriarRacaJourney",
     "./journeys/EditarRacaJourney",
-    // "./journeys/DetalhesRacaJourney",
+    "./journeys/DetalhesRacaJourney",
   ],
   function (Opa5, Startup) {
     "use strict";

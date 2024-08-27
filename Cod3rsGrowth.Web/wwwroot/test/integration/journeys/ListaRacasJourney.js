@@ -82,6 +82,32 @@ sap.ui.define(
       }
     );
       opaTest(
+          "Deve pressionar o botao adicionar e criar um personagem",
+          function (Given, When, Then) {
+              // Arrangements
+              Given.iStartMyApp({
+                  hash: "racas",
+              });
+              //Actions
+              When.naPaginaDaListaDeRacas.euPressionoOBotaoAdicionar();
+              When.naPaginaDeCriarRaca.aTelaFoiCarregadaCorretamente()
+                  .and.euDigitoUmNomeNoInputField("Teste")
+                  .and.euDigitoUmaLocalizacaoGeograficaNoInputField("???")
+                  .and.euDigitoUmaHabilidadeRacialNoInputField("???")
+                  .and.euSelecionoCondicaoExinta()
+                  .and.euPressionoOBotaoAdicionar();
+
+
+              // Assertions
+              Then.naPaginaDeCriarRaca.deveAparecerUmaMessageBoxDeSucesso();
+              Then.naPaginaDaListaDeRacas.oTituloDaPaginaDeRacasDeveraSer()
+                  .and.aUrlDaPaginaDeRacasDeveraSer();
+
+              // Cleanup
+              Then.iTeardownMyApp();
+          }
+      );
+      opaTest(
           "Deve selecionar uma raça e navegar até a página de detalhes e remove-la",
           function (Given, When, Then) {
               // Arrangements
@@ -89,11 +115,14 @@ sap.ui.define(
                   hash: "racas",
               });
               //Actions
-              When.naPaginaDaListaDeRacas.euSelecionoUmaRacaNaLista("Anão");
+              When.naPaginaDaListaDeRacas.euApertoParaCarregarMaisItensDaListaDeRacas()
+                  .and.euApertoParaCarregarMaisItensDaListaDeRacas()
+                  .and.euSelecionoUmaRacaNaLista("Teste");
+              When.naPaginaDeDetalhesDaRaca.euPressionoBotaoRemover();
 
               // Assertions
-              Then.naPaginaDeDetalhesDaRaca.oTituloDaPaginaDetalhesDaRacaDeveraSer();
-              Then.naPaginaDeDetalhesDaRaca.oNomeNosDetalhesDaRacaDeveraSer("Anão");
+              Then.naPaginaDeDetalhesDaRaca.deveAparecerUmaMessageBoxDeConfirmacao()
+                  .and.euPressionoSimParaConfirmarAEsclusao();
 
               // Cleanup
               Then.iTeardownMyApp();

@@ -20,7 +20,7 @@ sap.ui.define(
 
         //Actions
         When.naPaginaDeCriarRaca.aTelaFoiCarregadaCorretamente();
-        When.naPaginaDeCriarRaca.euDigitoUmNomeNoInputField("Aleatoria");
+        When.naPaginaDeCriarRaca.euDigitoUmNomeNoInputField("Humano");
         When.naPaginaDeCriarRaca.euDigitoUmaLocalizacaoGeograficaNoInputField(
           "???"
         );

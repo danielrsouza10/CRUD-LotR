@@ -33,6 +33,17 @@ sap.ui.define(
               errorMessage: "Não foi possível encontrar o botão editar na página",
             });
           },
+          euPressionoBotaoRemover: function (){
+            return this.waitFor({
+              controlType: "sap.m.Button",
+              matchers: new I18NText({
+                propertyName: "text",
+                key: "BotaoRemover"
+              }),
+              actions: new Press(),
+              errorMessage: "Não foi possível encontrar o botão remover na página",
+            });
+          },
         },
         assertions: {
           oTituloDaPaginaDetalhesDaRacaDeveraSer: function () {

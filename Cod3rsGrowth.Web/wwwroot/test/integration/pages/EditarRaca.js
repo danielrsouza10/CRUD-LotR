@@ -156,10 +156,10 @@ sap.ui.define(
                             success: function () {
                                 Opa5.assert.ok(
                                     true,
-                                    "Foi encontrada a MessageBox indicando sucesso ao editar o personagem"
+                                    "Foi encontrada a MessageBox indicando sucesso ao editar a raça"
                                 );
                             },
-                            errorMessage: "Não foi encontrada a MessageBox indicando sucesso ao editar o personagem",
+                            errorMessage: "Não foi encontrada a MessageBox indicando sucesso ao editar a raça",
                         });
                     },
                     deveAparecerUmaMessageBoxDeErroVindoDoServidor: function () {
