@@ -4,8 +4,9 @@ sap.ui.define(
     "sap/ui/test/actions/Press",
     "sap/ui/test/actions/EnterText",
     "sap/ui/test/matchers/PropertyStrictEquals",
+    "sap/ui/test/matchers/I18NText",
   ],
-  function (Opa5, Press, EnterText, PropertyStrictEquals) {
+  function (Opa5, Press, EnterText, PropertyStrictEquals, I18NText) {
     "use strict";
 
     const NOME_VIEW = "CriarRaca",
@@ -172,6 +173,34 @@ sap.ui.define(
               errorMessage: "A tela 'Home' não foi carregada corretamente",
             });
           },
+          aTelaDeEdicaoFoiCarregadaCorretamente: function (){
+            return this.waitFor({
+              controlType: "sap.m.Page",
+              matchers: new I18NText({
+                propertyName: "title",
+                key: "TituloPaginaEditarRaca",
+              }),
+              success: function (pagina) {
+                Opa5.assert.ok(pagina, "O título da página está correto.");
+              },
+              errorMessage:
+                  "Não foi encontrado título correspondente ou não foi possível navegar até a página",
+            });
+          },
+          oBotaoEditarTemONomeCorreto: function (){
+            return this.waitFor({
+              controlType: "sap.m.Button",
+              matchers: new I18NText({
+                propertyName: "text",
+                key: "BotaoEditar",
+              }),
+              success: function (botao) {
+                Opa5.assert.ok(botao, "O texto do botao na página está correto.");
+              },
+              errorMessage:
+                  "Não foi encontrado texto do botao correspondente ou não foi possível encontrar o botão em si",
+            });
+          }
         },
       },
     });
