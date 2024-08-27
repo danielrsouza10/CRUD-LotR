@@ -26,7 +26,7 @@ sap.ui.define(
         //Cleanup
         Then.iTeardownMyApp();
       }
-    ),
+    );
       opaTest(
         "Deve carregar a página de notFound quando o ID da raça não existir",
         function (Given, When, Then) {
@@ -41,7 +41,7 @@ sap.ui.define(
           //Cleanup;
           Then.iTeardownMyApp();
         }
-      ),
+      );
       opaTest(
         "Deve navegar para a págima home ao pressionar o botão voltar",
         function (Given, When, Then) {
@@ -61,6 +61,26 @@ sap.ui.define(
           //Cleanup
           Then.iTeardownMyApp();
         }
+      );
+      opaTest(
+          "Deve navegar até a página de edição da raça",
+          function (Given, When, Then) {
+              //Arrangements
+              Given.iStartMyApp({
+                  hash: "raca/1",
+              });
+
+              //Actions
+              When.naPaginaDeDetalhesDaRaca.euPressionoBotaoEditar();
+
+              //Assertions
+              Then.naPaginaDeEditarRaca.aTelaDeEdicaoFoiCarregadaCorretamente()
+                  .and.oBotaoEditarTemONomeCorreto()
+                  .and.osInputDeNomeDeveEstarPreenchido("Humano");
+
+              //Cleanup
+              Then.iTeardownMyApp();
+          }
       );
   }
 );

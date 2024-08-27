@@ -22,6 +22,17 @@ sap.ui.define(
                 "Não foi possível encontrar o botão voltar na página",
             });
           },
+          euPressionoBotaoEditar: function (){
+            return this.waitFor({
+              controlType: "sap.m.Button",
+              matchers: new I18NText({
+                propertyName: "text",
+                key: "BotaoEditar"
+              }),
+              actions: new Press(),
+              errorMessage: "Não foi possível encontrar o botão editar na página",
+            });
+          },
         },
         assertions: {
           oTituloDaPaginaDetalhesDaRacaDeveraSer: function () {
@@ -37,7 +48,7 @@ sap.ui.define(
                     Opa5.assert.ok(pagina, "O título da página está correto.");
                   },
                   errorMessage:
-                    "Não foi encontrado título correspondente a 'O Senhor dos Anéis' ou não foi possível navegar até a página",
+                      "Não foi encontrado título correspondente a 'O Senhor dos Anéis' ou não foi possível navegar até a página",
                 });
               },
             });

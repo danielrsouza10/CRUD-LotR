@@ -34,7 +34,7 @@ namespace Cod3rsGrowth.Web.Controllers
         public IActionResult Criar([FromBody] Raca raca)
         {
             var idRaca = _servicoRaca.Criar(raca);
-            return Ok(idRaca);
+            return Ok();
         }
         [HttpPut("raca")]
         public IActionResult Editar([FromBody] Raca raca)

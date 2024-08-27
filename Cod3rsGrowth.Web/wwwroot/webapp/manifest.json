@@ -80,8 +80,13 @@
           "target": "criarPersonagem"
         },
         {
-          "pattern": "raca/criarRaca",
+          "pattern": "raca/criarRaca/",
           "name": "criarRaca",
+          "target": "criarRaca"
+        },
+        {
+          "pattern": "raca/editarRaca/{id}",
+          "name": "editarRaca",
           "target": "criarRaca"
         },
         {

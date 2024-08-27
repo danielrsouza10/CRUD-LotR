@@ -61,5 +61,31 @@
                 <ObjectMarker type="Favorite" />
             </markers>
         </ObjectHeader>
+        <footer>
+            <OverflowToolbar id="otbFooter">
+                <ToolbarSpacer />
+                <Button
+                    type="Emphasized"
+                    text="{i18n>BotaoEditar}"
+                    id="editarRacaBtn"
+                    press=".onNavToEditarRaca"
+                    class="sapUiTinyMarginEnd"
+                    width="100px"
+                >
+                    <layoutData>
+                        <OverflowToolbarLayoutData priority="High" />
+                    </layoutData>
+                </Button>
+                <Button
+                    type="Reject"
+                    text="{i18n>BotaoRemover}"
+                    width="100px"
+                >
+                    <layoutData>
+                        <OverflowToolbarLayoutData priority="Low" />
+                    </layoutData>
+                </Button>
+            </OverflowToolbar>
+        </footer>
     </Page>
 </mvc:View>

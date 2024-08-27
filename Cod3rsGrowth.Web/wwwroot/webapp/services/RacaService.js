@@ -4,6 +4,7 @@ sap.ui.define([], function () {
   const URL_TODAS_AS_RACAS = "https://localhost:7244/api/Raca/racas";
   const URL_OBTER_RACA = "https://localhost:7244/api/Raca/raca";
   const URL_POST_RACA = "https://localhost:7244/api/Raca/raca";
+  const URL_PUT_RACA = "https://localhost:7244/api/Raca/raca";
 
   return {
     obterTodos: async function (filtros) {
@@ -26,7 +27,6 @@ sap.ui.define([], function () {
 
     obterRaca: function (idRaca) {
       const urlRaca = new URL(`${URL_OBTER_RACA}/${idRaca}`);
-
       return fetch(urlRaca.href)
         .then((response) => {
           if (!response.ok) {
@@ -51,8 +51,33 @@ sap.ui.define([], function () {
           },
         });
         if (!response.ok) {
-          const erro = await response.json();
-          throw erro;
+          throw await response.json();
+        }
+        if (response.status == 200) {
+          return;
+        }
+        return await response.json();
+      } catch (erro) {
+        throw erro;
+      }
+    },
+
+    editarRaca: async function (raca) {
+      let urlRacas = new URL(URL_PUT_RACA);
+
+      try {
+        const response = await fetch(urlRacas.href, {
+          method: "PUT",
+          body: JSON.stringify(raca),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        });
+        if (!response.ok) {
+          throw await response.json();
+        }
+        if (response.status == 200) {
+          return;
         }
         return await response.json();
       } catch (erro) {
