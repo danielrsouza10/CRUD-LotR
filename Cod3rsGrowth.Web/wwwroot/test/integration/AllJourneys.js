@@ -2,13 +2,13 @@ sap.ui.define(
   [
     "sap/ui/test/Opa5",
     "./arrangements/Startup",
-    "./journeys/HomeJourney",
-    "./journeys/ListaPersonagensJourney",
-    "./journeys/ListaRacasJourney",
-    "./journeys/CriarPersonagemJourney",
-    "./journeys/CriarRacaJourney",
+    // "./journeys/HomeJourney",
+    // "./journeys/ListaPersonagensJourney",
+    // "./journeys/ListaRacasJourney",
+    // "./journeys/CriarPersonagemJourney",
+    // "./journeys/CriarRacaJourney",
     "./journeys/EditarRacaJourney",
-    "./journeys/DetalhesRacaJourney",
+    // "./journeys/DetalhesRacaJourney",
   ],
   function (Opa5, Startup) {
     "use strict";

@@ -145,6 +145,23 @@ sap.ui.define(
                             errorMessage: "Não foi encontrada a MessageBox indicando um erro",
                         });
                     },
+                    deveAparecerUmaMessageBoxDeSucesso: function () {
+                        return this.waitFor({
+                            searchOpenDialogs: true,
+                            controlType: "sap.m.Dialog",
+                            matchers: new PropertyStrictEquals({
+                                name: "title",
+                                value: "Sucesso",
+                            }),
+                            success: function () {
+                                Opa5.assert.ok(
+                                    true,
+                                    "Foi encontrada a MessageBox indicando sucesso ao editar o personagem"
+                                );
+                            },
+                            errorMessage: "Não foi encontrada a MessageBox indicando sucesso ao editar o personagem",
+                        });
+                    },
                     deveAparecerUmaMessageBoxDeErroVindoDoServidor: function () {
                         return this.waitFor({
                             searchOpenDialogs: true,
@@ -173,7 +190,7 @@ sap.ui.define(
                             errorMessage: "A tela 'Home' não foi carregada corretamente",
                         });
                     },
-                    aTelaDeEdicaoFoiCarregadaCorretamente: function (){
+                    aTelaDeEdicaoFoiCarregadaCorretamente: function () {
                         return this.waitFor({
                             controlType: "sap.m.Page",
                             matchers: new I18NText({
@@ -187,7 +204,7 @@ sap.ui.define(
                                 "Não foi encontrado título correspondente ou não foi possível navegar até a página",
                         });
                     },
-                    oBotaoEditarTemONomeCorreto: function (){
+                    oBotaoEditarTemONomeCorreto: function () {
                         return this.waitFor({
                             controlType: "sap.m.Button",
                             matchers: new I18NText({
@@ -201,7 +218,7 @@ sap.ui.define(
                                 "Não foi encontrado texto do botao correspondente ou não foi possível encontrar o botão em si",
                         });
                     },
-                    osInputDeNomeDeveEstarPreenchido: function (nomeDaRaca){
+                    osInputDeNomeDeveEstarPreenchido: function (nomeDaRaca) {
                         return this.waitFor({
                             controlType: "sap.m.Input",
                             matchers: new PropertyStrictEquals({
