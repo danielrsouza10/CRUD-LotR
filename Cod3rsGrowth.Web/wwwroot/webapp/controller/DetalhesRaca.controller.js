@@ -26,6 +26,16 @@ sap.ui.define(
             idRacaSelecionada = this.getView().getModel(modelo).getData().id;
           this.onNavTo(rotaEditarRaca, { id: idRacaSelecionada });
         },
+          aoPressionarOBotaoRemover: function (){
+            if(_desejaExcluirEsseRegistro()){
+                const idRaca = this.getView().getModel(modelo).getData().id;
+                try{
+                RacaService.removerRaca(idRaca);
+                }catch(erros){
+                    _exibirErros(erros);
+                }
+            }
+          },
         _carregarModeloDaRaca: async function (oEvent) {
           try {
             const idRaca = oEvent.getParameter("arguments").id;

@@ -201,42 +201,6 @@ sap.ui.define(
           return str.length >= tamanhoMinimo;
         },
 
-        _exibirErros: function (erros) {
-          const espacoEntreErros = ".\n";
-          if (erros.status) {
-            let mensagemDeErro = Object.values(erros.extensions.erros).join(
-              espacoEntreErros
-            );
-            const tituloErro = erros.title;
-            const detalhesDoErro = erros.detail;
-            MessageBox.error(mensagemDeErro, {
-              title: tituloErro,
-              details: detalhesDoErro,
-              contentWidth: "400px",
-              dependentOn: this.getView(),
-            });
-          }
-          if (
-            this.errosDeValidacao.caracteresEspeciais ||
-            this.errosDeValidacao.tamanhoDaString ||
-            this.errosDeValidacao.idadeMinima ||
-            this.errosDeValidacao.alturaMinima
-          ) {
-            let mensagemDeErro = Object.values(this.errosDeValidacao).join(
-              espacoEntreErros
-            );
-            const tituloErro = "Erro ao criar raça";
-            const detailsErro =
-              "Corrija os campos acima para prosseguir com a criação da raça";
-            MessageBox.error(mensagemDeErro, {
-              title: tituloErro,
-              details: detailsErro,
-              contentWidth: "300px",
-              dependentOn: this.getView(),
-            });
-          }
-        },
-
         _pegarValoresDaRacaNaTela: function () {
           const modelo = this.getView().getModel("raca");
 
