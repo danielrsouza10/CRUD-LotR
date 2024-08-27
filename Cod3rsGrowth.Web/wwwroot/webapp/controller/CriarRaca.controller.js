@@ -17,16 +17,27 @@ sap.ui.define(
         onInit: function () {
           const rotaCriacao = "criarRaca";
           const rotaEdicao = "editarRaca";
-          this.vincularRota(rotaCriacao, this.aoCoincidirRota);
-          this.vincularRota(rotaEdicao, this.aoCoincidirRota);
+          this.vincularRota(rotaCriacao, this.aoCoincidirRotaCriar);
+          this.vincularRota(rotaEdicao, this.aoCoincidirRotaEditar);
         },
 
-        aoCoincidirRota: function (oEvent) {
+        aoCoincidirRotaCriar: function (oEvent) {
           this.filtros = {};
           this.raca = {};
           this.errosDeValidacao = {};
+          this.modoEditar = false;
           this._limparInputs();
-          this._carregarModeloDaRaca(oEvent);
+          this._atualizarTextoDaPáginaCriar();
+        },
+
+        aoCoincidirRotaEditar: function (oEvent) {
+          this.filtros = {};
+          this.raca = {};
+          this.errosDeValidacao = {};
+          this.modoEditar = true;
+          this._limparInputs();
+          this._carregarDadosDaRacaSelecionada(oEvent);
+          this._atualizarTextoDaPáginaEditar();
         },
 
         aoMudarNome: function (oEvent) {
@@ -35,21 +46,41 @@ sap.ui.define(
 
         aoCriarRaca: async function (oEvent) {
           this._pegarValoresDaRacaNaTela();
-
-          if (this._validarNovaRaca(this.raca)) {
-            try {
-              const racaCriada = await RacaService.adicionarRaca(this.raca);
-              const mensagemDeSucesso = "Raça adicionada com sucesso!";
-              MessageBox.show(mensagemDeSucesso, {
-                icon: sap.m.MessageBox.Icon.SUCCESS,
-                title: "Sucesso",
-                dependentOn: this.getView(),
-              });
-              this._limparInputs();
-              const tempoParaVisualizarMensagem = 2000;
-              setTimeout(() => this.onNavBack(), tempoParaVisualizarMensagem);
-            } catch (erros) {
-              this._exibirErros(erros);
+          const sucessoMessageBox = (mensagem, titulo) => {
+            console.log("Exibindo MessageBox:", mensagem); // Verifica se esta linha é executada
+            MessageBox.show(mensagem, {
+              icon: sap.m.MessageBox.Icon.SUCCESS,
+              title: titulo,
+              dependentOn: this.getView(),
+            });
+          };
+          if (!this.modoEditar) {
+            if (this._validarNovaRaca(this.raca)) {
+              try {
+                const racaCriada = await RacaService.adicionarRaca(this.raca);
+                const mensagemDeSucesso = "Raça adicionada com sucesso!";
+                const tituloDaMessageBox = "Sucesso";
+                sucessoMessageBox(mensagemDeSucesso, tituloDaMessageBox);
+                this._limparInputs();
+                const tempoParaVisualizarMensagem = 2000;
+                setTimeout(() => this.onNavBack(), tempoParaVisualizarMensagem);
+              } catch (erros) {
+                this._exibirErros(erros);
+              }
+            }
+          } else {
+            if (this._validarNovaRaca(this.raca)) {
+              try {
+                const racaEditada = await RacaService.editarRaca(this.raca);
+                const mensagemDeSucesso = "Raça editada com sucesso!";
+                const tituloDaMessageBox = "Sucesso";
+                sucessoMessageBox(mensagemDeSucesso, tituloDaMessageBox);
+                this._limparInputs();
+                const tempoParaVisualizarMensagem = 2000;
+                setTimeout(() => this.onNavBack(), tempoParaVisualizarMensagem);
+              } catch (erros) {
+                this._exibirErros(erros);
+              }
             }
           }
         },
@@ -59,24 +90,58 @@ sap.ui.define(
           this.onNavTo(rotaListaDeRacas);
         },
 
-        _carregarModeloDaRaca: async function (oEvent) {
+        _carregarDadosDaRacaSelecionada: async function (oEvent) {
           if (oEvent.getParameter("arguments").id) {
             try {
-              console.log(this.getView().getModel());
               const idRaca = oEvent.getParameter("arguments").id;
               const raca = await RacaService.obterRaca(idRaca);
-              console.log(oEvent.getParameter("arguments").id);
               const modelo = new JSONModel(raca);
               const modeloRaca = "raca";
 
               this.getView().setModel(modelo, modeloRaca);
             } catch (erros) {
-              console.log("Não foi possível obter a raça");
+              this._exibirErros(erros);
             }
           }
         },
 
-        _carregarDadosDaRacaNaTela: function () {},
+        _atualizarTextoDaPáginaCriar: function () {
+          this._atualizarTituloDaPaginaCriar();
+          this._atualizarLabelDoBotaoAdicionar();
+        },
+
+        _atualizarTextoDaPáginaEditar: function () {
+          this._atualizarTituloDaPaginaEditar();
+          this._atualizarLabelDoBotaoEditar();
+        },
+
+        _atualizarTituloDaPaginaCriar: function () {
+          const idPaginaCriacao = "paginaCriarRaca";
+          const oBundle = this.getView().getModel("i18n").getResourceBundle();
+          const novoTitulo = oBundle.getText("TituloPaginaCriarRaca");
+          this.byId(idPaginaCriacao).setTitle(novoTitulo);
+        },
+
+        _atualizarTituloDaPaginaEditar: function () {
+          const idPaginaCriacao = "paginaCriarRaca";
+          const oBundle = this.getView().getModel("i18n").getResourceBundle();
+          const novoTitulo = oBundle.getText("TituloPaginaEditarRaca");
+          this.byId(idPaginaCriacao).setTitle(novoTitulo);
+        },
+
+        _atualizarLabelDoBotaoAdicionar: function () {
+          const idBotaoAdicionar = "criarRacaBtn";
+          const oBundle = this.getView().getModel("i18n").getResourceBundle();
+          const novoLabel = oBundle.getText("BotaoAdicionar");
+          this.byId(idBotaoAdicionar).setText(novoLabel);
+        },
+
+        _atualizarLabelDoBotaoEditar: function () {
+          const idBotaoAdicionar = "criarRacaBtn";
+          const oBundle = this.getView().getModel("i18n").getResourceBundle();
+          const novoLabel = oBundle.getText("BotaoEditar");
+          this.byId(idBotaoAdicionar).setText(novoLabel);
+        },
 
         _aoMudarInput: function (oEvent, funcaoDeValidacao) {
           const objeto = oEvent.getSource();
@@ -87,9 +152,9 @@ sap.ui.define(
           objeto.setValueState(valueState);
         },
 
-        _validarNovaRaca: function (personagem) {
+        _validarNovaRaca: function (raca) {
           let racaValida = false;
-          const nomeInseridoInput = this._validarNome(personagem.nome);
+          const nomeInseridoInput = this._validarNome(raca.nome);
           if (nomeInseridoInput) {
             racaValida = true;
             return racaValida;
@@ -170,18 +235,23 @@ sap.ui.define(
         },
 
         _pegarValoresDaRacaNaTela: function () {
-          this.raca.nome = this.byId(ID_INPUT_NOME).getValue();
-          this.raca.localizacaoGeografica =
-            this.byId(ID_INPUT_LOCALIZACAO).getValue();
-          this.raca.habilidadeRacial =
-            this.byId(ID_INPUT_HABILIDADE).getValue();
+          const modelo = this.getView().getModel("raca");
 
+          const dadosDoModelo = modelo.getData();
           const condicaoExtinta = 0;
-          this.raca.estaExtinta =
+          const condicaoEstaExtintaNoModelo =
             this.byId(ID_RADIO_BTN_EXTINTAOUNAO).getSelectedIndex() ==
             condicaoExtinta
               ? true
               : false;
+
+          this.raca = {
+            id: dadosDoModelo.id,
+            nome: dadosDoModelo.nome,
+            localizacaoGeografica: dadosDoModelo.localizacaoGeografica,
+            habilidadeRacial: dadosDoModelo.habilidadeRacial,
+            estaExtinta: condicaoEstaExtintaNoModelo,
+          };
         },
 
         _limparInputs: function () {
@@ -189,15 +259,15 @@ sap.ui.define(
           const condicaoInicial = 0;
           const valueStatePadrao = "None";
 
-          this.byId(ID_INPUT_NOME).setValue(stringVazia);
+          const modeloRaca = "raca";
+          const modelo = new JSONModel({
+            nome: stringVazia,
+            localizacaoGeografica: stringVazia,
+            habilidadeRacial: stringVazia,
+          });
+          this.getView().setModel(modelo, modeloRaca);
+
           this.byId(ID_INPUT_NOME).setValueState(valueStatePadrao);
-
-          this.byId(ID_INPUT_HABILIDADE).setValue(stringVazia);
-          this.byId(ID_INPUT_HABILIDADE).setValueState(valueStatePadrao);
-
-          this.byId(ID_INPUT_LOCALIZACAO).setValue(stringVazia);
-          this.byId(ID_INPUT_LOCALIZACAO).setValueState(valueStatePadrao);
-
           this.byId(ID_RADIO_BTN_EXTINTAOUNAO).setSelectedIndex(
             condicaoInicial
           );

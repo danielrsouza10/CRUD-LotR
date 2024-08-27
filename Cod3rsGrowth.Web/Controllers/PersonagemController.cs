@@ -61,8 +61,8 @@ namespace Cod3rsGrowth.Web.Controllers
         [HttpPut("personagem")]
         public IActionResult Editar([FromBody] Personagem personagem)
         {
-            _servicoPersonagem.Editar(personagem);
-            return Ok();
+            var idPersonagem = _servicoPersonagem.Editar(personagem);
+            return Ok(idPersonagem);
         }
         [HttpDelete("personagem")]
         public IActionResult Deletar([FromBody] int id)
