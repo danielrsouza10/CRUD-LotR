@@ -4,8 +4,9 @@ sap.ui.define(
     "ui5/o_senhor_dos_aneis/services/RacaService",
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageBox",
+      "ui5/o_senhor_dos_aneis/model/formatter",
   ],
-  function (BaseController, RacaService, JSONModel, MessageBox) {
+  function (BaseController, RacaService, JSONModel, MessageBox, formatter) {
     "use strict";
     const ID_INPUT_NOME = "inputNome",
       ID_INPUT_LOCALIZACAO = "inputLocalizacaoGeografica",
@@ -14,6 +15,8 @@ sap.ui.define(
     return BaseController.extend(
       "ui5.o_senhor_dos_aneis.controller.CriarRaca",
       {
+          formatter: formatter,
+
         onInit: function () {
           const rotaCriacao = "criarRaca";
           const rotaEdicao = "editarRaca";

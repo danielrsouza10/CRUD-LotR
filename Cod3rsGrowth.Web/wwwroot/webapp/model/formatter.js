@@ -99,5 +99,11 @@ sap.ui.define([], () => {
       }
       return "Success";
     },
+    formatarCondicaoExtintaInicial(extinto){
+      if(extinto){
+        return 0;
+      }
+      return 1;
+    }
   };
 });

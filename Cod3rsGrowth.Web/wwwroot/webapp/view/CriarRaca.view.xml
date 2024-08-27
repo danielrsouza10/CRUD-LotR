@@ -79,6 +79,10 @@
                         columns="2"
                         valueState="None"
                         select="aoSelecionarCondicao"
+                        selectedIndex="{
+                                path: 'raca>/estaExtinta',
+                                formatter: '.formatter.formatarCondicaoExtintaInicial'
+                            }"
                     >
                         <RadioButton
                             id="radioBtnExtinta"
