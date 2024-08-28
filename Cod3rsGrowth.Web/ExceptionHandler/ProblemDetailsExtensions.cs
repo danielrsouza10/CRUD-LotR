@@ -33,7 +33,7 @@ namespace Cod3rsGrowth.Web.ExceptionHandler
                         }
                         else if (exception is SqlException sqlRequestException)
                         {
-                            problemDetails.Title = "O Id da raça não existe";
+                            problemDetails.Title = "Um erro de SqlException ocorreu";
                             problemDetails.Status = StatusCodes.Status500InternalServerError;
                             problemDetails.Detail = sqlRequestException.StackTrace;
                             problemDetails.Extensions["Erros"] = sqlRequestException.Message;

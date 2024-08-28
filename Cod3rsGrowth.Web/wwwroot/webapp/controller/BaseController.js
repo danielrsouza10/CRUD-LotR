@@ -89,12 +89,11 @@ sap.ui.define(
           const espacoEntreErros = ".\n";
 
           if (erros.status) {
-            const mensagemDeErro = Object.values(erros.extensions.erros).join(
+            const mensagemDeErro = Object.values(erros.extensions).join(
               espacoEntreErros
             );
             this.criarDialogoDeErro(erros.title, erros.detail, mensagemDeErro);
           }
-          //   if(erros.SqlException)
           if (
             this.errosDeValidacao.caracteresEspeciais ||
             this.errosDeValidacao.tamanhoDaString ||
