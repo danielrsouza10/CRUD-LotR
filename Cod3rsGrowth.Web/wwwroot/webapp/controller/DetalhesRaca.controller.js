@@ -27,7 +27,9 @@ sap.ui.define(
                     this.onNavTo(rotaEditarRaca, {id: idRacaSelecionada});
                 },
                 aoPressionarOBotaoRemover: function () {
-                    this._desejaExcluirEsseRegistro().then((confirmacao) =>{
+                    const tituloDoDialogo = "Excluir registro",
+                        mensagemDoDialogo = "Deseja confirmar a exclusão desse registro?";
+                    this.criarDialogoDeAviso(tituloDoDialogo, mensagemDoDialogo).then((confirmacao) =>{
                         if (confirmacao) {
                             const modelo = "raca";
                             const idRaca = this.getView().getModel(modelo).getData().id;
@@ -35,7 +37,7 @@ sap.ui.define(
                                 RacaService.removerRaca(idRaca);
                                 const mensagemDeSucesso = "Raça removida com sucesso!";
                                 const tituloDaMessageBox = "Sucesso";
-                                this._sucessoMessageBox(mensagemDeSucesso, tituloDaMessageBox);
+                                this.criarDialogoDeSucesso(mensagemDeSucesso, tituloDaMessageBox);
                             } catch (erros) {
                                 this._exibirErros(erros);
                             }

@@ -120,10 +120,10 @@ sap.ui.define(
                         });
                     }
                 },
-                _desejaExcluirEsseRegistro: function () {
+                criarDialogoDeAviso: function (titulo, mensagem) {
                     return new Promise((resolve, reject) => {
-                        MessageBox.warning("Deseja confirmar a exclusão desse registro?", {
-                            title: "Excluir registro",
+                        MessageBox.warning(mensagem, {
+                            title: titulo,
                             actions: [MessageBox.Action.YES, MessageBox.Action.NO],
                             emphasizedAction: "YES",
                             onClose: function (acao) {
@@ -137,7 +137,7 @@ sap.ui.define(
                         });
                     });
                 },
-                _sucessoMessageBox: function (mensagem, titulo) {
+                criarDialogoDeSucesso: function (mensagem, titulo) {
                     MessageBox.show(mensagem, {
                         icon: sap.m.MessageBox.Icon.SUCCESS,
                         title: titulo,

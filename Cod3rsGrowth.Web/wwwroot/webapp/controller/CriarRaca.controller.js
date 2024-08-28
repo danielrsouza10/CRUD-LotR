@@ -55,7 +55,7 @@ sap.ui.define(
                                 const racaCriada = await RacaService.adicionarRaca(this.raca);
                                 const mensagemDeSucesso = "Raça adicionada com sucesso!";
                                 const tituloDaMessageBox = "Sucesso";
-                                this._sucessoMessageBox(mensagemDeSucesso, tituloDaMessageBox);
+                                this.criarDialogoDeSucesso(mensagemDeSucesso, tituloDaMessageBox);
                                 this._limparInputs();
                             } catch (erros) {
                                 this._exibirErros(erros);
@@ -68,7 +68,7 @@ sap.ui.define(
                             const racaEditada = await RacaService.editarRaca(this.raca);
                             const mensagemDeSucesso = "Raça editada com sucesso!";
                             const tituloDaMessageBox = "Sucesso";
-                            this._sucessoMessageBox(mensagemDeSucesso, tituloDaMessageBox);
+                            this.criarDialogoDeSucesso(mensagemDeSucesso, tituloDaMessageBox);
                             this._limparInputs();
                         } catch (erros) {
                             this._exibirErros(erros);
