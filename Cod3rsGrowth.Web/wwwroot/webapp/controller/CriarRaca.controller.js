@@ -49,39 +49,30 @@ sap.ui.define(
 
                 aoCriarRaca: async function (oEvent) {
                     this._pegarValoresDaRacaNaTela();
-                    const sucessoMessageBox = (mensagem, titulo) => {
-                        MessageBox.show(mensagem, {
-                            icon: sap.m.MessageBox.Icon.SUCCESS,
-                            title: titulo,
-                            dependentOn: this.getView(),
-                        });
-                    };
                     if (!this.modoEditar) {
                         if (this._validarNovaRaca(this.raca)) {
                             try {
                                 const racaCriada = await RacaService.adicionarRaca(this.raca);
                                 const mensagemDeSucesso = "Raça adicionada com sucesso!";
                                 const tituloDaMessageBox = "Sucesso";
-                                sucessoMessageBox(mensagemDeSucesso, tituloDaMessageBox);
+                                this.criarDialogoDeSucesso(mensagemDeSucesso, tituloDaMessageBox);
                                 this._limparInputs();
-                                const tempoParaVisualizarMensagem = 2000;
-                                setTimeout(() => this.onNavBack(), tempoParaVisualizarMensagem);
                             } catch (erros) {
                                 this._exibirErros(erros);
                             }
                         }
                         return;
                     }
-                    try {
-                        const racaEditada = await RacaService.editarRaca(this.raca);
-                        const mensagemDeSucesso = "Raça editada com sucesso!";
-                        const tituloDaMessageBox = "Sucesso";
-                        sucessoMessageBox(mensagemDeSucesso, tituloDaMessageBox);
-                        this._limparInputs();
-                        const tempoParaVisualizarMensagem = 2000;
-                        setTimeout(() => this.onNavBack(), tempoParaVisualizarMensagem);
-                    } catch (erros) {
-                        this._exibirErros(erros);
+                    if (this._validarNovaRaca(this.raca)) {
+                        try {
+                            const racaEditada = await RacaService.editarRaca(this.raca);
+                            const mensagemDeSucesso = "Raça editada com sucesso!";
+                            const tituloDaMessageBox = "Sucesso";
+                            this.criarDialogoDeSucesso(mensagemDeSucesso, tituloDaMessageBox);
+                            this._limparInputs();
+                        } catch (erros) {
+                            this._exibirErros(erros);
+                        }
                     }
                 },
 
@@ -157,77 +148,6 @@ sap.ui.define(
                     }
                     this._exibirErros(this.errosDeValidacao);
                     return racaValida;
-                },
-
-                _validarNome: function (nomeInserido) {
-                    let nomeValido = false;
-                    const contemCaracteresEspeciais =
-                        this._verificarCaracteresEspeciais(nomeInserido);
-                    const tamanhoDaString = this._verificarTamanhoString(nomeInserido);
-                    if (!contemCaracteresEspeciais && tamanhoDaString) {
-                        nomeValido = true;
-                        return nomeValido;
-                    }
-                    return nomeValido;
-                },
-
-                _verificarCaracteresEspeciais: function (str) {
-                    const regex = /[^a-zA-Z]/;
-                    if (regex.test(str)) {
-                        const mensagemDeErro =
-                            "O nome não pode conter números, espaços ou caracteres especiais";
-                        this.errosDeValidacao.caracteresEspeciais = mensagemDeErro;
-                        return regex.test(str);
-                    }
-                    delete this.errosDeValidacao.caracteresEspeciais;
-                    return regex.test(str);
-                },
-
-                _verificarTamanhoString: function (str) {
-                    const tamanhoMinimo = 3;
-                    if (str.length < tamanhoMinimo) {
-                        const mensagemDeErro = "O nome precisa ter pelo menos 3 caracteres";
-                        this.errosDeValidacao.tamanhoDaString = mensagemDeErro;
-                        return str.length >= tamanhoMinimo;
-                    }
-                    delete this.errosDeValidacao.tamanhoDaString;
-                    return str.length >= tamanhoMinimo;
-                },
-
-                _exibirErros: function (erros) {
-                    const espacoEntreErros = ".\n";
-                    if (erros.status) {
-                        let mensagemDeErro = Object.values(erros.extensions.erros).join(
-                            espacoEntreErros
-                        );
-                        const tituloErro = erros.title;
-                        const detalhesDoErro = erros.detail;
-                        MessageBox.error(mensagemDeErro, {
-                            title: tituloErro,
-                            details: detalhesDoErro,
-                            contentWidth: "400px",
-                            dependentOn: this.getView(),
-                        });
-                    }
-                    if (
-                        this.errosDeValidacao.caracteresEspeciais ||
-                        this.errosDeValidacao.tamanhoDaString ||
-                        this.errosDeValidacao.idadeMinima ||
-                        this.errosDeValidacao.alturaMinima
-                    ) {
-                        let mensagemDeErro = Object.values(this.errosDeValidacao).join(
-                            espacoEntreErros
-                        );
-                        const tituloErro = "Erro ao criar raça";
-                        const detailsErro =
-                            "Corrija os campos acima para prosseguir com a criação da raça";
-                        MessageBox.error(mensagemDeErro, {
-                            title: tituloErro,
-                            details: detailsErro,
-                            contentWidth: "300px",
-                            dependentOn: this.getView(),
-                        });
-                    }
                 },
 
                 _pegarValoresDaRacaNaTela: function () {

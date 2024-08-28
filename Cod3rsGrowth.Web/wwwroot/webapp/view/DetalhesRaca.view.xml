@@ -79,6 +79,7 @@
                 <Button
                     type="Reject"
                     text="{i18n>BotaoRemover}"
+                    press=".aoPressionarOBotaoRemover"
                     width="100px"
                 >
                     <layoutData>

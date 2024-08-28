@@ -20,14 +20,6 @@ sap.ui.define(
     Opa5.createPageObjects({
       naPaginaDeCriarRaca: {
         actions: {
-          aTelaFoiCarregadaCorretamente: function () {
-            return this.waitFor({
-              viewName: NOME_VIEW,
-              success: () =>
-                Opa5.assert.ok(true, "A tela foi carregada corretamente"),
-              errorMessage: "A tela não foi carregada corretamente",
-            });
-          },
           euDigitoUmNomeNoInputField: function (nomeRaca) {
             return this.waitFor({
               id: ID_INPUT_NOME,
@@ -128,6 +120,31 @@ sap.ui.define(
           },
         },
         assertions: {
+          aTelaFoiCarregadaCorretamente: function () {
+            return this.waitFor({
+              viewName: NOME_VIEW,
+              success: () =>
+                  Opa5.assert.ok(true, "A tela foi carregada corretamente"),
+              errorMessage: "A tela não foi carregada corretamente",
+            });
+          },
+          deveAparecerUmaMessageBoxDeSucesso: function () {
+            return this.waitFor({
+              searchOpenDialogs: true,
+              controlType: "sap.m.Dialog",
+              matchers: new PropertyStrictEquals({
+                name: "title",
+                value: "Sucesso",
+              }),
+              success: function () {
+                Opa5.assert.ok(
+                    true,
+                    "Foi encontrada a MessageBox indicando sucesso ao adicionar a raça"
+                );
+              },
+              errorMessage: "Não foi encontrada a MessageBox indicando sucesso ao adicionar a raça",
+            });
+          },
           deveAparecerUmaMessageBoxDeErro: function () {
             return this.waitFor({
               searchOpenDialogs: true,

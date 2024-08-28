@@ -165,5 +165,43 @@ sap.ui.define(
                 Then.iTeardownMyApp();
             }
         );
+        opaTest(
+            "Deve retornar uma mensagem de sucesso ao editar um raça com o nome com caracteres validos",
+            function (Given, When, Then) {
+                // Arrangements
+                Given.iStartMyApp({
+                    hash: "raca/editarRaca/10",
+                });
+                //Actions
+                When.naPaginaDeEditarRaca.aTelaFoiCarregadaCorretamente();
+                When.naPaginaDeEditarRaca.euDigitoUmNomeNoInputField("Dragaos");
+                When.naPaginaDeEditarRaca.euSelecionoCondicaoNaoExtinta();
+                When.naPaginaDeEditarRaca.euSelecionoCondicaoExinta();
+                When.naPaginaDeEditarRaca.euPressionoOBotaoEditar();
+
+                // Assertions
+                Then.naPaginaDeEditarRaca.deveAparecerUmaMessageBoxDeSucesso();
+                // Cleanup
+                Then.iTeardownMyApp();
+            }
+        );
+        opaTest(
+            "Deve retornar uma mensagem de sucesso ao editar um raça com o nome anterior dela",
+            function (Given, When, Then) {
+                // Arrangements
+                Given.iStartMyApp({
+                    hash: "raca/editarRaca/10",
+                });
+                //Actions
+                When.naPaginaDeEditarRaca.aTelaFoiCarregadaCorretamente();
+                When.naPaginaDeEditarRaca.euDigitoUmNomeNoInputField("Dragão");
+                When.naPaginaDeEditarRaca.euPressionoOBotaoEditar();
+
+                // Assertions
+                Then.naPaginaDeEditarRaca.deveAparecerUmaMessageBoxDeSucesso();
+                // Cleanup
+                Then.iTeardownMyApp();
+            }
+        );
     }
 );
