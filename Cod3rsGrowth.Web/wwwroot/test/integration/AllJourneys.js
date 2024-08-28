@@ -2,10 +2,10 @@ sap.ui.define(
   [
     "sap/ui/test/Opa5",
     "./arrangements/Startup",
-    // "./journeys/HomeJourney",
-    // "./journeys/ListaPersonagensJourney",
+    "./journeys/HomeJourney",
+    "./journeys/ListaPersonagensJourney",
     "./journeys/ListaRacasJourney",
-    // "./journeys/CriarPersonagemJourney",
+    "./journeys/CriarPersonagemJourney",
     "./journeys/CriarRacaJourney",
     "./journeys/EditarRacaJourney",
     "./journeys/DetalhesRacaJourney",

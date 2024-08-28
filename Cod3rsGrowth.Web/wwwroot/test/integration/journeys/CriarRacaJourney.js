@@ -19,7 +19,6 @@ sap.ui.define(
         });
 
         //Actions
-        When.naPaginaDeCriarRaca.aTelaFoiCarregadaCorretamente();
         When.naPaginaDeCriarRaca.euDigitoUmNomeNoInputField("Humano");
         When.naPaginaDeCriarRaca.euDigitoUmaLocalizacaoGeograficaNoInputField(
           "???"
@@ -42,7 +41,6 @@ sap.ui.define(
           hash: "raca/criarRaca",
         });
         //Actions
-        When.naPaginaDeCriarRaca.aTelaFoiCarregadaCorretamente();
         When.naPaginaDeCriarRaca.euPressionoOBotaoAdicionar();
 
         // Assertions
@@ -59,7 +57,6 @@ sap.ui.define(
           hash: "raca/criarRaca",
         });
         //Actions
-        When.naPaginaDeCriarRaca.aTelaFoiCarregadaCorretamente();
         When.naPaginaDeCriarRaca.euDigitoUmNomeNoInputField("Al");
         When.naPaginaDeCriarRaca.euDigitoUmaLocalizacaoGeograficaNoInputField(
           "???"
@@ -82,7 +79,6 @@ sap.ui.define(
           hash: "raca/criarRaca",
         });
         //Actions
-        When.naPaginaDeCriarRaca.aTelaFoiCarregadaCorretamente();
         When.naPaginaDeCriarRaca.euDigitoUmNomeNoInputField("****");
         When.naPaginaDeCriarRaca.euDigitoUmaLocalizacaoGeograficaNoInputField(
           "???"
@@ -106,7 +102,6 @@ sap.ui.define(
           hash: "raca/criarRaca",
         });
         //Actions
-        When.naPaginaDeCriarRaca.aTelaFoiCarregadaCorretamente();
         When.naPaginaDeCriarRaca.euPressionoOBotaoCancelar();
 
         // Assertions
@@ -125,7 +120,6 @@ sap.ui.define(
           hash: "raca/criarRaca",
         });
         //Actions
-        When.naPaginaDeCriarRaca.aTelaFoiCarregadaCorretamente();
         When.naPaginaDeCriarRaca.euPressionoBotaoVoltar();
 
         // Assertions
@@ -144,7 +138,6 @@ sap.ui.define(
           hash: "raca/criarRaca",
         });
         //Actions
-        When.naPaginaDeCriarRaca.aTelaFoiCarregadaCorretamente();
         When.naPaginaDeCriarRaca.euDigitoUmNomeNoInputField("D*");
         When.naPaginaDeCriarRaca.euDigitoUmaLocalizacaoGeograficaNoInputField(
           "???"

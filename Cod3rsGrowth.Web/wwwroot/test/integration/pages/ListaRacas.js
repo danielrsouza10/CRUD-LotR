@@ -182,6 +182,20 @@ sap.ui.define(
                                 "A lista nao está vazia ou não foi possível verificar o seu tamanho",
                         });
                     },
+                    euVerificoSeAListaTem10Registros: function (){
+                        return this.waitFor({
+                            id: ID_LISTA,
+                            viewName: NOME_VIEW,
+                            success: function (lista) {
+                                const modeloDaLista = lista.getModel("racas");
+                                const listaDeRacas = modeloDaLista.getProperty("/");
+                                if(listaDeRacas.length === 10) {
+                                    Opa5.assert.ok(true, "A lista tem 10 registros");
+                                }
+                            },
+                            errorMessage: "A lista não contem 10 registros",
+                        });
+                    },
                 },
             },
         });
