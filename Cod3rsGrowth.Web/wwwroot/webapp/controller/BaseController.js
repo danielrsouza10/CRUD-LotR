@@ -64,7 +64,7 @@ sap.ui.define(
                 },
 
                 _verificarCaracteresEspeciais: function (str) {
-                    const regex = /[^a-zA-Z]/;
+                    const regex = /[^a-zA-ZÀ-ÖØ-öø-ÿ\s]/;
                     if (regex.test(str)) {
                         const mensagemDeErro =
                             "O nome não pode conter números, espaços ou caracteres especiais";
@@ -123,6 +123,7 @@ sap.ui.define(
                 _desejaExcluirEsseRegistro: function () {
                     return new Promise((resolve, reject) => {
                         MessageBox.warning("Deseja confirmar a exclusão desse registro?", {
+                            title: "Excluir registro",
                             actions: [MessageBox.Action.YES, MessageBox.Action.NO],
                             emphasizedAction: "YES",
                             onClose: function (acao) {
