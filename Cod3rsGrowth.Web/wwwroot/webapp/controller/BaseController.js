@@ -89,7 +89,7 @@ sap.ui.define(
           const espacoEntreErros = ".\n";
 
           if (erros.status) {
-            const mensagemDeErro = Object.values(erros.extensions).join(
+            const mensagemDeErro = Object.values(erros.extensions.erros).join(
               espacoEntreErros
             );
             this.criarDialogoDeErro(erros.title, erros.detail, mensagemDeErro);
