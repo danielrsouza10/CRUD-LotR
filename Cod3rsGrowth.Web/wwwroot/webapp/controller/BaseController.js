@@ -94,7 +94,7 @@ sap.ui.define(
             );
             this.criarDialogoDeErro(erros.title, erros.detail, mensagemDeErro);
           }
-          if(erros.SqlException)
+          //   if(erros.SqlException)
           if (
             this.errosDeValidacao.caracteresEspeciais ||
             this.errosDeValidacao.tamanhoDaString ||
