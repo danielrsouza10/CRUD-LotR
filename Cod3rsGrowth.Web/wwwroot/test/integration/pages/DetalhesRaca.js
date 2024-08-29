@@ -207,16 +207,16 @@ sap.ui.define(
               controlType: "sap.m.Dialog",
               matchers: new PropertyStrictEquals({
                 name: "title",
-                value: "Um erro de SqlException ocorreu",
+                value: "Erro de Registro com Dependentes",
               }),
               success: function () {
                 Opa5.assert.ok(
                   true,
-                  "Foi encontrada a MessageBox mostrando que um erro de SqlException ocorreu"
+                  "Foi encontrada a MessageBox mostrando que um Erro de Registro com Dependentes ocorreu"
                 );
               },
               errorMessage:
-                "Não encontrada a MessageBox mostrando que um erro de SqlException ocorreu",
+                "Não encontrada a MessageBox mostrando que um Erro de Registro com Dependentes ocorreu",
             });
           },
           deveExistirUmaListaNaPagina: function () {

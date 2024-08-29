@@ -88,11 +88,25 @@ sap.ui.define(
         _exibirErros: function (erros) {
           const espacoEntreErros = ".\n";
 
+          if (erros.status == "500") {
+            const mensagemDeErro = Object.values(erros.extensions).join(
+              espacoEntreErros
+            );
+            return this.criarDialogoDeErro(
+              erros.title,
+              mensagemDeErro,
+              erros.detail
+            );
+          }
           if (erros.status) {
             const mensagemDeErro = Object.values(erros.extensions.erros).join(
               espacoEntreErros
             );
-            this.criarDialogoDeErro(erros.title, erros.detail, mensagemDeErro);
+            return this.criarDialogoDeErro(
+              erros.title,
+              erros.detail,
+              mensagemDeErro
+            );
           }
           if (
             this.errosDeValidacao.caracteresEspeciais ||
@@ -106,7 +120,11 @@ sap.ui.define(
             const tituloErro = "Erro ao criar raça";
             const detalhesDoErro =
               "Corrija os campos acima para prosseguir com a criação da raça";
-            this.criarDialogoDeErro(tituloErro, detalhesDoErro, mensagemDeErro);
+            return this.criarDialogoDeErro(
+              tituloErro,
+              detalhesDoErro,
+              mensagemDeErro
+            );
           }
         },
         criarDialogoDeAviso: function (titulo, mensagem) {

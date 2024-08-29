@@ -3,6 +3,7 @@ using Dominio.Filtros;
 using Dominio.Modelos;
 using Dominio.Validacao;
 using FluentValidation;
+using LinqToDB.SqlQuery;
 using Testes.Interfaces;
 namespace Servico.Servicos
 {

@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Dominio.Exceptions;
+using FluentValidation;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
@@ -33,16 +34,23 @@ namespace Cod3rsGrowth.Web.ExceptionHandler
                         }
                         else if (exception is SqlException sqlRequestException)
                         {
-                            problemDetails.Title = "Um erro de SqlException ocorreu";
+                            problemDetails.Title = "Um erro de SQL ocorreu";
                             problemDetails.Status = StatusCodes.Status500InternalServerError;
                             problemDetails.Detail = sqlRequestException.Message;
                             problemDetails.Extensions["Erros"] = sqlRequestException.Errors
                                 .Cast<SqlError>()
-                                .GroupBy(error => error.Number) 
+                                .GroupBy(error => error.Number)
                                 .ToDictionary(
                                     group => $"Error Code {group.Key}",
                                     group => group.First().Message
                                 );
+                        }
+                        else if (exception is RegistroComDepententesException registroComDepentendesException)
+                        {
+                            problemDetails.Title = "Erro de Registro com Dependentes";
+                            problemDetails.Status = StatusCodes.Status500InternalServerError;
+                            problemDetails.Detail = registroComDepentendesException.Message;
+                            problemDetails.Extensions["Erros"] = registroComDepentendesException.StackTrace;
                         }
                         else if (exception is Exception requestException)
                         {
