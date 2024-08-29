@@ -1,6 +1,8 @@
+using Dominio.Exceptions;
 using Dominio.Filtros;
 using Dominio.Modelos;
 using LinqToDB;
+using Microsoft.Data.SqlClient;
 using Testes.Interfaces;
 
 namespace Infra.Repositorios;
@@ -33,9 +35,15 @@ public class RepositorioRaca : IRepositorio<Raca>
     }
     public void Deletar(int id)
     {
-        _db.Raca
-            .Where(r => r.Id == id)
-            .Delete();
+        try
+        {
+            _db.Raca
+                .Where(r => r.Id == id)
+                .Delete();
+        }
+        catch (SqlException ex) { 
+            throw new RegistroComDepententesException("Não é possível excluir uma raça com personagens", ex);
+        }
     }
     public bool VerificarNomeNoDb(string nome, int? id = null)
     {

@@ -61,6 +61,88 @@
                 <ObjectMarker type="Favorite" />
             </markers>
         </ObjectHeader>
+        <List
+            id="listaDePersonagens"
+            mode="None"
+            items="{personagens>/}"
+            growing="true"
+            growingThreshold="5"
+            enableBusyIndicator="true"
+            class="sapUiResponsiveContentPadding"
+        >
+            <headerToolbar>
+                <OverflowToolbar id="listToolbar">
+                    <Title text="{i18n>TituloListaPersonagens}" />
+                </OverflowToolbar>
+            </headerToolbar>
+
+            <CustomListItem
+                type="Navigation"
+                id="customListPersonagens"
+                highlight="{
+                path: 'personagens>estaVivo',
+                formatter: '.formatter.formatarStatusCondicaoNaLista'
+            }"
+            >
+                <HBox>
+                    <Image
+                        src="{
+                                    path: 'personagens>raca',
+                                    formatter: '.formatter.formatarIconeListagem'
+                                }"
+                        width="2rem"
+                        height="2rem"
+                        class="sapUiSmallMargin"
+                    />
+                    <VBox
+                        class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
+                    >
+                        <ObjectIdentifier
+                            title="{personagens>nome}"
+                            class="sapUiTinyMarginBottom"
+                        />
+                        <FlexBox>
+                            <Label
+                                text="{i18n>LabelRaca}:"
+                                class="sapUiTinyMarginEnd"
+                            />
+                            <Text text="{personagens>raca}" />
+                        </FlexBox>
+                        <FlexBox>
+                            <Label
+                                text="{i18n>LabelProfissao}:"
+                                class="sapUiTinyMarginEnd"
+                            />
+                            <Text text="{personagens>profissao}" />
+                        </FlexBox>
+                        <FlexBox>
+                            <Label
+                                text="{i18n>LabelCondicao}:"
+                                class="sapUiTinyMarginEnd"
+                            />
+                            <Text
+                                text="{
+                                    path: 'personagens>estaVivo',
+                                    formatter: '.formatter.formatarBooleanVivoMorto'
+                                    }"
+                            />
+                        </FlexBox>
+                        <FlexBox>
+                            <Label
+                                text="{i18n>LabelDataDoCadastro}:"
+                                class="sapUiTinyMarginEnd"
+                            />
+                            <Text
+                                text="{
+                                    path: 'personagens>dataDoCadastro',
+                                    formatter: '.formatter.formatarDataDeCadastro'
+                                }"
+                            />
+                        </FlexBox>
+                    </VBox>
+                </HBox>
+            </CustomListItem>
+        </List>
         <footer>
             <OverflowToolbar id="otbFooter">
                 <ToolbarSpacer />
