@@ -15,6 +15,7 @@ sap.ui.define(
     formatter
   ) {
     "use strict";
+    const ID_RADIO_BTN_VIVOOUMORTO = "radioBtnVivoMorto";
     return BaseController.extend(
       "ui5.o_senhor_dos_aneis.controller.DetalhesRaca",
       {
@@ -26,6 +27,7 @@ sap.ui.define(
         },
         aoCoincidirRota: function (oEvent) {
           this.filtros = {};
+          this.personagem = {};
           this._carregarModeloDaRaca(oEvent);
           this._carregarModeloDePersonagens(oEvent);
         },
@@ -55,6 +57,47 @@ sap.ui.define(
             }
           }
         },
+        aoAdicionarPersonagem: async function () {
+          this.modalCriarPersonagem ??= await this.loadFragment({
+            name: "ui5.o_senhor_dos_aneis.view.CriarPersonagensModal",
+          });
+
+          this.modalCriarPersonagem.open();
+        },
+        aoFecharModalCriarPersonagem: function (oEvent) {
+          this._carregarModeloDePersonagens(oEvent);
+          this._pegarValoresDoPersonagemNoModalNaTela();
+          this.byId("modalCriarPersonagem").close();
+        },
+        aoFecharModalCancelarCriarPersonagem: function (oEvent) {
+          this._carregarModeloDePersonagens(oEvent);
+          this.byId("modalCriarPersonagem").close();
+        },
+
+        _pegarValoresDoPersonagemNoModalNaTela: function () {
+          const modeloPersonagem = "personagem";
+          const modelo = new JSONModel();
+          this.getView().setModel(modelo, modeloPersonagem);
+
+          const dadosDoModelo = modelo.getData();
+          const condicao = 0;
+          const condicaoNoModelo =
+            this.byId(ID_RADIO_BTN_VIVOOUMORTO).getSelectedIndex() == condicao
+              ? true
+              : false;
+          //pegar valor da profissao
+          //pegar valor do id da raça
+          console.log(dadosDoModelo);
+          this.personagem = {
+            nome: dadosDoModelo.nome,
+            idRaca: dadosDoModelo.id,
+            altura: dadosDoModelo.altura,
+            idade: dadosDoModelo.idade,
+            estaVivo: condicaoNoModelo,
+          };
+          console.log(this.personagem);
+        },
+
         _carregarModeloDaRaca: async function (oEvent) {
           try {
             const idRaca = oEvent.getParameter("arguments").id;
