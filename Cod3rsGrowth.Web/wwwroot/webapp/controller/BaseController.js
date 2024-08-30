@@ -7,6 +7,7 @@ sap.ui.define(
   ],
   function (Controller, History, UIComponent, MessageBox) {
     "use strict";
+    this.errosDeValidacao = {};
 
     return Controller.extend(
       "ui5.o_senhor_dos_aneis.controller.BaseController",
@@ -51,16 +52,48 @@ sap.ui.define(
           return oBundle.getText(chave);
         },
 
+        aoMudarNome: function (oEvent) {
+          this._aoMudarInput(oEvent, this._validarNome.bind(this));
+        },
+
+        aoMudarIdade: function (oEvent) {
+          this._aoMudarInput(oEvent, this._validarIdade.bind(this));
+        },
+
+        aoMudarAltura: function (oEvent) {
+          this._aoMudarInput(oEvent, this._validarAltura.bind(this));
+        },
+
+        _aoMudarInput: function (oEvent, funcaoDeValidacao) {
+          const objeto = oEvent.getSource();
+          const nomeInserido = objeto.getValue();
+          const valueStateSucesso = "Success";
+          const valueStateErro = "Error";
+          let valueState = funcaoDeValidacao(nomeInserido)
+            ? valueStateSucesso
+            : valueStateErro;
+          objeto.setValueState(valueState);
+        },
+
+        _validarNovoPersonagem: function (personagem) {
+          const nomeInseridoInput = this._validarNome(personagem.nome);
+          const idadeInseridaInput = this._validarIdade(personagem.idade);
+          const alturaInseridaInput = this._validarAltura(personagem.altura);
+          if (nomeInseridoInput && idadeInseridaInput && alturaInseridaInput) {
+            return true;
+          }
+          this._exibirErros(this.errosDeValidacao);
+          return false;
+        },
+
         _validarNome: function (nomeInserido) {
-          let nomeValido = false;
           const contemCaracteresEspeciais =
             this._verificarCaracteresEspeciais(nomeInserido);
           const tamanhoDaString = this._verificarTamanhoString(nomeInserido);
           if (!contemCaracteresEspeciais && tamanhoDaString) {
-            nomeValido = true;
-            return nomeValido;
+            return true;
           }
-          return nomeValido;
+          return false;
         },
 
         _verificarCaracteresEspeciais: function (str) {
@@ -85,6 +118,31 @@ sap.ui.define(
           delete this.errosDeValidacao.tamanhoDaString;
           return str.length >= tamanhoMinimo;
         },
+
+        _validarIdade(idadeInserida) {
+          const idadeMinima = 0;
+          if (idadeInserida < idadeMinima) {
+            const mensagemDeErro =
+              "O valor da idade precisa ser maior do que zero";
+            this.errosDeValidacao.idadeMinima = mensagemDeErro;
+            return false;
+          }
+          delete this.errosDeValidacao.idadeMinima;
+          return true;
+        },
+
+        _validarAltura(alturaInserida) {
+          const alturaMinima = 0;
+          if (alturaInserida < alturaMinima) {
+            const mensagemDeErro =
+              "O valor da altura precisa ser maior do que zero";
+            this.errosDeValidacao.alturaMinima = mensagemDeErro;
+            return false;
+          }
+          delete this.errosDeValidacao.alturaMinima;
+          return true;
+        },
+
         _exibirErros: function (erros) {
           const espacoEntreErros = ".\n";
 
@@ -117,9 +175,9 @@ sap.ui.define(
             let mensagemDeErro = Object.values(this.errosDeValidacao).join(
               espacoEntreErros
             );
-            const tituloErro = "Erro ao criar raça";
+            const tituloErro = "Erro ao criar registro";
             const detalhesDoErro =
-              "Corrija os campos acima para prosseguir com a criação da raça";
+              "Corrija os campos acima para prosseguir com a criação do registro";
             return this.criarDialogoDeErro(
               tituloErro,
               detalhesDoErro,

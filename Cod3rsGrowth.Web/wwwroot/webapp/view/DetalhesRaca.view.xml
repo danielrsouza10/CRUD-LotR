@@ -61,6 +61,36 @@
                 <ObjectMarker type="Favorite" />
             </markers>
         </ObjectHeader>
+        <OverflowToolbar
+            id="otbHeader"
+            class="sapUiTinyMarginTop sapUiTinyMarginBottom"
+        >
+            <ToolbarSpacer />
+            <Button
+                type="Emphasized"
+                text="{i18n>BotaoEditar}"
+                id="editarRacaBtn"
+                press=".onNavToEditarRaca"
+                class="sapUiTinyMarginTop sapUiTinyMarginBottom"
+                width="100px"
+            >
+                <layoutData>
+                    <OverflowToolbarLayoutData priority="High" />
+                </layoutData>
+            </Button>
+            <Button
+                type="Reject"
+                text="{i18n>BotaoRemover}"
+                press=".aoPressionarOBotaoRemover"
+                width="100px"
+                class="sapUiTinyMarginTop sapUiTinyMarginBottom"
+            >
+                <layoutData>
+                    <OverflowToolbarLayoutData priority="Low" />
+                </layoutData>
+            </Button>
+        </OverflowToolbar>
+
         <List
             id="listaDePersonagens"
             mode="None"
@@ -73,6 +103,7 @@
             <headerToolbar>
                 <OverflowToolbar id="listToolbar">
                     <Title text="{i18n>TituloListaPersonagens}" />
+                    <ToolbarSpacer />
                 </OverflowToolbar>
             </headerToolbar>
 
@@ -143,29 +174,19 @@
                 </HBox>
             </CustomListItem>
         </List>
+
         <footer>
             <OverflowToolbar id="otbFooter">
                 <ToolbarSpacer />
                 <Button
-                    type="Emphasized"
-                    text="{i18n>BotaoEditar}"
-                    id="editarRacaBtn"
-                    press=".onNavToEditarRaca"
+                    type="Accept"
+                    text="{i18n>BotaoAdicionarPersonagem}"
+                    press=".aoAdicionarPersonagem"
+                    id="adicionarPersonagemBtn"
                     class="sapUiTinyMarginEnd"
-                    width="100px"
                 >
                     <layoutData>
                         <OverflowToolbarLayoutData priority="High" />
-                    </layoutData>
-                </Button>
-                <Button
-                    type="Reject"
-                    text="{i18n>BotaoRemover}"
-                    press=".aoPressionarOBotaoRemover"
-                    width="100px"
-                >
-                    <layoutData>
-                        <OverflowToolbarLayoutData priority="Low" />
                     </layoutData>
                 </Button>
             </OverflowToolbar>

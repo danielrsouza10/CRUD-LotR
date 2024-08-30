@@ -124,7 +124,7 @@ sap.ui.define(
             return this.waitFor({
               viewName: NOME_VIEW,
               success: () =>
-                  Opa5.assert.ok(true, "A tela foi carregada corretamente"),
+                Opa5.assert.ok(true, "A tela foi carregada corretamente"),
               errorMessage: "A tela não foi carregada corretamente",
             });
           },
@@ -138,11 +138,12 @@ sap.ui.define(
               }),
               success: function () {
                 Opa5.assert.ok(
-                    true,
-                    "Foi encontrada a MessageBox indicando sucesso ao adicionar a raça"
+                  true,
+                  "Foi encontrada a MessageBox indicando sucesso ao adicionar a raça"
                 );
               },
-              errorMessage: "Não foi encontrada a MessageBox indicando sucesso ao adicionar a raça",
+              errorMessage:
+                "Não foi encontrada a MessageBox indicando sucesso ao adicionar a raça",
             });
           },
           deveAparecerUmaMessageBoxDeErro: function () {
@@ -151,7 +152,7 @@ sap.ui.define(
               controlType: "sap.m.Dialog",
               matchers: new PropertyStrictEquals({
                 name: "title",
-                value: "Erro ao criar raça",
+                value: "Erro ao criar registro",
               }),
               success: function () {
                 Opa5.assert.ok(
@@ -190,7 +191,7 @@ sap.ui.define(
               errorMessage: "A tela 'Home' não foi carregada corretamente",
             });
           },
-          aTelaDeEdicaoFoiCarregadaCorretamente: function (){
+          aTelaDeEdicaoFoiCarregadaCorretamente: function () {
             return this.waitFor({
               controlType: "sap.m.Page",
               matchers: new I18NText({
@@ -201,10 +202,10 @@ sap.ui.define(
                 Opa5.assert.ok(pagina, "O título da página está correto.");
               },
               errorMessage:
-                  "Não foi encontrado título correspondente ou não foi possível navegar até a página",
+                "Não foi encontrado título correspondente ou não foi possível navegar até a página",
             });
           },
-          oBotaoEditarTemONomeCorreto: function (){
+          oBotaoEditarTemONomeCorreto: function () {
             return this.waitFor({
               controlType: "sap.m.Button",
               matchers: new I18NText({
@@ -212,12 +213,15 @@ sap.ui.define(
                 key: "BotaoEditar",
               }),
               success: function (botao) {
-                Opa5.assert.ok(botao, "O texto do botao na página está correto.");
+                Opa5.assert.ok(
+                  botao,
+                  "O texto do botao na página está correto."
+                );
               },
               errorMessage:
-                  "Não foi encontrado texto do botao correspondente ou não foi possível encontrar o botão em si",
+                "Não foi encontrado texto do botao correspondente ou não foi possível encontrar o botão em si",
             });
-          }
+          },
         },
       },
     });

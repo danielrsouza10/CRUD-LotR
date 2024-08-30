@@ -158,7 +158,7 @@ sap.ui.define(
               controlType: "sap.m.Dialog",
               matchers: new PropertyStrictEquals({
                 name: "title",
-                value: "Erro ao criar personagem",
+                value: "Erro ao criar registro",
               }),
               success: function () {
                 Opa5.assert.ok(

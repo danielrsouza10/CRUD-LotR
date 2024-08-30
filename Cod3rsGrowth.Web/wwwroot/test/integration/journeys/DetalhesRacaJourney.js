@@ -113,7 +113,7 @@ sap.ui.define(
         When.naPaginaDeDetalhesDaRaca.euPressionoSimParaConfirmarAEsclusao();
 
         //Assertions
-        Then.naPaginaDeDetalhesDaRaca.deveAparecerUmaMessageBoxDeErro();
+        Then.naPaginaDeDetalhesDaRaca.deveAparecerUmaMessageBoxDeErroDeRegistroDeDependentes();
 
         //Cleanup
         Then.iTeardownMyApp();
@@ -145,6 +145,116 @@ sap.ui.define(
           .and.deveConterUmaListaComRegistrosFilhosNaPagina();
 
         //Cleanup
+        Then.iTeardownMyApp();
+      }
+    );
+    opaTest(
+      "Deve pressionar o botao adicionar registro filho e carregar o modal de criação",
+      function (Given, When, Then) {
+        //Arrangements
+        Given.iStartMyApp({
+          hash: "raca/2",
+        });
+
+        //Actions
+        When.naPaginaDeDetalhesDaRaca.euPressionoOBotaoAdicionarPersonagem();
+
+        //Assertions
+        Then.naPaginaDeDetalhesDaRaca.deveAparecerOModalDeCriacaoDePersonagem();
+
+        //Cleanup
+        Then.iTeardownMyApp();
+      }
+    );
+    opaTest(
+      "Deve tentar criar um personagem com nome ja existente e retornar um erro do servidor",
+      function (Given, When, Then) {
+        //Arrangements
+        Given.iStartMyApp({
+          hash: "raca/2",
+        });
+        //Actions
+        When.naPaginaDeDetalhesDaRaca
+          .euPressionoOBotaoAdicionarPersonagem()
+          .and.euDigitoUmNomeNoInputField("Aragorn")
+          .and.euSelecionoUmaProfissao("7")
+          .and.euDigitoUmaIdadeNoInputField("98")
+          .and.euDigitoUmaAlturaNoInputField("1.97")
+          .and.euSelecionoCondicaoMorto()
+          .and.euPressionoOBotaoAdicionar();
+
+        //Assertions
+        Then.naPaginaDeDetalhesDaRaca.deveAparecerUmaMessageBoxDeErroVindoDoServidor();
+
+        //Cleanup
+        Then.iTeardownMyApp();
+      }
+    );
+    opaTest(
+      "Deve tentar criar um personagem com nome invalido e retornar um erro de validação",
+      function (Given, When, Then) {
+        //Arrangements
+        Given.iStartMyApp({
+          hash: "raca/3",
+        });
+        //Actions
+        When.naPaginaDeDetalhesDaRaca
+          .euPressionoOBotaoAdicionarPersonagem()
+          .and.euDigitoUmNomeNoInputField("Gi")
+          .and.euSelecionoUmaProfissao("5")
+          .and.euDigitoUmaIdadeNoInputField("1000")
+          .and.euDigitoUmaAlturaNoInputField("1.97")
+          .and.euSelecionoCondicaoMorto()
+          .and.euSelecionoCondicaoVivo()
+          .and.euPressionoOBotaoAdicionar();
+
+        //Assertions
+        Then.naPaginaDeDetalhesDaRaca.deveAparecerUmaMessageBoxDeErro();
+
+        //Cleanup
+        Then.iTeardownMyApp();
+      }
+    );
+    opaTest(
+      "Deve tentar criar um personagem com todos os inputs invalidos e retornar um erro de validação",
+      function (Given, When, Then) {
+        //Arrangements
+        Given.iStartMyApp({
+          hash: "raca/5",
+        });
+        //Actions
+        When.naPaginaDeDetalhesDaRaca
+          .euPressionoOBotaoAdicionarPersonagem()
+          .and.euDigitoUmNomeNoInputField("O*")
+          .and.euSelecionoUmaProfissao("5")
+          .and.euDigitoUmaIdadeNoInputField("-990")
+          .and.euDigitoUmaAlturaNoInputField("-1.97")
+          .and.euSelecionoCondicaoMorto()
+          .and.euSelecionoCondicaoVivo()
+          .and.euPressionoOBotaoAdicionar();
+
+        //Assertions
+        Then.naPaginaDeDetalhesDaRaca.deveAparecerUmaMessageBoxDeErro();
+
+        //Cleanup
+        Then.iTeardownMyApp();
+      }
+    );
+    opaTest(
+      "Deve retornar a pagina de detalhes da raça quando pressiono o botao cancelar",
+      function (Given, When, Then) {
+        //Arrangements
+        Given.iStartMyApp({
+          hash: "raca/9",
+        });
+        //Actions
+        When.naPaginaDeDetalhesDaRaca
+          .euPressionoOBotaoAdicionarPersonagem()
+          .and.euPressionoOBotaoCancelar();
+
+        // Assertions
+        Then.naPaginaDeDetalhesDaRaca.oTituloDaPaginaDetalhesDaRacaDeveraSer();
+        // Cleanup
         Then.iTeardownMyApp();
       }
     );
