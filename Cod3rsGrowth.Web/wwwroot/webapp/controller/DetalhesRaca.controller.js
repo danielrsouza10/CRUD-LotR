@@ -15,7 +15,10 @@ sap.ui.define(
     formatter
   ) {
     "use strict";
-    const ID_RADIO_BTN_VIVOOUMORTO = "radioBtnVivoMorto";
+    const ID_INPUT_NOME = "inputNome",
+      ID_RADIO_BTN_VIVOOUMORTO = "radioBtnVivoMorto",
+      ID_COMBOBOX_PROFISSAO = "profissaoComboBox",
+      ID_MODAL_CRIAR_PERSONAGEM = "modalCriarPersonagem";
     return BaseController.extend(
       "ui5.o_senhor_dos_aneis.controller.DetalhesRaca",
       {
@@ -28,8 +31,10 @@ sap.ui.define(
         aoCoincidirRota: function (oEvent) {
           this.filtros = {};
           this.personagem = {};
+          this.errosDeValidacao = {};
           this._carregarModeloDaRaca(oEvent);
           this._carregarModeloDePersonagens(oEvent);
+          this._carregarModeloDeNovoPersonagem(oEvent);
         },
         onNavToEditarRaca: function () {
           const modelo = "raca",
@@ -64,38 +69,51 @@ sap.ui.define(
 
           this.modalCriarPersonagem.open();
         },
-        aoFecharModalCriarPersonagem: function (oEvent) {
-          this._carregarModeloDePersonagens(oEvent);
+
+        aoPressionarAdicionarNoModal: async function (oEvent) {
           this._pegarValoresDoPersonagemNoModalNaTela();
-          this.byId("modalCriarPersonagem").close();
-        },
-        aoFecharModalCancelarCriarPersonagem: function (oEvent) {
-          this._carregarModeloDePersonagens(oEvent);
-          this.byId("modalCriarPersonagem").close();
+          if (this._validarNovoPersonagem(this.personagem)) {
+            try {
+              const personagemCriado =
+                await PersonagemService.adicionarPersonagem(this.personagem);
+              const mensagemDeSucesso = "Personagem adicionado com sucesso!";
+              const tituloDaMessageBox = "Sucesso";
+              this.criarDialogoDeSucesso(mensagemDeSucesso, tituloDaMessageBox);
+              this._limparInputs(oEvent);
+              this.byId(ID_MODAL_CRIAR_PERSONAGEM).close();
+            } catch (erros) {
+              this._exibirErros(erros);
+            }
+          }
         },
 
-        _pegarValoresDoPersonagemNoModalNaTela: function () {
-          const modeloPersonagem = "personagem";
-          const modelo = new JSONModel();
-          this.getView().setModel(modelo, modeloPersonagem);
+        aoPressionarCancelarNoModal: function (oEvent) {
+          this._carregarModeloDePersonagens(oEvent);
+          this.byId(ID_MODAL_CRIAR_PERSONAGEM).close();
+          this._limparInputs(oEvent);
+        },
+
+        _pegarValoresDoPersonagemNoModalNaTela: function (oEvent) {
+          const modelo = this.getView().getModel("personagem");
 
           const dadosDoModelo = modelo.getData();
           const condicao = 0;
-          const condicaoNoModelo =
+          const condicaoSelecionada =
             this.byId(ID_RADIO_BTN_VIVOOUMORTO).getSelectedIndex() == condicao
               ? true
               : false;
-          //pegar valor da profissao
-          //pegar valor do id da raça
-          console.log(dadosDoModelo);
+          const profissaoSelecionada = this.byId(
+            ID_COMBOBOX_PROFISSAO
+          ).getSelectedIndex();
+
           this.personagem = {
             nome: dadosDoModelo.nome,
-            idRaca: dadosDoModelo.id,
-            altura: dadosDoModelo.altura,
-            idade: dadosDoModelo.idade,
-            estaVivo: condicaoNoModelo,
+            idRaca: dadosDoModelo.idRaca,
+            profissao: parseInt(profissaoSelecionada),
+            altura: parseFloat(dadosDoModelo.altura),
+            idade: parseInt(dadosDoModelo.idade),
+            estaVivo: condicaoSelecionada,
           };
-          console.log(this.personagem);
         },
 
         _carregarModeloDaRaca: async function (oEvent) {
@@ -123,7 +141,45 @@ sap.ui.define(
             const modeloPersonagens = "personagens";
 
             this.getView().setModel(modelo, modeloPersonagens);
-          } catch (erros) {}
+          } catch (erros) {
+            this._exibirErros(erros);
+          }
+        },
+        _carregarModeloDeNovoPersonagem: function (oEvent) {
+          const stringVazia = "";
+          const condicaoInicial = 0;
+          const modeloPersonagem = "personagem";
+          const modelo = new JSONModel({
+            nome: stringVazia,
+            idRaca: oEvent.getParameter("arguments").id,
+            profissao: stringVazia,
+            altura: stringVazia,
+            idade: stringVazia,
+            estaVivo: condicaoInicial,
+          });
+
+          this.getView().setModel(modelo, modeloPersonagem);
+        },
+        _limparInputs: function (oEvent) {
+          const stringVazia = "";
+          const profissaoInicial = 0;
+          const condicaoInicial = 0;
+          const valueStatePadrao = "None";
+
+          const modeloRaca = "personagem";
+          const modelo = new JSONModel({
+            nome: stringVazia,
+            idRaca: oEvent.getParameter("arguments").id,
+            profissao: parseInt(profissaoInicial),
+            altura: parseFloat(stringVazia),
+            idade: parseInt(stringVazia),
+            estaVivo: condicaoInicial,
+          });
+          this.getView().setModel(modelo, modeloRaca);
+
+          this.byId(ID_INPUT_NOME).setValueState(valueStatePadrao);
+          this.byId(ID_COMBOBOX_PROFISSAO).setSelectedIndex(profissaoInicial);
+          this.byId(ID_RADIO_BTN_VIVOOUMORTO).setSelectedIndex(condicaoInicial);
         },
       }
     );

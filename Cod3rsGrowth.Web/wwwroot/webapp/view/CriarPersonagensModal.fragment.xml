@@ -170,7 +170,7 @@
         <beginButton>
             <Button
                 text="{i18n>BotaoAdicionar}"
-                press=".aoFecharModalCriarPersonagem"
+                press=".aoPressionarAdicionarNoModal"
                 id="criarPersonagemModalBtn"
                 type="Accept"
             />
@@ -178,7 +178,7 @@
         <endButton>
             <Button
                 text="{i18n>BotaoCancelar}"
-                press=".aoFecharModalCancelarCriarPersonagem"
+                press=".aoPressionarCancelarNoModal"
                 id="cancelarCriarPersonagemModalBtn"
                 type="Reject"
             />

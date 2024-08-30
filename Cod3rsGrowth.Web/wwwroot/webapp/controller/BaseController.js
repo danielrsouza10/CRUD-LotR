@@ -7,6 +7,7 @@ sap.ui.define(
   ],
   function (Controller, History, UIComponent, MessageBox) {
     "use strict";
+    this.errosDeValidacao = {};
 
     return Controller.extend(
       "ui5.o_senhor_dos_aneis.controller.BaseController",
@@ -51,6 +52,40 @@ sap.ui.define(
           return oBundle.getText(chave);
         },
 
+        aoMudarNome: function (oEvent) {
+          this._aoMudarInput(oEvent, this._validarNome.bind(this));
+        },
+
+        aoMudarIdade: function (oEvent) {
+          this._aoMudarInput(oEvent, this._validarIdade.bind(this));
+        },
+
+        aoMudarAltura: function (oEvent) {
+          this._aoMudarInput(oEvent, this._validarAltura.bind(this));
+        },
+
+        _aoMudarInput: function (oEvent, funcaoDeValidacao) {
+          const objeto = oEvent.getSource();
+          const nomeInserido = objeto.getValue();
+          let valueState = funcaoDeValidacao(nomeInserido)
+            ? "Success"
+            : "Error";
+          objeto.setValueState(valueState);
+        },
+
+        _validarNovoPersonagem: function (personagem) {
+          let personagemValido = false;
+          const nomeInseridoInput = this._validarNome(personagem.nome);
+          const idadeInseridaInput = this._validarIdade(personagem.idade);
+          const alturaInseridaInput = this._validarAltura(personagem.altura);
+          if (nomeInseridoInput && idadeInseridaInput && alturaInseridaInput) {
+            personagemValido = true;
+            return personagemValido;
+          }
+          this._exibirErros(this.errosDeValidacao);
+          return personagemValido;
+        },
+
         _validarNome: function (nomeInserido) {
           let nomeValido = false;
           const contemCaracteresEspeciais =
@@ -85,6 +120,35 @@ sap.ui.define(
           delete this.errosDeValidacao.tamanhoDaString;
           return str.length >= tamanhoMinimo;
         },
+
+        _validarIdade(idadeInserida) {
+          const idadeMinima = 0;
+          let idadeValida = false;
+          if (idadeInserida < idadeMinima) {
+            const mensagemDeErro =
+              "O valor da idade precisa ser maior do que zero";
+            this.errosDeValidacao.idadeMinima = mensagemDeErro;
+            return idadeValida;
+          }
+          delete this.errosDeValidacao.idadeMinima;
+          idadeValida = true;
+          return idadeValida;
+        },
+
+        _validarAltura(alturaInserida) {
+          const alturaMinima = 0;
+          let alturaValida = false;
+          if (alturaInserida < alturaMinima) {
+            const mensagemDeErro =
+              "O valor da altura precisa ser maior do que zero";
+            this.errosDeValidacao.alturaMinima = mensagemDeErro;
+            return alturaValida;
+          }
+          delete this.errosDeValidacao.alturaMinima;
+          alturaValida = true;
+          return alturaValida;
+        },
+
         _exibirErros: function (erros) {
           const espacoEntreErros = ".\n";
 

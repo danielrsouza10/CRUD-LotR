@@ -36,10 +36,8 @@ sap.ui.define(["sap/m/MessageBox"], function (MessageBox) {
           },
         });
         if (!response.ok) {
-          const erro = await response.json();
-          throw erro;
+          throw await response.json();
         }
-
         return await response.json();
       } catch (erro) {
         throw erro;
