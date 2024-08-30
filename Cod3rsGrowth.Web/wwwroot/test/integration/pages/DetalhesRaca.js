@@ -6,13 +6,28 @@ sap.ui.define(
     "sap/ui/test/matchers/Properties",
     "sap/ui/test/matchers/PropertyStrictEquals",
     "sap/ui/test/matchers/Ancestor",
+    "sap/ui/test/actions/EnterText",
   ],
-  function (Opa5, I18NText, Press, Properties, PropertyStrictEquals, Ancestor) {
+  function (
+    Opa5,
+    I18NText,
+    Press,
+    Properties,
+    PropertyStrictEquals,
+    Ancestor,
+    EnterText
+  ) {
     "use strict";
 
     const NOME_VIEW = "DetalhesRaca",
       ID_PAGINA = "paginaDetalhesRaca",
-      ID_LISTA_REGISTROS_FILHOS = "listaDePersonagens";
+      ID_LISTA_REGISTROS_FILHOS = "listaDePersonagens",
+      ID_COMBOBOX_PROFISSAO = "profissaoComboBox",
+      ID_INPUT_NOME = "inputNome",
+      ID_INPUT_IDADE = "inputIdade",
+      ID_INPUT_ALTURA = "inputAltura",
+      ID_RADIO_BUTTON_VIVO = "radioBtnVivo",
+      ID_RADIO_BUTTON_MORTO = "radioBtnMorto";
     Opa5.createPageObjects({
       naPaginaDeDetalhesDaRaca: {
         actions: {
@@ -59,6 +74,106 @@ sap.ui.define(
               actions: new Press(),
               errorMessage:
                 "Não foi possível pressionar o botão 'Sim' para confirmar a exclusão",
+            });
+          },
+          euPressionoOBotaoAdicionarPersonagem: function () {
+            return this.waitFor({
+              controlType: "sap.m.Button",
+              matchers: new I18NText({
+                propertyName: "text",
+                key: "BotaoAdicionarPersonagem",
+              }),
+              actions: new Press(),
+              errorMessage:
+                "Não foi possível encontrar o botão adicionar personagem na página",
+            });
+          },
+          euDigitoUmNomeNoInputField: function (nomePersonagem) {
+            return this.waitFor({
+              id: ID_INPUT_NOME,
+              viewName: NOME_VIEW,
+              actions: new EnterText({
+                text: nomePersonagem,
+              }),
+              errorMessage: "Input não encontrado",
+            });
+          },
+          euSelecionoUmaProfissao: function (idProfissao) {
+            return this.waitFor({
+              id: ID_COMBOBOX_PROFISSAO,
+              viewName: NOME_VIEW,
+              actions: function (comboBox) {
+                comboBox.setSelectedKey(idProfissao);
+                comboBox.fireChange({
+                  selectedItem: comboBox.getSelectedItem(),
+                });
+              },
+              errorMessage:
+                "Não foi possível selecionar a profissão no ComboBox",
+            });
+          },
+          euDigitoUmaIdadeNoInputField: function (idade) {
+            return this.waitFor({
+              id: ID_INPUT_IDADE,
+              viewName: NOME_VIEW,
+              actions: new EnterText({
+                text: idade,
+              }),
+              errorMessage: "Não foi possível inserir um valor para a idade",
+            });
+          },
+          euDigitoUmaAlturaNoInputField: function (altura) {
+            return this.waitFor({
+              id: ID_INPUT_ALTURA,
+              viewName: NOME_VIEW,
+              actions: new EnterText({
+                text: altura,
+              }),
+              errorMessage: "Não foi possível inserir um valor para a altura",
+            });
+          },
+          euSelecionoCondicaoVivo: function () {
+            return this.waitFor({
+              id: ID_RADIO_BUTTON_VIVO,
+              viewName: NOME_VIEW,
+              actions: new Press(),
+              errorMessage: "Não foi possível selecionar o box 'Vivo'",
+            });
+          },
+          euSelecionoCondicaoMorto: function () {
+            return this.waitFor({
+              id: ID_RADIO_BUTTON_MORTO,
+              viewName: NOME_VIEW,
+              actions: new Press(),
+              errorMessage: "Não foi possível selecionar o box 'Morto'",
+            });
+          },
+          euPressionoOBotaoAdicionar: function () {
+            return this.waitFor({
+              controlType: "sap.m.Button",
+              matchers: new PropertyStrictEquals({
+                name: "type",
+                value: "Accept",
+              }),
+              actions: new Press(),
+              success: function () {
+                Opa5.assert.ok(true, "O botão adicionar foi pressionado");
+              },
+              errorMessage: "Não foi possível encontrar o botao adicionar",
+            });
+          },
+          euPressionoOBotaoCancelar: function () {
+            return this.waitFor({
+              controlType: "sap.m.Button",
+              matchers: new PropertyStrictEquals({
+                name: "type",
+                value: "Reject",
+              }),
+              actions: new Press(),
+              success: function () {
+                Opa5.assert.ok(true, "O botão cancelar foi pressionado");
+              },
+              errorMessage: "Não foi possível encontrar o botao cancelar",
             });
           },
         },
@@ -241,6 +356,58 @@ sap.ui.define(
                 }
               },
               errorMessage: "A lista não contem 3 registros",
+            });
+          },
+          deveAparecerOModalDeCriacaoDePersonagem: function () {
+            return this.waitFor({
+              searchOpenDialogs: true,
+              controlType: "sap.m.Dialog",
+              matchers: new PropertyStrictEquals({
+                name: "title",
+                value: "Criar Personagem",
+              }),
+              success: function () {
+                Opa5.assert.ok(
+                  true,
+                  "Foi encontrada o Modal de criação de personagem"
+                );
+              },
+              errorMessage:
+                "Não foi encontrado o Modal de criação de personagem",
+            });
+          },
+          deveAparecerUmaMessageBoxDeErro: function () {
+            return this.waitFor({
+              searchOpenDialogs: true,
+              controlType: "sap.m.Dialog",
+              matchers: new PropertyStrictEquals({
+                name: "title",
+                value: "Erro ao criar registro",
+              }),
+              success: function () {
+                Opa5.assert.ok(
+                  true,
+                  "Foi encontrada a MessageBox indicando um erro"
+                );
+              },
+              errorMessage: "Não foi encontrada a MessageBox indicando um erro",
+            });
+          },
+          deveAparecerUmaMessageBoxDeErroVindoDoServidor: function () {
+            return this.waitFor({
+              searchOpenDialogs: true,
+              controlType: "sap.m.Dialog",
+              matchers: new PropertyStrictEquals({
+                name: "title",
+                value: "Ocorreram um ou mais erros de validação",
+              }),
+              success: function () {
+                Opa5.assert.ok(
+                  true,
+                  "Foi encontrada a MessageBox indicando um erro"
+                );
+              },
+              errorMessage: "Não foi encontrada a MessageBox indicando um erro",
             });
           },
         },

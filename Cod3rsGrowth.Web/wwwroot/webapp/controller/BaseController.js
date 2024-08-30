@@ -181,9 +181,9 @@ sap.ui.define(
             let mensagemDeErro = Object.values(this.errosDeValidacao).join(
               espacoEntreErros
             );
-            const tituloErro = "Erro ao criar raça";
+            const tituloErro = "Erro ao criar registro";
             const detalhesDoErro =
-              "Corrija os campos acima para prosseguir com a criação da raça";
+              "Corrija os campos acima para prosseguir com a criação do registro";
             return this.criarDialogoDeErro(
               tituloErro,
               detalhesDoErro,

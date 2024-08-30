@@ -83,7 +83,7 @@ sap.ui.define(
       }
     );
     opaTest(
-      "Deve pressionar o botao adicionar e criar um personagem",
+      "Deve pressionar o botao adicionar e abria a pagina de criaçao de raça",
       function (Given, When, Then) {
         // Arrangements
         Given.iStartMyApp({
@@ -97,7 +97,7 @@ sap.ui.define(
       }
     );
     opaTest(
-      "Deve criar um personagem e voltar para a pagina de listagem",
+      "Deve criar uma raça e voltar para a pagina de listagem",
       function (Given, When, Then) {
         //Actions
         When.naPaginaDeCriarRaca

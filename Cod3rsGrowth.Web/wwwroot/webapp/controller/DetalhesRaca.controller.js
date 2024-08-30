@@ -18,7 +18,9 @@ sap.ui.define(
     const ID_INPUT_NOME = "inputNome",
       ID_RADIO_BTN_VIVOOUMORTO = "radioBtnVivoMorto",
       ID_COMBOBOX_PROFISSAO = "profissaoComboBox",
-      ID_MODAL_CRIAR_PERSONAGEM = "modalCriarPersonagem";
+      ID_MODAL_CRIAR_PERSONAGEM = "modalCriarPersonagem",
+      MODELO_PERSONAGEM = "personagem",
+      MODELO_RACA = "raca";
     return BaseController.extend(
       "ui5.o_senhor_dos_aneis.controller.DetalhesRaca",
       {
@@ -32,9 +34,7 @@ sap.ui.define(
           this.filtros = {};
           this.personagem = {};
           this.errosDeValidacao = {};
-          this._carregarModeloDaRaca(oEvent);
-          this._carregarModeloDePersonagens(oEvent);
-          this._carregarModeloDeNovoPersonagem(oEvent);
+          this._carregarModelos(oEvent);
         },
         onNavToEditarRaca: function () {
           const modelo = "raca",
@@ -50,8 +50,7 @@ sap.ui.define(
             mensagemDoDialogo
           );
           if (confirmacao) {
-            const modelo = "raca";
-            const idRaca = this.getView().getModel(modelo).getData().id;
+            const idRaca = this.getView().getModel(MODELO_RACA).getData().id;
             try {
               await RacaService.removerRaca(idRaca);
               const mensagemDeSucesso = "Raça removida com sucesso!";
@@ -88,13 +87,12 @@ sap.ui.define(
         },
 
         aoPressionarCancelarNoModal: function (oEvent) {
-          this._carregarModeloDePersonagens(oEvent);
           this.byId(ID_MODAL_CRIAR_PERSONAGEM).close();
           this._limparInputs(oEvent);
         },
 
         _pegarValoresDoPersonagemNoModalNaTela: function (oEvent) {
-          const modelo = this.getView().getModel("personagem");
+          const modelo = this.getView().getModel(MODELO_PERSONAGEM);
 
           const dadosDoModelo = modelo.getData();
           const condicao = 0;
@@ -116,14 +114,19 @@ sap.ui.define(
           };
         },
 
+        _carregarModelos: async function (oEvent) {
+          this._carregarModeloDaRaca(oEvent);
+          this._carregarModeloDePersonagens(oEvent);
+          this._carregarModeloDeNovoPersonagem(oEvent);
+        },
+
         _carregarModeloDaRaca: async function (oEvent) {
           try {
             const idRaca = oEvent.getParameter("arguments").id;
             const raca = await RacaService.obterRaca(idRaca);
             const modelo = new JSONModel(raca);
-            const modeloRaca = "raca";
 
-            this.getView().setModel(modelo, modeloRaca);
+            this.getView().setModel(modelo, MODELO_RACA);
           } catch (erros) {
             const rotaNotFound = "notFound";
             this.onNavTo(rotaNotFound, this);
@@ -148,7 +151,7 @@ sap.ui.define(
         _carregarModeloDeNovoPersonagem: function (oEvent) {
           const stringVazia = "";
           const condicaoInicial = 0;
-          const modeloPersonagem = "personagem";
+
           const modelo = new JSONModel({
             nome: stringVazia,
             idRaca: oEvent.getParameter("arguments").id,
@@ -158,7 +161,7 @@ sap.ui.define(
             estaVivo: condicaoInicial,
           });
 
-          this.getView().setModel(modelo, modeloPersonagem);
+          this.getView().setModel(modelo, MODELO_PERSONAGEM);
         },
         _limparInputs: function (oEvent) {
           const stringVazia = "";
@@ -166,16 +169,18 @@ sap.ui.define(
           const condicaoInicial = 0;
           const valueStatePadrao = "None";
 
-          const modeloRaca = "personagem";
+          const MODELO_RACA = this.getView().getModel("raca");
+          const idRaca = MODELO_RACA.getProperty("/id");
+
           const modelo = new JSONModel({
             nome: stringVazia,
-            idRaca: oEvent.getParameter("arguments").id,
-            profissao: parseInt(profissaoInicial),
-            altura: parseFloat(stringVazia),
-            idade: parseInt(stringVazia),
+            idRaca: idRaca,
+            profissao: profissaoInicial,
+            altura: stringVazia,
+            idade: stringVazia,
             estaVivo: condicaoInicial,
           });
-          this.getView().setModel(modelo, modeloRaca);
+          this.getView().setModel(modelo, MODELO_PERSONAGEM);
 
           this.byId(ID_INPUT_NOME).setValueState(valueStatePadrao);
           this.byId(ID_COMBOBOX_PROFISSAO).setSelectedIndex(profissaoInicial);
