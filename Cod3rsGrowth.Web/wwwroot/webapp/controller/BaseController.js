@@ -67,35 +67,33 @@ sap.ui.define(
         _aoMudarInput: function (oEvent, funcaoDeValidacao) {
           const objeto = oEvent.getSource();
           const nomeInserido = objeto.getValue();
+          const valueStateSucesso = "Success";
+          const valueStateErro = "Error";
           let valueState = funcaoDeValidacao(nomeInserido)
-            ? "Success"
-            : "Error";
+            ? valueStateSucesso
+            : valueStateErro;
           objeto.setValueState(valueState);
         },
 
         _validarNovoPersonagem: function (personagem) {
-          let personagemValido = false;
           const nomeInseridoInput = this._validarNome(personagem.nome);
           const idadeInseridaInput = this._validarIdade(personagem.idade);
           const alturaInseridaInput = this._validarAltura(personagem.altura);
           if (nomeInseridoInput && idadeInseridaInput && alturaInseridaInput) {
-            personagemValido = true;
-            return personagemValido;
+            return true;
           }
           this._exibirErros(this.errosDeValidacao);
-          return personagemValido;
+          return false;
         },
 
         _validarNome: function (nomeInserido) {
-          let nomeValido = false;
           const contemCaracteresEspeciais =
             this._verificarCaracteresEspeciais(nomeInserido);
           const tamanhoDaString = this._verificarTamanhoString(nomeInserido);
           if (!contemCaracteresEspeciais && tamanhoDaString) {
-            nomeValido = true;
-            return nomeValido;
+            return true;
           }
-          return nomeValido;
+          return false;
         },
 
         _verificarCaracteresEspeciais: function (str) {
@@ -123,30 +121,26 @@ sap.ui.define(
 
         _validarIdade(idadeInserida) {
           const idadeMinima = 0;
-          let idadeValida = false;
           if (idadeInserida < idadeMinima) {
             const mensagemDeErro =
               "O valor da idade precisa ser maior do que zero";
             this.errosDeValidacao.idadeMinima = mensagemDeErro;
-            return idadeValida;
+            return false;
           }
           delete this.errosDeValidacao.idadeMinima;
-          idadeValida = true;
-          return idadeValida;
+          return true;
         },
 
         _validarAltura(alturaInserida) {
           const alturaMinima = 0;
-          let alturaValida = false;
           if (alturaInserida < alturaMinima) {
             const mensagemDeErro =
               "O valor da altura precisa ser maior do que zero";
             this.errosDeValidacao.alturaMinima = mensagemDeErro;
-            return alturaValida;
+            return false;
           }
           delete this.errosDeValidacao.alturaMinima;
-          alturaValida = true;
-          return alturaValida;
+          return true;
         },
 
         _exibirErros: function (erros) {

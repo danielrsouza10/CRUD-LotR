@@ -316,7 +316,7 @@ sap.ui.define(
                 "Não foi encontrada a MessageBox solicitando confirmação para excluir",
             });
           },
-          deveAparecerUmaMessageBoxDeErro: function () {
+          deveAparecerUmaMessageBoxDeErroDeRegistroDeDependentes: function () {
             return this.waitFor({
               searchOpenDialogs: true,
               controlType: "sap.m.Dialog",

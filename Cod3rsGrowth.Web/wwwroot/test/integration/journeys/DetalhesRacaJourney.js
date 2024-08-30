@@ -12,142 +12,142 @@ sap.ui.define(
 
     QUnit.module("Detalhes da Raça");
 
-    // opaTest(
-    //   "Deve carregar a página da raça de id 1 corretamente",
-    //   function (Given, When, Then) {
-    //     //Arrangements
-    //     Given.iStartMyApp({
-    //       hash: "raca/1",
-    //     });
+    opaTest(
+      "Deve carregar a página da raça de id 1 corretamente",
+      function (Given, When, Then) {
+        //Arrangements
+        Given.iStartMyApp({
+          hash: "raca/1",
+        });
 
-    //     //Assertions
-    //     Then.naPaginaDeDetalhesDaRaca
-    //       .oTituloDaPaginaDetalhesDaRacaDeveraSer()
-    //       .and.aUrlDaPaginaDeDetalhesDaRacaDeveraSer(1)
-    //       .and.oIdNosDetalhesDaRacaDeveraSer("1")
-    //       .and.oNomeNosDetalhesDaRacaDeveraSer("Humano")
-    //       .and.aLocalizacaoGeograficaNosDetalhesDaRacaDeveraSer("???")
-    //       .and.aHabilidadeRacialNosDetalhesDaRacaDeveraSer("???")
-    //       .and.oEstaExtintaNosDetalhesDaRacaDeveraSer("Não")
-    //       .and.aFormatacaoDoEstaExtintaDeveraSer("Success");
+        //Assertions
+        Then.naPaginaDeDetalhesDaRaca
+          .oTituloDaPaginaDetalhesDaRacaDeveraSer()
+          .and.aUrlDaPaginaDeDetalhesDaRacaDeveraSer(1)
+          .and.oIdNosDetalhesDaRacaDeveraSer("1")
+          .and.oNomeNosDetalhesDaRacaDeveraSer("Humano")
+          .and.aLocalizacaoGeograficaNosDetalhesDaRacaDeveraSer("???")
+          .and.aHabilidadeRacialNosDetalhesDaRacaDeveraSer("???")
+          .and.oEstaExtintaNosDetalhesDaRacaDeveraSer("Não")
+          .and.aFormatacaoDoEstaExtintaDeveraSer("Success");
 
-    //     //Cleanup
-    //     Then.iTeardownMyApp();
-    //   }
-    // );
-    // opaTest(
-    //   "Deve carregar a página de notFound quando o ID da raça não existir",
-    //   function (Given, When, Then) {
-    //     //Arrangements;
-    //     Given.iStartMyApp({
-    //       hash: "raca/0",
-    //     });
+        //Cleanup
+        Then.iTeardownMyApp();
+      }
+    );
+    opaTest(
+      "Deve carregar a página de notFound quando o ID da raça não existir",
+      function (Given, When, Then) {
+        //Arrangements;
+        Given.iStartMyApp({
+          hash: "raca/0",
+        });
 
-    //     //Assertions;
-    //     Then.naPaginaDeNotFound.oTituloDaPaginaNotFoundDeveraSer();
+        //Assertions;
+        Then.naPaginaDeNotFound.oTituloDaPaginaNotFoundDeveraSer();
 
-    //     //Cleanup;
-    //     Then.iTeardownMyApp();
-    //   }
-    // );
-    // opaTest(
-    //   "Deve navegar para a págima home ao pressionar o botão voltar",
-    //   function (Given, When, Then) {
-    //     //Arrangements
-    //     Given.iStartMyApp({
-    //       hash: "raca/1",
-    //     });
+        //Cleanup;
+        Then.iTeardownMyApp();
+      }
+    );
+    opaTest(
+      "Deve navegar para a págima home ao pressionar o botão voltar",
+      function (Given, When, Then) {
+        //Arrangements
+        Given.iStartMyApp({
+          hash: "raca/1",
+        });
 
-    //     //Actions
-    //     When.naPaginaDeDetalhesDaRaca.euPressionoBotaoVoltar();
+        //Actions
+        When.naPaginaDeDetalhesDaRaca.euPressionoBotaoVoltar();
 
-    //     //Assertions
-    //     Then.naPaginaHome
-    //       .oTituloDaPaginaHomeDeveraSer()
-    //       .and.aUrlDaPaginaHomeDeveraSer();
+        //Assertions
+        Then.naPaginaHome
+          .oTituloDaPaginaHomeDeveraSer()
+          .and.aUrlDaPaginaHomeDeveraSer();
 
-    //     //Cleanup
-    //     Then.iTeardownMyApp();
-    //   }
-    // );
-    // opaTest(
-    //   "Deve navegar até a página de edição da raça",
-    //   function (Given, When, Then) {
-    //     //Arrangements
-    //     Given.iStartMyApp({
-    //       hash: "raca/1",
-    //     });
+        //Cleanup
+        Then.iTeardownMyApp();
+      }
+    );
+    opaTest(
+      "Deve navegar até a página de edição da raça",
+      function (Given, When, Then) {
+        //Arrangements
+        Given.iStartMyApp({
+          hash: "raca/1",
+        });
 
-    //     //Actions
-    //     When.naPaginaDeDetalhesDaRaca.euPressionoBotaoEditar();
+        //Actions
+        When.naPaginaDeDetalhesDaRaca.euPressionoBotaoEditar();
 
-    //     //Assertions
-    //     Then.naPaginaDeEditarRaca
-    //       .aTelaDeEdicaoFoiCarregadaCorretamente()
-    //       .and.oBotaoEditarTemONomeCorreto()
-    //       .and.osInputDeNomeDeveEstarPreenchido("Humano");
+        //Assertions
+        Then.naPaginaDeEditarRaca
+          .aTelaDeEdicaoFoiCarregadaCorretamente()
+          .and.oBotaoEditarTemONomeCorreto()
+          .and.osInputDeNomeDeveEstarPreenchido("Humano");
 
-    //     //Cleanup
-    //     Then.iTeardownMyApp();
-    //   }
-    // );
-    // opaTest(
-    //   "Deve pressionar o botao excluir para remover um registro pai com filhos",
-    //   function (Given, When, Then) {
-    //     //Arrangements
-    //     Given.iStartMyApp({
-    //       hash: "raca/1",
-    //     });
+        //Cleanup
+        Then.iTeardownMyApp();
+      }
+    );
+    opaTest(
+      "Deve pressionar o botao excluir para remover um registro pai com filhos",
+      function (Given, When, Then) {
+        //Arrangements
+        Given.iStartMyApp({
+          hash: "raca/1",
+        });
 
-    //     //Actions
-    //     When.naPaginaDeDetalhesDaRaca.euPressionoBotaoRemover();
+        //Actions
+        When.naPaginaDeDetalhesDaRaca.euPressionoBotaoRemover();
 
-    //     //Assertions
-    //     Then.naPaginaDeDetalhesDaRaca.deveAparecerUmaMessageBoxDeConfirmacao();
-    //   }
-    // );
-    // opaTest(
-    //   "Deve pressionar para confirmar a exclusao do registro pai com filhos e retornar um erro",
-    //   function (Given, When, Then) {
-    //     //Actions
-    //     When.naPaginaDeDetalhesDaRaca.euPressionoSimParaConfirmarAEsclusao();
+        //Assertions
+        Then.naPaginaDeDetalhesDaRaca.deveAparecerUmaMessageBoxDeConfirmacao();
+      }
+    );
+    opaTest(
+      "Deve pressionar para confirmar a exclusao do registro pai com filhos e retornar um erro",
+      function (Given, When, Then) {
+        //Actions
+        When.naPaginaDeDetalhesDaRaca.euPressionoSimParaConfirmarAEsclusao();
 
-    //     //Assertions
-    //     Then.naPaginaDeDetalhesDaRaca.deveAparecerUmaMessageBoxDeErro();
+        //Assertions
+        Then.naPaginaDeDetalhesDaRaca.deveAparecerUmaMessageBoxDeErroDeRegistroDeDependentes();
 
-    //     //Cleanup
-    //     Then.iTeardownMyApp();
-    //   }
-    // );
-    // opaTest("Deve existir uma lista na pagina", function (Given, When, Then) {
-    //   //Arrangements
-    //   Given.iStartMyApp({
-    //     hash: "raca/10",
-    //   });
+        //Cleanup
+        Then.iTeardownMyApp();
+      }
+    );
+    opaTest("Deve existir uma lista na pagina", function (Given, When, Then) {
+      //Arrangements
+      Given.iStartMyApp({
+        hash: "raca/10",
+      });
 
-    //   //Assertions
-    //   Then.naPaginaDeDetalhesDaRaca.deveExistirUmaListaNaPagina();
+      //Assertions
+      Then.naPaginaDeDetalhesDaRaca.deveExistirUmaListaNaPagina();
 
-    //   //Cleanup
-    //   Then.iTeardownMyApp();
-    // });
-    // opaTest(
-    //   "Deve conter uma lista dos registros filhos associados ao registro pai atual",
-    //   function (Given, When, Then) {
-    //     //Arrangements
-    //     Given.iStartMyApp({
-    //       hash: "raca/2",
-    //     });
+      //Cleanup
+      Then.iTeardownMyApp();
+    });
+    opaTest(
+      "Deve conter uma lista dos registros filhos associados ao registro pai atual",
+      function (Given, When, Then) {
+        //Arrangements
+        Given.iStartMyApp({
+          hash: "raca/2",
+        });
 
-    //     //Assertions
-    //     Then.naPaginaDeDetalhesDaRaca
-    //       .deveExistirUmaListaNaPagina()
-    //       .and.deveConterUmaListaComRegistrosFilhosNaPagina();
+        //Assertions
+        Then.naPaginaDeDetalhesDaRaca
+          .deveExistirUmaListaNaPagina()
+          .and.deveConterUmaListaComRegistrosFilhosNaPagina();
 
-    //     //Cleanup
-    //     Then.iTeardownMyApp();
-    //   }
-    // );
+        //Cleanup
+        Then.iTeardownMyApp();
+      }
+    );
     opaTest(
       "Deve pressionar o botao adicionar registro filho e carregar o modal de criação",
       function (Given, When, Then) {
