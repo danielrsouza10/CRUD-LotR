@@ -93,12 +93,14 @@
 
         <List
             id="listaDePersonagens"
-            mode="None"
+            mode="Delete"
+            delete="aoRemoverPersonagem"
             items="{personagens>/}"
             growing="true"
             growingThreshold="5"
             enableBusyIndicator="true"
             class="sapUiResponsiveContentPadding"
+            itemPress=".aoSelecionarItemNaListaDePersonagens"
         >
             <headerToolbar>
                 <OverflowToolbar id="listToolbar">
@@ -108,7 +110,8 @@
             </headerToolbar>
 
             <CustomListItem
-                type="Navigation"
+                type="Detail"
+                detailPress="aoEditarPersonagem"
                 id="customListPersonagens"
                 highlight="{
                 path: 'personagens>estaVivo',
@@ -170,6 +173,7 @@
                                 }"
                             />
                         </FlexBox>
+                        
                     </VBox>
                 </HBox>
             </CustomListItem>
@@ -186,6 +190,30 @@
                     class="sapUiTinyMarginEnd"
                 >
                     <layoutData>
+                        <OverflowToolbarLayoutData priority="High" />
+                    </layoutData>
+                </Button>
+                        <Button
+                            type="Emphasized"
+                            text="{i18n>BotaoEditarPersonagem}"
+                            press=".aoEditarPersonagem"
+                            id="editarPersonagemBtn"
+                            class="sapUiTinyMarginEnd"
+                            visible="false"
+                        >
+                    <layoutData>
+                        <OverflowToolbarLayoutData priority="High" />
+                    </layoutData>
+                </Button>
+                        <Button
+                            type="Reject"
+                            text="{i18n>BotaoRemoverPersonagem}"
+                            press=".aoRemoverPersonagem"
+                            id="removerPersonagemBtn"
+                            class="sapUiTinyMarginEnd"
+                            visible="false"
+                        >
+                        <layoutData>
                         <OverflowToolbarLayoutData priority="High" />
                     </layoutData>
                 </Button>

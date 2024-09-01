@@ -69,6 +69,19 @@ sap.ui.define(
           this.modalCriarPersonagem.open();
         },
 
+        aoEditarPersonagem: async function () {
+          this._mostrarBotoesEditarERemover(false);
+          this.modalCriarPersonagem ??= await this.loadFragment({
+            name: "ui5.o_senhor_dos_aneis.view.CriarPersonagensModal",
+          });
+
+          this.modalCriarPersonagem.open();
+        },
+
+        aoSelecionarItemNaListaDePersonagens: function () {
+          this._mostrarBotoesEditarERemover(true);
+        },
+
         aoPressionarAdicionarNoModal: async function (oEvent) {
           this._pegarValoresDoPersonagemNoModalNaTela();
           if (this._validarNovoPersonagem(this.personagem)) {
@@ -114,6 +127,11 @@ sap.ui.define(
           };
         },
 
+        _mostrarBotoesEditarERemover: function (valor) {
+          this.byId("editarPersonagemBtn").setVisible(valor);
+          this.byId("removerPersonagemBtn").setVisible(valor);
+        },
+
         _carregarModelos: async function (oEvent) {
           this._carregarModeloDaRaca(oEvent);
           this._carregarModeloDePersonagens(oEvent);
@@ -144,6 +162,13 @@ sap.ui.define(
             const modeloPersonagens = "personagens";
 
             this.getView().setModel(modelo, modeloPersonagens);
+          } catch (erros) {
+            this._exibirErros(erros);
+          }
+        },
+        _carrgarModeloPersonagemSelecionado: async function (oEvent) {
+          try {
+            const idPersonagemSelecionado = oEvent.getParameter("arguments").id;
           } catch (erros) {
             this._exibirErros(erros);
           }
