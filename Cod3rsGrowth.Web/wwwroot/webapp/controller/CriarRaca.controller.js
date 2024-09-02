@@ -29,7 +29,7 @@ sap.ui.define(
                     this.errosDeValidacao = {};
                     this.modoEditar = false;
                     this._limparInputs();
-                    this._atualizarTextoDaPáginaCriar();
+                    this._atualizarTextoDaPaginaCriar();
                 },
 
                 aoCoincidirRotaEditar: function (oEvent) {
@@ -39,7 +39,7 @@ sap.ui.define(
                     this.modoEditar = true;
                     this._limparInputs();
                     this._carregarDadosDaRacaSelecionada(oEvent);
-                    this._atualizarTextoDaPáginaEditar();
+                    this._atualizarTextoDaPaginaEditar();
                 },
 
                 aoMudarNome: function (oEvent) {
@@ -98,12 +98,12 @@ sap.ui.define(
                     }
                 },
 
-                _atualizarTextoDaPáginaCriar: function () {
+                _atualizarTextoDaPaginaCriar: function () {
                     this._atualizarTituloDaPaginaCriar();
                     this._atualizarLabelDoBotaoAdicionar();
                 },
 
-                _atualizarTextoDaPáginaEditar: function () {
+                _atualizarTextoDaPaginaEditar: function () {
                     this._atualizarTituloDaPaginaEditar();
                     this._atualizarLabelDoBotaoEditar();
                 },

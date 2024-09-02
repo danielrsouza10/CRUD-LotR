@@ -19,8 +19,10 @@ sap.ui.define(
       ID_RADIO_BTN_VIVOOUMORTO = "radioBtnVivoMorto",
       ID_COMBOBOX_PROFISSAO = "profissaoComboBox",
       ID_MODAL_CRIAR_PERSONAGEM = "modalCriarPersonagem",
+      MODELO_PERSONAGENS = "personagens",
       MODELO_PERSONAGEM = "personagem",
       MODELO_RACA = "raca";
+
     return BaseController.extend(
       "ui5.o_senhor_dos_aneis.controller.DetalhesRaca",
       {
@@ -35,14 +37,15 @@ sap.ui.define(
           this.personagem = {};
           this.errosDeValidacao = {};
           this._carregarModelos(oEvent);
+          this._mostrarBotoesEditarERemover(false);
         },
-        onNavToEditarRaca: function () {
+        aoClicarBtnEditarRaca: function () {
           const modelo = "raca",
             rotaEditarRaca = "editarRaca",
             idRacaSelecionada = this.getView().getModel(modelo).getData().id;
           this.onNavTo(rotaEditarRaca, { id: idRacaSelecionada });
         },
-        aoPressionarOBotaoRemover: async function () {
+        aoClicarBtnRemoverRaca: async function () {
           const tituloDoDialogo = "Excluir registro",
             mensagemDoDialogo = "Deseja confirmar a exclusão desse registro?";
           const confirmacao = await this.criarDialogoDeAviso(
@@ -61,30 +64,35 @@ sap.ui.define(
             }
           }
         },
-        aoAdicionarPersonagem: async function () {
-          this.modalCriarPersonagem ??= await this.loadFragment({
-            name: "ui5.o_senhor_dos_aneis.view.CriarPersonagensModal",
-          });
-
-          this.modalCriarPersonagem.open();
+        aoClicarBtnAdicionarPersonagem: function (oEvent) {
+          this._carregarModalDeCriacao();
         },
 
-        aoEditarPersonagem: async function () {
+        aoClicarBtnEditarPersonagem: function (oEvent) {
           this._mostrarBotoesEditarERemover(false);
-          this.modalCriarPersonagem ??= await this.loadFragment({
-            name: "ui5.o_senhor_dos_aneis.view.CriarPersonagensModal",
-          });
-
-          this.modalCriarPersonagem.open();
-        },
-
-        aoSelecionarItemNaListaDePersonagens: function () {
-          this._mostrarBotoesEditarERemover(true);
+          this._buscarDadosDoPersonagemSelecionado(oEvent);
+          this._carregarModalDeCriacao();
         },
 
         aoPressionarAdicionarNoModal: async function (oEvent) {
-          this._pegarValoresDoPersonagemNoModalNaTela();
+          this._pegarDadosDoPersonagemNoModelo();
           if (this._validarNovoPersonagem(this.personagem)) {
+            if (this.personagem.id) {
+              try {
+                const personagemEditado =
+                  await PersonagemService.editarPersonagem(this.personagem);
+                const mensagemDeSucesso = "Personagem editado com sucesso!";
+                const tituloDaMessageBox = "Sucesso";
+                this.criarDialogoDeSucesso(
+                  mensagemDeSucesso,
+                  tituloDaMessageBox
+                );
+                this._limparInputs(oEvent);
+                return this.byId(ID_MODAL_CRIAR_PERSONAGEM).close();
+              } catch (erros) {
+                return this._exibirErros(erros);
+              }
+            }
             try {
               const personagemCriado =
                 await PersonagemService.adicionarPersonagem(this.personagem);
@@ -104,7 +112,16 @@ sap.ui.define(
           this._limparInputs(oEvent);
         },
 
-        _pegarValoresDoPersonagemNoModalNaTela: function (oEvent) {
+        _carregarModalDeCriacao: async function () {
+          this.modalCriarPersonagem ??= await this.loadFragment({
+            name: "ui5.o_senhor_dos_aneis.view.CriarPersonagensModal",
+          });
+
+          this.modalCriarPersonagem.open();
+          this._pegarDadosDoPersonagemNoModelo();
+        },
+
+        _pegarDadosDoPersonagemNoModelo: function () {
           const modelo = this.getView().getModel(MODELO_PERSONAGEM);
 
           const dadosDoModelo = modelo.getData();
@@ -119,12 +136,34 @@ sap.ui.define(
 
           this.personagem = {
             nome: dadosDoModelo.nome,
+            id: dadosDoModelo.id,
             idRaca: dadosDoModelo.idRaca,
             profissao: parseInt(profissaoSelecionada),
             altura: parseFloat(dadosDoModelo.altura),
             idade: parseInt(dadosDoModelo.idade),
             estaVivo: condicaoSelecionada,
           };
+        },
+
+        _buscarDadosDoPersonagemSelecionado: function (dados) {
+          const idPersonagemSelecionado = dados
+            .getSource()
+            .getBindingContext("personagens")
+            .getProperty("id");
+
+          const personagemSelecionado = dados
+            .getSource()
+            .getBindingContext("personagens")
+            .getObject();
+
+          console.log(personagemSelecionado);
+
+          this.getView().setModel(
+            new JSONModel(personagemSelecionado),
+            MODELO_PERSONAGEM
+          );
+
+          return idPersonagemSelecionado;
         },
 
         _mostrarBotoesEditarERemover: function (valor) {
@@ -159,14 +198,13 @@ sap.ui.define(
               this.filtros
             );
             const modelo = new JSONModel(personagens);
-            const modeloPersonagens = "personagens";
 
-            this.getView().setModel(modelo, modeloPersonagens);
+            this.getView().setModel(modelo, MODELO_PERSONAGENS);
           } catch (erros) {
             this._exibirErros(erros);
           }
         },
-        _carrgarModeloPersonagemSelecionado: async function (oEvent) {
+        _carregarModeloPersonagemSelecionado: async function (oEvent) {
           try {
             const idPersonagemSelecionado = oEvent.getParameter("arguments").id;
           } catch (erros) {
@@ -194,8 +232,8 @@ sap.ui.define(
           const condicaoInicial = 0;
           const valueStatePadrao = "None";
 
-          const MODELO_RACA = this.getView().getModel("raca");
-          const idRaca = MODELO_RACA.getProperty("/id");
+          const modeloRaca = this.getView().getModel(MODELO_RACA);
+          const idRaca = modeloRaca.getProperty("/id");
 
           const modelo = new JSONModel({
             nome: stringVazia,

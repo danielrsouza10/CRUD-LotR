@@ -5,6 +5,7 @@ sap.ui.define(["sap/m/MessageBox"], function (MessageBox) {
     "https://localhost:7244/api/Personagem/personagens";
   const URL_POST_PERSONAGEM =
     "https://localhost:7244/api/Personagem/personagem";
+  const URL_PUT_PERSONAGEM = "https://localhost:7244/api/Personagem/personagem";
 
   return {
     obterTodos: async function (filtros) {
@@ -37,6 +38,31 @@ sap.ui.define(["sap/m/MessageBox"], function (MessageBox) {
         });
         if (!response.ok) {
           throw await response.json();
+        }
+        if (response.status == 200) {
+          return;
+        }
+        return await response.json();
+      } catch (erro) {
+        throw erro;
+      }
+    },
+    editarPersonagem: async function (personagem) {
+      let urlPersonagens = new URL(URL_PUT_PERSONAGEM);
+
+      try {
+        const response = await fetch(urlPersonagens.href, {
+          method: "PUT",
+          body: JSON.stringify(personagem),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        });
+        if (!response.ok) {
+          throw await response.json();
+        }
+        if (response.status == 200) {
+          return;
         }
         return await response.json();
       } catch (erro) {
