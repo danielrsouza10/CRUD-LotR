@@ -90,7 +90,6 @@ sap.ui.define(
                             const raca = await RacaService.obterRaca(idRaca);
                             const modelo = new JSONModel(raca);
 
-
                             this.getView().setModel(modelo, MODELO_RACA);
                         } catch (erros) {
                             this._exibirErros(erros);

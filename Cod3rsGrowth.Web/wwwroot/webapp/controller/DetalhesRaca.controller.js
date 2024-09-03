@@ -32,19 +32,21 @@ sap.ui.define(
           const rota = "detalhesRaca";
           this.vincularRota(rota, this.aoCoincidirRota);
         },
+
         aoCoincidirRota: function (oEvent) {
           this.filtros = {};
           this.personagem = {};
           this.errosDeValidacao = {};
-          this._carregarModelos(oEvent);
-          this._mostrarBotoesEditarERemover(false);
+          this._carregarDados(oEvent);
         },
+
         aoClicarBtnEditarRaca: function () {
           const modelo = "raca",
             rotaEditarRaca = "editarRaca",
             idRacaSelecionada = this.getView().getModel(modelo).getData().id;
           this.onNavTo(rotaEditarRaca, { id: idRacaSelecionada });
         },
+
         aoClicarBtnRemoverRaca: async function () {
           const tituloDoDialogo = "Excluir registro",
             mensagemDoDialogo = "Deseja confirmar a exclusão desse registro?";
@@ -64,18 +66,19 @@ sap.ui.define(
             }
           }
         },
+
         aoClicarBtnAdicionarPersonagem: function (oEvent) {
+          this._carregarModeloVazioDePersonagem();
           this._carregarModalDeCriacao();
         },
 
         aoClicarBtnEditarPersonagem: function (oEvent) {
-          this._mostrarBotoesEditarERemover(false);
-          this._buscarDadosDoPersonagemSelecionado(oEvent);
+          this._buscarDadosDoPersonagemSelecionadoNaLista(oEvent);
           this._carregarModalDeCriacao();
         },
 
-        aoPressionarAdicionarNoModal: async function (oEvent) {
-          this._pegarDadosDoPersonagemNoModelo();
+        aoClicarBtnAdicionarNoModal: async function (oEvent) {
+          this._buscarDadosDoPersonagemNoModelo();
           if (this._validarNovoPersonagem(this.personagem)) {
             if (this.personagem.id) {
               try {
@@ -107,21 +110,30 @@ sap.ui.define(
           }
         },
 
-        aoPressionarCancelarNoModal: function (oEvent) {
+        aoClicarBtnCancelarNoModal: function (oEvent) {
           this.byId(ID_MODAL_CRIAR_PERSONAGEM).close();
           this._limparInputs(oEvent);
         },
 
         _carregarModalDeCriacao: async function () {
+          const modeloTemId = this.getView()
+            .getModel(MODELO_PERSONAGEM)
+            .getData().id;
+
           this.modalCriarPersonagem ??= await this.loadFragment({
             name: "ui5.o_senhor_dos_aneis.view.CriarPersonagensModal",
           });
 
+          if (modeloTemId) {
+            this._atualizarTextoDaModalEditar();
+            this.modalCriarPersonagem.open();
+            return this._buscarDadosDoPersonagemNoModelo();
+          }
           this.modalCriarPersonagem.open();
-          this._pegarDadosDoPersonagemNoModelo();
+          this._atualizarTextoDaPaginaCriar();
         },
 
-        _pegarDadosDoPersonagemNoModelo: function () {
+        _buscarDadosDoPersonagemNoModelo: function () {
           const modelo = this.getView().getModel(MODELO_PERSONAGEM);
 
           const dadosDoModelo = modelo.getData();
@@ -145,39 +157,33 @@ sap.ui.define(
           };
         },
 
-        _buscarDadosDoPersonagemSelecionado: function (dados) {
-          const idPersonagemSelecionado = dados
-            .getSource()
-            .getBindingContext("personagens")
-            .getProperty("id");
-
+        _buscarDadosDoPersonagemSelecionadoNaLista: function (dados) {
           const personagemSelecionado = dados
             .getSource()
             .getBindingContext("personagens")
             .getObject();
 
-          console.log(personagemSelecionado);
+          this.personagem = {
+            nome: personagemSelecionado.nome,
+            id: personagemSelecionado.id,
+            idRaca: personagemSelecionado.idRaca,
+            altura: parseFloat(personagemSelecionado.altura),
+            idade: parseInt(personagemSelecionado.idade),
+          };
 
           this.getView().setModel(
             new JSONModel(personagemSelecionado),
             MODELO_PERSONAGEM
           );
-
-          return idPersonagemSelecionado;
         },
 
-        _mostrarBotoesEditarERemover: function (valor) {
-          this.byId("editarPersonagemBtn").setVisible(valor);
-          this.byId("removerPersonagemBtn").setVisible(valor);
+        _carregarDados: async function (oEvent) {
+          this._carregarDadosDaRaca(oEvent);
+          this._carregarListaDePersonagens(oEvent);
+          this._carregarModeloVazioDePersonagem(oEvent);
         },
 
-        _carregarModelos: async function (oEvent) {
-          this._carregarModeloDaRaca(oEvent);
-          this._carregarModeloDePersonagens(oEvent);
-          this._carregarModeloDeNovoPersonagem(oEvent);
-        },
-
-        _carregarModeloDaRaca: async function (oEvent) {
+        _carregarDadosDaRaca: async function (oEvent) {
           try {
             const idRaca = oEvent.getParameter("arguments").id;
             const raca = await RacaService.obterRaca(idRaca);
@@ -189,7 +195,8 @@ sap.ui.define(
             this.onNavTo(rotaNotFound, this);
           }
         },
-        _carregarModeloDePersonagens: async function (oEvent) {
+
+        _carregarListaDePersonagens: async function (oEvent) {
           try {
             const idRaca = oEvent.getParameter("arguments").id;
             const raca = await RacaService.obterRaca(idRaca);
@@ -204,20 +211,14 @@ sap.ui.define(
             this._exibirErros(erros);
           }
         },
-        _carregarModeloPersonagemSelecionado: async function (oEvent) {
-          try {
-            const idPersonagemSelecionado = oEvent.getParameter("arguments").id;
-          } catch (erros) {
-            this._exibirErros(erros);
-          }
-        },
-        _carregarModeloDeNovoPersonagem: function (oEvent) {
+
+        _carregarModeloVazioDePersonagem: function (oEvent) {
           const stringVazia = "";
           const condicaoInicial = 0;
 
           const modelo = new JSONModel({
             nome: stringVazia,
-            idRaca: oEvent.getParameter("arguments").id,
+            idRaca: this.personagem.idRaca,
             profissao: stringVazia,
             altura: stringVazia,
             idade: stringVazia,
@@ -226,6 +227,7 @@ sap.ui.define(
 
           this.getView().setModel(modelo, MODELO_PERSONAGEM);
         },
+
         _limparInputs: function (oEvent) {
           const stringVazia = "";
           const profissaoInicial = 0;
@@ -248,6 +250,39 @@ sap.ui.define(
           this.byId(ID_INPUT_NOME).setValueState(valueStatePadrao);
           this.byId(ID_COMBOBOX_PROFISSAO).setSelectedIndex(profissaoInicial);
           this.byId(ID_RADIO_BTN_VIVOOUMORTO).setSelectedIndex(condicaoInicial);
+        },
+        _atualizarTextoDaPaginaCriar: function () {
+          this._atualizarTituloDaModalCriar();
+          this._atualizarLabelDoBotaoAdicionar();
+        },
+
+        _atualizarTextoDaModalEditar: function () {
+          this._atualizarTituloDaModalEditar();
+          this._atualizarLabelDoBotaoEditar();
+        },
+
+        _atualizarTituloDaModalCriar: function () {
+          const idModalCriacao = "modalCriarPersonagem";
+          const chaveI18N = "TituloModalCriarPersonagem";
+          this.byId(idModalCriacao).setTitle(this.obterTextoI18N(chaveI18N));
+        },
+
+        _atualizarTituloDaModalEditar: function () {
+          const idModalCriacao = "modalCriarPersonagem";
+          const chaveI18N = "TituloModalEditarPersonagem";
+          this.byId(idModalCriacao).setTitle(this.obterTextoI18N(chaveI18N));
+        },
+
+        _atualizarLabelDoBotaoAdicionar: function () {
+          const idBotaoAdicionar = "criarPersonagemModalBtn";
+          const chaveI18N = "BotaoAdicionar";
+          this.byId(idBotaoAdicionar).setText(this.obterTextoI18N(chaveI18N));
+        },
+
+        _atualizarLabelDoBotaoEditar: function () {
+          const idBotaoAdicionar = "criarPersonagemModalBtn";
+          const chaveI18N = "BotaoEditar";
+          this.byId(idBotaoAdicionar).setText(this.obterTextoI18N(chaveI18N));
         },
       }
     );
