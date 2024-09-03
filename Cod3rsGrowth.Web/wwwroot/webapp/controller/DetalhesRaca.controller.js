@@ -38,6 +38,7 @@ sap.ui.define(
           this.personagem = {};
           this.errosDeValidacao = {};
           this._carregarDados(oEvent);
+          this._mostrarBotoesDeEditarERemoverPersonagem(false);
         },
 
         aoClicarBtnEditarRaca: function () {
@@ -72,9 +73,13 @@ sap.ui.define(
           this._carregarModalDeCriacao();
         },
 
-        aoClicarBtnEditarPersonagem: function (oEvent) {
-          this._buscarDadosDoPersonagemSelecionadoNaLista(oEvent);
+        aoClicarBtnEditarPersonagem: function () {
           this._carregarModalDeCriacao();
+        },
+
+        aoSelecionarItemNaListaDePersonagem: function (oEvent) {
+          this._buscarDadosDoPersonagemSelecionadoNaLista(oEvent);
+          this._mostrarBotoesDeEditarERemoverPersonagem(true);
         },
 
         aoClicarBtnAdicionarNoModal: async function (oEvent) {
@@ -113,6 +118,7 @@ sap.ui.define(
         aoClicarBtnCancelarNoModal: function (oEvent) {
           this.byId(ID_MODAL_CRIAR_PERSONAGEM).close();
           this._limparInputs(oEvent);
+          this._mostrarBotoesDeEditarERemoverPersonagem(false);
         },
 
         _carregarModalDeCriacao: async function () {
@@ -283,6 +289,10 @@ sap.ui.define(
           const idBotaoAdicionar = "criarPersonagemModalBtn";
           const chaveI18N = "BotaoEditar";
           this.byId(idBotaoAdicionar).setText(this.obterTextoI18N(chaveI18N));
+        },
+        _mostrarBotoesDeEditarERemoverPersonagem: function (visibilidade) {
+          this.byId("removerPersonagemBtn").setVisible(visibilidade);
+          this.byId("editarPersonagemBtn").setVisible(visibilidade);
         },
       }
     );
