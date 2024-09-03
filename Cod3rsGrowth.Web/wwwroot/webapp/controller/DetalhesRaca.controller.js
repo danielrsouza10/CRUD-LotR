@@ -69,7 +69,7 @@ sap.ui.define(
         },
 
         aoClicarBtnAdicionarPersonagem: function (oEvent) {
-          this._carregarModeloVazioDePersonagem();
+          this._carregarModeloDeNovoPersonagem();
           this._carregarModalDeCriacao();
         },
 
@@ -224,7 +224,26 @@ sap.ui.define(
 
           const modelo = new JSONModel({
             nome: stringVazia,
-            idRaca: this.personagem.idRaca,
+            idRaca: oEvent.getParameter("arguments").id,
+            profissao: stringVazia,
+            altura: stringVazia,
+            idade: stringVazia,
+            estaVivo: condicaoInicial,
+          });
+
+          this.getView().setModel(modelo, MODELO_PERSONAGEM);
+        },
+
+        _carregarModeloDeNovoPersonagem: function () {
+          const stringVazia = "";
+          const condicaoInicial = 0;
+
+          const modeloRaca = this.getView().getModel(MODELO_RACA);
+          const idRaca = modeloRaca.getProperty("/id");
+
+          const modelo = new JSONModel({
+            nome: stringVazia,
+            idRaca: idRaca,
             profissao: stringVazia,
             altura: stringVazia,
             idade: stringVazia,
