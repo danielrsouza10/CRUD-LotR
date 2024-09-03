@@ -77,6 +77,28 @@ sap.ui.define(
           this._carregarModalDeCriacao();
         },
 
+        aoClicarBtnRemoverPersonagem: async function () {
+          const tituloDoDialogo = "Excluir registro",
+            mensagemDoDialogo = "Deseja confirmar a exclusão desse registro?";
+          const confirmacao = await this.criarDialogoDeAviso(
+            tituloDoDialogo,
+            mensagemDoDialogo
+          );
+          if (confirmacao) {
+            const idPersonagem = this.getView()
+              .getModel(MODELO_PERSONAGEM)
+              .getData().id;
+            try {
+              await PersonagemService.removerPersonagem(idPersonagem);
+              const mensagemDeSucesso = "Personagem removido com sucesso!";
+              const tituloDaMessageBox = "Sucesso";
+              this.criarDialogoDeSucesso(mensagemDeSucesso, tituloDaMessageBox);
+            } catch (erros) {
+              this._exibirErros(erros);
+            }
+          }
+        },
+
         aoSelecionarItemNaListaDePersonagem: function (oEvent) {
           this._buscarDadosDoPersonagemSelecionadoNaLista(oEvent);
           this._mostrarBotoesDeEditarERemoverPersonagem(true);
