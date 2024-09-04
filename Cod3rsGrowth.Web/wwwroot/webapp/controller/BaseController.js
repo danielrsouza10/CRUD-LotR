@@ -208,8 +208,6 @@ sap.ui.define(
             title: titulo,
             dependentOn: this.getView(),
           });
-          const tempoParaVisualizarMensagem = 2000;
-          setTimeout(() => this.onNavBack(), tempoParaVisualizarMensagem);
         },
         criarDialogoDeErro: function (titulo, detalhes, mensagemDeErro) {
           MessageBox.error(mensagemDeErro, {

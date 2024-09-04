@@ -62,6 +62,9 @@ sap.ui.define(
               const mensagemDeSucesso = "Raça removida com sucesso!";
               const tituloDaMessageBox = "Sucesso";
               this.criarDialogoDeSucesso(mensagemDeSucesso, tituloDaMessageBox);
+              const tempoParaVisualizarMensagem = 2000;
+              const rota = "listaDeRacas";
+              setTimeout(() => this.onNavTo(rota), tempoParaVisualizarMensagem);
             } catch (erros) {
               this._exibirErros(erros);
             }
@@ -97,6 +100,7 @@ sap.ui.define(
               this._exibirErros(erros);
             }
           }
+          await this._loadPersonagens();
         },
 
         aoSelecionarItemNaListaDePersonagem: function (oEvent) {
@@ -118,6 +122,7 @@ sap.ui.define(
                   tituloDaMessageBox
                 );
                 this._limparInputs(oEvent);
+
                 return this.byId(ID_MODAL_CRIAR_PERSONAGEM).close();
               } catch (erros) {
                 return this._exibirErros(erros);
@@ -135,12 +140,21 @@ sap.ui.define(
               this._exibirErros(erros);
             }
           }
+          await this._loadPersonagens();
         },
 
-        aoClicarBtnCancelarNoModal: function (oEvent) {
-          this.byId(ID_MODAL_CRIAR_PERSONAGEM).close();
-          this._limparInputs(oEvent);
-          this._mostrarBotoesDeEditarERemoverPersonagem(false);
+        aoClicarBtnCancelarNoModal: async function (oEvent) {
+          const tituloDoDialogo = "Cancelar operação",
+            mensagemDoDialogo = "Deseja realmente cancelar a operação?";
+          const confirmacao = await this.criarDialogoDeAviso(
+            tituloDoDialogo,
+            mensagemDoDialogo
+          );
+          if (confirmacao) {
+            this.byId(ID_MODAL_CRIAR_PERSONAGEM).close();
+            this._limparInputs(oEvent);
+            this._mostrarBotoesDeEditarERemoverPersonagem(false);
+          }
         },
 
         _carregarModalDeCriacao: async function () {
@@ -334,6 +348,21 @@ sap.ui.define(
         _mostrarBotoesDeEditarERemoverPersonagem: function (visibilidade) {
           this.byId("removerPersonagemBtn").setVisible(visibilidade);
           this.byId("editarPersonagemBtn").setVisible(visibilidade);
+        },
+        _loadPersonagens: async function () {
+          try {
+            const idRaca = this.getView().getModel(MODELO_RACA).getData().id;
+            const raca = await RacaService.obterRaca(idRaca);
+            this.filtros.nomeDaRaca = raca.nome;
+            const personagens = await PersonagemService.obterTodos(
+              this.filtros
+            );
+
+            const modeloPersonagens = new JSONModel(personagens);
+            this.getView().setModel(modeloPersonagens, MODELO_PERSONAGENS);
+          } catch (erros) {
+            this._exibirErros(erros);
+          }
         },
       }
     );
