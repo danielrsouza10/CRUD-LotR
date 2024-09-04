@@ -258,5 +258,83 @@ sap.ui.define(
         Then.iTeardownMyApp();
       }
     );
+    opaTest(
+      "Deve selecionar um personagem e aparecer o botao de editar personagem na tela",
+      function (Given, When, Then) {
+        //Arrangements
+        Given.iStartMyApp({
+          hash: "raca/2",
+        });
+
+        //Actions
+        When.naPaginaDeDetalhesDaRaca.euSelecionoUmPersonagemNaLista("Legolas");
+
+        //Assertions
+        Then.naPaginaDeDetalhesDaRaca.deveAparecerUmBotaoDeEditarPersonagemNaTela();
+
+        //Cleanup
+        Then.iTeardownMyApp();
+      }
+    );
+    opaTest(
+      "Deve pressionar o botao editar de um registro filho e carregar o modal de edição",
+      function (Given, When, Then) {
+        //Arrangements
+        Given.iStartMyApp({
+          hash: "raca/2",
+        });
+
+        //Actions
+        When.naPaginaDeDetalhesDaRaca
+          .euSelecionoUmPersonagemNaLista("Legolas")
+          .and.euPressionoOBotaoEditarPersonagem();
+
+        //Assertions
+        Then.naPaginaDeDetalhesDaRaca
+          .deveAparecerOModalDeEdicaoDePersonagem()
+          .and.oTituloDoModalDeveraSer()
+          .and.oInputDeNomeDeveraEstarPreenchido("Legolas")
+          .and.oTextoDoBotaoEditarDeveraSer();
+      }
+    );
+    opaTest(
+      "Deve pressionar o botao cancelar no modal e deve permancer na pagina de detalhes",
+      function (Given, When, Then) {
+        //Actions
+        When.naPaginaDeDetalhesDaRaca.euPressionoOBotaoCancelar();
+
+        //Assertions
+        Then.naPaginaDeDetalhesDaRaca.oTituloDaPaginaDetalhesDaRacaDeveraSer();
+
+        //Cleanup
+        Then.iTeardownMyApp();
+      }
+    );
+    opaTest(
+      "Deve tentar editar um personagem com todos os inputs invalidos e retornar um erro de validação",
+      function (Given, When, Then) {
+        //Arrangements
+        Given.iStartMyApp({
+          hash: "raca/2",
+        });
+        //Actions
+        When.naPaginaDeDetalhesDaRaca
+          .euSelecionoUmPersonagemNaLista("Legolas")
+          .and.euPressionoOBotaoEditarPersonagem()
+          .and.euDigitoUmNomeNoInputField("O*")
+          .and.euSelecionoUmaProfissao("5")
+          .and.euDigitoUmaIdadeNoInputField("-990")
+          .and.euDigitoUmaAlturaNoInputField("-1.97")
+          .and.euSelecionoCondicaoMorto()
+          .and.euSelecionoCondicaoVivo()
+          .and.euPressionoOBotaoEditarNoModal();
+
+        //Assertions
+        Then.naPaginaDeDetalhesDaRaca.deveAparecerUmaMessageBoxDeErro();
+
+        //Cleanup
+        Then.iTeardownMyApp();
+      }
+    );
   }
 );

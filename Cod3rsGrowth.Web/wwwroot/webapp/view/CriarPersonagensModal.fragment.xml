@@ -5,7 +5,7 @@
 >
     <Dialog
         id="modalCriarPersonagem"
-        title="{i18n>TituloPaginaCriarPersonagem}"
+        title="{i18n>TituloModalCriarPersonagem}"
         class="sapUiContentPadding"
     >
         <FlexBox>
@@ -170,7 +170,7 @@
         <beginButton>
             <Button
                 text="{i18n>BotaoAdicionar}"
-                press=".aoPressionarAdicionarNoModal"
+                press=".aoClicarBtnAdicionarNoModal"
                 id="criarPersonagemModalBtn"
                 type="Accept"
             />
@@ -178,7 +178,7 @@
         <endButton>
             <Button
                 text="{i18n>BotaoCancelar}"
-                press=".aoPressionarCancelarNoModal"
+                press=".aoClicarBtnCancelarNoModal"
                 id="cancelarCriarPersonagemModalBtn"
                 type="Reject"
             />

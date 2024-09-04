@@ -88,6 +88,18 @@ sap.ui.define(
                 "Não foi possível encontrar o botão adicionar personagem na página",
             });
           },
+          euPressionoOBotaoEditarNoModal: function () {
+            return this.waitFor({
+              controlType: "sap.m.Button",
+              matchers: new I18NText({
+                propertyName: "text",
+                key: "BotaoEditar",
+              }),
+              actions: new Press(),
+              errorMessage:
+                "Não foi possível encontrar o botão adicionar personagem na página",
+            });
+          },
           euDigitoUmNomeNoInputField: function (nomePersonagem) {
             return this.waitFor({
               id: ID_INPUT_NOME,
@@ -174,6 +186,35 @@ sap.ui.define(
                 Opa5.assert.ok(true, "O botão cancelar foi pressionado");
               },
               errorMessage: "Não foi possível encontrar o botao cancelar",
+            });
+          },
+          euPressionoOBotaoEditarPersonagem: function () {
+            return this.waitFor({
+              controlType: "sap.m.Button",
+              matchers: new I18NText({
+                propertyName: "text",
+                key: "BotaoEditarPersonagem",
+              }),
+              actions: new Press(),
+              success: function () {
+                Opa5.assert.ok(
+                  true,
+                  "O botão editar personagem foi pressionado"
+                );
+              },
+              errorMessage:
+                "Não foi possível encontrar o botao editar personagem",
+            });
+          },
+          euSelecionoUmPersonagemNaLista(nomeDoPersonagem) {
+            return this.waitFor({
+              controlType: "sap.m.ObjectIdentifier",
+              viewName: NOME_VIEW,
+              matchers: new Properties({
+                title: nomeDoPersonagem,
+              }),
+              actions: new Press(),
+              errorMessage: "Não foi possível selecionar o item na lista",
             });
           },
         },
@@ -376,6 +417,24 @@ sap.ui.define(
                 "Não foi encontrado o Modal de criação de personagem",
             });
           },
+          deveAparecerOModalDeEdicaoDePersonagem: function () {
+            return this.waitFor({
+              searchOpenDialogs: true,
+              controlType: "sap.m.Dialog",
+              matchers: new PropertyStrictEquals({
+                name: "title",
+                value: "Editar Personagem",
+              }),
+              success: function () {
+                Opa5.assert.ok(
+                  true,
+                  "Foi encontrada o Modal de edição de personagem"
+                );
+              },
+              errorMessage:
+                "Não foi encontrado o Modal de edição de personagem",
+            });
+          },
           deveAparecerUmaMessageBoxDeErro: function () {
             return this.waitFor({
               searchOpenDialogs: true,
@@ -408,6 +467,80 @@ sap.ui.define(
                 );
               },
               errorMessage: "Não foi encontrada a MessageBox indicando um erro",
+            });
+          },
+          oTituloDoModalDeveraSer: function () {
+            return this.waitFor({
+              searchOpenDialogs: true,
+              controlType: "sap.m.Dialog",
+              matchers: new PropertyStrictEquals({
+                name: "title",
+                value: "Editar Personagem",
+              }),
+              success: function () {
+                Opa5.assert.ok(
+                  true,
+                  "Foi encontrada o Modal de edição de personagem"
+                );
+              },
+              errorMessage:
+                "Não foi encontrado o Modal de edição de personagem",
+            });
+          },
+          deveAparecerUmBotaoDeEditarPersonagemNaTela: function () {
+            return this.waitFor({
+              controlType: "sap.m.Button",
+              matchers: new I18NText({
+                propertyName: "text",
+                key: "BotaoEditarPersonagem",
+              }),
+              success: function () {
+                Opa5.assert.ok(
+                  true,
+                  "O botão editar personagem foi encontrado"
+                );
+              },
+              errorMessage:
+                "Não foi possível encontrar o botao editar personagem",
+            });
+          },
+          oInputDeNomeDeveraEstarPreenchido: function (nomeDoPersonagem) {
+            return this.waitFor({
+              controlType: "sap.m.Input",
+              matchers: new I18NText({
+                propertyName: "placeholder",
+                key: "PlaceholderNome",
+              }),
+              success: function (input) {
+                this.waitFor({
+                  controlType: "sap.m.Input",
+                  matchers: new Properties({
+                    value: nomeDoPersonagem,
+                  }),
+                });
+                Opa5.assert.ok(
+                  input,
+                  "O input esta preenchido com o nome correto"
+                );
+              },
+              errorMessage: "Não foi encontrado o nome no input",
+            });
+          },
+          oTextoDoBotaoEditarDeveraSer: function () {
+            this.waitFor({
+              controlType: "sap.m.Button",
+              matchers: new I18NText({
+                propertyName: "text",
+                key: "BotaoEditar",
+              }),
+              success: function () {
+                Opa5.assert.ok(
+                  true,
+                  "O botão editar personagem foi encontrado"
+                );
+              },
+              errorMessage:
+                "Não foi possível encontrar o botao editar personagem",
             });
           },
         },
