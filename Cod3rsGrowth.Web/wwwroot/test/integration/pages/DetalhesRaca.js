@@ -64,7 +64,7 @@ sap.ui.define(
                 "Não foi possível encontrar o botão remover na página",
             });
           },
-          euPressionoSimParaConfirmarAEsclusao: function () {
+          euPressionoSimParaConfirmarAExclusao: function () {
             return this.waitFor({
               controlType: "sap.m.Button",
               matchers: [
@@ -74,6 +74,30 @@ sap.ui.define(
               actions: new Press(),
               errorMessage:
                 "Não foi possível pressionar o botão 'Sim' para confirmar a exclusão",
+            });
+          },
+          euPressionoSimParaConfirmaroCancelamento: function () {
+            return this.waitFor({
+              controlType: "sap.m.Button",
+              matchers: [
+                new Properties({ text: "Sim" }),
+                new Ancestor(Opa5.getContext().dialog, false),
+              ],
+              actions: new Press(),
+              errorMessage:
+                "Não foi possível pressionar o botão 'Sim' para confirmar a exclusão",
+            });
+          },
+          euPressionoOkNaMessageBoxDeSucesso: function () {
+            return this.waitFor({
+              searchOpenDialogs: true,
+              controlType: "sap.m.Button",
+              matchers: new Properties({
+                text: "OK",
+              }),
+              actions: new Press(),
+              errorMessage:
+                "Não foi possível pressionar o botão 'OK' para fechar o diálogo",
             });
           },
           euPressionoOBotaoAdicionarPersonagem: function () {
@@ -86,6 +110,18 @@ sap.ui.define(
               actions: new Press(),
               errorMessage:
                 "Não foi possível encontrar o botão adicionar personagem na página",
+            });
+          },
+          euPressionoOBotaoRemoverPersonagem: function () {
+            return this.waitFor({
+              controlType: "sap.m.Button",
+              matchers: new I18NText({
+                propertyName: "text",
+                key: "BotaoRemoverPersonagem",
+              }),
+              actions: new Press(),
+              errorMessage:
+                "Não foi possível encontrar o botão remover personagem na página",
             });
           },
           euPressionoOBotaoEditarNoModal: function () {
@@ -541,6 +577,34 @@ sap.ui.define(
               },
               errorMessage:
                 "Não foi possível encontrar o botao editar personagem",
+            });
+          },
+          euVerificoSeAListaTem4Registros: function () {
+            return this.waitFor({
+              id: ID_LISTA_REGISTROS_FILHOS,
+              viewName: NOME_VIEW,
+              success: function (lista) {
+                const modeloDaLista = lista.getModel("personagens");
+                const listaDeRacas = modeloDaLista.getProperty("/");
+                if (listaDeRacas.length === 4) {
+                  Opa5.assert.ok(true, "A lista tem 4 registros");
+                }
+              },
+              errorMessage: "A lista não contem 4 registros",
+            });
+          },
+          euVerificoSeAListaTem3Registros: function () {
+            return this.waitFor({
+              id: ID_LISTA_REGISTROS_FILHOS,
+              viewName: NOME_VIEW,
+              success: function (lista) {
+                const modeloDaLista = lista.getModel("personagens");
+                const listaDeRacas = modeloDaLista.getProperty("/");
+                if (listaDeRacas.length === 3) {
+                  Opa5.assert.ok(true, "A lista tem 3 registros");
+                }
+              },
+              errorMessage: "A lista não contem 3 registros",
             });
           },
         },

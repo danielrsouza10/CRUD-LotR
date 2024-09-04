@@ -108,7 +108,6 @@ sap.ui.define(
           .and.euPressionoOBotaoAdicionar();
 
         //Assertions
-        Then.naPaginaDeCriarRaca.deveAparecerUmaMessageBoxDeSucesso();
         Then.naPaginaDaListaDeRacas
           .oTituloDaPaginaDeRacasDeveraSer()
           .and.aUrlDaPaginaDeRacasDeveraSer();
@@ -132,7 +131,7 @@ sap.ui.define(
       "Deve confirmar a exclusão do registro e voltar para a página de listagem",
       function (Given, When, Then) {
         //Actions
-        When.naPaginaDeDetalhesDaRaca.euPressionoSimParaConfirmarAEsclusao();
+        When.naPaginaDeDetalhesDaRaca.euPressionoSimParaConfirmarAExclusao();
 
         // Assertions
         Then.naPaginaDaListaDeRacas

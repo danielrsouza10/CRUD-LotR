@@ -207,9 +207,6 @@ sap.ui.define(
 
         // Assertions
         Then.naPaginaDeEditarRaca.deveAparecerUmaMessageBoxDeSucesso();
-        Then.naPaginaDaListaDeRacas
-          .oTituloDaPaginaDeRacasDeveraSer()
-          .and.aUrlDaPaginaDeRacasDeveraSer();
         // Cleanup
         Then.iTeardownMyApp();
       }

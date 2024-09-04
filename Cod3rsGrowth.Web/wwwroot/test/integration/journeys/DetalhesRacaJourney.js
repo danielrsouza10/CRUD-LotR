@@ -110,7 +110,7 @@ sap.ui.define(
       "Deve pressionar para confirmar a exclusao do registro pai com filhos e retornar um erro",
       function (Given, When, Then) {
         //Actions
-        When.naPaginaDeDetalhesDaRaca.euPressionoSimParaConfirmarAEsclusao();
+        When.naPaginaDeDetalhesDaRaca.euPressionoSimParaConfirmarAExclusao();
 
         //Assertions
         Then.naPaginaDeDetalhesDaRaca.deveAparecerUmaMessageBoxDeErroDeRegistroDeDependentes();
@@ -250,7 +250,8 @@ sap.ui.define(
         //Actions
         When.naPaginaDeDetalhesDaRaca
           .euPressionoOBotaoAdicionarPersonagem()
-          .and.euPressionoOBotaoCancelar();
+          .and.euPressionoOBotaoCancelar()
+          .and.euPressionoSimParaConfirmaroCancelamento();
 
         // Assertions
         Then.naPaginaDeDetalhesDaRaca.oTituloDaPaginaDetalhesDaRacaDeveraSer();
@@ -301,7 +302,9 @@ sap.ui.define(
       "Deve pressionar o botao cancelar no modal e deve permancer na pagina de detalhes",
       function (Given, When, Then) {
         //Actions
-        When.naPaginaDeDetalhesDaRaca.euPressionoOBotaoCancelar();
+        When.naPaginaDeDetalhesDaRaca
+          .euPressionoOBotaoCancelar()
+          .and.euPressionoSimParaConfirmaroCancelamento();
 
         //Assertions
         Then.naPaginaDeDetalhesDaRaca.oTituloDaPaginaDetalhesDaRacaDeveraSer();
@@ -331,6 +334,65 @@ sap.ui.define(
 
         //Assertions
         Then.naPaginaDeDetalhesDaRaca.deveAparecerUmaMessageBoxDeErro();
+
+        //Cleanup
+        Then.iTeardownMyApp();
+      }
+    );
+    opaTest(
+      "Deve pressionar o botao adicionar e abria a modal de criaçao de personagem",
+      function (Given, When, Then) {
+        // Arrangements
+        Given.iStartMyApp({
+          hash: "raca/2",
+        });
+        //Actions
+        When.naPaginaDeDetalhesDaRaca.euPressionoOBotaoAdicionarPersonagem();
+
+        // Assertions
+        Then.naPaginaDeDetalhesDaRaca.deveAparecerOModalDeCriacaoDePersonagem();
+      }
+    );
+    opaTest(
+      "Deve inserir os detalhes do novo personagem, criar a lista deve conter o novo personagem",
+      function (Given, When, Then) {
+        //Actions
+        When.naPaginaDeDetalhesDaRaca
+          .euDigitoUmNomeNoInputField("NovoElfo")
+          .and.euSelecionoUmaProfissao("5")
+          .and.euDigitoUmaIdadeNoInputField("990")
+          .and.euDigitoUmaAlturaNoInputField("1.97")
+          .and.euSelecionoCondicaoMorto()
+          .and.euSelecionoCondicaoVivo()
+          .and.euPressionoOBotaoAdicionar()
+          .and.euPressionoOkNaMessageBoxDeSucesso();
+
+        //Assertions
+        Then.naPaginaDeDetalhesDaRaca.euVerificoSeAListaTem4Registros();
+      }
+    );
+    opaTest(
+      "Deve selecionar o personagem recem criado e pressionar o botao remover personagem",
+      function (Given, When, Then) {
+        //Actions
+        When.naPaginaDeDetalhesDaRaca
+          .euSelecionoUmPersonagemNaLista("NovoElfo")
+          .and.euPressionoOBotaoRemoverPersonagem();
+
+        // Assertions
+        Then.naPaginaDeDetalhesDaRaca.deveAparecerUmaMessageBoxDeConfirmacao();
+      }
+    );
+    opaTest(
+      "Deve confirmar a exclusão do registro e a lista deve estar sem o registro removido",
+      function (Given, When, Then) {
+        //Actions
+        When.naPaginaDeDetalhesDaRaca
+          .euPressionoSimParaConfirmarAExclusao()
+          .and.euPressionoOkNaMessageBoxDeSucesso();
+
+        // Assertions
+        Then.naPaginaDeDetalhesDaRaca.euVerificoSeAListaTem3Registros();
 
         //Cleanup
         Then.iTeardownMyApp();
