@@ -1,5 +1,6 @@
 ﻿using Infra;
 using Microsoft.Extensions.DependencyInjection;
+using Servico;
 
 
 namespace Testes
@@ -13,9 +14,10 @@ namespace Testes
         }
         public ServiceCollection ObterServiceCollections()
         {
+            
             var serviceCollection = new ServiceCollection();
             ModuloDeInjecaoTestes.BindServices(serviceCollection);
-            ModuloDeInjecaoInfra.BindServices(serviceCollection);
+            ModuloDeInjecaoServico.BindServices(serviceCollection);
             return serviceCollection;
         }
         public void Dispose() { }

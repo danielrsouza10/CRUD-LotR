@@ -13,8 +13,8 @@ namespace Testes
     {
         public static void BindServices(IServiceCollection services)
         {
-            ModuloDeInjecaoServico.BindServices(services);
-            ModuloDeInjecaoInfra.BindServices(services);
+            var connectionString = Environment.GetEnvironmentVariable("SQLSERVER_CONNECTION_STRING");
+            ModuloDeInjecaoInfra.BindServices(services, connectionString);
             services.AddScoped<IRepositorio<Personagem>, RepositorioMockPersonagens>();
             services.AddScoped<IRepositorio<Raca>, RepositorioMockRacas>();
         }
