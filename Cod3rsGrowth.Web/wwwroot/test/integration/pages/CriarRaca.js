@@ -4,9 +4,17 @@ sap.ui.define(
     "sap/ui/test/actions/Press",
     "sap/ui/test/actions/EnterText",
     "sap/ui/test/matchers/PropertyStrictEquals",
+    "sap/ui/test/matchers/Properties",
     "sap/ui/test/matchers/I18NText",
   ],
-  function (Opa5, Press, EnterText, PropertyStrictEquals, I18NText) {
+  function (
+    Opa5,
+    Press,
+    EnterText,
+    PropertyStrictEquals,
+    Properties,
+    I18NText
+  ) {
     "use strict";
 
     const NOME_VIEW = "CriarRaca",
@@ -116,6 +124,18 @@ sap.ui.define(
               actions: new Press(),
               errorMessage:
                 "Não foi possível encontrar o botão voltar na página",
+            });
+          },
+          euPressionoOkNaMessageBoxDeSucesso: function () {
+            return this.waitFor({
+              searchOpenDialogs: true,
+              controlType: "sap.m.Button",
+              matchers: new Properties({
+                text: "OK",
+              }),
+              actions: new Press(),
+              errorMessage:
+                "Não foi possível pressionar o botão 'OK' para fechar o diálogo",
             });
           },
         },

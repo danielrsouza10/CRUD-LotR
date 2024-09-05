@@ -6,6 +6,8 @@ sap.ui.define(["sap/m/MessageBox"], function (MessageBox) {
   const URL_POST_PERSONAGEM =
     "https://localhost:7244/api/Personagem/personagem";
   const URL_PUT_PERSONAGEM = "https://localhost:7244/api/Personagem/personagem";
+  const URL_DELETE_PERSONAGEM =
+    "https://localhost:7244/api/Personagem/personagem";
 
   return {
     obterTodos: async function (filtros) {
@@ -54,6 +56,27 @@ sap.ui.define(["sap/m/MessageBox"], function (MessageBox) {
         const response = await fetch(urlPersonagens.href, {
           method: "PUT",
           body: JSON.stringify(personagem),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        });
+        if (!response.ok) {
+          throw await response.json();
+        }
+        if (response.status == 200) {
+          return;
+        }
+        return await response.json();
+      } catch (erro) {
+        throw erro;
+      }
+    },
+    removerPersonagem: async function (idPersonagem) {
+      let urlPersonagens = new URL(URL_DELETE_PERSONAGEM);
+      try {
+        const response = await fetch(urlPersonagens.href, {
+          method: "DELETE",
+          body: JSON.stringify(idPersonagem),
           headers: {
             "Content-type": "application/json; charset=UTF-8",
           },
