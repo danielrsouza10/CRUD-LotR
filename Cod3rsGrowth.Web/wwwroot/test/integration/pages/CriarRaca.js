@@ -152,9 +152,9 @@ sap.ui.define(
             return this.waitFor({
               searchOpenDialogs: true,
               controlType: "sap.m.Dialog",
-              matchers: new PropertyStrictEquals({
-                name: "title",
-                value: "Sucesso",
+              matchers: new I18NText({
+                propertyName: "title",
+                key: "tituloDeBoxDeSucesso",
               }),
               success: function () {
                 Opa5.assert.ok(
@@ -170,9 +170,9 @@ sap.ui.define(
             return this.waitFor({
               searchOpenDialogs: true,
               controlType: "sap.m.Dialog",
-              matchers: new PropertyStrictEquals({
-                name: "title",
-                value: "Erro ao criar registro",
+              matchers: new I18NText({
+                propertyName: "title",
+                key: "tituloDeBoxDeErroDeCriacao",
               }),
               success: function () {
                 Opa5.assert.ok(

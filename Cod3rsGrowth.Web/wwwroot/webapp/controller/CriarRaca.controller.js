@@ -1,12 +1,11 @@
 sap.ui.define(
   [
-    "../controller/BaseController",
+    "../common/BaseController",
     "ui5/o_senhor_dos_aneis/services/RacaService",
     "sap/ui/model/json/JSONModel",
-    "sap/m/MessageBox",
     "ui5/o_senhor_dos_aneis/model/formatter",
   ],
-  function (BaseController, RacaService, JSONModel, MessageBox, formatter) {
+  function (BaseController, RacaService, JSONModel, formatter) {
     "use strict";
     const ID_INPUT_NOME = "inputNome",
       ID_RADIO_BTN_EXTINTAOUNAO = "radioBtnExtintaOuNao",
@@ -52,12 +51,11 @@ sap.ui.define(
             if (this._validarNovaRaca(this.raca)) {
               try {
                 const racaCriada = await RacaService.adicionarRaca(this.raca);
-                const mensagemDeSucesso = "Raça adicionada com sucesso!";
-                const tituloDaMessageBox = "Sucesso";
-                this.criarDialogoDeSucesso(
-                  mensagemDeSucesso,
-                  tituloDaMessageBox
-                );
+                const chaveI18NMensagem = "mensagemDeBoxDeSucessoDeCriacao",
+                  chaveI18NTitulo = "tituloDeBoxDeSucesso",
+                  mensagem = this.obterTextoI18N(chaveI18NMensagem),
+                  titulo = this.obterTextoI18N(chaveI18NTitulo);
+                this.criarDialogoDeSucesso(mensagem, titulo);
                 this._limparInputs();
                 this.onNavToListaDeRacas();
               } catch (erros) {
@@ -69,9 +67,11 @@ sap.ui.define(
           if (this._validarNovaRaca(this.raca)) {
             try {
               const racaEditada = await RacaService.editarRaca(this.raca);
-              const mensagemDeSucesso = "Raça editada com sucesso!";
-              const tituloDaMessageBox = "Sucesso";
-              this.criarDialogoDeSucesso(mensagemDeSucesso, tituloDaMessageBox);
+              const chaveI18NMensagem = "mensagemDeBoxDeSucessoDeEdicao",
+                chaveI18NTitulo = "tituloDeBoxDeSucesso",
+                mensagem = this.obterTextoI18N(chaveI18NMensagem),
+                titulo = this.obterTextoI18N(chaveI18NTitulo);
+              this.criarDialogoDeSucesso(mensagem, titulo);
               this._limparInputs();
             } catch (erros) {
               this._exibirErros(erros);

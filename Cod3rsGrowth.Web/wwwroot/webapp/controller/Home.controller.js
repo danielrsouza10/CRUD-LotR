@@ -1,4 +1,4 @@
-sap.ui.define(["../controller/BaseController"], function (BaseController) {
+sap.ui.define(["../common/BaseController"], function (BaseController) {
   "use strict";
 
   const ROTA_PERSONAGENS = "listaDePersonagens";

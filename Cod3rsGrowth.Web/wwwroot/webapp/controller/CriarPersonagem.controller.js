@@ -1,18 +1,11 @@
 sap.ui.define(
   [
-    "../controller/BaseController",
+    "../common/BaseController",
     "sap/ui/model/json/JSONModel",
     "ui5/o_senhor_dos_aneis/services/RacaService",
     "ui5/o_senhor_dos_aneis/services/PersonagemService",
-    "sap/m/MessageBox",
   ],
-  function (
-    BaseController,
-    JSONModel,
-    RacaService,
-    PersonagemService,
-    MessageBox
-  ) {
+  function (BaseController, JSONModel, RacaService, PersonagemService) {
     "use strict";
     const ID_INPUT_NOME = "inputNome",
       ID_COMBOBOX_RACAS = "comboBoxRacas",
@@ -44,19 +37,18 @@ sap.ui.define(
           this.getView().setModel(modelo, modeloRaca);
         },
 
-        aoCriarPersonagem: async function (oEvent) {
+        aoCriarPersonagem: async function () {
           this._pegarValoresDoPersonagemNaTela();
 
           if (this._validarNovoPersonagem(this.personagem)) {
             try {
               const personagemCriado =
                 await PersonagemService.adicionarPersonagem(this.personagem);
-              const mensagemDeSucesso = "Personagem adicionado com sucesso!";
-              MessageBox.show(mensagemDeSucesso, {
-                icon: sap.m.MessageBox.Icon.SUCCESS,
-                title: "Sucesso",
-                dependentOn: this.getView(),
-              });
+              const chaveI18NMensagem = "mensagemDeBoxDeSucessoDeCriacao",
+                chaveI18NTitulo = "tituloDeBoxDeSucesso",
+                mensagem = this.obterTextoI18N(chaveI18NMensagem),
+                titulo = this.obterTextoI18N(chaveI18NTitulo);
+              this.criarDialogoDeSucesso(mensagem, titulo);
               this._limparInputs();
               const tempoParaVisualizarMensagem = 2000;
               setTimeout(() => this.onNavBack(), tempoParaVisualizarMensagem);

@@ -1,6 +1,6 @@
 sap.ui.define(
   [
-    "../controller/BaseController",
+    "../common/BaseController",
     "sap/ui/model/json/JSONModel",
     "ui5/o_senhor_dos_aneis/model/formatter",
     "ui5/o_senhor_dos_aneis/services/RacaService",

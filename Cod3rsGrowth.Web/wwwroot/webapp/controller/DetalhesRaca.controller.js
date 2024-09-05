@@ -1,6 +1,6 @@
 sap.ui.define(
   [
-    "../controller/BaseController",
+    "../common/BaseController",
     "ui5/o_senhor_dos_aneis/services/RacaService",
     "ui5/o_senhor_dos_aneis/services/PersonagemService",
     "sap/ui/model/json/JSONModel",
@@ -49,19 +49,20 @@ sap.ui.define(
         },
 
         aoClicarBtnRemoverRaca: async function () {
-          const tituloDoDialogo = "Excluir registro",
-            mensagemDoDialogo = "Deseja confirmar a exclusão desse registro?";
-          const confirmacao = await this.criarDialogoDeAviso(
-            tituloDoDialogo,
-            mensagemDoDialogo
-          );
+          const chaveI18NMensagem = "mensagemDeBoxDeConfirmacaoDeExclusao",
+            chaveI18NTitulo = "tituloDeBoxDeAdvertencia",
+            mensagem = this.obterTextoI18N(chaveI18NMensagem),
+            titulo = this.obterTextoI18N(chaveI18NTitulo);
+          const confirmacao = await this.criarDialogoDeAviso(titulo, mensagem);
           if (confirmacao) {
             const idRaca = this.getView().getModel(MODELO_RACA).getData().id;
             try {
               await RacaService.removerRaca(idRaca);
-              const mensagemDeSucesso = "Raça removida com sucesso!";
-              const tituloDaMessageBox = "Sucesso";
-              this.criarDialogoDeSucesso(mensagemDeSucesso, tituloDaMessageBox);
+              const chaveI18NMensagem = "mensagemDeBoxDeSucessoDeRemocao",
+                chaveI18NTitulo = "tituloDeBoxDeSucesso",
+                mensagem = this.obterTextoI18N(chaveI18NMensagem),
+                titulo = this.obterTextoI18N(chaveI18NTitulo);
+              this.criarDialogoDeSucesso(mensagem, titulo);
               const tempoParaVisualizarMensagem = 2000;
               const rota = "listaDeRacas";
               setTimeout(() => this.onNavTo(rota), tempoParaVisualizarMensagem);
@@ -81,21 +82,22 @@ sap.ui.define(
         },
 
         aoClicarBtnRemoverPersonagem: async function () {
-          const tituloDoDialogo = "Excluir registro",
-            mensagemDoDialogo = "Deseja confirmar a exclusão desse registro?";
-          const confirmacao = await this.criarDialogoDeAviso(
-            tituloDoDialogo,
-            mensagemDoDialogo
-          );
+          const chaveI18NMensagem = "mensagemDeBoxDeConfirmacaoDeExclusao",
+            chaveI18NTitulo = "tituloDeBoxDeAdvertencia",
+            mensagem = this.obterTextoI18N(chaveI18NMensagem),
+            titulo = this.obterTextoI18N(chaveI18NTitulo);
+          const confirmacao = await this.criarDialogoDeAviso(titulo, mensagem);
           if (confirmacao) {
             const idPersonagem = this.getView()
               .getModel(MODELO_PERSONAGEM)
               .getData().id;
             try {
               await PersonagemService.removerPersonagem(idPersonagem);
-              const mensagemDeSucesso = "Personagem removido com sucesso!";
-              const tituloDaMessageBox = "Sucesso";
-              this.criarDialogoDeSucesso(mensagemDeSucesso, tituloDaMessageBox);
+              const chaveI18NMensagem = "mensagemDeBoxDeSucessoDeRemocao",
+                chaveI18NTitulo = "tituloDeBoxDeSucesso",
+                mensagem = this.obterTextoI18N(chaveI18NMensagem),
+                titulo = this.obterTextoI18N(chaveI18NTitulo);
+              this.criarDialogoDeSucesso(mensagem, titulo);
             } catch (erros) {
               this._exibirErros(erros);
             }
@@ -115,12 +117,11 @@ sap.ui.define(
               try {
                 const personagemEditado =
                   await PersonagemService.editarPersonagem(this.personagem);
-                const mensagemDeSucesso = "Personagem editado com sucesso!";
-                const tituloDaMessageBox = "Sucesso";
-                this.criarDialogoDeSucesso(
-                  mensagemDeSucesso,
-                  tituloDaMessageBox
-                );
+                const chaveI18NMensagem = "mensagemDeBoxDeSucessoDeEdicao",
+                  chaveI18NTitulo = "tituloDeBoxDeSucesso",
+                  mensagem = this.obterTextoI18N(chaveI18NMensagem),
+                  titulo = this.obterTextoI18N(chaveI18NTitulo);
+                this.criarDialogoDeSucesso(mensagem, titulo);
                 this._limparInputs(oEvent);
 
                 return this.byId(ID_MODAL_CRIAR_PERSONAGEM).close();
@@ -131,9 +132,11 @@ sap.ui.define(
             try {
               const personagemCriado =
                 await PersonagemService.adicionarPersonagem(this.personagem);
-              const mensagemDeSucesso = "Personagem adicionado com sucesso!";
-              const tituloDaMessageBox = "Sucesso";
-              this.criarDialogoDeSucesso(mensagemDeSucesso, tituloDaMessageBox);
+              const chaveI18NMensagem = "mensagemDeBoxDeSucessoDeCriacao",
+                chaveI18NTitulo = "tituloDeBoxDeSucesso",
+                mensagem = this.obterTextoI18N(chaveI18NMensagem),
+                titulo = this.obterTextoI18N(chaveI18NTitulo);
+              this.criarDialogoDeSucesso(mensagem, titulo);
               this._limparInputs(oEvent);
               this.byId(ID_MODAL_CRIAR_PERSONAGEM).close();
             } catch (erros) {
@@ -144,12 +147,11 @@ sap.ui.define(
         },
 
         aoClicarBtnCancelarNoModal: async function (oEvent) {
-          const tituloDoDialogo = "Cancelar operação",
-            mensagemDoDialogo = "Deseja realmente cancelar a operação?";
-          const confirmacao = await this.criarDialogoDeAviso(
-            tituloDoDialogo,
-            mensagemDoDialogo
-          );
+          const chaveI18NMensagem = "mensagemDeBoxDeCancelamento",
+            chaveI18NTitulo = "tituloDeBoxDeAdvertencia",
+            mensagem = this.obterTextoI18N(chaveI18NMensagem),
+            titulo = this.obterTextoI18N(chaveI18NTitulo);
+          const confirmacao = await this.criarDialogoDeAviso(titulo, mensagem);
           if (confirmacao) {
             this.byId(ID_MODAL_CRIAR_PERSONAGEM).close();
             this._limparInputs(oEvent);
