@@ -113,7 +113,7 @@ namespace Forms.Forms
         {
             Personagem novoPersonagem = new Personagem();
             novoPersonagem.Nome = boxNome.Text;
-            _filtro.NomeDoPersonagem = boxRacas.Text;
+            _filtro.NomeDaRaca = boxRacas.Text;
             novoPersonagem.IdRaca = _servicoRaca.ObterTodos(_filtro).FirstOrDefault(r => r.Nome == _filtro.NomeDaRaca).Id;
             novoPersonagem.Profissao = (ProfissaoEnum)Enum.Parse(typeof(ProfissaoEnum), boxProfissao.Text);
             novoPersonagem.Altura = (float)boxAltura.Value;

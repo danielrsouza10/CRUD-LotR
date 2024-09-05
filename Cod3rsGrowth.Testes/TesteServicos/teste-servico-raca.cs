@@ -11,12 +11,10 @@ namespace Testes.TesteServicos;
 public class teste_servico_raca : TesteBase
 {
     private readonly ServicoRaca _servicoRaca;
-    private readonly IRepositorio<Raca> _servicoRepositorio;
 
     public teste_servico_raca()
     {
-        _servicoRaca = _serviceProvider.GetService<ServicoRaca>();
-        _servicoRepositorio = _serviceProvider.GetService<IRepositorio<Raca>>();
+        _servicoRaca = _serviceProvider.GetRequiredService<ServicoRaca>();
     }
 
     [Fact]
@@ -73,7 +71,7 @@ public class teste_servico_raca : TesteBase
     {
         //arrange
         var idBusca = 0;
-        var mensagemErro = "O ID deve ser maior que zero";
+        var mensagemErro = "O ID informado não existe";
         //act
         var ex = Assert.Throws<Exception>(() => _servicoRaca.ObterPorId(idBusca));
         //assert
@@ -108,62 +106,64 @@ public class teste_servico_raca : TesteBase
     {
         //arrange
         var novaRaca = new Raca() { LocalizacaoGeografica = "Goiania" };
-        var mensagemDeErro = "O nome da raça não pode ser null. Precisa informar um nome para a raça. ";
+        var mensagemDeErro = "O nome da raça não pode ser null";
         //act
-        var ex = Assert.Throws<Exception>(() => _servicoRaca.Criar(novaRaca));
+        var ex = Assert.Throws<FluentValidation.ValidationException>(() => _servicoRaca.Criar(novaRaca));
         //assert
-        Assert.Equal(mensagemDeErro, ex.Message);
+        Assert.Contains(mensagemDeErro, ex.Message);
     }
     [Fact]
     public void AoCriarUmaRacaComNomeNull_DeveRetornarUmaExcecao()
     {
         //arrange
         var novaRaca = new Raca() { Nome = null, HabilidadeRacial = "Imunidade a veneno" };
-        var mensagemDeErro = "O nome da raça não pode ser null. Precisa informar um nome para a raça. ";
+        var mensagemDeErro = "O nome da raça não pode ser null";
         //act
-        var ex = Assert.Throws<Exception>(() => _servicoRaca.Criar(novaRaca));
+        var ex = Assert.Throws<FluentValidation.ValidationException>(() => _servicoRaca.Criar(novaRaca));
         //assert
-        Assert.Equal(mensagemDeErro, ex.Message);
+        Assert.Contains(mensagemDeErro, ex.Message);
     }
     [Fact]
     public void AoCriarUmaRacaComNomeDeApenas2Caracteres_DeveRetornarUmaExcecao()
     {
         //arrange
         var novaRaca = new Raca() { Nome = "or" };
-        var mensagemDeErro = "O nome da raça precisa ter entre 3 e 25 caracteres. ";
+        var mensagemDeErro = "O nome da raça precisa ter entre 3 e 25 caracteres";
         //act
-        var ex = Assert.Throws<Exception>(() => _servicoRaca.Criar(novaRaca));
+        var ex = Assert.Throws<FluentValidation.ValidationException>(() => _servicoRaca.Criar(novaRaca));
         //assert
-        Assert.Equal(mensagemDeErro, ex.Message);
+        Assert.Contains(mensagemDeErro, ex.Message);
     }
     [Fact]
     public void AoCriarUmaRacaComIdDeclaradoManualmente_DeveRetornarUmaExcecao()
     {
         //arrange
         var novaRaca = new Raca() { Nome = "Orc", Id = 1 };
-        var mensagemDeErro = "Não deve ser informado um Id. ";
+        var mensagemDeErro = "Id: Não deve ser informado um Id";
         //act
-        var ex = Assert.Throws<Exception>(() => _servicoRaca.Criar(novaRaca));
+        var ex = Assert.Throws<FluentValidation.ValidationException>(() => _servicoRaca.Criar(novaRaca));
         //assert
-        Assert.Equal(mensagemDeErro, ex.Message);
+        Assert.Contains(mensagemDeErro, ex.Message);
     }
     [Fact]
     public void AoCriarUmaRacaComIdDeclaradoManualmenteENomeComMenosDe2Caracteres_DeveRetornarUmaExcecaoComOTextoDosDoisErros()
     {
         //arrange
         var novaRaca = new Raca() { Nome = "Or", Id = 1 };
-        var mensagemDeErro = "O nome da raça precisa ter entre 3 e 25 caracteres. Não deve ser informado um Id. ";
+        var mensagemDeErroId = "Id: Não deve ser informado um Id";
+        var mensagemDeErroNome = "Nome: O nome da raça precisa ter entre 3 e 25 caracteres";
         //act
-        var ex = Assert.Throws<Exception>(() => _servicoRaca.Criar(novaRaca));
+        var ex = Assert.Throws<FluentValidation.ValidationException>(() => _servicoRaca.Criar(novaRaca));
         //assert
-        Assert.Equal(mensagemDeErro, ex.Message);
+        Assert.Contains(mensagemDeErroId, ex.Message);
+        Assert.Contains(mensagemDeErroNome, ex.Message);
     }
 
     [Fact]
     public void AoEditarUmaRacaComIdValido_DeveRetornarARacaComOsDadosAtualizados()
     {
         //arrange
-        var raca = new Raca() { Id = 1, HabilidadeRacial = "Domar feras" };
+        var raca = new Raca() { Nome = "Humano", Id = 1, HabilidadeRacial = "Domar feras" };
         var nomeRaca = "Humano";
         //act
         var racaEditada = _servicoRaca.Editar(raca);
@@ -175,13 +175,13 @@ public class teste_servico_raca : TesteBase
     public void AoEditarUmaRacaComUmNomeDeApenas2Caracteres_DeveRetornarUmaExcecao()
     {
         //arranje
-        var mensagemErro = "O nome da raça precisa ter entre 3 e 25 caracteres. ";
+        var mensagemErro = "Nome: O nome da raça precisa ter entre 3 e 25 caracteres";
         Raca raca = new() { Id = 1, Nome = "ab" };
         //act
-        var ex = Assert.Throws<Exception>(() => _servicoRaca.Editar(raca));
+        var ex = Assert.Throws<FluentValidation.ValidationException>(() => _servicoRaca.Editar(raca));
         //assert
-        Assert.IsType<Exception>(ex);
-        Assert.Equal(mensagemErro, ex.Message);
+        Assert.IsType<FluentValidation.ValidationException>(ex);
+        Assert.Contains(mensagemErro, ex.Message);
     }
     [Fact]
     public void AoEditarUmaRacaComIdInexistente_DeveRetornarUmaExcecao()

@@ -14,11 +14,12 @@ namespace Testes.Repositorios
         public IEnumerable<Raca> ObterTodos(Filtro filtro) => _listaDeRacas;
         public Raca ObterPorId(int id) => _listaDeRacas.Find(r => r.Id == id) ?? throw new Exception("O ID informado não existe");
 
-        public void Criar(Raca raca)
+        public int Criar(Raca raca)
         {
             const int IncrementoParaONovoId = 1;
             raca.Id = _listaDeRacas.Any() ? _listaDeRacas.Max(r => r.Id) + IncrementoParaONovoId : IncrementoParaONovoId;
             _listaDeRacas.Add(raca);
+            return raca.Id;
         }
 
         public Raca Editar(Raca raca)
@@ -32,12 +33,13 @@ namespace Testes.Repositorios
         public void Deletar(int id) => _listaDeRacas.Remove(ObterPorId(id));
         public bool VerificarNomeNoDb(string nome, int? id = null)
         {
-            throw new NotImplementedException();
-        }
-
-        public bool VerificarNomeNoDb(string nome)
-        {
-            throw new NotImplementedException();
+            if (id.HasValue)
+            {
+                return _listaDeRacas
+                            .Any(p => p.Nome.ToLower() == nome.ToLower() && p.Id != id.Value);
+            }
+            return _listaDeRacas
+                            .Any(p => p.Nome.ToLower().Equals(nome.ToLower()));
         }
     }
 }
