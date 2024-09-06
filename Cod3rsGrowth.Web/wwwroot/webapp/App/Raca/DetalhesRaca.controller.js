@@ -1,10 +1,11 @@
 sap.ui.define(
   [
     "../common/BaseController",
-    "ui5/o_senhor_dos_aneis/services/RacaService",
-    "ui5/o_senhor_dos_aneis/services/PersonagemService",
+    "ui5/o_senhor_dos_aneis/App/Raca/RacaService",
+    "ui5/o_senhor_dos_aneis/App/Personagem/PersonagemService",
     "sap/ui/model/json/JSONModel",
     "ui5/o_senhor_dos_aneis/model/formatter",
+    "ui5/o_senhor_dos_aneis/App/common/Dialogs",
   ],
 
   function (
@@ -12,7 +13,8 @@ sap.ui.define(
     RacaService,
     PersonagemService,
     JSONModel,
-    formatter
+    formatter,
+    Dialogs
   ) {
     "use strict";
     const ID_INPUT_NOME = "inputNome",
@@ -24,7 +26,7 @@ sap.ui.define(
       MODELO_RACA = "raca";
 
     return BaseController.extend(
-      "ui5.o_senhor_dos_aneis.controller.DetalhesRaca",
+      "ui5.o_senhor_dos_aneis.App.Raca.DetalhesRaca",
       {
         formatter: formatter,
 
@@ -55,7 +57,11 @@ sap.ui.define(
             chaveI18NTitulo = "tituloDeBoxDeAdvertencia",
             mensagem = this.obterTextoI18N(chaveI18NMensagem),
             titulo = this.obterTextoI18N(chaveI18NTitulo);
-          const confirmacao = await this.criarDialogoDeAviso(titulo, mensagem);
+          const confirmacao = await Dialogs.criarDialogoDeAviso(
+            titulo,
+            mensagem,
+            this
+          );
           if (confirmacao) {
             this.exibirEspera(async () => {
               const idRaca = this.modelo(MODELO_RACA).getData().id;
@@ -65,7 +71,7 @@ sap.ui.define(
                   chaveI18NTitulo = "tituloDeBoxDeSucesso",
                   mensagem = this.obterTextoI18N(chaveI18NMensagem),
                   titulo = this.obterTextoI18N(chaveI18NTitulo);
-                this.criarDialogoDeSucesso(mensagem, titulo);
+                Dialogs.criarDialogoDeSucesso(mensagem, titulo, this);
                 const tempoParaVisualizarMensagem = 2000;
                 const rota = "listaDeRacas";
                 setTimeout(
@@ -97,7 +103,11 @@ sap.ui.define(
             chaveI18NTitulo = "tituloDeBoxDeAdvertencia",
             mensagem = this.obterTextoI18N(chaveI18NMensagem),
             titulo = this.obterTextoI18N(chaveI18NTitulo);
-          const confirmacao = await this.criarDialogoDeAviso(titulo, mensagem);
+          const confirmacao = await Dialogs.criarDialogoDeAviso(
+            titulo,
+            mensagem,
+            this
+          );
           if (confirmacao) {
             this.exibirEspera(async () => {
               const idPersonagem = this.modelo(MODELO_PERSONAGEM).getData().id;
@@ -107,13 +117,13 @@ sap.ui.define(
                   chaveI18NTitulo = "tituloDeBoxDeSucesso",
                   mensagem = this.obterTextoI18N(chaveI18NMensagem),
                   titulo = this.obterTextoI18N(chaveI18NTitulo);
-                this.criarDialogoDeSucesso(mensagem, titulo);
+                Dialogs.criarDialogoDeSucesso(mensagem, titulo, this);
               } catch (erros) {
                 this._exibirErros(erros);
               }
+              await this._loadPersonagens();
             });
           }
-          await this._loadPersonagens();
         },
 
         aoSelecionarItemNaListaDePersonagem: function (oEvent) {
@@ -135,7 +145,7 @@ sap.ui.define(
                     chaveI18NTitulo = "tituloDeBoxDeSucesso",
                     mensagem = this.obterTextoI18N(chaveI18NMensagem),
                     titulo = this.obterTextoI18N(chaveI18NTitulo);
-                  this.criarDialogoDeSucesso(mensagem, titulo);
+                  Dialogs.criarDialogoDeSucesso(mensagem, titulo, this);
                   this._limparInputs(oEvent);
                   await this._loadPersonagens();
                   return this.byId(ID_MODAL_CRIAR_PERSONAGEM).close();
@@ -150,7 +160,7 @@ sap.ui.define(
                   chaveI18NTitulo = "tituloDeBoxDeSucesso",
                   mensagem = this.obterTextoI18N(chaveI18NMensagem),
                   titulo = this.obterTextoI18N(chaveI18NTitulo);
-                this.criarDialogoDeSucesso(mensagem, titulo);
+                Dialogs.criarDialogoDeSucesso(mensagem, titulo, this);
                 this._limparInputs(oEvent);
                 this.byId(ID_MODAL_CRIAR_PERSONAGEM).close();
               } catch (erros) {
@@ -166,7 +176,11 @@ sap.ui.define(
             chaveI18NTitulo = "tituloDeBoxDeAdvertencia",
             mensagem = this.obterTextoI18N(chaveI18NMensagem),
             titulo = this.obterTextoI18N(chaveI18NTitulo);
-          const confirmacao = await this.criarDialogoDeAviso(titulo, mensagem);
+          const confirmacao = await Dialogs.criarDialogoDeAviso(
+            titulo,
+            mensagem,
+            this
+          );
           if (confirmacao) {
             this.exibirEspera(async () => {
               this.byId(ID_MODAL_CRIAR_PERSONAGEM).close();
@@ -180,7 +194,7 @@ sap.ui.define(
           const modeloTemId = this.modelo(MODELO_PERSONAGEM).getData().id;
 
           this.modalCriarPersonagem ??= await this.loadFragment({
-            name: "ui5.o_senhor_dos_aneis.view.CriarPersonagensModal",
+            name: "ui5.o_senhor_dos_aneis.App.Personagem.CriarPersonagensModal",
           });
 
           if (modeloTemId) {

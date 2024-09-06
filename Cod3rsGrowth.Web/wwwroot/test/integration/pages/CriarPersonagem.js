@@ -8,8 +8,8 @@ sap.ui.define(
   function (Opa5, Press, EnterText, PropertyStrictEquals) {
     "use strict";
 
-    const NOME_VIEW = "CriarPersonagem",
-      NOME_VIEW_HOME = "Home",
+    const NOME_VIEW = "Personagem.CriarPersonagem",
+      NOME_VIEW_HOME = "Home.Home",
       ID_PAGINA = "paginaCriarPersonagem",
       ID_COMBOBOX_PROFISSAO = "comboBoxProfissoes",
       ID_COMBOBOX_RACAS = "comboBoxRacas",

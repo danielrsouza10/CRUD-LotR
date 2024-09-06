@@ -2,10 +2,17 @@ sap.ui.define(
   [
     "../common/BaseController",
     "sap/ui/model/json/JSONModel",
-    "ui5/o_senhor_dos_aneis/services/RacaService",
-    "ui5/o_senhor_dos_aneis/services/PersonagemService",
+    "ui5/o_senhor_dos_aneis/App/Raca/RacaService",
+    "ui5/o_senhor_dos_aneis/App/Personagem/PersonagemService",
+    "ui5/o_senhor_dos_aneis/App/common/Dialogs",
   ],
-  function (BaseController, JSONModel, RacaService, PersonagemService) {
+  function (
+    BaseController,
+    JSONModel,
+    RacaService,
+    PersonagemService,
+    Dialogs
+  ) {
     "use strict";
     const ID_INPUT_NOME = "inputNome",
       ID_COMBOBOX_RACAS = "comboBoxRacas",
@@ -14,7 +21,7 @@ sap.ui.define(
       ID_INPUT_ALTURA = "inputAltura",
       ID_RADIO_BTN_VIVOMORTO = "radioBtnVivoMorto";
     return BaseController.extend(
-      "ui5.o_senhor_dos_aneis.controller.CriarPersonagem",
+      "ui5.o_senhor_dos_aneis.App.Personagem.CriarPersonagem",
       {
         onInit: function () {
           const rota = "criarPersonagem";
@@ -51,7 +58,7 @@ sap.ui.define(
                   chaveI18NTitulo = "tituloDeBoxDeSucesso",
                   mensagem = this.obterTextoI18N(chaveI18NMensagem),
                   titulo = this.obterTextoI18N(chaveI18NTitulo);
-                this.criarDialogoDeSucesso(mensagem, titulo);
+                Dialogs.criarDialogoDeSucesso(mensagem, titulo, this);
                 this._limparInputs();
                 const tempoParaVisualizarMensagem = 2000;
                 setTimeout(() => this.onNavBack(), tempoParaVisualizarMensagem);

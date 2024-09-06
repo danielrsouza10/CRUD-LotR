@@ -4,9 +4,9 @@ sap.ui.define(
     "sap/ui/core/routing/History",
     "sap/ui/core/UIComponent",
     "sap/ui/core/BusyIndicator",
-    "sap/m/MessageBox",
+    "ui5/o_senhor_dos_aneis/App/common/Dialogs",
   ],
-  function (Controller, History, UIComponent, BusyIndicator, MessageBox) {
+  function (Controller, History, UIComponent, BusyIndicator, Dialogs) {
     "use strict";
     this.errosDeValidacao = {};
 
@@ -55,7 +55,8 @@ sap.ui.define(
       },
 
       exibirEspera: async function (funcao) {
-        BusyIndicator.show();
+        const delayTime = 0;
+        BusyIndicator.show(delayTime);
 
         return Promise.resolve(funcao())
           .catch((erros) => {
@@ -170,20 +171,22 @@ sap.ui.define(
           const mensagemDeErro = Object.values(erros.extensions).join(
             espacoEntreErros
           );
-          return this.criarDialogoDeErro(
+          return Dialogs.criarDialogoDeErro(
             erros.title,
             mensagemDeErro,
-            erros.detail
+            erros.detail,
+            this
           );
         }
         if (erros.status) {
           const mensagemDeErro = Object.values(erros.extensions.erros).join(
             espacoEntreErros
           );
-          return this.criarDialogoDeErro(
+          return Dialogs.criarDialogoDeErro(
             erros.title,
             erros.detail,
-            mensagemDeErro
+            mensagemDeErro,
+            this
           );
         }
         if (
@@ -200,44 +203,13 @@ sap.ui.define(
             tituloErro = this.obterTextoI18N(chaveI18NTituloErro),
             detalhesDoErro = this.obterTextoI18N(chaveI18NDetalhesErro);
 
-          return this.criarDialogoDeErro(
+          return Dialogs.criarDialogoDeErro(
             tituloErro,
             detalhesDoErro,
-            mensagemDeErro
+            mensagemDeErro,
+            this
           );
         }
-      },
-      criarDialogoDeAviso: function (titulo, mensagem) {
-        return new Promise((resolve, reject) => {
-          MessageBox.warning(mensagem, {
-            title: titulo,
-            actions: [MessageBox.Action.YES, MessageBox.Action.NO],
-            emphasizedAction: "YES",
-            onClose: function (acao) {
-              if (acao === "YES") {
-                resolve(true);
-              } else {
-                resolve(false);
-              }
-            },
-            dependentOn: this.getView(),
-          });
-        });
-      },
-      criarDialogoDeSucesso: function (mensagem, titulo) {
-        MessageBox.show(mensagem, {
-          icon: sap.m.MessageBox.Icon.SUCCESS,
-          title: titulo,
-          dependentOn: this.getView(),
-        });
-      },
-      criarDialogoDeErro: function (titulo, detalhes, mensagemDeErro) {
-        MessageBox.error(mensagemDeErro, {
-          title: titulo,
-          details: detalhes,
-          contentWidth: "400px",
-          dependentOn: this.getView(),
-        });
       },
     });
   }

@@ -1,4 +1,4 @@
-sap.ui.define(["sap/m/MessageBox"], function (MessageBox) {
+sap.ui.define([], function () {
   "use strict";
 
   const URL_TODOS_OS_PERSONAGENS =

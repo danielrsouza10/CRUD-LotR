@@ -1,6 +1,6 @@
 <mvc:View
     height="100%"
-    controllerName="ui5.o_senhor_dos_aneis.controller.DetalhesRaca"
+    controllerName="ui5.o_senhor_dos_aneis.App.Raca.DetalhesRaca"
     xmlns="sap.m"
     xmlns:form="sap.ui.layout.form"
     xmlns:core="sap.ui.core"

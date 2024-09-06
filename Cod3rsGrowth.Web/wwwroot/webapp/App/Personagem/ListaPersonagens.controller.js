@@ -1,11 +1,11 @@
 sap.ui.define(
   [
-    "ui5/o_senhor_dos_aneis/common/BaseController",
+    "ui5/o_senhor_dos_aneis/App/common/BaseController",
     "sap/ui/model/json/JSONModel",
     "sap/ui/model/Sorter",
     "ui5/o_senhor_dos_aneis/model/formatter",
-    "ui5/o_senhor_dos_aneis/services/PersonagemService",
-    "ui5/o_senhor_dos_aneis/services/RacaService",
+    "ui5/o_senhor_dos_aneis/App/Personagem/PersonagemService",
+    "ui5/o_senhor_dos_aneis/App/Raca/RacaService",
   ],
   (
     BaseController,
@@ -21,7 +21,7 @@ sap.ui.define(
     const LISTA_VAZIA = 0;
 
     return BaseController.extend(
-      "ui5.o_senhor_dos_aneis.controller.ListaPersonagens",
+      "ui5.o_senhor_dos_aneis.App.Personagem.ListaPersonagens",
       {
         formatter: formatter,
 
@@ -168,7 +168,7 @@ sap.ui.define(
         async aoAbrirDialogoDeFiltro() {
           this.exibirEspera(async () => {
             this.oDialog ??= await this.loadFragment({
-              name: "ui5.o_senhor_dos_aneis.view.FilterPersonagensDialog",
+              name: "ui5.o_senhor_dos_aneis.App.Personagem.FilterPersonagensDialog",
             });
 
             this.oDialog.open();

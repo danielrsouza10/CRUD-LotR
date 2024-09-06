@@ -19,7 +19,7 @@ sap.ui.define(
   ) {
     "use strict";
 
-    const NOME_VIEW = "DetalhesRaca",
+    const NOME_VIEW = "Raca.DetalhesRaca",
       ID_PAGINA = "paginaDetalhesRaca",
       ID_LISTA_REGISTROS_FILHOS = "listaDePersonagens",
       ID_COMBOBOX_PROFISSAO = "profissaoComboBox",

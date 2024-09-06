@@ -9,7 +9,7 @@ sap.ui.define(
   function (Opa5, AggregationLengthEquals, Properties, Press, EnterText) {
     "use strict";
 
-    const NOME_VIEW = "ListaPersonagens",
+    const NOME_VIEW = "Personagem.ListaPersonagens",
       ID_PAGINA = "paginaListaDePersonagens",
       ID_LISTA = "listaDePersonagens",
       ID_SEARCH_FIELD = "searchFieldPersonagens",

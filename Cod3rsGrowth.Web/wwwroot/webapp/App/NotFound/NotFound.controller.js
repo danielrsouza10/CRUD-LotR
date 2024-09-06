@@ -1,6 +1,6 @@
 sap.ui.define(["../common/BaseController"], function (BaseController) {
   "use strict";
-  return BaseController.extend("ui5.o_senhor_dos_aneis.controller.NotFound", {
+  return BaseController.extend("ui5.o_senhor_dos_aneis.App.NotFound.NotFound", {
     onInit: function () {
       var oRouter, oTarget;
 

@@ -2,7 +2,7 @@
         xmlns:core="sap.ui.core"
         xmlns:mvc="sap.ui.core.mvc"
         height="100%"
-        controllerName="ui5.o_senhor_dos_aneis.controller.ListaRacas"
+        controllerName="ui5.o_senhor_dos_aneis.App.Raca.ListaRacas"
         xmlns="sap.m"
 >
     <Page

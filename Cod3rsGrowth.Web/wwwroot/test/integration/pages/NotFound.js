@@ -7,7 +7,7 @@ sap.ui.define(
   function (Opa5, Press, Properties) {
     "use strict";
 
-    const NOME_VIEW = "NotFound",
+    const NOME_VIEW = "NotFound.NotFound",
       ID_PAGINA_NOTFOUND = "paginaNotFound",
       TITULO_DA_PAGINA = "NotFound";
 
