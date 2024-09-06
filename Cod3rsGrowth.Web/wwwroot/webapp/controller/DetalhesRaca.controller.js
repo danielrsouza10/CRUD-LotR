@@ -42,10 +42,12 @@ sap.ui.define(
         },
 
         aoClicarBtnEditarRaca: function () {
-          const modelo = "raca",
-            rotaEditarRaca = "editarRaca",
-            idRacaSelecionada = this.getView().getModel(modelo).getData().id;
-          this.onNavTo(rotaEditarRaca, { id: idRacaSelecionada });
+          this.exibirEspera(async () => {
+            const modelo = "raca",
+              rotaEditarRaca = "editarRaca",
+              idRacaSelecionada = this.modelo(modelo).getData().id;
+            this.onNavTo(rotaEditarRaca, { id: idRacaSelecionada });
+          });
         },
 
         aoClicarBtnRemoverRaca: async function () {
@@ -55,30 +57,39 @@ sap.ui.define(
             titulo = this.obterTextoI18N(chaveI18NTitulo);
           const confirmacao = await this.criarDialogoDeAviso(titulo, mensagem);
           if (confirmacao) {
-            const idRaca = this.getView().getModel(MODELO_RACA).getData().id;
-            try {
-              await RacaService.removerRaca(idRaca);
-              const chaveI18NMensagem = "mensagemDeBoxDeSucessoDeRemocao",
-                chaveI18NTitulo = "tituloDeBoxDeSucesso",
-                mensagem = this.obterTextoI18N(chaveI18NMensagem),
-                titulo = this.obterTextoI18N(chaveI18NTitulo);
-              this.criarDialogoDeSucesso(mensagem, titulo);
-              const tempoParaVisualizarMensagem = 2000;
-              const rota = "listaDeRacas";
-              setTimeout(() => this.onNavTo(rota), tempoParaVisualizarMensagem);
-            } catch (erros) {
-              this._exibirErros(erros);
-            }
+            this.exibirEspera(async () => {
+              const idRaca = this.modelo(MODELO_RACA).getData().id;
+              try {
+                await RacaService.removerRaca(idRaca);
+                const chaveI18NMensagem = "mensagemDeBoxDeSucessoDeRemocao",
+                  chaveI18NTitulo = "tituloDeBoxDeSucesso",
+                  mensagem = this.obterTextoI18N(chaveI18NMensagem),
+                  titulo = this.obterTextoI18N(chaveI18NTitulo);
+                this.criarDialogoDeSucesso(mensagem, titulo);
+                const tempoParaVisualizarMensagem = 2000;
+                const rota = "listaDeRacas";
+                setTimeout(
+                  () => this.onNavTo(rota),
+                  tempoParaVisualizarMensagem
+                );
+              } catch (erros) {
+                this._exibirErros(erros);
+              }
+            });
           }
         },
 
         aoClicarBtnAdicionarPersonagem: function (oEvent) {
-          this._carregarModeloDeNovoPersonagem();
-          this._carregarModalDeCriacao();
+          this.exibirEspera(async () => {
+            this._carregarModalDeCriacao();
+            this._carregarModeloDeNovoPersonagem();
+          });
         },
 
         aoClicarBtnEditarPersonagem: function () {
-          this._carregarModalDeCriacao();
+          this.exibirEspera(async () => {
+            this._carregarModalDeCriacao();
+          });
         },
 
         aoClicarBtnRemoverPersonagem: async function () {
@@ -88,62 +99,66 @@ sap.ui.define(
             titulo = this.obterTextoI18N(chaveI18NTitulo);
           const confirmacao = await this.criarDialogoDeAviso(titulo, mensagem);
           if (confirmacao) {
-            const idPersonagem = this.getView()
-              .getModel(MODELO_PERSONAGEM)
-              .getData().id;
-            try {
-              await PersonagemService.removerPersonagem(idPersonagem);
-              const chaveI18NMensagem = "mensagemDeBoxDeSucessoDeRemocao",
-                chaveI18NTitulo = "tituloDeBoxDeSucesso",
-                mensagem = this.obterTextoI18N(chaveI18NMensagem),
-                titulo = this.obterTextoI18N(chaveI18NTitulo);
-              this.criarDialogoDeSucesso(mensagem, titulo);
-            } catch (erros) {
-              this._exibirErros(erros);
-            }
+            this.exibirEspera(async () => {
+              const idPersonagem = this.modelo(MODELO_PERSONAGEM).getData().id;
+              try {
+                await PersonagemService.removerPersonagem(idPersonagem);
+                const chaveI18NMensagem = "mensagemDeBoxDeSucessoDeRemocao",
+                  chaveI18NTitulo = "tituloDeBoxDeSucesso",
+                  mensagem = this.obterTextoI18N(chaveI18NMensagem),
+                  titulo = this.obterTextoI18N(chaveI18NTitulo);
+                this.criarDialogoDeSucesso(mensagem, titulo);
+              } catch (erros) {
+                this._exibirErros(erros);
+              }
+            });
           }
           await this._loadPersonagens();
         },
 
         aoSelecionarItemNaListaDePersonagem: function (oEvent) {
-          this._buscarDadosDoPersonagemSelecionadoNaLista(oEvent);
-          this._mostrarBotoesDeEditarERemoverPersonagem(true);
+          this.exibirEspera(async () => {
+            this._buscarDadosDoPersonagemSelecionadoNaLista(oEvent);
+            this._mostrarBotoesDeEditarERemoverPersonagem(true);
+          });
         },
 
         aoClicarBtnAdicionarNoModal: async function (oEvent) {
-          this._buscarDadosDoPersonagemNoModelo();
-          if (this._validarNovoPersonagem(this.personagem)) {
-            if (this.personagem.id) {
+          this.exibirEspera(async () => {
+            this._buscarDadosDoPersonagemNoModelo();
+            if (this._validarNovoPersonagem(this.personagem)) {
+              if (this.personagem.id) {
+                try {
+                  const personagemEditado =
+                    await PersonagemService.editarPersonagem(this.personagem);
+                  const chaveI18NMensagem = "mensagemDeBoxDeSucessoDeEdicao",
+                    chaveI18NTitulo = "tituloDeBoxDeSucesso",
+                    mensagem = this.obterTextoI18N(chaveI18NMensagem),
+                    titulo = this.obterTextoI18N(chaveI18NTitulo);
+                  this.criarDialogoDeSucesso(mensagem, titulo);
+                  this._limparInputs(oEvent);
+                  await this._loadPersonagens();
+                  return this.byId(ID_MODAL_CRIAR_PERSONAGEM).close();
+                } catch (erros) {
+                  return this._exibirErros(erros);
+                }
+              }
               try {
-                const personagemEditado =
-                  await PersonagemService.editarPersonagem(this.personagem);
-                const chaveI18NMensagem = "mensagemDeBoxDeSucessoDeEdicao",
+                const personagemCriado =
+                  await PersonagemService.adicionarPersonagem(this.personagem);
+                const chaveI18NMensagem = "mensagemDeBoxDeSucessoDeCriacao",
                   chaveI18NTitulo = "tituloDeBoxDeSucesso",
                   mensagem = this.obterTextoI18N(chaveI18NMensagem),
                   titulo = this.obterTextoI18N(chaveI18NTitulo);
                 this.criarDialogoDeSucesso(mensagem, titulo);
                 this._limparInputs(oEvent);
-
-                return this.byId(ID_MODAL_CRIAR_PERSONAGEM).close();
+                this.byId(ID_MODAL_CRIAR_PERSONAGEM).close();
               } catch (erros) {
-                return this._exibirErros(erros);
+                this._exibirErros(erros);
               }
             }
-            try {
-              const personagemCriado =
-                await PersonagemService.adicionarPersonagem(this.personagem);
-              const chaveI18NMensagem = "mensagemDeBoxDeSucessoDeCriacao",
-                chaveI18NTitulo = "tituloDeBoxDeSucesso",
-                mensagem = this.obterTextoI18N(chaveI18NMensagem),
-                titulo = this.obterTextoI18N(chaveI18NTitulo);
-              this.criarDialogoDeSucesso(mensagem, titulo);
-              this._limparInputs(oEvent);
-              this.byId(ID_MODAL_CRIAR_PERSONAGEM).close();
-            } catch (erros) {
-              this._exibirErros(erros);
-            }
-          }
-          await this._loadPersonagens();
+            await this._loadPersonagens();
+          });
         },
 
         aoClicarBtnCancelarNoModal: async function (oEvent) {
@@ -153,16 +168,16 @@ sap.ui.define(
             titulo = this.obterTextoI18N(chaveI18NTitulo);
           const confirmacao = await this.criarDialogoDeAviso(titulo, mensagem);
           if (confirmacao) {
-            this.byId(ID_MODAL_CRIAR_PERSONAGEM).close();
-            this._limparInputs(oEvent);
-            this._mostrarBotoesDeEditarERemoverPersonagem(false);
+            this.exibirEspera(async () => {
+              this.byId(ID_MODAL_CRIAR_PERSONAGEM).close();
+              this._limparInputs(oEvent);
+              this._mostrarBotoesDeEditarERemoverPersonagem(false);
+            });
           }
         },
 
         _carregarModalDeCriacao: async function () {
-          const modeloTemId = this.getView()
-            .getModel(MODELO_PERSONAGEM)
-            .getData().id;
+          const modeloTemId = this.modelo(MODELO_PERSONAGEM).getData().id;
 
           this.modalCriarPersonagem ??= await this.loadFragment({
             name: "ui5.o_senhor_dos_aneis.view.CriarPersonagensModal",
@@ -178,7 +193,7 @@ sap.ui.define(
         },
 
         _buscarDadosDoPersonagemNoModelo: function () {
-          const modelo = this.getView().getModel(MODELO_PERSONAGEM);
+          const modelo = this.modelo(MODELO_PERSONAGEM);
 
           const dadosDoModelo = modelo.getData();
           const condicao = 0;
@@ -215,10 +230,7 @@ sap.ui.define(
             idade: parseInt(personagemSelecionado.idade),
           };
 
-          this.getView().setModel(
-            new JSONModel(personagemSelecionado),
-            MODELO_PERSONAGEM
-          );
+          this.modelo(MODELO_PERSONAGEM, new JSONModel(personagemSelecionado));
         },
 
         _carregarDados: async function (oEvent) {
@@ -233,7 +245,7 @@ sap.ui.define(
             const raca = await RacaService.obterRaca(idRaca);
             const modelo = new JSONModel(raca);
 
-            this.getView().setModel(modelo, MODELO_RACA);
+            this.modelo(MODELO_RACA, modelo);
           } catch (erros) {
             const rotaNotFound = "notFound";
             this.onNavTo(rotaNotFound, this);
@@ -250,7 +262,7 @@ sap.ui.define(
             );
             const modelo = new JSONModel(personagens);
 
-            this.getView().setModel(modelo, MODELO_PERSONAGENS);
+            this.modelo(MODELO_PERSONAGENS, modelo);
           } catch (erros) {
             this._exibirErros(erros);
           }
@@ -269,14 +281,14 @@ sap.ui.define(
             estaVivo: condicaoInicial,
           });
 
-          this.getView().setModel(modelo, MODELO_PERSONAGEM);
+          this.modelo(MODELO_PERSONAGEM, modelo);
         },
 
         _carregarModeloDeNovoPersonagem: function () {
           const stringVazia = "";
           const condicaoInicial = 0;
 
-          const modeloRaca = this.getView().getModel(MODELO_RACA);
+          const modeloRaca = this.modelo(MODELO_RACA);
           const idRaca = modeloRaca.getProperty("/id");
 
           const modelo = new JSONModel({
@@ -288,7 +300,7 @@ sap.ui.define(
             estaVivo: condicaoInicial,
           });
 
-          this.getView().setModel(modelo, MODELO_PERSONAGEM);
+          this.modelo(MODELO_PERSONAGEM, modelo);
         },
 
         _limparInputs: function (oEvent) {
@@ -297,7 +309,7 @@ sap.ui.define(
           const condicaoInicial = 0;
           const valueStatePadrao = "None";
 
-          const modeloRaca = this.getView().getModel(MODELO_RACA);
+          const modeloRaca = this.modelo(MODELO_RACA);
           const idRaca = modeloRaca.getProperty("/id");
 
           const modelo = new JSONModel({
@@ -308,7 +320,7 @@ sap.ui.define(
             idade: stringVazia,
             estaVivo: condicaoInicial,
           });
-          this.getView().setModel(modelo, MODELO_PERSONAGEM);
+          this.modelo(MODELO_PERSONAGEM, modelo);
 
           this.byId(ID_INPUT_NOME).setValueState(valueStatePadrao);
           this.byId(ID_COMBOBOX_PROFISSAO).setSelectedIndex(profissaoInicial);
@@ -353,7 +365,7 @@ sap.ui.define(
         },
         _loadPersonagens: async function () {
           try {
-            const idRaca = this.getView().getModel(MODELO_RACA).getData().id;
+            const idRaca = this.modelo(MODELO_RACA).getData().id;
             const raca = await RacaService.obterRaca(idRaca);
             this.filtros.nomeDaRaca = raca.nome;
             const personagens = await PersonagemService.obterTodos(
@@ -361,7 +373,7 @@ sap.ui.define(
             );
 
             const modeloPersonagens = new JSONModel(personagens);
-            this.getView().setModel(modeloPersonagens, MODELO_PERSONAGENS);
+            this.modelo(MODELO_PERSONAGENS, modeloPersonagens);
           } catch (erros) {
             this._exibirErros(erros);
           }

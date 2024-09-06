@@ -30,32 +30,36 @@ sap.ui.define(
         },
 
         loadRacas: async function () {
-          const racas = await RacaService.obterTodos(this.filtros);
-          const modelo = new JSONModel(racas);
-          const modeloRaca = "racas";
+          this.exibirEspera(async () => {
+            const racas = await RacaService.obterTodos(this.filtros);
+            const modelo = new JSONModel(racas);
+            const modeloRaca = "racas";
 
-          this.getView().setModel(modelo, modeloRaca);
+            this.modelo(modeloRaca, modelo);
+          });
         },
 
         aoCriarPersonagem: async function () {
-          this._pegarValoresDoPersonagemNaTela();
+          this.exibirEspera(async () => {
+            this._pegarValoresDoPersonagemNaTela();
 
-          if (this._validarNovoPersonagem(this.personagem)) {
-            try {
-              const personagemCriado =
-                await PersonagemService.adicionarPersonagem(this.personagem);
-              const chaveI18NMensagem = "mensagemDeBoxDeSucessoDeCriacao",
-                chaveI18NTitulo = "tituloDeBoxDeSucesso",
-                mensagem = this.obterTextoI18N(chaveI18NMensagem),
-                titulo = this.obterTextoI18N(chaveI18NTitulo);
-              this.criarDialogoDeSucesso(mensagem, titulo);
-              this._limparInputs();
-              const tempoParaVisualizarMensagem = 2000;
-              setTimeout(() => this.onNavBack(), tempoParaVisualizarMensagem);
-            } catch (erros) {
-              this._exibirErros(erros);
+            if (this._validarNovoPersonagem(this.personagem)) {
+              try {
+                const personagemCriado =
+                  await PersonagemService.adicionarPersonagem(this.personagem);
+                const chaveI18NMensagem = "mensagemDeBoxDeSucessoDeCriacao",
+                  chaveI18NTitulo = "tituloDeBoxDeSucesso",
+                  mensagem = this.obterTextoI18N(chaveI18NMensagem),
+                  titulo = this.obterTextoI18N(chaveI18NTitulo);
+                this.criarDialogoDeSucesso(mensagem, titulo);
+                this._limparInputs();
+                const tempoParaVisualizarMensagem = 2000;
+                setTimeout(() => this.onNavBack(), tempoParaVisualizarMensagem);
+              } catch (erros) {
+                this._exibirErros(erros);
+              }
             }
-          }
+          });
         },
 
         onNavToListaDePersonagens: function () {

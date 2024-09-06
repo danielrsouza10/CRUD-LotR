@@ -42,41 +42,45 @@ sap.ui.define(
         },
 
         aoMudarNome: function (oEvent) {
-          this._aoMudarInput(oEvent, this._validarNome.bind(this));
+          this.exibirEspera(async () => {
+            this._aoMudarInput(oEvent, this._validarNome.bind(this));
+          });
         },
 
         aoCriarRaca: async function (oEvent) {
-          this._pegarValoresDaRacaNaTela();
-          if (!this.modoEditar) {
+          this.exibirEspera(async () => {
+            this._pegarValoresDaRacaNaTela();
+            if (!this.modoEditar) {
+              if (this._validarNovaRaca(this.raca)) {
+                try {
+                  const racaCriada = await RacaService.adicionarRaca(this.raca);
+                  const chaveI18NMensagem = "mensagemDeBoxDeSucessoDeCriacao",
+                    chaveI18NTitulo = "tituloDeBoxDeSucesso",
+                    mensagem = this.obterTextoI18N(chaveI18NMensagem),
+                    titulo = this.obterTextoI18N(chaveI18NTitulo);
+                  this.criarDialogoDeSucesso(mensagem, titulo);
+                  this._limparInputs();
+                  this.onNavToListaDeRacas();
+                } catch (erros) {
+                  this._exibirErros(erros);
+                }
+              }
+              return;
+            }
             if (this._validarNovaRaca(this.raca)) {
               try {
-                const racaCriada = await RacaService.adicionarRaca(this.raca);
-                const chaveI18NMensagem = "mensagemDeBoxDeSucessoDeCriacao",
+                const racaEditada = await RacaService.editarRaca(this.raca);
+                const chaveI18NMensagem = "mensagemDeBoxDeSucessoDeEdicao",
                   chaveI18NTitulo = "tituloDeBoxDeSucesso",
                   mensagem = this.obterTextoI18N(chaveI18NMensagem),
                   titulo = this.obterTextoI18N(chaveI18NTitulo);
                 this.criarDialogoDeSucesso(mensagem, titulo);
                 this._limparInputs();
-                this.onNavToListaDeRacas();
               } catch (erros) {
                 this._exibirErros(erros);
               }
             }
-            return;
-          }
-          if (this._validarNovaRaca(this.raca)) {
-            try {
-              const racaEditada = await RacaService.editarRaca(this.raca);
-              const chaveI18NMensagem = "mensagemDeBoxDeSucessoDeEdicao",
-                chaveI18NTitulo = "tituloDeBoxDeSucesso",
-                mensagem = this.obterTextoI18N(chaveI18NMensagem),
-                titulo = this.obterTextoI18N(chaveI18NTitulo);
-              this.criarDialogoDeSucesso(mensagem, titulo);
-              this._limparInputs();
-            } catch (erros) {
-              this._exibirErros(erros);
-            }
-          }
+          });
         },
 
         onNavToListaDeRacas: function () {
@@ -91,7 +95,7 @@ sap.ui.define(
               const raca = await RacaService.obterRaca(idRaca);
               const modelo = new JSONModel(raca);
 
-              this.getView().setModel(modelo, MODELO_RACA);
+              this.modelo(MODELO_RACA, modelo);
             } catch (erros) {
               this._exibirErros(erros);
             }
@@ -153,7 +157,7 @@ sap.ui.define(
         },
 
         _pegarValoresDaRacaNaTela: function () {
-          const modelo = this.getView().getModel("raca");
+          const modelo = this.modelo("raca");
 
           const dadosDoModelo = modelo.getData();
           const condicaoExtinta = 0;
@@ -182,7 +186,7 @@ sap.ui.define(
             localizacaoGeografica: stringVazia,
             habilidadeRacial: stringVazia,
           });
-          this.getView().setModel(modelo, MODELO_RACA);
+          this.modelo(MODELO_RACA, modelo);
 
           this.byId(ID_INPUT_NOME).setValueState(valueStatePadrao);
           this.byId(ID_RADIO_BTN_EXTINTAOUNAO).setSelectedIndex(

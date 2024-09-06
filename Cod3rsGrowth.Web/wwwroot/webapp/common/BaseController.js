@@ -3,9 +3,10 @@ sap.ui.define(
     "sap/ui/core/mvc/Controller",
     "sap/ui/core/routing/History",
     "sap/ui/core/UIComponent",
+    "sap/ui/core/BusyIndicator",
     "sap/m/MessageBox",
   ],
-  function (Controller, History, UIComponent, MessageBox) {
+  function (Controller, History, UIComponent, BusyIndicator, MessageBox) {
     "use strict";
     this.errosDeValidacao = {};
 
@@ -45,8 +46,28 @@ sap.ui.define(
         this.getRouter().navTo(rota, parametros);
       },
 
+      modelo: function (nome, modelo) {
+        if (modelo) {
+          this.getView().setModel(modelo, nome);
+        } else {
+          return this.getView().getModel(nome);
+        }
+      },
+
+      exibirEspera: async function (funcao) {
+        BusyIndicator.show();
+
+        return Promise.resolve(funcao())
+          .catch((erros) => {
+            this._exibirErros(erros);
+          })
+          .finally(() => {
+            BusyIndicator.hide();
+          });
+      },
+
       obterTextoI18N: function (chave) {
-        const oBundle = this.getView().getModel("i18n").getResourceBundle();
+        const oBundle = this.modelo("i18n").getResourceBundle();
         return oBundle.getText(chave);
       },
 
