@@ -23,7 +23,9 @@ sap.ui.define(
       ID_MODAL_CRIAR_PERSONAGEM = "modalCriarPersonagem",
       MODELO_PERSONAGENS = "personagens",
       MODELO_PERSONAGEM = "personagem",
-      MODELO_RACA = "raca";
+      MODELO_RACA = "raca",
+      ARGUMENTS = "arguments",
+      PROPRIEDADE_ID = "/id";
 
     return BaseController.extend(
       "ui5.o_senhor_dos_aneis.App.Raca.DetalhesRaca",
@@ -192,9 +194,11 @@ sap.ui.define(
 
         _carregarModalDeCriacao: async function () {
           const modeloTemId = this.modelo(MODELO_PERSONAGEM).getData().id;
+          const pathDoFragmento =
+            "ui5.o_senhor_dos_aneis.App.Personagem.CriarPersonagensModal";
 
           this.modalCriarPersonagem ??= await this.loadFragment({
-            name: "ui5.o_senhor_dos_aneis.App.Personagem.CriarPersonagensModal",
+            name: pathDoFragmento,
           });
 
           if (modeloTemId) {
@@ -231,10 +235,11 @@ sap.ui.define(
         },
 
         _buscarDadosDoPersonagemSelecionadoNaLista: function (dados) {
-          const personagemSelecionado = dados
-            .getSource()
-            .getBindingContext("personagens")
-            .getObject();
+          const contexto = "personagens",
+            personagemSelecionado = dados
+              .getSource()
+              .getBindingContext(contexto)
+              .getObject();
 
           this.personagem = {
             nome: personagemSelecionado.nome,
@@ -255,7 +260,7 @@ sap.ui.define(
 
         _carregarDadosDaRaca: async function (oEvent) {
           try {
-            const idRaca = oEvent.getParameter("arguments").id;
+            const idRaca = oEvent.getParameter(ARGUMENTS).id;
             const raca = await RacaService.obterRaca(idRaca);
             const modelo = new JSONModel(raca);
 
@@ -268,7 +273,7 @@ sap.ui.define(
 
         _carregarListaDePersonagens: async function (oEvent) {
           try {
-            const idRaca = oEvent.getParameter("arguments").id;
+            const idRaca = oEvent.getParameter(ARGUMENTS).id;
             const raca = await RacaService.obterRaca(idRaca);
             this.filtros.nomeDaRaca = raca.nome;
             const personagens = await PersonagemService.obterTodos(
@@ -288,7 +293,7 @@ sap.ui.define(
 
           const modelo = new JSONModel({
             nome: stringVazia,
-            idRaca: oEvent.getParameter("arguments").id,
+            idRaca: oEvent.getParameter(ARGUMENTS).id,
             profissao: stringVazia,
             altura: stringVazia,
             idade: stringVazia,
@@ -301,9 +306,10 @@ sap.ui.define(
         _carregarModeloDeNovoPersonagem: function () {
           const stringVazia = "";
           const condicaoInicial = 0;
+          
 
           const modeloRaca = this.modelo(MODELO_RACA);
-          const idRaca = modeloRaca.getProperty("/id");
+          const idRaca = modeloRaca.getProperty(PROPRIEDADE_ID);
 
           const modelo = new JSONModel({
             nome: stringVazia,
@@ -324,7 +330,7 @@ sap.ui.define(
           const valueStatePadrao = "None";
 
           const modeloRaca = this.modelo(MODELO_RACA);
-          const idRaca = modeloRaca.getProperty("/id");
+          const idRaca = modeloRaca.getProperty(PROPRIEDADE_ID);
 
           const modelo = new JSONModel({
             nome: stringVazia,

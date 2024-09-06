@@ -158,9 +158,10 @@ sap.ui.define(
 
         aoResetarFiltros: function () {
           this.exibirEspera(async () => {
-            const stringVazia = "";
+            const stringVazia = "",
+              idSearchField = "searchFieldPersonagens";
             this.filtros = {};
-            this.byId("searchFieldPersonagens").setValue(stringVazia);
+            this.byId(idSearchField).setValue(stringVazia);
             this.loadPersonagens();
           });
         },
@@ -176,27 +177,36 @@ sap.ui.define(
         },
 
         aoFecharDialogoDeFiltro: function () {
+          const idFilterDialog = "filterDialog";
           this.exibirEspera(async () => {
             this.loadPersonagens();
-            this.byId("filterDialog").close();
+            this.byId(idFilterDialog).close();
           });
         },
 
         aoOrganizar: function () {
+          const idListaDePersonagens = "listaDePersonagens",
+            propriedade = "items",
+            propriedadeOrdenada = "nome";
           this.exibirEspera(async () => {
-            var lista = this.byId("listaDePersonagens");
-            var binding = lista.getBinding("items");
-            var sorter = new Sorter("nome");
+            var lista = this.byId(idListaDePersonagens);
+            var binding = lista.getBinding(propriedade);
+            var sorter = new Sorter(propriedadeOrdenada);
             binding.sort(sorter);
           });
         },
 
         aoAgrupar: function () {
+          const idListaDePersonagens = "listaDePersonagens",
+            propriedade = "items",
+            propriedadeOrdenada = "raca";
           this.exibirEspera(async () => {
-            var lista = this.byId("listaDePersonagens");
-            var binding = lista.getBinding("items");
-            var sorter = new Sorter("raca", false, function (contexto) {
-              var raca = contexto.getProperty("raca");
+            var lista = this.byId(idListaDePersonagens);
+            var binding = lista.getBinding(propriedade);
+            var sorter = new Sorter(propriedadeOrdenada, false, function (
+              contexto
+            ) {
+              var raca = contexto.getProperty(propriedadeOrdenada);
               return {
                 key: raca,
                 text: raca,

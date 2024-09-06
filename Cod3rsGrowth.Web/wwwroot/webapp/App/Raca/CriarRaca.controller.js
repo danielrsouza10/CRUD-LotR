@@ -88,9 +88,10 @@ sap.ui.define(
       },
 
       _carregarDadosDaRacaSelecionada: async function (oEvent) {
-        if (oEvent.getParameter("arguments").id) {
+        const argumentos = "arguments";
+        if (oEvent.getParameter(argumentos).id) {
           try {
-            const idRaca = oEvent.getParameter("arguments").id;
+            const idRaca = oEvent.getParameter(argumentos).id;
             const raca = await RacaService.obterRaca(idRaca);
             const modelo = new JSONModel(raca);
 
@@ -136,9 +137,13 @@ sap.ui.define(
       },
 
       _aoMudarInput: function (oEvent, funcaoDeValidacao) {
-        const objeto = oEvent.getSource();
-        const nomeInserido = objeto.getValue();
-        let valueState = funcaoDeValidacao(nomeInserido) ? "Success" : "Error";
+        const objeto = oEvent.getSource(),
+          nomeInserido = objeto.getValue(),
+          valueStateSucesso = "Success",
+          valueStateErro = "Error";
+        let valueState = funcaoDeValidacao(nomeInserido)
+          ? valueStateSucesso
+          : valueStateErro;
         objeto.setValueState(valueState);
       },
 
@@ -154,7 +159,8 @@ sap.ui.define(
       },
 
       _pegarValoresDaRacaNaTela: function () {
-        const modelo = this.modelo("raca");
+        const nomeDoModelo = "raca";
+        const modelo = this.modelo(nomeDoModelo);
 
         const dadosDoModelo = modelo.getData();
         const condicaoExtinta = 0;

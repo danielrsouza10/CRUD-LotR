@@ -43,18 +43,22 @@ sap.ui.define(
       },
       aoSelecionarRacaNaLista: function (oEvent) {
         this.exibirEspera(async () => {
-          const idRacaSelecionada = oEvent
-            .getSource()
-            .getBindingContext("racas")
-            .getProperty("id");
-          const rotaDetalhesRaca = "detalhesRaca";
+          const rotaDetalhesRaca = "detalhesRaca",
+            contexto = "racas",
+            propriedade = "id",
+            idRacaSelecionada = oEvent
+              .getSource()
+              .getBindingContext(contexto)
+              .getProperty(propriedade);
+
           this.onNavTo(rotaDetalhesRaca, { id: idRacaSelecionada });
         });
       },
 
       aoFiltrarRacas: function (oEvent) {
+        const parametro = "query";
         this.exibirEspera(async () => {
-          const filtroRaca = oEvent.getParameter("query");
+          const filtroRaca = oEvent.getParameter(parametro);
           if (filtroRaca) {
             this.filtros.nomeDaRaca = filtroRaca;
           } else {
@@ -65,8 +69,9 @@ sap.ui.define(
       },
 
       aoChecarExtinta: function (oEvent) {
+        const parametro = "selected";
         this.exibirEspera(async () => {
-          var filtroExtinta = oEvent.getParameter("selected");
+          var filtroExtinta = oEvent.getParameter(parametro);
           if (filtroExtinta) {
             this.filtros.estaExtinta = true;
             return this.loadRacas();

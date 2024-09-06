@@ -10,7 +10,8 @@ sap.ui.define(["sap/m/MessageBox"], function (MessageBox) {
           actions: [MessageBox.Action.YES, MessageBox.Action.NO],
           emphasizedAction: "YES",
           onClose: function (acao) {
-            if (acao === "YES") {
+            const confirmacao = "YES";
+            if (acao === confirmacao) {
               resolve(true);
             } else {
               resolve(false);

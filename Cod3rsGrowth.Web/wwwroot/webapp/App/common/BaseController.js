@@ -38,7 +38,8 @@ sap.ui.define(
         ) {
           window.history.go(-1);
         } else {
-          this.getRouter().navTo("appHome", {});
+          const rota = "appHome";
+          this.getRouter().navTo(rota, {});
         }
       },
 
