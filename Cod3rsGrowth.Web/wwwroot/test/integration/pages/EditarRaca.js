@@ -9,8 +9,8 @@ sap.ui.define(
   function (Opa5, Press, EnterText, PropertyStrictEquals, I18NText) {
     "use strict";
 
-    const NOME_VIEW = "CriarRaca",
-      NOME_VIEW_HOME = "Home",
+    const NOME_VIEW = "Raca.CriarRaca",
+      NOME_VIEW_HOME = "Home.Home",
       ID_PAGINA = "paginaCriarRaca",
       ID_INPUT_NOME = "inputNome",
       ID_INPUT_LOCALIZACAO_GEOGRAFICA = "inputLocalizacaoGeografica",

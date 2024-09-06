@@ -17,7 +17,7 @@ sap.ui.define(
   ) {
     "use strict";
 
-    const NOME_VIEW = "ListaRacas",
+    const NOME_VIEW = "Raca.ListaRacas",
       ID_PAGINA = "paginaListaDeRacas",
       ID_LISTA = "listaDeRacas",
       ID_ITEM_LIST = "customListItemRaca",

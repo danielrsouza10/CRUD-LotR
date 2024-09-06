@@ -20,7 +20,7 @@
   },
   "sap.ui5": {
     "rootView": {
-      "viewName": "ui5.o_senhor_dos_aneis.view.App",
+      "viewName": "ui5.o_senhor_dos_aneis.App.App",
       "type": "XML",
       "id": "app"
     },
@@ -49,7 +49,7 @@
         "routerClass": "sap.m.routing.Router",
         "type": "View",
         "viewType": "XML",
-        "path": "ui5.o_senhor_dos_aneis.view",
+        "path": "ui5.o_senhor_dos_aneis.App",
         "controlId": "app",
         "controlAggregation": "pages",
         "transition": "slide",
@@ -103,41 +103,43 @@
       "targets": {
         "home": {
           "id": "home",
+          "path": "ui5.o_senhor_dos_aneis.App.Home",
           "name": "Home",
           "level": 1
         },
         "notFound": {
           "id": "notFound",
+          "path": "ui5.o_senhor_dos_aneis.App.NotFound",
           "name": "NotFound",
           "transition": "show"
         },
         "personagens": {
           "id": "listaDePersonagens",
-          "path": "ui5.o_senhor_dos_aneis.view",
+          "path": "ui5.o_senhor_dos_aneis.App.Personagem",
           "name": "ListaPersonagens",
           "level": "2"
         },
         "racas": {
           "id": "listaDeRacas",
-          "path": "ui5.o_senhor_dos_aneis.view",
+          "path": "ui5.o_senhor_dos_aneis.App.Raca",
           "name": "ListaRacas",
           "level": "2"
         },
         "criarPersonagem": {
           "id": "criarPersonagem",
-          "path": "ui5.o_senhor_dos_aneis.view",
+          "path": "ui5.o_senhor_dos_aneis.App.Personagem",
           "name": "CriarPersonagem",
           "level": "3"
         },
         "criarRaca": {
           "id": "criarRaca",
-          "path": "ui5.o_senhor_dos_aneis.view",
+          "path": "ui5.o_senhor_dos_aneis.App.Raca",
           "name": "CriarRaca",
           "level": "3"
         },
         "detalhesRaca": {
           "id": "detalhesRaca",
-          "path": "ui5.o_senhor_dos_aneis.view",
+          "path": "ui5.o_senhor_dos_aneis.App.Raca",
           "name": "DetalhesRaca",
           "level": "3"
         }

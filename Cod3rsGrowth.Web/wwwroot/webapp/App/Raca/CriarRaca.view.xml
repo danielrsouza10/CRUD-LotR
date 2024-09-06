@@ -1,6 +1,6 @@
 <mvc:View
     xmlns:mvc="sap.ui.core.mvc"
-    controllerName="ui5.o_senhor_dos_aneis.controller.CriarRaca"
+    controllerName="ui5.o_senhor_dos_aneis.App.Raca.CriarRaca"
     xmlns="sap.m"
 >
     <Page

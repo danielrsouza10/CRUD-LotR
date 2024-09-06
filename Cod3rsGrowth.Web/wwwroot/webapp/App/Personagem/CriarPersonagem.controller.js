@@ -1,17 +1,17 @@
 sap.ui.define(
   [
-    "../controller/BaseController",
+    "../common/BaseController",
     "sap/ui/model/json/JSONModel",
-    "ui5/o_senhor_dos_aneis/services/RacaService",
-    "ui5/o_senhor_dos_aneis/services/PersonagemService",
-    "sap/m/MessageBox",
+    "ui5/o_senhor_dos_aneis/App/Raca/RacaService",
+    "ui5/o_senhor_dos_aneis/App/Personagem/PersonagemService",
+    "ui5/o_senhor_dos_aneis/App/common/Dialogs",
   ],
   function (
     BaseController,
     JSONModel,
     RacaService,
     PersonagemService,
-    MessageBox
+    Dialogs
   ) {
     "use strict";
     const ID_INPUT_NOME = "inputNome",
@@ -21,7 +21,7 @@ sap.ui.define(
       ID_INPUT_ALTURA = "inputAltura",
       ID_RADIO_BTN_VIVOMORTO = "radioBtnVivoMorto";
     return BaseController.extend(
-      "ui5.o_senhor_dos_aneis.controller.CriarPersonagem",
+      "ui5.o_senhor_dos_aneis.App.Personagem.CriarPersonagem",
       {
         onInit: function () {
           const rota = "criarPersonagem";
@@ -37,33 +37,36 @@ sap.ui.define(
         },
 
         loadRacas: async function () {
-          const racas = await RacaService.obterTodos(this.filtros);
-          const modelo = new JSONModel(racas);
-          const modeloRaca = "racas";
+          this.exibirEspera(async () => {
+            const racas = await RacaService.obterTodos(this.filtros);
+            const modelo = new JSONModel(racas);
+            const modeloRaca = "racas";
 
-          this.getView().setModel(modelo, modeloRaca);
+            this.modelo(modeloRaca, modelo);
+          });
         },
 
-        aoCriarPersonagem: async function (oEvent) {
-          this._pegarValoresDoPersonagemNaTela();
+        aoCriarPersonagem: async function () {
+          this.exibirEspera(async () => {
+            this._pegarValoresDoPersonagemNaTela();
 
-          if (this._validarNovoPersonagem(this.personagem)) {
-            try {
-              const personagemCriado =
-                await PersonagemService.adicionarPersonagem(this.personagem);
-              const mensagemDeSucesso = "Personagem adicionado com sucesso!";
-              MessageBox.show(mensagemDeSucesso, {
-                icon: sap.m.MessageBox.Icon.SUCCESS,
-                title: "Sucesso",
-                dependentOn: this.getView(),
-              });
-              this._limparInputs();
-              const tempoParaVisualizarMensagem = 2000;
-              setTimeout(() => this.onNavBack(), tempoParaVisualizarMensagem);
-            } catch (erros) {
-              this._exibirErros(erros);
+            if (this._validarNovoPersonagem(this.personagem)) {
+              try {
+                const personagemCriado =
+                  await PersonagemService.adicionarPersonagem(this.personagem);
+                const chaveI18NMensagem = "mensagemDeBoxDeSucessoDeCriacao",
+                  chaveI18NTitulo = "tituloDeBoxDeSucesso",
+                  mensagem = this.obterTextoI18N(chaveI18NMensagem),
+                  titulo = this.obterTextoI18N(chaveI18NTitulo);
+                Dialogs.criarDialogoDeSucesso(mensagem, titulo, this);
+                this._limparInputs();
+                const tempoParaVisualizarMensagem = 2000;
+                setTimeout(() => this.onNavBack(), tempoParaVisualizarMensagem);
+              } catch (erros) {
+                this._exibirErros(erros);
+              }
             }
-          }
+          });
         },
 
         onNavToListaDePersonagens: function () {

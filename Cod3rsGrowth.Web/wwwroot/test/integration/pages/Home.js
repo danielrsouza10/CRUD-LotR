@@ -7,7 +7,7 @@ sap.ui.define(
   function (Opa5, Press, Properties) {
     "use strict";
 
-    const NOME_VIEW = "Home",
+    const NOME_VIEW = "Home.Home",
       ID_PAGINA_HOME = "paginaHome",
       ID_BTN_LISTA_PERSONAGENS = "personagensListBtn",
       ID_BTN_LISTA_RACAS = "racasListBtn",

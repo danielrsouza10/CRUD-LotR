@@ -19,7 +19,7 @@ sap.ui.define(
   ) {
     "use strict";
 
-    const NOME_VIEW = "DetalhesRaca",
+    const NOME_VIEW = "Raca.DetalhesRaca",
       ID_PAGINA = "paginaDetalhesRaca",
       ID_LISTA_REGISTROS_FILHOS = "listaDePersonagens",
       ID_COMBOBOX_PROFISSAO = "profissaoComboBox",
@@ -379,9 +379,9 @@ sap.ui.define(
             return this.waitFor({
               searchOpenDialogs: true,
               controlType: "sap.m.Dialog",
-              matchers: new PropertyStrictEquals({
-                name: "title",
-                value: "Excluir registro",
+              matchers: new I18NText({
+                propertyName: "title",
+                key: "tituloDeBoxDeAdvertencia",
               }),
               success: function () {
                 Opa5.assert.ok(
@@ -439,9 +439,9 @@ sap.ui.define(
             return this.waitFor({
               searchOpenDialogs: true,
               controlType: "sap.m.Dialog",
-              matchers: new PropertyStrictEquals({
-                name: "title",
-                value: "Criar Personagem",
+              matchers: new I18NText({
+                propertyName: "title",
+                key: "TituloModalCriarPersonagem",
               }),
               success: function () {
                 Opa5.assert.ok(
@@ -457,9 +457,9 @@ sap.ui.define(
             return this.waitFor({
               searchOpenDialogs: true,
               controlType: "sap.m.Dialog",
-              matchers: new PropertyStrictEquals({
-                name: "title",
-                value: "Editar Personagem",
+              matchers: new I18NText({
+                propertyName: "title",
+                key: "TituloModalEditarPersonagem",
               }),
               success: function () {
                 Opa5.assert.ok(
@@ -475,9 +475,9 @@ sap.ui.define(
             return this.waitFor({
               searchOpenDialogs: true,
               controlType: "sap.m.Dialog",
-              matchers: new PropertyStrictEquals({
-                name: "title",
-                value: "Erro ao criar registro",
+              matchers: new I18NText({
+                propertyName: "title",
+                key: "tituloDeBoxDeErroDeCriacao",
               }),
               success: function () {
                 Opa5.assert.ok(
@@ -509,9 +509,9 @@ sap.ui.define(
             return this.waitFor({
               searchOpenDialogs: true,
               controlType: "sap.m.Dialog",
-              matchers: new PropertyStrictEquals({
-                name: "title",
-                value: "Editar Personagem",
+              matchers: new I18NText({
+                propertyName: "title",
+                key: "TituloModalEditarPersonagem",
               }),
               success: function () {
                 Opa5.assert.ok(
