@@ -114,6 +114,7 @@ sap.ui.define(
               .toISOString();
             if (filtroDataInicial) {
               this.filtros.dataInicial = filtroDataInicial;
+              debugger;
             } else {
               delete this.filtros.dataInicial;
             }
@@ -179,6 +180,7 @@ sap.ui.define(
         aoFecharDialogoDeFiltro: function () {
           const idFilterDialog = "filterDialog";
           this.exibirEspera(async () => {
+            debugger;
             this.loadPersonagens();
             this.byId(idFilterDialog).close();
           });
