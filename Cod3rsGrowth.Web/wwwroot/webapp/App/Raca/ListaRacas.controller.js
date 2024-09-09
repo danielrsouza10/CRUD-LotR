@@ -37,7 +37,6 @@ sap.ui.define(
           const racas = await RacaService.obterTodos(this.filtros);
           const modelo = new JSONModel(racas);
           const modeloRaca = "racas";
-
           this.modelo(modeloRaca, modelo);
         });
       },

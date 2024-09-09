@@ -75,6 +75,7 @@ sap.ui.define(
                 titulo = this.obterTextoI18N(chaveI18NTitulo);
               Dialogs.criarDialogoDeSucesso(mensagem, titulo, this);
               this._limparInputs();
+              this.onNavToListaDeRacas();
             } catch (erros) {
               this._exibirErros(erros);
             }

@@ -120,6 +120,7 @@ sap.ui.define(
                   mensagem = this.obterTextoI18N(chaveI18NMensagem),
                   titulo = this.obterTextoI18N(chaveI18NTitulo);
                 Dialogs.criarDialogoDeSucesso(mensagem, titulo, this);
+                this._mostrarBotoesDeEditarERemoverPersonagem(false);
               } catch (erros) {
                 this._exibirErros(erros);
               }
@@ -149,6 +150,7 @@ sap.ui.define(
                     titulo = this.obterTextoI18N(chaveI18NTitulo);
                   Dialogs.criarDialogoDeSucesso(mensagem, titulo, this);
                   this._limparInputs(oEvent);
+                  this._mostrarBotoesDeEditarERemoverPersonagem(false);
                   await this._loadPersonagens();
                   return this.byId(ID_MODAL_CRIAR_PERSONAGEM).close();
                 } catch (erros) {
@@ -164,6 +166,7 @@ sap.ui.define(
                   titulo = this.obterTextoI18N(chaveI18NTitulo);
                 Dialogs.criarDialogoDeSucesso(mensagem, titulo, this);
                 this._limparInputs(oEvent);
+                this._mostrarBotoesDeEditarERemoverPersonagem(false);
                 this.byId(ID_MODAL_CRIAR_PERSONAGEM).close();
               } catch (erros) {
                 this._exibirErros(erros);
@@ -306,7 +309,6 @@ sap.ui.define(
         _carregarModeloDeNovoPersonagem: function () {
           const stringVazia = "";
           const condicaoInicial = 0;
-          
 
           const modeloRaca = this.modelo(MODELO_RACA);
           const idRaca = modeloRaca.getProperty(PROPRIEDADE_ID);
