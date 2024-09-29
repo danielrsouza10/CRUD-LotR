@@ -113,8 +113,8 @@ namespace Forms.Forms
         {
             Personagem novoPersonagem = new Personagem();
             novoPersonagem.Nome = boxNome.Text;
-            _filtro.Nome = boxRacas.Text;
-            novoPersonagem.IdRaca = _servicoRaca.ObterTodos(_filtro).FirstOrDefault(r => r.Nome == _filtro.Nome).Id;
+            _filtro.NomeDaRaca = boxRacas.Text;
+            novoPersonagem.IdRaca = _servicoRaca.ObterTodos(_filtro).FirstOrDefault(r => r.Nome == _filtro.NomeDaRaca).Id;
             novoPersonagem.Profissao = (ProfissaoEnum)Enum.Parse(typeof(ProfissaoEnum), boxProfissao.Text);
             novoPersonagem.Altura = (float)boxAltura.Value;
             novoPersonagem.Idade = (int)boxIdade.Value;
@@ -124,8 +124,8 @@ namespace Forms.Forms
         public void EditarPersonagem()
         {
             _personagem.Nome = boxNome.Text;
-            _filtro.Nome = boxRacas.Text;
-            _personagem.IdRaca = _servicoRaca.ObterTodos(_filtro).FirstOrDefault(r => r.Nome == _filtro.Nome).Id;
+            _filtro.NomeDaRaca = boxRacas.Text;
+            _personagem.IdRaca = _servicoRaca.ObterTodos(_filtro).FirstOrDefault(r => r.Nome == _filtro.NomeDaRaca).Id;
             _personagem.Profissao = (ProfissaoEnum)Enum.Parse(typeof(ProfissaoEnum), boxProfissao.Text);
             _personagem.Altura = (float)boxAltura.Value;
             _personagem.Idade = (int)boxIdade.Value;

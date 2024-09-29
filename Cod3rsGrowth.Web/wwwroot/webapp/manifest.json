@@ -1,0 +1,149 @@
+{
+  "_version": "1.58.0",
+  "sap.app": {
+    "id": "ui5.o_senhor_dos_aneis",
+    "i18n": "i18n/i18n.properties",
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "type": "application",
+    "applicationVersion": {
+      "version": "1.0.0"
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "rootView": {
+      "viewName": "ui5.o_senhor_dos_aneis.App.App",
+      "type": "XML",
+      "id": "app"
+    },
+    "dependencies": {
+      "minUI5Version": "1.108.0",
+      "libs": {
+        "sap.ui.core": {},
+        "sap.m": {}
+      }
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "ui5.o_senhor_dos_aneis.i18n.i18n",
+          "supportedLocales": [
+            "pt_br",
+            "en"
+          ],
+          "fallbackLocale": "en"
+        }
+      }
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "type": "View",
+        "viewType": "XML",
+        "path": "ui5.o_senhor_dos_aneis.App",
+        "controlId": "app",
+        "controlAggregation": "pages",
+        "transition": "slide",
+        "bypassed": {
+          "target": "notFound"
+        },
+        "async": true
+      },
+      "routes": [
+        {
+          "pattern": "",
+          "name": "appHome",
+          "target": "home"
+        },
+        {
+          "pattern": "personagens:?query:",
+          "name": "listaDePersonagens",
+          "target": "personagens"
+        },
+        {
+          "pattern": "racas:?query:",
+          "name": "listaDeRacas",
+          "target": "racas"
+        },
+        {
+          "pattern": "personagem/criarPersonagem",
+          "name": "criarPersonagem",
+          "target": "criarPersonagem"
+        },
+        {
+          "pattern": "raca/criarRaca/",
+          "name": "criarRaca",
+          "target": "criarRaca"
+        },
+        {
+          "pattern": "raca/editarRaca/{id}",
+          "name": "editarRaca",
+          "target": "criarRaca"
+        },
+        {
+          "pattern": "raca/{id}",
+          "name": "detalhesRaca",
+          "target": "detalhesRaca"
+        },
+        {
+          "pattern": "notFound",
+          "name": "notFound",
+          "target": "notFound"
+        }
+      ],
+      "targets": {
+        "home": {
+          "id": "home",
+          "path": "ui5.o_senhor_dos_aneis.App.Home",
+          "name": "Home",
+          "level": 1
+        },
+        "notFound": {
+          "id": "notFound",
+          "path": "ui5.o_senhor_dos_aneis.App.NotFound",
+          "name": "NotFound",
+          "transition": "show"
+        },
+        "personagens": {
+          "id": "listaDePersonagens",
+          "path": "ui5.o_senhor_dos_aneis.App.Personagem",
+          "name": "ListaPersonagens",
+          "level": "2"
+        },
+        "racas": {
+          "id": "listaDeRacas",
+          "path": "ui5.o_senhor_dos_aneis.App.Raca",
+          "name": "ListaRacas",
+          "level": "2"
+        },
+        "criarPersonagem": {
+          "id": "criarPersonagem",
+          "path": "ui5.o_senhor_dos_aneis.App.Personagem",
+          "name": "CriarPersonagem",
+          "level": "3"
+        },
+        "criarRaca": {
+          "id": "criarRaca",
+          "path": "ui5.o_senhor_dos_aneis.App.Raca",
+          "name": "CriarRaca",
+          "level": "3"
+        },
+        "detalhesRaca": {
+          "id": "detalhesRaca",
+          "path": "ui5.o_senhor_dos_aneis.App.Raca",
+          "name": "DetalhesRaca",
+          "level": "3"
+        }
+      }
+    }
+  }
+}

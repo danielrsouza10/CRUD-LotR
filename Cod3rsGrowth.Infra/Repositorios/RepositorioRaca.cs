@@ -1,6 +1,8 @@
+using Dominio.Exceptions;
 using Dominio.Filtros;
 using Dominio.Modelos;
 using LinqToDB;
+using Microsoft.Data.SqlClient;
 using Testes.Interfaces;
 
 namespace Infra.Repositorios;
@@ -14,7 +16,7 @@ public class RepositorioRaca : IRepositorio<Raca>
 
         if(filtro == null) return racas.ToList();
 
-        if (!string.IsNullOrEmpty(filtro.Nome)) racas = from r in racas where r.Nome.ToLower().Contains(filtro.Nome.ToLower()) select r;
+        if (!string.IsNullOrEmpty(filtro.NomeDaRaca)) racas = from r in racas where r.Nome.ToLower().Contains(filtro.NomeDaRaca.ToLower()) select r;
         if (!filtro.EstaExtinta.Equals(null)) racas = from r in racas where r.EstaExtinta == filtro.EstaExtinta select r;
 
         return racas.ToList();
@@ -24,7 +26,7 @@ public class RepositorioRaca : IRepositorio<Raca>
         var racas = _db.Raca;
         return racas.FirstOrDefault(r => r.Id == id);
     }
-    public void Criar(Raca raca) => _db.Insert(raca);
+    public int Criar(Raca raca) => _db.InsertWithInt32Identity(raca);
     public Raca Editar(Raca raca)
     {
         var racas = _db.Raca.ToList();
@@ -33,9 +35,15 @@ public class RepositorioRaca : IRepositorio<Raca>
     }
     public void Deletar(int id)
     {
-        _db.Raca
-            .Where(r => r.Id == id)
-            .Delete();
+        try
+        {
+            _db.Raca
+                .Where(r => r.Id == id)
+                .Delete();
+        }
+        catch (SqlException ex) { 
+            throw new RegistroComDepententesException("Não é possível excluir uma raça com personagens", ex);
+        }
     }
     public bool VerificarNomeNoDb(string nome, int? id = null)
     {

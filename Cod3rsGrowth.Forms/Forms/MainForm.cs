@@ -21,13 +21,13 @@ namespace Forms
         }
         private void LimparFiltro()
         {
-            _filtroPersonagem.Nome = null;
+            _filtroPersonagem.NomeDoPersonagem = null;
             _filtroPersonagem.EstaVivo = null;
             _filtroPersonagem.DataFinal = null;
             _filtroPersonagem.Profissao = (ProfissaoEnum)Enum.Parse(typeof(ProfissaoEnum), "Nenhum");
             _filtroPersonagem.DataInicial = null;
             _filtroPersonagem.DataFinal = null;
-            _filtroRaca.Nome = null;
+            _filtroRaca.NomeDaRaca = null;
             _filtroRaca.EstaExtinta = null;
             filtroRacaBox.SelectedItem = null;
         }
@@ -80,12 +80,12 @@ namespace Forms
         }
         private void AoDigitarNaBarraDePesquisaDePersonagemDeveListarNoDataGrid(object sender, EventArgs e)
         {
-            _filtroPersonagem.Nome = barraDePesquisaDePersonagem.Text;
+            _filtroPersonagem.NomeDoPersonagem = barraDePesquisaDePersonagem.Text;
             DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
         }
         private void AoDigitarNaBarraDePesquisaDeRacaDeveListarNoDataGrid(object sender, EventArgs e)
         {
-            _filtroRaca.Nome = barraDePesquisaDeRaca.Text;
+            _filtroRaca.NomeDaRaca = barraDePesquisaDeRaca.Text;
             DefinirGridDeRacas(_filtroRaca);
         }
         private void AoDarCheckNoBoxVivoDeveFiltarAListaDePersonagens(object sender, EventArgs e)
@@ -265,31 +265,26 @@ namespace Forms
                 return ID_EM_CASO_DE_NULL;
             }
         }
-
         private void AoAlterarASelecaoDoComboboxDeRacasDeveFiltrar(object sender, EventArgs e)
         {
-            _filtroRaca.Nome = filtroRacaBox.GetItemText(filtroRacaBox.SelectedItem);
+            _filtroRaca.NomeDaRaca = filtroRacaBox.GetItemText(filtroRacaBox.SelectedItem);
             DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
         }
-
         private void AoAlterarASelecaoDoComboboxDeProfissaoDeveFiltrar(object sender, EventArgs e)
         {
             _filtroPersonagem.Profissao = (ProfissaoEnum)Enum.Parse(typeof(ProfissaoEnum), boxFiltroProfissao.Text);
             DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
         }
-
         private void AoAlterarADataInicialDeveFiltrar(object sender, EventArgs e)
         {
             _filtroPersonagem.DataInicial = dataInicialTimePicker.Value.Date;
             DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
         }
-
         private void AoAlterarADataFinalDeveFiltrar(object sender, EventArgs e)
         {
             _filtroPersonagem.DataFinal = dataFinalTimePicker.Value.Date;
             DefinirGridDePersonagens(_filtroPersonagem, _filtroRaca);
         }
-
         private void AoAlternarEntreTabsDeveRedefinirOGrid(object sender, TabControlEventArgs e)
         {
             filtroRacaBox.DataSource = _servicoRaca.ObterTodos(_filtroRaca);

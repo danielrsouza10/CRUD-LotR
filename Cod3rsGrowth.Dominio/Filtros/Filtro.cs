@@ -5,7 +5,8 @@ namespace Dominio.Filtros;
 
 public class Filtro
 {
-    public string? Nome { get; set; }
+    public string? NomeDoPersonagem { get; set; }
+    public string? NomeDaRaca { get; set; }
     public ProfissaoEnum Profissao { get; set; }
     public bool? EstaVivo { get; set; }
     public bool? EstaExtinta { get; set; }

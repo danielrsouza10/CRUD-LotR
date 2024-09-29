@@ -1,0 +1,12 @@
+{
+    "name": "ui5.o_senhor_dos_aneis",
+    "version": "1.0.0",
+    "description": "O Senhor dos Aneis",
+    "scripts": {
+        "start": "ui5 serve -o index.html"
+    },
+    "devDependencies": {
+        "@ui5/cli": "^3.11.1",
+        "ui5-middleware-simpleproxy": "^3.2.16"
+    }
+}

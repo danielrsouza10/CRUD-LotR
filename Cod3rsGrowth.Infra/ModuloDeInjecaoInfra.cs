@@ -13,12 +13,12 @@ namespace Infra;
 
 public class ModuloDeInjecaoInfra
 {
-    public static void BindServices(IServiceCollection services)
+    public static void BindServices(IServiceCollection services, string connectionString)
     {
         services.AddScoped<IRepositorio<Personagem>, RepositorioPersonagem>();
         services.AddScoped<IRepositorio<Raca>, RepositorioRaca>();
 
-        var connectionString = Environment.GetEnvironmentVariable("SQLSERVER_CONNECTION_STRING");
+        
         if (string.IsNullOrEmpty(connectionString))
         {
             throw new InvalidOperationException("A variavel de ambiente SQLSERVER_CONNECTION_STRING não está definida");
