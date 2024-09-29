@@ -1,10 +1,11 @@
-﻿using FluentValidation;
+﻿using Dominio.Exceptions;
+using FluentValidation;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Newtonsoft.Json;
 
-namespace Cod3rsGrowth.Web.ExceptionHanlder
+namespace Cod3rsGrowth.Web.ExceptionHandler
 {
     public static class ProblemDetailsExtensions
     {
@@ -27,23 +28,36 @@ namespace Cod3rsGrowth.Web.ExceptionHanlder
                             problemDetails.Title = "Ocorreram um ou mais erros de validação";
                             problemDetails.Status = StatusCodes.Status400BadRequest;
                             problemDetails.Detail = validationRequestException.StackTrace;
-                            problemDetails.Extensions["Erros:"] = validationRequestException.Errors
+                            problemDetails.Extensions["Erros"] = validationRequestException.Errors
                             .GroupBy(error => error.PropertyName)
                             .ToDictionary(group => group.Key, group => group.First().ErrorMessage);
                         }
-                        else if(exception is SqlException sqlRequestException)
+                        else if (exception is SqlException sqlRequestException)
                         {
-                            problemDetails.Title = "O Id da raça não existe";
+                            problemDetails.Title = "Um erro de SQL ocorreu";
                             problemDetails.Status = StatusCodes.Status500InternalServerError;
-                            problemDetails.Detail = sqlRequestException.StackTrace;
-                            problemDetails.Extensions["Erros:"] = sqlRequestException.Message;
+                            problemDetails.Detail = sqlRequestException.Message;
+                            problemDetails.Extensions["Erros"] = sqlRequestException.Errors
+                                .Cast<SqlError>()
+                                .GroupBy(error => error.Number)
+                                .ToDictionary(
+                                    group => $"Error Code {group.Key}",
+                                    group => group.First().Message
+                                );
                         }
-                        else if(exception is Exception requestException)
+                        else if (exception is RegistroComDepententesException registroComDepentendesException)
+                        {
+                            problemDetails.Title = "Erro de Registro com Dependentes";
+                            problemDetails.Status = StatusCodes.Status500InternalServerError;
+                            problemDetails.Detail = registroComDepentendesException.Message;
+                            problemDetails.Extensions["Erros"] = registroComDepentendesException.StackTrace;
+                        }
+                        else if (exception is Exception requestException)
                         {
                             problemDetails.Title = "Um erro inesperado ocorreu";
                             problemDetails.Status = StatusCodes.Status500InternalServerError;
                             problemDetails.Detail = requestException.StackTrace;
-                            problemDetails.Extensions["Erros:"] = requestException.Message;
+                            problemDetails.Extensions["Erros"] = requestException.Message;
                         }
                         else
                         {

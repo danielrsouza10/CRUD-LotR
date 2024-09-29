@@ -33,7 +33,7 @@ namespace Cod3rsGrowth.Web.Controllers
         [HttpPost("raca")]
         public IActionResult Criar([FromBody] Raca raca)
         {
-            _servicoRaca.Criar(raca);
+            var idRaca = _servicoRaca.Criar(raca);
             return Ok();
         }
         [HttpPut("raca")]

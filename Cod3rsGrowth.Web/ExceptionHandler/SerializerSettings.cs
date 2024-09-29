@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 
-namespace Cod3rsGrowth.Web.ExceptionHanlder
+namespace Cod3rsGrowth.Web.ExceptionHandler
 {
     public static class SerializerSettings
     {

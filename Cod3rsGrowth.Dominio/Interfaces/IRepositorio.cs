@@ -6,7 +6,7 @@ namespace Testes.Interfaces
     {
         IEnumerable<T> ObterTodos(Filtro filtro);
         T ObterPorId(int id);
-        void Criar(T t);
+        int Criar(T t);
         T Editar(T t);
         void Deletar(int id);
         bool VerificarNomeNoDb(string nome, int? id = null);

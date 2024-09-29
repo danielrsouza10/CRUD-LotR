@@ -13,19 +13,19 @@ public class PersonagemValidacao : AbstractValidator<Personagem>
 
         RuleSet("Criacao", () =>
         {
-            RuleFor(personagem => personagem.Nome)
-                .Cascade(CascadeMode.StopOnFirstFailure)
-                .Must(nome => !_repositorio.VerificarNomeNoDb(nome.ToLower(), null)).WithMessage("O nome do personagem ja existe")
-                .Matches(@"^[a-zA-ZÀ-ÖØ-öø-ÿ'-]*$").WithMessage("O nome não pode conter caracteres especiais")
-                .NotNull().WithMessage("O nome do personagem não pode ser null")
-                .NotEmpty().WithMessage("Precisa informar um nome para o personagem")
-                .Length(3, 25).WithMessage("O nome do personagem precisa ter entre 3 e 25 caracteres");
             RuleFor(personagem => personagem.Id)
                 .Empty().WithMessage("Não deve ser informado um Id");
+            RuleFor(personagem => personagem.Nome)
+                .Cascade(CascadeMode.StopOnFirstFailure)
+                    .NotNull().WithMessage("O nome do personagem não pode ser null")
+                    .NotEmpty().WithMessage("Precisa informar um nome para o personagem")
+                    .Length(3, 25).WithMessage("O nome do personagem precisa ter entre 3 e 25 caracteres")
+                    .Matches(@"^[a-zA-ZÀ-ÖØ-öø-ÿ'-]*$").WithMessage("O nome não pode conter caracteres especiais")
+                    .Must(nome => !_repositorio.VerificarNomeNoDb(nome.ToLower(), null)).WithMessage("O nome do personagem ja existe");
             RuleFor(personagem => personagem.IdRaca)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotNull().WithMessage("O Id da raça não pode ser null")
-                .NotEmpty().WithMessage("Deve ser informado um id correspondente a raça do personagem");
+                    .NotNull().WithMessage("O Id da raça não pode ser null")
+                    .NotEmpty().WithMessage("Deve ser informado um id correspondente a raça do personagem");
             RuleFor(personagem => personagem.EstaVivo)
                 .NotNull().WithMessage("É necessário informar se o personagem está vivo ou não");
             RuleFor(personagem => personagem.Profissao)
@@ -39,11 +39,11 @@ public class PersonagemValidacao : AbstractValidator<Personagem>
         {
             RuleFor(personagem => personagem.Nome)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .Must((personagem, nome) => !_repositorio.VerificarNomeNoDb(nome.ToLower(), personagem.Id)).WithMessage("O nome do personagem ja existe")
-                .NotNull().WithMessage("O nome do personagem não pode ser null")
-                .NotEmpty().WithMessage("Precisa informar um nome para o personagem")
-                .Matches(@"^[a-zA-ZÀ-ÖØ-öø-ÿ'-]*$").WithMessage("O nome não pode conter caracteres especiais")
-                .Length(3, 25).WithMessage("O nome do personagem precisa ter entre 3 e 25 caracteres");
+                    .NotNull().WithMessage("O nome do personagem não pode ser null")
+                    .NotEmpty().WithMessage("Precisa informar um nome para o personagem")
+                    .Length(3, 25).WithMessage("O nome do personagem precisa ter entre 3 e 25 caracteres")
+                    .Matches(@"^[a-zA-ZÀ-ÖØ-öø-ÿ'-]*$").WithMessage("O nome não pode conter caracteres especiais")
+                    .Must((personagem, nome) => !_repositorio.VerificarNomeNoDb(nome.ToLower(), personagem.Id)).WithMessage("O nome do personagem ja existe");
             RuleFor(personagem => personagem.EstaVivo)
                 .NotNull().WithMessage("É necessário informar se o personagem está vivo ou não");
             RuleFor(personagem => personagem.Profissao)

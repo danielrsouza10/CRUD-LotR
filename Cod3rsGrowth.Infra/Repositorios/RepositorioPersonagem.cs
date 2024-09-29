@@ -12,15 +12,34 @@ public class RepositorioPersonagem : IRepositorio<Personagem>
     public IEnumerable<Personagem> ObterTodos(Filtro filtro)
     {
         var personagens = from p in _db.Personagem select p;
-        
-        if (filtro == null) return personagens.ToList();
-        
-        if (!string.IsNullOrEmpty(filtro.Nome)) personagens = from p in personagens where p.Nome.ToLower().Contains(filtro.Nome.ToLower()) select p;
-        if (!filtro.Profissao.Equals((ProfissaoEnum)Enum.Parse(typeof(ProfissaoEnum), "Nenhum"))) personagens = from p in personagens where p.Profissao == filtro.Profissao select p;
-        if (!filtro.EstaVivo.Equals(null)) personagens = from p in personagens where p.EstaVivo == filtro.EstaVivo select p;
-        if (!filtro.DataInicial.Equals(null)) personagens = from p in personagens where p.DataDoCadastro.Date >= filtro.DataInicial select p;
-        if (!filtro.DataFinal.Equals(null)) personagens = from p in personagens where p.DataDoCadastro.Date <= filtro.DataFinal select p;
-        
+
+        if (filtro != null)
+        {
+            if (!string.IsNullOrEmpty(filtro.NomeDoPersonagem))
+            {
+                personagens = personagens.Where(p => p.Nome.ToLower().Contains(filtro.NomeDoPersonagem.ToLower())); ;
+            }
+
+            if (filtro.Profissao != ProfissaoEnum.Nenhum)
+            {
+                personagens = from p in personagens where p.Profissao == filtro.Profissao select p;
+            }
+
+            if (filtro.EstaVivo.HasValue)
+            {
+                personagens = from p in personagens where p.EstaVivo == filtro.EstaVivo select p;
+            }
+
+            if (filtro.DataInicial.HasValue)
+            {
+                personagens = from p in personagens where p.DataDoCadastro.Date >= filtro.DataInicial.Value select p;
+            }
+
+            if (filtro.DataFinal.HasValue)
+            {
+                personagens = from p in personagens where p.DataDoCadastro.Date <= filtro.DataFinal.Value select p;
+            }
+        }
         return personagens.ToList();
     }
     public Personagem ObterPorId(int id)
@@ -28,7 +47,7 @@ public class RepositorioPersonagem : IRepositorio<Personagem>
         var personagens = _db.Personagem;
         return personagens.FirstOrDefault(p => p.Id == id);
     }
-    public void Criar(Personagem personagem) => _db.Insert(personagem);
+    public int Criar(Personagem personagem) => _db.InsertWithInt32Identity(personagem);
     public Personagem Editar(Personagem personagem)
     {
         var personagens = _db.Personagem.ToList();

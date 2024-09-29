@@ -22,7 +22,7 @@ namespace Servico.Servicos
         {
             return _servicoRepositorio.ObterPorId(id);
         }
-        public void Criar(Personagem personagem)
+        public int Criar(Personagem personagem)
         {
             var resultadoValidacao = _personagemValidacao
                 .Validate(personagem, options => options.IncludeRuleSets("Criacao"));
@@ -30,7 +30,7 @@ namespace Servico.Servicos
             {
                 throw new ValidationException(resultadoValidacao.Errors);
             }
-            _servicoRepositorio.Criar(personagem);
+            return _servicoRepositorio.Criar(personagem);
         }
         public Personagem Editar(Personagem personagem)
         {

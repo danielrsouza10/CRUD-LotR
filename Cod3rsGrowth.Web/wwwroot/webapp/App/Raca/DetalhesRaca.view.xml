@@ -1,0 +1,219 @@
+<mvc:View
+    height="100%"
+    controllerName="ui5.o_senhor_dos_aneis.App.Raca.DetalhesRaca"
+    xmlns="sap.m"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+>
+    <Page
+        id="paginaDetalhesRaca"
+        title="{i18n>TituloPaginaDetalhesRaca}"
+        showHeader="true"
+        enableScrolling="true"
+        showNavButton="true"
+        navButtonPress=".onNavBack"
+        class="sapUiResponsiveContentPadding"
+    >
+        <ObjectHeader
+            icon="{
+                        path: 'raca>/nome',
+                        formatter: '.formatter.formatarIconeListagem'
+                    }"
+            iconDensityAware="false"
+            iconAlt="{raca>/nome}"
+            imageShape="Circle"
+            responsive="true"
+            id="objectHeader"
+            fullScreenOptimized="true"
+            binding="{raca>/}"
+            intro="{i18n>LabelId}:{raca>/id}"
+            title="{raca>/nome}"
+            titleActive="false"
+            backgroundDesign="Translucent"
+            class="sapUiResponsivePadding--header"
+        >
+            <ObjectAttribute
+                title="{i18n>LabelLocalizacaoGeografica}"
+                text="{raca>/localizacaoGeografica}"
+            />
+            <ObjectAttribute
+                title="{i18n>LabelHabilidadeRacial}"
+                text="{raca>/habilidadeRacial}"
+            />
+
+            <statuses>
+                <ObjectStatus
+                    title="{i18n>LabelExtinta}"
+                    text="{
+                                path: 'raca>/estaExtinta', 
+                                formatter: '.formatter.formatarBooleanEstaExtinta'
+                            }"
+                    state="{
+                                    path: 'raca>/estaExtinta',
+                                    formatter: '.formatter.formatarStatusExtintoNaLista'
+                                }"
+                />
+            </statuses>
+            <markers>
+                <ObjectMarker type="Flagged" />
+                <ObjectMarker type="Favorite" />
+            </markers>
+        </ObjectHeader>
+        <OverflowToolbar
+            id="otbHeader"
+            class="sapUiTinyMarginTop sapUiTinyMarginBottom"
+        >
+            <ToolbarSpacer />
+            <Button
+                type="Emphasized"
+                text="{i18n>BotaoEditar}"
+                id="editarRacaBtn"
+                press=".aoClicarBtnEditarRaca"
+                class="sapUiTinyMarginTop sapUiTinyMarginBottom"
+                width="100px"
+            >
+                <layoutData>
+                    <OverflowToolbarLayoutData priority="High" />
+                </layoutData>
+            </Button>
+            <Button
+                type="Reject"
+                text="{i18n>BotaoRemover}"
+                press=".aoClicarBtnRemoverRaca"
+                width="100px"
+                class="sapUiTinyMarginTop sapUiTinyMarginBottom"
+            >
+                <layoutData>
+                    <OverflowToolbarLayoutData priority="Low" />
+                </layoutData>
+            </Button>
+        </OverflowToolbar>
+
+        <List
+            id="listaDePersonagens"
+            items="{personagens>/}"
+            growing="true"
+            growingThreshold="5"
+            enableBusyIndicator="true"
+            class="sapUiResponsiveContentPadding"
+        >
+            <headerToolbar>
+                <OverflowToolbar id="listToolbar">
+                    <Title text="{i18n>TituloListaPersonagens}" />
+                    <ToolbarSpacer />
+                </OverflowToolbar>
+            </headerToolbar>
+
+            <CustomListItem
+                type="Active"
+                press=".aoSelecionarItemNaListaDePersonagem"
+                id="customListPersonagens"
+                highlight="{
+                path: 'personagens>estaVivo',
+                formatter: '.formatter.formatarStatusCondicaoNaLista'
+            }"
+            >
+                <HBox>
+                    <Image
+                        src="{
+                                    path: 'personagens>raca',
+                                    formatter: '.formatter.formatarIconeListagem'
+                                }"
+                        width="2rem"
+                        height="2rem"
+                        class="sapUiSmallMargin"
+                    />
+                    <VBox
+                        class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
+                    >
+                        <ObjectIdentifier
+                            title="{personagens>nome}"
+                            class="sapUiTinyMarginBottom"
+                        />
+                        <FlexBox>
+                            <Label
+                                text="{i18n>LabelRaca}:"
+                                class="sapUiTinyMarginEnd"
+                            />
+                            <Text text="{personagens>raca}" />
+                        </FlexBox>
+                        <FlexBox>
+                            <Label
+                                text="{i18n>LabelProfissao}:"
+                                class="sapUiTinyMarginEnd"
+                            />
+                            <Text text="{personagens>profissao}" />
+                        </FlexBox>
+                        <FlexBox>
+                            <Label
+                                text="{i18n>LabelCondicao}:"
+                                class="sapUiTinyMarginEnd"
+                            />
+                            <Text
+                                text="{
+                                    path: 'personagens>estaVivo',
+                                    formatter: '.formatter.formatarBooleanVivoMorto'
+                                    }"
+                            />
+                        </FlexBox>
+                        <FlexBox>
+                            <Label
+                                text="{i18n>LabelDataDoCadastro}:"
+                                class="sapUiTinyMarginEnd"
+                            />
+                            <Text
+                                text="{
+                                    path: 'personagens>dataDoCadastro',
+                                    formatter: '.formatter.formatarDataDeCadastro'
+                                }"
+                            />
+                        </FlexBox>
+                    </VBox>
+                </HBox>
+            </CustomListItem>
+        </List>
+
+        <footer>
+            <OverflowToolbar id="otbFooter">
+                <ToolbarSpacer />
+                <Button
+                    type="Accept"
+                    text="{i18n>BotaoAdicionarPersonagem}"
+                    press=".aoClicarBtnAdicionarPersonagem"
+                    id="adicionarPersonagemBtn"
+                    class="sapUiTinyMarginEnd"
+                >
+                    <layoutData>
+                        <OverflowToolbarLayoutData priority="High" />
+                    </layoutData>
+                </Button>
+                <Button
+                    type="Emphasized"
+                    text="{i18n>BotaoEditarPersonagem}"
+                    press=".aoClicarBtnEditarPersonagem"
+                    id="editarPersonagemBtn"
+                    class="sapUiTinyMarginEnd"
+                    visible="false"
+                >
+                    <layoutData>
+                        <OverflowToolbarLayoutData priority="High" />
+                    </layoutData>
+                </Button>
+                <Button
+                    type="Reject"
+                    text="{i18n>BotaoRemoverPersonagem}"
+                    press=".aoClicarBtnRemoverPersonagem"
+                    id="removerPersonagemBtn"
+                    class="sapUiTinyMarginEnd"
+                    visible="false"
+                >
+                    <layoutData>
+                        <OverflowToolbarLayoutData priority="High" />
+                    </layoutData>
+                </Button>
+            </OverflowToolbar>
+        </footer>
+    </Page>
+</mvc:View>
